@@ -46,7 +46,7 @@ extension ResultVC: UITableViewDelegate, UITableViewDataSource {
         let questionsArray = Array(gameData?.questions ?? [:])
         if indexPath.row < questionsArray.count {
             let question = questionsArray[indexPath.row]
-            cell.textLabel?.text = questionsArray[indexPath.row].value.question
+            cell.textLabel?.text = question.value.question
         }
         
         return cell

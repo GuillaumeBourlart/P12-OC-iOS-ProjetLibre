@@ -34,6 +34,7 @@ class QuizzVC: UIViewController {
                 switch result {
                 case .success(let questions):
                     self.questions = questions
+                    print("après la closure : \(questions)")
                     self.displayQuestion()
                 case .failure(let error):
                     print(error)
@@ -49,7 +50,7 @@ class QuizzVC: UIViewController {
             
             let question = questions[currentQuestionIndex]
             questionLabel.text = question.question
-            print(question.id)
+            
             var choices = question.incorrect_answers + [question.correct_answer]
             choices.shuffle()
             

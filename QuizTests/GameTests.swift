@@ -18,7 +18,6 @@ final class GameTests: XCTestCase {
         sut = Game(firestoreService: FirestoreServiceStub(), firebaseAuthService: FirebaseAuthServiceStub())
     }
     
-    
     func testSearchCompetitiveLobby_GivenNoLobbies_ReturnsFailure() {
         // Given
         let expectedError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No lobbies found"])

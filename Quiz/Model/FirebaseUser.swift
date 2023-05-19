@@ -340,13 +340,13 @@ class FirebaseUser {
         
         
         
-        let dataa: [String: Any] = ["friends": "received", "friendRequests.\(friendID)": FieldValue.delete()]
+        let dataa: [String: Any] = ["friends": FieldValue.arrayUnion([friendID]), "friendRequests.\(friendID)": FieldValue.delete()]
         firestoreService.updateDocument(in: "users", documentId: currentUserId, data: dataa) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
                 
-                let dataa: [String: Any] = ["friends": FieldValue.arrayUnion([currentUserId])]
+                let dataa: [String: Any] = ["friends": FieldValue.arrayUnion([currentUserId]), "friendRequests.\(currentUserId)": FieldValue.delete()]
                 self.firestoreService.updateDocument(in: "users", documentId: friendID, data: dataa) { error in
                     if let error = error {
                         completion(.failure(error))
@@ -357,6 +357,7 @@ class FirebaseUser {
             }
         }
     }
+    
     
     func rejectFriendRequest(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseAuthService.currentUserID else { print("Aucun utilisateur connecté"); return}
@@ -376,9 +377,6 @@ class FirebaseUser {
     func removeFriend(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseAuthService.currentUserID else { print("Aucun utilisateur connecté"); return}
         
-        let usersRef = self.db.collection("users")
-        let currentUserRef = usersRef.document(currentUserId)
-        let friendRef = usersRef.document(friendID)
         let dataa: [String: Any] = ["friends": FieldValue.arrayRemove([friendID])]
         firestoreService.updateDocument(in: "users", documentId: currentUserId, data: dataa) { error in
             if let error = error {
@@ -426,8 +424,7 @@ class FirebaseUser {
             "questions": [[String: Any]](),
             "code": quizCode
         ]
-        
-        firestoreService.updateDocument(in: "quizzes", documentId: quizID, data: newQuiz) { (error) in
+        firestoreService.setData(in: "quizzes", documentId: quizID, data: newQuiz) { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -462,9 +459,9 @@ class FirebaseUser {
     // Fonction pour supprimer un quiz
     func deleteQuiz(quiz: Quiz, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseAuthService.currentUserID else { print("Aucun utilisateur connecté"); return}
-        let quizID = quiz.id
+        guard let quizID: String = quiz.id else { return }
         
-        firestoreService.deleteDocument(in: "quizzes", documentId: quizID!) { (error) in
+        firestoreService.deleteDocument(in: "quizzes", documentId: quizID) { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -581,8 +578,8 @@ class FirebaseUser {
     
     func deleteGroup(group: FriendGroup, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseAuthService.currentUserID else { print("Aucun utilisateur connecté"); return}
-        let groupID = group.id
-        firestoreService.deleteDocument(in: "groups", documentId: groupID!) { (error) in
+        guard let groupID = group.id else { return }
+        firestoreService.deleteDocument(in: "groups", documentId: groupID) { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {
