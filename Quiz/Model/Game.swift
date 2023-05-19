@@ -12,14 +12,22 @@ import FirebaseAuth
 class Game {
     
     static let shared = Game()
-    var apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()))
     
+    private var firestoreService: FirestoreServiceProtocol
+    private var firebaseAuthService: FirebaseAuthServiceProtocol
+    private var apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()))
+    
+    init(firestoreService: FirestoreServiceProtocol = FirestoreService(),
+         firebaseAuthService: FirebaseAuthServiceProtocol = FirebaseAuthService()) {
+        self.firestoreService = firestoreService
+        self.firebaseAuthService = firebaseAuthService
+    }
+  
     var difficulty: String?
     var category: Int?
     var currentLobbyId: String?
     
     
-    private init() {} // Privatisez l'initiateur
     
     private let db = Firestore.firestore() // Référence à Firestore
     private var currentUserId: String? { return Auth.auth().currentUser?.uid }
@@ -30,22 +38,23 @@ class Game {
     //                                 GAME CREATION
     //-----------------------------------------------------------------------------------
     
-    
     func searchCompetitiveLobby(completion: @escaping (Result<Void, Error>) -> Void ) {
-        guard self.currentUserId != nil else { print("Aucun utilisateur connecté"); return}
+        guard (firebaseAuthService.currentUserID) != nil else {
+            print("Aucun utilisateur connecté")
+            return
+        }
         
-        
-        let lobbyRef = db.collection("lobby")
-        lobbyRef.whereField("status", isEqualTo: "waiting").whereField("competitive", isEqualTo: true).getDocuments { (querySnapshot, error) in
+        let conditions: [FirestoreCondition] = [.isEqualTo("status", "waiting"), .isEqualTo("competitive", true)]
+        firestoreService.getDocuments(in: "lobby", whereFields: conditions) { querySnapshot, error in
+            // Continuez comme dans votre implémentation initiale
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let snapshot = querySnapshot, !snapshot.isEmpty {
+            } else if let snapshot = querySnapshot, !snapshot.isEmpty {
                     // Un lobby disponible a été trouvé
                     print("Lobby trouvé")
                     let lobbyId = snapshot.documents.first!.documentID
                     self.currentLobbyId = lobbyId
-                    self.joinCompetitiveLobbby(lobbyId: lobbyId) {success in
+                    self.joinCompetitiveLobby(lobbyId: lobbyId) {success in
                         switch success {
                         case .success():
                             completion(.success(()))
@@ -65,60 +74,67 @@ class Game {
                         }
                     }
                 }
-            }
+            
         }
     }
-    
     
     func createCompetitiveLobby(completion: @escaping (Result<Void, Error>) -> Void ) {
-        guard let currentUserId = self.currentUserId else { print("Aucun utilisateur connecté"); return}
-        
-        let lobbyRef = db.collection("lobby")
-        
-        let newLobby = lobbyRef.document()
-        newLobby.setData(["creator": currentUserId, "competitive": true, "status": "waiting"])
-        print("Nouveau lobby créé avec l'ID: \(newLobby.documentID)")
-        currentLobbyId = newLobby.documentID
-        completion(.success(()))
-    }
-    
-    func cancelSearch(completion: @escaping (Result<Void, Error>) -> Void ) {
-        guard self.currentUserId != nil else { print("Aucun utilisateur connecté"); return}
-        guard let lobbyId = currentLobbyId else {
-            print("Aucun lobby actif")
-            return
-        }
-        
-        let lobbyRef = db.collection("lobby").document(lobbyId)
-        
-        lobbyRef.delete { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                self.currentLobbyId = nil
-                completion(.success(()))
+            guard let currentUserId = firebaseAuthService.currentUserID else {
+                print("Aucun utilisateur connecté");
+                return
+            }
+            
+            let newLobby = db.collection("lobby").document()
+            firestoreService.setData(in: "lobby", documentId: newLobby.documentID, data: ["creator": currentUserId, "competitive": true, "status": "waiting"]) { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    print("Nouveau lobby créé avec l'ID: \(newLobby.documentID)")
+                    self.currentLobbyId = newLobby.documentID
+                    completion(.success(()))
+                }
             }
         }
-    }
+
+        func cancelSearch(completion: @escaping (Result<Void, Error>) -> Void ) {
+            guard firebaseAuthService.currentUserID != nil else {
+                print("Aucun utilisateur connecté");
+                return
+            }
+            guard let lobbyId = currentLobbyId else {
+                print("Aucun lobby actif")
+                return
+            }
+            
+            firestoreService.deleteDocument(in: "lobby", documentId: lobbyId) { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    self.currentLobbyId = nil
+                    completion(.success(()))
+                }
+            }
+        }
     
-    func joinCompetitiveLobbby(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let currentUserId = self.currentUserId else { print("Aucun utilisateur connecté"); return}
-        
-        let lobbyRef = db.collection("lobby").document(lobbyId)
-        
-        // Mettez à jour le statut du lobby en "matched"
-        lobbyRef.updateData(["status": "matched"])
-        
-        // Appel à l'API pour obtenir les questions de quiz
-        apiManager.fetchQuestions(inCategory: nil, difficulty: nil) { result in
-            switch result {
-            case .success(let questions):
-                // Créez une nouvelle partie dans la collection "games"
-                let gameRef = self.db.collection("games").document()
+    func joinCompetitiveLobby(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            guard let currentUserId = firebaseAuthService.currentUserID else {
+                print("Aucun utilisateur connecté")
+                return
+            }
+            
+            // Update lobby status to "matched"
+            firestoreService.updateDocument(in: "lobby", documentId: lobbyId, data: ["status": "matched"]) { error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
                 
-                lobbyRef.getDocument { snapshot, error in
-                    if let snapshot = snapshot, snapshot.exists {
-                        let creator = snapshot.data()?["creator"] as! String
+                // API call to fetch quiz questions
+                self.apiManager.fetchQuestions(inCategory: nil, difficulty: nil) { result in
+                    switch result {
+                    case .success(let questions):
+                        // Create new game in "games" collection
+                        let gameId = UUID().uuidString
                         
                         // Convertir les questions en un dictionnaire avec des identifiants uniques
                         var questionsDict = [String: [String: Any]]()
@@ -127,41 +143,50 @@ class Game {
                             questionsDict[question.id!] = question.dictionary
                         }
                         
-                        gameRef.setData([
+                        let gameData: [String: Any] = [
                             "name": "Quizz entre amis",
-                            "creator": creator,
                             "status": "waiting",
-                            "players": [creator, currentUserId],
+                            "players": [currentUserId],
                             "date": FieldValue.serverTimestamp(),
                             "competitive": true,
-                            "questions": questionsDict // Ajoutez les questions ici
-                        ])
+                            "questions": [String: [String: Any]]()
+                        ]
+
                         
                         
                         
-                        print("Partie créée avec l'ID: \(gameRef.documentID)")
                         
-                        // Supprimez le lobby de la collection "lobby"
-                        lobbyRef.delete()
-                        print("Lobby supprimé avec l'ID: \(lobbyId)")
-                        completion(.success(()))
-                        
-                    }
-                    else if let error = error {
-                        completion(.failure(error))
+                        self.firestoreService.setData(in: "games", documentId: gameId, data: gameData) { error in
+                            if let error = error {
+                                completion(.failure(error))
+                                return
+                            }
+                            
+                            print("Game created with ID: \(gameId)")
+                            
+                            // Delete the lobby from "lobby" collection
+                            self.firestoreService.deleteDocument(in: "lobby", documentId: lobbyId) { error in
+                                if let error = error {
+                                    completion(.failure(error))
+                                    return
+                                }
+                                
+                                print("Lobby deleted with ID: \(lobbyId)")
+                                completion(.success(()))
+                            }
+                        }
+                    case .failure(let error):
+                        completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch quiz questions: \(error.localizedDescription)"])))
                     }
                 }
-            case .failure(let error):
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch quiz questions: \(error.localizedDescription)"])))
             }
         }
-    }
     
     func getQuestions(gameId: String, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
-        guard self.currentUserId != nil else { print("Aucun utilisateur connecté"); return}
-        let gameRef = db.collection("games").document(gameId)
+        guard firebaseAuthService.currentUserID != nil else { print("Aucun utilisateur connecté"); return}
         
-        gameRef.getDocument { (snapshot, error) in
+            firestoreService.getDocument(in: "games", documentId: gameId) { (snapshot, error) in
+            
             if let error = error {
                 print("Error fetching document: \(error)")
                 completion(.failure(error))
@@ -201,26 +226,16 @@ class Game {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //-----------------------------------------------------------------------------------
     //                                 GAME DATA
     //-----------------------------------------------------------------------------------
     
     func getCompletedGames(completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let currentUserId = self.currentUserId else { print("Aucun utilisateur connecté"); return}
+        guard let currentUserId = firebaseAuthService.currentUserID else { print("Aucun utilisateur connecté"); return}
         
-        let gamesRef = db.collection("games")
-        
-        gamesRef.whereField("status", isEqualTo: "completed").whereField("players", arrayContains: currentUserId)
-            .getDocuments { (querySnapshot, error) in
+        _ = db.collection("games")
+        let conditions: [FirestoreCondition] = [.isEqualTo("status", "completed"), .arrayContains("players", currentUserId)]
+        firestoreService.getDocuments(in: "games", whereFields: conditions) { (querySnapshot, error) in
                 if let error = error {
                     completion(.failure(error))
                 } else if let snapshot = querySnapshot {
@@ -239,13 +254,13 @@ class Game {
                             gameData.id = document.documentID
                             completedGames.append(gameData)
                         }  catch {
-                                print("Error decoding: \(error)")
-                                if let decodingError = error as? DecodingError {
-                                    print(decodingError)
-                                }
-                                completion(.failure(error))
-                                return
+                            print("Error decoding: \(error)")
+                            if let decodingError = error as? DecodingError {
+                                print(decodingError)
                             }
+                            completion(.failure(error))
+                            return
+                        }
                     }
                     
                     FirebaseUser.shared.History = completedGames
@@ -255,12 +270,11 @@ class Game {
                 }
             }
     }
-        
+    
     func getGameData(gameId: String, completion: @escaping (Result<GameData, Error>) -> Void) {
         
-        let gameRef = db.collection("games").document(gameId)
         
-        gameRef.getDocument { (snapshot, error) in
+        firestoreService.getDocument(in: "games", documentId: gameId) { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -293,9 +307,8 @@ class Game {
     
     
     func saveStats(userAnswers: [String: UserAnswer], gameID: String, completion: @escaping (Result<Void, Error>) -> Void ) {
-        guard let currentUserId = self.currentUserId else { print("Aucun utilisateur connecté"); return}
-        let gameRef = db.collection("games").document(gameID)
-        let userGamesRef = db.collection("users").document(currentUserId)
+        guard let currentUserId = firebaseAuthService.currentUserID else { print("Aucun utilisateur connecté"); return}
+        
         
         
         var answersData: [String: Any] = [:]
@@ -305,22 +318,21 @@ class Game {
         
         let data: [String: Any] = ["user_answers.\(currentUserId)": answersData, "status": "completed"]
         
-        
-        gameRef.updateData(data, completion: { error in
+        firestoreService.updateDocument(in: "games", documentId: gameID, data: data) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
                 let data: [String: Any] = ["games": FieldValue.arrayUnion([gameID])]
-                userGamesRef.updateData(data, completion: { error in
+                self.firestoreService.updateDocument(in: "users", documentId: currentUserId, data: data) { error in
                     if let error = error {
                         completion(.failure(error))
                     } else {
                         FirebaseUser.shared.userInfo?.games.append(gameID)
                         completion(.success(()))
                     }
-                })
+                }
             }
-        })
+        }
     }
     //-----------------------------------------------------------------------------------
     //                                 LISTENER FOR GAME STARTING
@@ -328,13 +340,10 @@ class Game {
     
     
     func listenForGameStart(completion: @escaping (Bool, String?) -> Void) {
-        guard let currentUserId = self.currentUserId else { print("Aucun utilisateur connecté"); return}
+        guard let currentUserId = firebaseAuthService.currentUserID else { print("Aucun utilisateur connecté"); return}
         
-        let gamesRef = db.collection("games")
-        
-        gamesRef.whereField("players", arrayContains: currentUserId)
-            .whereField("status", isEqualTo: "waiting")
-            .getDocuments() { (querySnapshot, error) in
+        let conditions: [FirestoreCondition] = [.arrayContains("players", currentUserId), .isEqualTo("status", "waiting")]
+        firestoreService.getDocuments(in: "games", whereFields: conditions) { (querySnapshot, error) in
                 if let error = error {
                     print("Error getting documents: \(error)")
                 } else if let snapshot = querySnapshot, !snapshot.isEmpty {

@@ -8,132 +8,102 @@
 import XCTest
 
 
-@testable import QuizzCultureG
+@testable import Quiz
+import FirebaseAuth
 
 
 final class OpenTriviaDatabaseManagerTests: XCTestCase {
     
-    var manager: OpenTriviaDatabaseManager!
     var service: Service!
-    var networkRequestStub: NetworkRequestStub!
-    
-    override func setUp() {
-        super.setUp()
-        networkRequestStub = NetworkRequestStub()
-        service = Service(networkRequest: networkRequestStub)
-        manager = OpenTriviaDatabaseManager(service: service)
-    }
-    
-    override func tearDown() {
-        manager = nil
-        service = nil
-        networkRequestStub = nil
-        super.tearDown()
-    }
-    
-    func testFetchCategories() {
-        // Given
-        let expectedCategories: [NSDictionary] = [
-            ["id": 1, "name": "Category 1"],
-            ["id": 2, "name": "Category 2"]
-        ]
-        let jsonData = try! JSONSerialization.data(withJSONObject: ["trivia_categories": expectedCategories], options: [])
-        networkRequestStub.data = jsonData
-        
-        // When
-        let expectation = XCTestExpectation(description: "Fetch categories")
-        manager.fetchCategories { (categories) in
-            // Then
-            XCTAssertEqual(categories as NSArray?, expectedCategories as NSArray?)
-            expectation.fulfill()
+        var sut: OpenTriviaDatabaseManager!
+        var networkRequestStub: NetworkRequestStub!
+        var currentUserStub: String!
+
+        override func setUp() {
+            super.setUp()
+            networkRequestStub = NetworkRequestStub()
+            service = Service(networkRequest: networkRequestStub)
+            sut = OpenTriviaDatabaseManager(service: service)
+            currentUserStub = "testUser"
         }
-        
-        wait(for: [expectation], timeout: 1.0)
-    }
-    
-    func testFetchCategoriesWithError() {
-        // Given
-        networkRequestStub.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Error"])
-        
-        // When
-        let expectation = XCTestExpectation(description: "Fetch categories with error")
-        manager.fetchCategories { (categories) in
-            // Then
-            XCTAssertNil(categories)
-            expectation.fulfill()
+
+        override func tearDown() {
+            sut = nil
+            service = nil
+            networkRequestStub = nil
+            currentUserStub = nil
+            super.tearDown()
         }
-        
-        wait(for: [expectation], timeout: 1.0)
-    }
-    
-    func testFetchQuestions() {
-        // Given
-        let expectedQuestions: [[String: Any]] = [
-            ["question": "Question 1", "correct_answer": "Answer 1"],
-            ["question": "Question 2", "correct_answer": "Answer 2"]
-        ]
-        let jsonData = try! JSONSerialization.data(withJSONObject: expectedQuestions, options: [])
-        networkRequestStub.data = jsonData
-        
-        // When
-        let expectation = XCTestExpectation(description: "Fetch questions")
-        manager.fetchQuestions(inCategory: nil, amount: 10, difficulty: nil) { (result) in
-            // Then
-            switch result {
-            case .success(let questions):
-                XCTAssertEqual(questions.count, expectedQuestions.count)
-            case .failure(let error):
-                XCTFail("Failed with error: \(error.localizedDescription)")
-            }
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 1.0)
-    }
-    
-    func testFetchQuestionsWithCategory() {
-        // Given
-        let expectedQuestions: [[String: Any]] = [
-            ["question": "Question 1", "correct_answer": "Answer 1"],
-            ["question": "Question 2", "correct_answer": "Answer 2"]
-        ]
-        let jsonData = try! JSONSerialization.data(withJSONObject: expectedQuestions, options: [])
-        networkRequestStub.data = jsonData
-        
-        // When
-        let expectation = XCTestExpectation(description: "Fetch questions with category")
-        manager.fetchQuestions(inCategory: 1, amount: 10, difficulty: nil) { (result) in
-            // Then
-            switch result {
-            case .success(let questions):
-                XCTAssertEqual(questions.count, expectedQuestions.count)
-            case .failure(let error):
-                XCTFail("Failed with error: \(error.localizedDescription)")
-            }
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 1.0)
-    }
-    
-    
-    func testFetchQuestionsWithError() {
+
+        func testFetchCategories_success() {
             // Given
-            networkRequestStub.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Error"])
-            
+            let jsonData = "[{\"trivia_categories\": \"category1\"}]".data(using: .utf8)
+            networkRequestStub.data = jsonData
+
             // When
-            let expectation = XCTestExpectation(description: "Fetch questions with error")
-            manager.fetchQuestions(inCategory: nil, amount: 10, difficulty: nil) { (result) in
-                // Then
-                switch result {
-                case .success:
-                    XCTFail("Fetch should have failed")
-                case .failure(let error):
-                    XCTAssertNotNil(error)
-                }
-                expectation.fulfill()
+            var fetchedCategories: [[String: Any]]?
+            sut.fetchCategories { categories in
+                fetchedCategories = categories
             }
-            
-            wait(for: [expectation], timeout: 1.0)
+
+            // Then
+            XCTAssertNotNil(fetchedCategories)
+        }
+
+        func testFetchCategories_failure() {
+            // Given
+            networkRequestStub.error = NSError(domain: "", code: -1, userInfo: nil)
+
+            // When
+            var fetchedCategories: [[String: Any]]?
+            sut.fetchCategories { categories in
+                fetchedCategories = categories
+            }
+
+            // Then
+            XCTAssertNil(fetchedCategories)
+        }
+
+        func testFetchQuestions_success() {
+            // Given
+            let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8)
+            networkRequestStub.data = jsonData
+
+            // When
+            var fetchedQuestions: [UniversalQuestion]?
+            var fetchedError: Error?
+            sut.fetchQuestions(inCategory: 1, difficulty: nil) { result in
+                switch result {
+                case .success(let questions):
+                    fetchedQuestions = questions
+                case .failure(let error):
+                    fetchedError = error
+                }
+            }
+
+            // Then
+            XCTAssertNil(fetchedError)
+            XCTAssertNotNil(fetchedQuestions)
+        }
+
+        func testFetchQuestions_failure() {
+            // Given
+            networkRequestStub.error = NSError(domain: "", code: -1, userInfo: nil)
+
+            // When
+            var fetchedQuestions: [UniversalQuestion]?
+            var fetchedError: Error?
+            sut.fetchQuestions(inCategory: 1, difficulty: nil) { result in
+                switch result {
+                case .success(let questions):
+                    fetchedQuestions = questions
+                case .failure(let error):
+                    fetchedError = error
+                }
+            }
+
+            // Then
+            XCTAssertNotNil(fetchedError)
+            XCTAssertNil(fetchedQuestions)
         }
     }

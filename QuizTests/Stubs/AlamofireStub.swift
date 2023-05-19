@@ -4,7 +4,7 @@
 //
 //  Created by Guillaume Bourlart on 13/05/2023.
 //
-@testable import QuizzCultureG
+@testable import Quiz
 import Foundation
 class NetworkRequestStub: NetworkRequest {
     var data: Data?

@@ -16,6 +16,7 @@ class OpenTriviaDatabaseManager {
     init(service: Service) {
         self.service = service
     }
+    
     private var currentUserId: String? { return Auth.auth().currentUser?.uid }
     
     func fetchCategories(completion: @escaping ([[String: Any]]?) -> Void) {

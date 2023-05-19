@@ -33,7 +33,7 @@
 		D030840E2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840D2A0F8CF500A8FBB7 /* CustomCell.swift */; };
 		D030840F2A0F8CF500A8FBB7 /* CustomFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840C2A0F8CF400A8FBB7 /* CustomFriendCell.swift */; };
 		D03084112A0F8CFB00A8FBB7 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */; };
-		D03084142A0F8D8200A8FBB7 /* Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084122A0F8D8200A8FBB7 /* Stub.swift */; };
+		D03084142A0F8D8200A8FBB7 /* AlamofireStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */; };
 		D03084152A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */; };
 		D084EC3A2A0F7EF400544AA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084EC392A0F7EF400544AA3 /* AppDelegate.swift */; };
 		D084EC3C2A0F7EF400544AA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */; };
@@ -42,6 +42,11 @@
 		D084EC492A0F7EF700544AA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */; };
 		D084EC742A0F81FC00544AA3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D084EC732A0F81FC00544AA3 /* GoogleService-Info.plist */; };
 		D084FB142A10309200721B88 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084FB132A10309200721B88 /* HistoryVC.swift */; };
+		D08E0ED92A163FAC00D09FAD /* FakeResponsesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08E0ED82A163FAC00D09FAD /* FakeResponsesData.swift */; };
+		D0B35CDA2A1591FA007B3431 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D0B35CD92A1591FA007B3431 /* FirebaseAuth */; };
+		D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */; };
+		D0B35CDE2A159B3D007B3431 /* FirebaseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */; };
+		D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDF2A159C74007B3431 /* GameTests.swift */; };
 		D0BB50322A0FA75B00E1C144 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D0BB50312A0FA75B00E1C144 /* FirebaseAuth */; };
 		D0BB50342A0FA75B00E1C144 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D0BB50332A0FA75B00E1C144 /* FirebaseDatabase */; };
 		D0BB50362A0FA75B00E1C144 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D0BB50352A0FA75B00E1C144 /* FirebaseFirestore */; };
@@ -93,7 +98,7 @@
 		D030840C2A0F8CF400A8FBB7 /* CustomFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFriendCell.swift; sourceTree = "<group>"; };
 		D030840D2A0F8CF500A8FBB7 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
-		D03084122A0F8D8200A8FBB7 /* Stub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stub.swift; sourceTree = "<group>"; };
+		D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireStub.swift; sourceTree = "<group>"; };
 		D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTriviaDatabaseManagerTests.swift; sourceTree = "<group>"; };
 		D084EC362A0F7EF400544AA3 /* Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D084EC392A0F7EF400544AA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +110,10 @@
 		D084EC4F2A0F7EF700544AA3 /* QuizTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D084EC732A0F81FC00544AA3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D084FB132A10309200721B88 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
+		D08E0ED82A163FAC00D09FAD /* FakeResponsesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponsesData.swift; sourceTree = "<group>"; };
+		D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStub.swift; sourceTree = "<group>"; };
+		D0B35CDF2A159C74007B3431 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2E6EC46FBC38B53205941E5 /* Pods_QuizTests.framework in Frameworks */,
+				D0B35CDA2A1591FA007B3431 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,11 +187,11 @@
 			isa = PBXGroup;
 			children = (
 				D084EC422A0F7EF400544AA3 /* Quiz.xcdatamodeld */,
-				D03083F32A0F8A7900A8FBB7 /* AlamofireService.swift */,
 				D03083F42A0F8A7900A8FBB7 /* FirebaseUser.swift */,
 				D03083F22A0F8A7800A8FBB7 /* Game.swift */,
 				D03083F12A0F8A7800A8FBB7 /* OpenTriviaDatabaseManager.swift */,
 				D03083F52A0F8A7900A8FBB7 /* Structures.swift */,
+				D0B35CE12A159CDE007B3431 /* services */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -239,7 +249,8 @@
 			isa = PBXGroup;
 			children = (
 				D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */,
-				D03084122A0F8D8200A8FBB7 /* Stub.swift */,
+				D0B35CDF2A159C74007B3431 /* GameTests.swift */,
+				D0B35CE22A159CF4007B3431 /* Stubs */,
 			);
 			path = QuizTests;
 			sourceTree = "<group>";
@@ -252,6 +263,25 @@
 				D084EC392A0F7EF400544AA3 /* AppDelegate.swift */,
 			);
 			path = Others;
+			sourceTree = "<group>";
+		};
+		D0B35CE12A159CDE007B3431 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				D03083F32A0F8A7900A8FBB7 /* AlamofireService.swift */,
+				D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		D0B35CE22A159CF4007B3431 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */,
+				D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */,
+				D08E0ED82A163FAC00D09FAD /* FakeResponsesData.swift */,
+			);
+			path = Stubs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +329,9 @@
 				D084EC512A0F7EF700544AA3 /* PBXTargetDependency */,
 			);
 			name = QuizTests;
+			packageProductDependencies = (
+				D0B35CD92A1591FA007B3431 /* FirebaseAuth */,
+			);
 			productName = QuizTests;
 			productReference = D084EC4F2A0F7EF700544AA3 /* QuizTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -448,6 +481,7 @@
 				D03083E92A0F8A5100A8FBB7 /* SearchOpponentVC.swift in Sources */,
 				D084EC442A0F7EF400544AA3 /* Quiz.xcdatamodeld in Sources */,
 				D030840B2A0F8CEB00A8FBB7 /* CategoryCell.swift in Sources */,
+				D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */,
 				D03084112A0F8CFB00A8FBB7 /* CustomTableView.swift in Sources */,
 				D03083F82A0F8A7900A8FBB7 /* AlamofireService.swift in Sources */,
 				D03083EC2A0F8A5200A8FBB7 /* TrainingVC.swift in Sources */,
@@ -469,8 +503,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D08E0ED92A163FAC00D09FAD /* FakeResponsesData.swift in Sources */,
 				D03084152A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift in Sources */,
-				D03084142A0F8D8200A8FBB7 /* Stub.swift in Sources */,
+				D03084142A0F8D8200A8FBB7 /* AlamofireStub.swift in Sources */,
+				D0B35CDE2A159B3D007B3431 /* FirebaseStub.swift in Sources */,
+				D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,6 +797,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D0B35CD92A1591FA007B3431 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0BB50302A0FA75B00E1C144 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		D0BB50312A0FA75B00E1C144 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0BB50302A0FA75B00E1C144 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
