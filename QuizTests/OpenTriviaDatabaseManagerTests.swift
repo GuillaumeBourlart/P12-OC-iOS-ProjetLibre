@@ -35,20 +35,38 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
             super.tearDown()
         }
 
-        func testFetchCategories_success() {
-            // Given
-            let jsonData = "[{\"trivia_categories\": \"category1\"}]".data(using: .utf8)
-            networkRequestStub.data = jsonData
-
-            // When
-            var fetchedCategories: [[String: Any]]?
-            sut.fetchCategories { categories in
-                fetchedCategories = categories
-            }
-
-            // Then
-            XCTAssertNotNil(fetchedCategories)
+    func testFetchCategories_success() {
+        // Given
+        let jsonString = """
+        {
+            "trivia_categories": [
+                {
+                    "id": 9,
+                    "name": "General Knowledge"
+                },
+                {
+                    "id": 10,
+                    "name": "Entertainment: Books"
+                },
+                {
+                    "id": 11,
+                    "name": "Entertainment: Film"
+                }
+            ]
         }
+        """
+        let jsonData = jsonString.data(using: .utf8)
+        networkRequestStub.data = jsonData
+
+        // When
+        var fetchedCategories: [[String: Any]]?
+        sut.fetchCategories { categories in
+            fetchedCategories = categories
+        }
+
+        // Then
+        XCTAssertNotNil(fetchedCategories)
+    }
 
         func testFetchCategories_failure() {
             // Given

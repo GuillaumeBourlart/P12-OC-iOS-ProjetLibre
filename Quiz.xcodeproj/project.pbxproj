@@ -14,6 +14,8 @@
 		D01EDCE22A182A3400FF3163 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCE12A182A3400FF3163 /* FirebaseFunctions */; };
 		D01EDCE42A182A3400FF3163 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCE32A182A3400FF3163 /* FirebaseMessaging */; };
 		D01EDCE62A182A3400FF3163 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCE52A182A3400FF3163 /* FirebaseStorage */; };
+		D01EDCE82A184E3900FF3163 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCE72A184E3900FF3163 /* FirebaseAuth */; };
+		D01EDCEA2A184E3900FF3163 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCE92A184E3900FF3163 /* FirebaseDatabase */; };
 		D03083E42A0F8A5100A8FBB7 /* CompetitiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083D82A0F8A4F00A8FBB7 /* CompetitiveVC.swift */; };
 		D03083E52A0F8A5100A8FBB7 /* ModificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */; };
 		D03083E62A0F8A5100A8FBB7 /* ProfilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DA2A0F8A4F00A8FBB7 /* ProfilVC.swift */; };
@@ -52,6 +54,8 @@
 		D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */; };
 		D0B35CDE2A159B3D007B3431 /* FirebaseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */; };
 		D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDF2A159C74007B3431 /* GameTests.swift */; };
+		D0B8D42C2A1BA5560033467D /* AppLobby.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8D42B2A1BA5560033467D /* AppLobby.swift */; };
+		D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */; };
 		E2E6EC46FBC38B53205941E5 /* Pods_QuizTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3755A998632E0A2D7B89F0 /* Pods_QuizTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +117,8 @@
 		D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStub.swift; sourceTree = "<group>"; };
 		D0B35CDF2A159C74007B3431 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
+		D0B8D42B2A1BA5560033467D /* AppLobby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLobby.swift; sourceTree = "<group>"; };
+		D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +140,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D01EDCEA2A184E3900FF3163 /* FirebaseDatabase in Frameworks */,
 				E2E6EC46FBC38B53205941E5 /* Pods_QuizTests.framework in Frameworks */,
+				D01EDCE82A184E3900FF3163 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +185,7 @@
 				D03083E32A0F8A5100A8FBB7 /* SignupVC.swift */,
 				D03083E02A0F8A5100A8FBB7 /* TrainingVC.swift */,
 				D084FB132A10309200721B88 /* HistoryVC.swift */,
+				D0B8D42B2A1BA5560033467D /* AppLobby.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -248,6 +257,7 @@
 			children = (
 				D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */,
 				D0B35CDF2A159C74007B3431 /* GameTests.swift */,
+				D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */,
 				D0B35CE22A159CF4007B3431 /* Stubs */,
 			);
 			path = QuizTests;
@@ -328,6 +338,8 @@
 			);
 			name = QuizTests;
 			packageProductDependencies = (
+				D01EDCE72A184E3900FF3163 /* FirebaseAuth */,
+				D01EDCE92A184E3900FF3163 /* FirebaseDatabase */,
 			);
 			productName = QuizTests;
 			productReference = D084EC4F2A0F7EF700544AA3 /* QuizTests.xctest */;
@@ -474,6 +486,7 @@
 				D03083EA2A0F8A5200A8FBB7 /* FriendsVC.swift in Sources */,
 				D030840E2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */,
 				D03083EF2A0F8A5200A8FBB7 /* SignupVC.swift in Sources */,
+				D0B8D42C2A1BA5560033467D /* AppLobby.swift in Sources */,
 				D03083E52A0F8A5100A8FBB7 /* ModificationVC.swift in Sources */,
 				D03083E92A0F8A5100A8FBB7 /* SearchOpponentVC.swift in Sources */,
 				D084EC442A0F7EF400544AA3 /* Quiz.xcdatamodeld in Sources */,
@@ -503,6 +516,7 @@
 				D08E0ED92A163FAC00D09FAD /* FakeResponsesData.swift in Sources */,
 				D03084152A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift in Sources */,
 				D03084142A0F8D8200A8FBB7 /* AlamofireStub.swift in Sources */,
+				D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */,
 				D0B35CDE2A159B3D007B3431 /* FirebaseStub.swift in Sources */,
 				D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */,
 			);
@@ -823,6 +837,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D01EDCDA2A182A3400FF3163 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		D01EDCE72A184E3900FF3163 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D01EDCDA2A182A3400FF3163 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		D01EDCE92A184E3900FF3163 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D01EDCDA2A182A3400FF3163 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 

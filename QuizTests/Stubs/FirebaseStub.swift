@@ -11,44 +11,59 @@ import FirebaseFirestore
 
 class FirestoreServiceStub: FirestoreServiceProtocol {
     
-    
-    var stubbedError: Error?
-    var setDocumentStubbedError: Error?
-    var deleteDocumentStubbedError: Error?
-    var stubbedQuerySnapshot: QuerySnapshot?
-    var stubbedDocumentSnapshot: DocumentSnapshot?
+    var stubbedQuerySnapshotData: [[String: Any]]?
+    var stubbedDocumentSnapshot: [String: Any]?
     var stubbedDocumentError: Error?
     
-    func getDocuments(in collection: String, whereFields fields: [(String, Any)], completion: @escaping (QuerySnapshot?, Error?) -> Void) {
-        completion(stubbedQuerySnapshot, stubbedError)
+    
+    func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String : Any]]?, Error?) -> Void) {
+        completion(stubbedQuerySnapshotData, stubbedDocumentError)
     }
     
-    func getDocument(in collection: String, documentId: String, completion: @escaping (DocumentSnapshot?, Error?) -> Void) {
-            completion(stubbedDocumentSnapshot, stubbedDocumentError)
-        }
-    
-    func setDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
-        completion(setDocumentStubbedError)
+    func getDocument(in collection: String, documentId: String, completion: @escaping ([String : Any]?, Error?) -> Void) {
+        completion(stubbedDocumentSnapshot, stubbedDocumentError)
     }
+
+    
+    func setData(in collection: String, documentId: String, data: [String : Any], completion: @escaping (Error?) -> Void) {
+        completion(stubbedDocumentError)
+    }
+    
+    func updateDocument(in collection: String, documentId: String, data: [String : Any], completion: @escaping (Error?) -> Void) {
+        completion(stubbedDocumentError)
+    }
+    
     
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void) {
-        completion(deleteDocumentStubbedError)
+        completion(stubbedDocumentError)
     }
 }
 
 class FirebaseAuthServiceStub: FirebaseAuthServiceProtocol {
     
+    var stubbedQuerySnapshotData: [[String: Any]]?
+    var stubbedDocumentSnapshot: [String: Any]?
+    var stubbedDocumentError: Error?
     
     var currentUserID: String? {
         // Retourne un ID utilisateur factice
-        return "12345"
+        return userID
+    }
+    var userID: String?
+    
+    func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        if stubbedDocumentError != nil {
+            completion(.failure(stubbedDocumentError!))
+        }else{
+            completion(.success(()))
+        }
     }
     
-    func signInUser(email: String, password: String, completion: @escaping (AuthDataResult?, Error?) -> Void) {
-        
-    }
-    
-    func createUser(withEmail email: String, password: String, completion: @escaping (AuthDataResult?, Error?) -> Void) {
-        
+    func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
+        if stubbedDocumentError != nil {
+            completion(.failure(stubbedDocumentError!))
+        }else{
+            completion(.success(currentUserID!))
+        }
     }
 }

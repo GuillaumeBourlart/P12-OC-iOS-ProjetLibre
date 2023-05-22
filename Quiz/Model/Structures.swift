@@ -47,7 +47,7 @@ struct UniversalQuestion: Decodable, Equatable {
 
 
 struct Quiz: Decodable, Equatable {
-    var id: String?
+    var id: String
     var name: String
     var category_id: String
     var creator: String
@@ -56,11 +56,10 @@ struct Quiz: Decodable, Equatable {
     var average_score: Int
     var users_completed: Int
     var code: String
-    
 }
 
 
-struct User: Decodable {
+struct aUser: Decodable {
     let username: String
     let email: String
     let first_name: String
@@ -71,12 +70,9 @@ struct User: Decodable {
     let points: Int
     let profile_picture: String
     var friends: [String]
-    var friend_groups: [String]
-    var games: [String]
-    var created_quizzes: [String]
     var friendRequests: [String: FriendRequest]
     
-    struct FriendRequest: Decodable {
+    struct FriendRequest: Decodable, Equatable {
         let status: String
         let date: Date
     }
@@ -84,7 +80,8 @@ struct User: Decodable {
 
 
 struct FriendGroup: Decodable {
-    var id: String?
+    var id: String
+    var creator: String
     var name: String
     var members: [String]
 }
@@ -93,7 +90,7 @@ struct FriendGroup: Decodable {
 
 
 struct GameData: Decodable {
-    var id: String?
+    var id: String
     let name: String
     let creator: String
     let competitive: Bool
@@ -106,7 +103,6 @@ struct GameData: Decodable {
 }
 
 struct UserAnswer: Decodable {
-    let id: String?
     let selected_answer: String
     let points: Int
     

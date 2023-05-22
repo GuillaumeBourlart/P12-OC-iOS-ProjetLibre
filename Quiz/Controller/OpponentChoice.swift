@@ -19,7 +19,12 @@ class OpponentChoice: UIViewController {
     
     @IBAction func onTap(_ sender: UIButton){
         switch sender.tag {
-        case 0: performSegue(withIdentifier: "goToQuizz", sender: sender)
+        case 0: Game.shared.createGame(competitive: false, players: [Game.shared.currentUserId!], creator: Game.shared.currentUserId!) { reuslt in
+            switch reuslt {
+            case .failure(let error): print(error)
+            case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
+            }
+        }
         case 1: performSegue(withIdentifier: "goToGameLobby", sender: sender)
             
         default:
@@ -30,6 +35,7 @@ class OpponentChoice: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuizzVC {
             destination.isCompetitiveMode = false
+            destination.gameID = sender as? String
         }
     }
     

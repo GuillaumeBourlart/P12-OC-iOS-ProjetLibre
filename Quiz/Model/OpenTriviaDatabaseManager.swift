@@ -88,7 +88,7 @@ class OpenTriviaDatabaseManager {
                     completion(.failure(error))
                 }
             } else {
-                completion(.failure(error!))
+                completion(.failure(MyError.generalError))
             }
         }
     }

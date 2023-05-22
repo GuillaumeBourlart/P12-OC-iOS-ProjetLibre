@@ -14,11 +14,17 @@ class ResultVC: UIViewController {
     var gameID: String?
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var goToAppLobby: UIButton!
     var gameData: GameData?
     var questions: [UniversalQuestion]?
+    var isResultAfterGame: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let isResultAfterGame =  isResultAfterGame {
+            goToAppLobby.isHidden = false
+        }
         
         if let gameID = gameID {
             Game.shared.getGameData(gameId: gameID) { [weak self] result in

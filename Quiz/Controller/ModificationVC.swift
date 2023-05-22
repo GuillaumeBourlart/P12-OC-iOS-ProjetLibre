@@ -135,7 +135,7 @@ class ModificationVC: UIViewController{
         if let quiz = quiz {
             guard let name = nameField.text, let theme = themeField.text, let difficulty = difficultyField.text else {return}
             
-            FirebaseUser.shared.updateQuiz(quizID: quiz.id!, newName: name, newCategoryID: theme, newDifficulty: difficulty) { result in
+            FirebaseUser.shared.updateQuiz(quizID: quiz.id, newName: name, newCategoryID: theme, newDifficulty: difficulty) { result in
                 switch result {
                 case .success():
                     print("Quiz modifié avec succès.")
@@ -152,7 +152,7 @@ class ModificationVC: UIViewController{
         else if let group = group {
             guard let name = nameField.text else {return}
             
-            FirebaseUser.shared.updateGroupName(groupID: group.id!, newName: name) { result in
+            FirebaseUser.shared.updateGroupName(groupID: group.id, newName: name) { result in
                 switch result {
                 case .success():
                     print("Groupe modifié avec succès.")

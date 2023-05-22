@@ -83,7 +83,7 @@ class QuizzVC: UIViewController {
             let correctAnswer = questions[currentQuestionIndex].correct_answer
             let questionId = questions[currentQuestionIndex].id // Assuming your questions have an 'id' field
 
-        let userAnswer = UserAnswer(id: questionId!, selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1 : 0)
+        let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1 : 0)
             
         userAnswers[questionId!] = userAnswer
                 
@@ -132,6 +132,7 @@ class QuizzVC: UIViewController {
         if let destination = segue.destination as? ResultVC {
             if let gameID = sender as? String {
                 destination.gameID = gameID
+                destination.isResultAfterGame = true
             }
         }
     }

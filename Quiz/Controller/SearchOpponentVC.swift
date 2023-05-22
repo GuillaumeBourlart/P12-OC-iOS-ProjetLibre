@@ -31,7 +31,7 @@ class SearchOpponentVC: UIViewController{
         }
         
         if !isGameFound {
-            Game.shared.cancelSearch(){ result in
+            Game.shared.deleteCurrentLobby(){ result in
                 switch result {
                 case .success():
                     print("annulation réussie")
@@ -60,12 +60,13 @@ class SearchOpponentVC: UIViewController{
     }
     
     func listenForGameStart() {
-        Game.shared.listenForGameStart { success, gameId in
-            if success {
+        Game.shared.listenForGameStart { result in
+            switch result {
+            case .success(let gameId):
                 self.isGameFound = true
-                // Lancez la partie ici
-                // Par exemple, vous pouvez naviguer vers un nouveau ViewController pour afficher le quizz
                 self.performSegue(withIdentifier: "goToQuizz", sender: gameId)
+            case .failure(let error):
+                print(error)
             }
         }
     }
