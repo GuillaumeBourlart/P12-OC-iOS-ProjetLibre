@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-class TrainingVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     

@@ -53,6 +53,7 @@ class FirebaseAuthServiceStub: FirebaseAuthServiceProtocol {
     
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         if stubbedDocumentError != nil {
+            print(1)
             completion(.failure(stubbedDocumentError!))
         }else{
             completion(.success(()))

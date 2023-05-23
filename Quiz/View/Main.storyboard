@@ -133,10 +133,10 @@
             </objects>
             <point key="canvasLocation" x="1833" y="199"/>
         </scene>
-        <!--App Lobby-->
+        <!--HomeVC-->
         <scene sceneID="hZh-VQ-kb5">
             <objects>
-                <viewController id="nLG-xv-KmG" customClass="AppLobby" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="nLG-xv-KmG" customClass="HomeVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FgK-h7-DBG">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -424,14 +424,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HistoryCell" id="daX-4e-yvW" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="313" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="313" height="43.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="daX-4e-yvW" id="ToI-te-xs3">
-                                            <rect key="frame" x="0.0" y="0.0" width="313" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="313" height="43.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbA-QI-m0r">
-                                                    <rect key="frame" x="16" y="11.000000000000002" width="281" height="21.666666666666671"/>
+                                                    <rect key="frame" x="16" y="10.999999999999998" width="281" height="21.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -521,7 +521,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Accueil"/>
                                 <connections>
-                                    <segue destination="9w4-t4-cAc" kind="unwind" unwindAction="unwindToViewControllerWithSegue:" id="q6o-hw-nzd"/>
+                                    <segue destination="9w4-t4-cAc" kind="unwind" unwindAction="unwindToHomeVCWithSegue:" id="jJL-jK-7WE"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -581,20 +581,20 @@
                                 <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" id="ifV-cz-CCP" customClass="CustomFriendCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="353" height="42.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="353" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ifV-cz-CCP" id="AAb-2z-MXl">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="42.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRj-Kk-caM">
-                                                    <rect key="frame" x="20" y="11.000000000000002" width="313" height="20.666666666666671"/>
+                                                    <rect key="frame" x="20" y="11" width="313" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lb-sS-1xO">
-                                                    <rect key="frame" x="303" y="0.0" width="50" height="42.666666666666664"/>
+                                                    <rect key="frame" x="303" y="0.0" width="50" height="43"/>
                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="wrongwaysign" catalog="system"/>
@@ -603,7 +603,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ezy-GI-XFI">
-                                                    <rect key="frame" x="256" y="0.0" width="47" height="42.666666666666664"/>
+                                                    <rect key="frame" x="256" y="0.0" width="47" height="43"/>
                                                     <color key="tintColor" systemColor="systemGreenColor"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
@@ -698,14 +698,14 @@
                                 <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="hxl-a9-78R" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="353" height="42.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="353" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hxl-a9-78R" id="mhv-Bb-KNJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="42.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzd-nu-mjD">
-                                                    <rect key="frame" x="20" y="11.000000000000002" width="313" height="20.666666666666671"/>
+                                                    <rect key="frame" x="20" y="11" width="313" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -807,14 +807,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xtz-Zc-n5j" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="333" height="43.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="50" width="333" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xtz-Zc-n5j" id="6cY-t0-Wh1">
-                                            <rect key="frame" x="0.0" y="0.0" width="333" height="43.333332061767578"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="333" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ5-5x-9jZ">
-                                                    <rect key="frame" x="20" y="10.999999999999998" width="293" height="21.333333333333329"/>
+                                                    <rect key="frame" x="20" y="11.000000000000002" width="293" height="21.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1059,10 +1059,10 @@
             </objects>
             <point key="canvasLocation" x="-585.49618320610682" y="-2786.6197183098593"/>
         </scene>
-        <!--TrainingVC-->
+        <!--Quick PlayVC-->
         <scene sceneID="eCl-YL-Y82">
             <objects>
-                <viewController id="zeR-P5-oDk" customClass="TrainingVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zeR-P5-oDk" customClass="QuickPlayVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LkO-Pt-EZN">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1388,10 +1388,10 @@
             </objects>
             <point key="canvasLocation" x="-2993.1297709923665" y="-957.04225352112678"/>
         </scene>
-        <!--SignupVC-->
+        <!--Quick PlayVC-->
         <scene sceneID="nZ4-6e-rLm">
             <objects>
-                <viewController id="CHq-st-MhL" customClass="SignupVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CHq-st-MhL" customClass="QuickPlayVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jhk-cS-6kS">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1513,7 +1513,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="qAE-Zc-maS"/>
-        <segue reference="mgT-Y3-Laq"/>
+        <segue reference="sSV-FG-nyi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="crown.fill" catalog="system" width="128" height="92"/>

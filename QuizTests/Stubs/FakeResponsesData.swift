@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import FirebaseFirestore
 
 class fakeResponsesData {
     
@@ -21,7 +21,7 @@ class fakeResponsesData {
         "status": "completed",
         "players": ["user_id_1", "user_id_2"],
         "quiz_id": "quiz_id_1",
-        "date": Date(),
+        "date": "2023-05-22T14:53:27Z",
         "questions": [
             "question_id_1": [
                 "category": "History",
@@ -71,20 +71,18 @@ class fakeResponsesData {
     //-----------------------------------------------------------------------------------
     
     static let mockUserData: [String: Any] = [
-        "username": "user1",
+        "id": "id",
+        "username": "username",
         "email": "user1@email.com",
         "first_name": "username",
         "last_name": "lastname",
-        "birth_date": "12/09/1097",
-        "inscription_date": "12/09/1097",
+        "birth_date": "2023-05-22T14:53:27Z",
+        "inscription_date": "2023-05-22T14:53:27Z",
         "rank": 1,
         "points": 0,
         "profile_picture": "https://example.com/user1/profile_picture.jpg",
         "friends": ["userID_2", "userID_3"],
-        "friend_groups": ["group_id_1"],
-        "games": ["game_id_1", "game_id_2"],
-        "created_quizzes": ["quiz_id_1", "quiz_id_2"],
-        "friendRequests": ["user_id_2": ["status": "sent", "date": "2023-04-12T12:00:00"]]
+        "friendRequests": ["user_id_2": ["status": "sent", "date": "2023-05-22T14:53:27Z"]]
     ]
     static let mockUsersData: [[String: Any]] = [mockUserData, mockUserData, mockUserData]
     

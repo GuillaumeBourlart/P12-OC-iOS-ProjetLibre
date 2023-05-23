@@ -9,7 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
-class SignupVC: UIViewController {
+class CreateAccountVC: UIViewController {
     
     @IBOutlet private weak var userFirstname: UITextField!
     @IBOutlet private weak var userLastname: UITextField!

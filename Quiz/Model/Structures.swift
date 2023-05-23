@@ -60,6 +60,7 @@ struct Quiz: Decodable, Equatable {
 
 
 struct aUser: Decodable {
+    let id: String
     let username: String
     let email: String
     let first_name: String

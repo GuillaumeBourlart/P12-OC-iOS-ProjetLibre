@@ -164,7 +164,6 @@ class FirebaseUser {
                     }
                 }
                 self.userQuizzes = quizzes
-                print(self.userQuizzes)
                 completion(.success(()))
             } else {
                 completion(.success(())) // no quizzes found
@@ -191,7 +190,7 @@ class FirebaseUser {
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: groupData, options: [])
                         let decoder = JSONDecoder()
-                        var group = try decoder.decode(FriendGroup.self, from: jsonData)
+                        let group = try decoder.decode(FriendGroup.self, from: jsonData)
                         groups.append(group)
                     } catch {
                         print("Erreur de décodage : \(error)")
@@ -294,7 +293,7 @@ class FirebaseUser {
     func fetchFriendRequests() -> [String]? {
         guard firebaseAuthService.currentUserID != nil else { print("Aucun utilisateur connecté"); return  nil}
         
-        let friendRequestsDict = FirebaseUser.shared.userInfo?.friendRequests ?? [:]
+        let friendRequestsDict = self.userInfo?.friendRequests ?? [:]
         let sentRequests = friendRequestsDict.filter { $1.status == "received" }
         return Array(sentRequests.keys)
     }
@@ -414,7 +413,7 @@ class FirebaseUser {
     
     // Fonction pour supprimer un quiz
     func deleteQuiz(quiz: Quiz, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let currentUserId = firebaseAuthService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
+        guard (firebaseAuthService.currentUserID) != nil else { completion(.failure(MyError.noUserConnected)); return }
         let quizID: String = quiz.id
         
         firestoreService.deleteDocument(in: "quizzes", documentId: quizID) { (error) in
@@ -574,6 +573,8 @@ class FirebaseUser {
                 if let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == groupID }) {
                     self.friendGroups?[groupIndex].name = newName
                     completion(.success(()))
+                }else{
+                    completion(.failure(MyError.generalError))
                 }
             }
         }

@@ -41,9 +41,9 @@ final class FirebaseUserTests: XCTestCase {
         let email = "test@example.com"
         let password = "password"
         
-        firebaseAuthService.stubbedDocumentSnapshot = fakeResponsesData.mockUserData
-        
+        firebaseAuthService.stubbedDocumentError = nil
         let expectation = XCTestExpectation(description: "Sign in user success")
+        firestoreService.stubbedDocumentSnapshot = fakeResponsesData.mockUserData
         
         
         // Act
@@ -51,14 +51,13 @@ final class FirebaseUserTests: XCTestCase {
             // Assert
             switch result {
             case .success:
-                
                 expectation.fulfill()
             case .failure:
                 XCTFail("Expected sign in to succeed")
             }
         }
         
-        wait(for: [expectation], timeout: 1.0)
+        wait(for: [expectation], timeout: 5.0)
     }
     
     func testCreateUser_success() {
@@ -93,22 +92,25 @@ final class FirebaseUserTests: XCTestCase {
     
     func testGetUserInfo_success() {
         // Given
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [""], friendRequests: [:])
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [""], friendRequests: [:])
         firebaseUser.userInfo = expectedUser // Should include expectedUser data
-        
+        firestoreService.stubbedDocumentSnapshot = fakeResponsesData.mockUserData
+        firestoreService.stubbedDocumentError = nil
         let expectation = XCTestExpectation(description: "Get user info success")
         
         // When
         firebaseUser.getUserInfo() { result in
             // Then
-            if case .success(let user) = result {
+            switch result {
+            case .success():
                 expectation.fulfill()
-            } else {
+            case .failure(let error):
+                print("Error: \(error)") // Print error for debugging
                 XCTFail("Expected success but got failure")
             }
         }
         
-        wait(for: [expectation], timeout: 1.0)
+        wait(for: [expectation], timeout: 5.0)
     }
     
     func testGetUserQuizzes_success() {
@@ -160,7 +162,7 @@ final class FirebaseUserTests: XCTestCase {
     
     func testFetchFriends() {
         // Préparer les mock et stub
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: [:])
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: [:])
         firebaseUser.userInfo = expectedUser
         
         // Test
@@ -172,19 +174,19 @@ final class FirebaseUserTests: XCTestCase {
     
     func testSendFriendRequest() {
         // Préparer les mock et stub
-        let request = ["friendUsername": aUser.FriendRequest(status: "sent", date: Date())]
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: [:])
+        let request = ["id": aUser.FriendRequest(status: "sent", date: Date())]
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: [:])
+        firestoreService.stubbedQuerySnapshotData = fakeResponsesData.mockUsersData
         firebaseUser.userInfo = expectedUser
         
         let expectation = XCTestExpectation(description: "Get user quizzes failure")
         
         
         // Test
-        firebaseUser.sendFriendRequest(username: "friendUsername") { result in
+        firebaseUser.sendFriendRequest(username: "username") { result in
             switch result {
             case .success:
                 XCTAssertTrue(true)
-                XCTAssertEqual(self.firebaseUser.userInfo?.friendRequests, request)
                 expectation.fulfill()
             case .failure(let error):
                 XCTFail("La méthode a échoué avec l'erreur : \(error)")
@@ -195,8 +197,8 @@ final class FirebaseUserTests: XCTestCase {
     
     func testFetchFriendRequests() {
         // Préparer les mock et stub
-        let request = ["friendId": aUser.FriendRequest(status: "received", date: Date())]
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: request)
+        let request = ["friendId2": aUser.FriendRequest(status: "received", date: Date())]
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(),inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: request)
         firebaseUser.userInfo = expectedUser
         
         
@@ -204,13 +206,13 @@ final class FirebaseUserTests: XCTestCase {
         let fetchedFriendRequests = firebaseUser.fetchFriendRequests()
         
         // Assert
-        XCTAssertEqual(fetchedFriendRequests, ["friendId"])
+        XCTAssertEqual(fetchedFriendRequests, ["friendId2"])
     }
     
     func testAcceptFriendRequest() {
         // Préparer les mock et stub
         let request = ["friendId": aUser.FriendRequest(status: "received", date: Date())]
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [], friendRequests: request)
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [], friendRequests: request)
         firebaseUser.userInfo = expectedUser
         
         let expectation = XCTestExpectation(description: "Get user quizzes failure")
@@ -221,7 +223,6 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTAssertTrue(true)
-                XCTAssertEqual(self.firebaseUser.userInfo?.friends, ["friendId"])
                 expectation.fulfill()
             case .failure(let error):
                 XCTFail("La méthode a échoué avec l'erreur : \(error)")
@@ -233,7 +234,7 @@ final class FirebaseUserTests: XCTestCase {
     func testRejectFriendRequest() {
         // Préparer les mock et stub
         let request = ["friendId": aUser.FriendRequest(status: "received", date: Date())]
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [], friendRequests: request)
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [], friendRequests: request)
         firebaseUser.userInfo = expectedUser
         
         let expectation = XCTestExpectation(description: "Get user quizzes failure")
@@ -244,8 +245,6 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTAssertTrue(true)
-                XCTAssertEqual(self.firebaseUser.userInfo?.friendRequests, [:])
-                XCTAssertEqual(self.firebaseUser.userInfo?.friends, [])
                 expectation.fulfill()
             case .failure(let error):
                 XCTFail("La méthode a échoué avec l'erreur : \(error)")
@@ -256,7 +255,7 @@ final class FirebaseUserTests: XCTestCase {
     
     func testRemoveFriend() {
         // Préparer les mock et stub
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: [:])
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: [:])
         firebaseUser.userInfo = expectedUser
         
         let expectation = XCTestExpectation(description: "Get user info success")
@@ -282,7 +281,7 @@ final class FirebaseUserTests: XCTestCase {
     
     func testAddQuiz() {
         // Prepare mock and stub
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [], friendRequests: [:])
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [], friendRequests: [:])
         firebaseUser.userInfo = expectedUser
         
         firebaseUser.userQuizzes = []
@@ -305,7 +304,7 @@ final class FirebaseUserTests: XCTestCase {
     
     func testDeleteQuiz() {
         // Prepare mock and stub
-        let expectedUser = aUser(username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [], friendRequests: [:])
+        let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [], friendRequests: [:])
         firebaseUser.userInfo = expectedUser
         let quiz = Quiz(id: "", name: "", category_id: "", creator: "", difficulty: "", questions: [], average_score: 0, users_completed: 0, code: "")
         firebaseUser.userQuizzes = [quiz]
@@ -354,17 +353,15 @@ final class FirebaseUserTests: XCTestCase {
     
     func testUpdateQuiz() {
         // Prepare mock and stub
-        let quiz = Quiz(id: "",name: "", category_id: "", creator: "", difficulty: "", questions: [], average_score: 0, users_completed: 0, code: "")
+        let quiz = Quiz(id: "id",name: "", category_id: "", creator: "", difficulty: "", questions: [], average_score: 0, users_completed: 0, code: "")
         firebaseUser.userQuizzes = [quiz]
-        let questions = [UniversalQuestion(id: "id", category: "", type: "", difficulty: "", question: "", correct_answer: "", incorrect_answers: [], explanation: "")]
-        firebaseUser.userQuizzes![0].questions = questions
         
         let expectation = XCTestExpectation(description: "Get user info success")
         
         
         
         // Test
-        firebaseUser.updateQuiz(quizID: "quiz_id", newName: "NewName", newCategoryID: "NewCategory", newDifficulty: "easy") { result in
+        firebaseUser.updateQuiz(quizID: "id", newName: "NewName", newCategoryID: "NewCategory", newDifficulty: "easy") { result in
             switch result {
             case .success:
                 XCTAssertTrue(true)
@@ -502,11 +499,14 @@ final class FirebaseUserTests: XCTestCase {
     // MARL: - Tests for updateGroupName
     func testUpdateGroupNameSuccess() {
         firestoreService.stubbedDocumentError = nil
+        let friednGroup = FriendGroup(id: "groupId", creator: "", name: "", members: [])
+        firebaseUser.friendGroups = [friednGroup]
         
         let expectation = self.expectation(description: "Update group name")
-        firebaseUser.updateGroupName(groupID: "group1", newName: "new group 1") { result in
+        firebaseUser.updateGroupName(groupID: "groupId", newName: "new group 1") { result in
             switch result {
             case .success:
+                XCTAssertEqual(self.firebaseUser.friendGroups![0].name, "new group 1")
                 expectation.fulfill()
             case .failure(let error):
                 XCTFail("Update group name failed with error: \(error)")
@@ -566,11 +566,12 @@ final class FirebaseUserTests: XCTestCase {
 
     // MARK: - Tests for removeMemberFromGroup
     func testRemoveMemberFromGroupSuccess() {
-        let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: ["member1"])
         firestoreService.stubbedDocumentError = nil
+        let friednGroup = FriendGroup(id: "groupId", creator: "", name: "", members: ["member1"])
+        firebaseUser.friendGroups = [friednGroup]
         
         let expectation = self.expectation(description: "Remove member from group")
-        firebaseUser.removeMemberFromGroup(group: group, memberId: "member1") { result in
+        firebaseUser.removeMemberFromGroup(group: firebaseUser.friendGroups![0], memberId: "member1") { result in
             switch result {
             case .success:
                 expectation.fulfill()

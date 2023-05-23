@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AppLobby: UIViewController{
+class HomeVC: UIViewController{
     
     
     override func viewDidLoad() {
@@ -17,7 +17,7 @@ class AppLobby: UIViewController{
         
     }
     
-    @IBAction func unwindToViewController(segue: UIStoryboardSegue) {
+    @IBAction func unwindToHomeVC(segue: UIStoryboardSegue) {
         // Code exécuté lors du retour en arrière
     }
     
