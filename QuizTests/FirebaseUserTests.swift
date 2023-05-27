@@ -14,21 +14,19 @@ final class FirebaseUserTests: XCTestCase {
     
     var firebaseUser: FirebaseUser!
     
-    var firestoreService: FirestoreServiceStub!
-    var firebaseAuthService: FirebaseAuthServiceStub!
+    var firebaseService: FirebaseServiceStub!
+    var networkRequestStub: NetworkRequestStub!
+    var service: Service!
     
     override func setUp() {
         super.setUp()
-        firestoreService = FirestoreServiceStub()
-        firebaseAuthService = FirebaseAuthServiceStub()
-        firebaseUser = FirebaseUser(firestoreService: firestoreService, firebaseAuthService: firebaseAuthService)
-        firebaseAuthService.userID = "currentUserId"
+        firebaseService = FirebaseServiceStub()
+        firebaseUser = FirebaseUser(firebaseService: firebaseService)
     }
     
     override func tearDown() {
         firebaseUser = nil
-        firestoreService = nil
-        firebaseAuthService = nil
+        firebaseService = nil
         super.tearDown()
     }
     
@@ -41,9 +39,9 @@ final class FirebaseUserTests: XCTestCase {
         let email = "test@example.com"
         let password = "password"
         
-        firebaseAuthService.stubbedDocumentError = nil
+        firebaseService.stubbedDocumentError = nil
         let expectation = XCTestExpectation(description: "Sign in user success")
-        firestoreService.stubbedDocumentSnapshot = fakeResponsesData.mockUserData
+        firebaseService.stubbedDocumentSnapshot = fakeResponsesData.mockUserData
         
         
         // Act
@@ -70,7 +68,7 @@ final class FirebaseUserTests: XCTestCase {
         let birthDate = Date()
         
         
-        firestoreService.stubbedQuerySnapshotData = [] // username not used
+        firebaseService.stubbedQuerySnapshotData = [] // username not used
         
         let expectation = XCTestExpectation(description: "Create user success")
         
@@ -78,7 +76,7 @@ final class FirebaseUserTests: XCTestCase {
         firebaseUser.createUser(email: email, password: password, pseudo: pseudo, firstName: firstName, lastName: lastName, birthDate: birthDate) { uid, error in
             // 3. Assert
             if let uid = uid, error == nil {
-                XCTAssertEqual(uid, self.firebaseAuthService.currentUserID)
+                XCTAssertEqual(uid, self.firebaseService.currentUserID)
                 expectation.fulfill()
             }
         }
@@ -94,8 +92,8 @@ final class FirebaseUserTests: XCTestCase {
         // Given
         let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: [""], friendRequests: [:])
         firebaseUser.userInfo = expectedUser // Should include expectedUser data
-        firestoreService.stubbedDocumentSnapshot = fakeResponsesData.mockUserData
-        firestoreService.stubbedDocumentError = nil
+        firebaseService.stubbedDocumentSnapshot = fakeResponsesData.mockUserData
+        firebaseService.stubbedDocumentError = nil
         let expectation = XCTestExpectation(description: "Get user info success")
         
         // When
@@ -137,7 +135,7 @@ final class FirebaseUserTests: XCTestCase {
     
     func testGetUserQuizzes_failure() {
         // Arrange
-        firestoreService.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get document"])
+        firebaseService.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get document"])
         
         let expectation = XCTestExpectation(description: "Get user quizzes failure")
         
@@ -176,7 +174,7 @@ final class FirebaseUserTests: XCTestCase {
         // Préparer les mock et stub
         let request = ["id": aUser.FriendRequest(status: "sent", date: Date())]
         let expectedUser = aUser(id: "id", username: "", email: "", first_name: "", last_name: "", birth_date: Date(), inscription_date: Date(), rank: 3, points: 3, profile_picture: "", friends: ["friendId"], friendRequests: [:])
-        firestoreService.stubbedQuerySnapshotData = fakeResponsesData.mockUsersData
+        firebaseService.stubbedQuerySnapshotData = fakeResponsesData.mockUsersData
         firebaseUser.userInfo = expectedUser
         
         let expectation = XCTestExpectation(description: "Get user quizzes failure")
@@ -435,7 +433,7 @@ final class FirebaseUserTests: XCTestCase {
     // MARK: - Tests for deleteGroup
     func testDeleteGroupSuccess() {
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: [])
-        firestoreService.stubbedDocumentError = nil
+        firebaseService.stubbedDocumentError = nil
         
         let expectation = self.expectation(description: "Delete group")
         firebaseUser.deleteGroup(group: group) { result in
@@ -451,7 +449,7 @@ final class FirebaseUserTests: XCTestCase {
 
     func testDeleteGroupFailure() {
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: [])
-        firestoreService.stubbedDocumentError = MyError.generalError
+        firebaseService.stubbedDocumentError = MyError.generalError
         
         let expectation = self.expectation(description: "Delete group failure")
         firebaseUser.deleteGroup(group: group) { result in
@@ -467,7 +465,7 @@ final class FirebaseUserTests: XCTestCase {
 
     // MARK: - Tests for addGroup
     func testAddGroupSuccess() {
-        firestoreService.stubbedDocumentError = nil
+        firebaseService.stubbedDocumentError = nil
         
         let expectation = self.expectation(description: "Add group")
         firebaseUser.addGroup(name: "group 1") { result in
@@ -482,7 +480,7 @@ final class FirebaseUserTests: XCTestCase {
     }
 
     func testAddGroupFailure() {
-        firestoreService.stubbedDocumentError = MyError.generalError
+        firebaseService.stubbedDocumentError = MyError.generalError
         
         let expectation = self.expectation(description: "Add group failure")
         firebaseUser.addGroup(name: "group 1") { result in
@@ -498,7 +496,7 @@ final class FirebaseUserTests: XCTestCase {
 
     // MARL: - Tests for updateGroupName
     func testUpdateGroupNameSuccess() {
-        firestoreService.stubbedDocumentError = nil
+        firebaseService.stubbedDocumentError = nil
         let friednGroup = FriendGroup(id: "groupId", creator: "", name: "", members: [])
         firebaseUser.friendGroups = [friednGroup]
         
@@ -516,7 +514,7 @@ final class FirebaseUserTests: XCTestCase {
     }
 
     func testUpdateGroupNameFailure() {
-        firestoreService.stubbedDocumentError = MyError.generalError
+        firebaseService.stubbedDocumentError = MyError.generalError
         
         let expectation = self.expectation(description: "Update group name failure")
         firebaseUser.updateGroupName(groupID: "group1", newName: "new group 1") { result in
@@ -533,7 +531,7 @@ final class FirebaseUserTests: XCTestCase {
     // MARK: - Tests for addNewMembersToGroup
     func testAddNewMembersToGroupSuccess() {
         firebaseUser.friendGroups = [FriendGroup(id: "group1", creator: "", name: "group 1", members: [])]
-        firestoreService.stubbedDocumentError = nil
+        firebaseService.stubbedDocumentError = nil
         
         
         let expectation = self.expectation(description: "Add new members to group")
@@ -550,7 +548,7 @@ final class FirebaseUserTests: XCTestCase {
 
     func testAddNewMembersToGroupFailure() {
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: [])
-        firestoreService.stubbedDocumentError = MyError.generalError
+        firebaseService.stubbedDocumentError = MyError.generalError
         
         let expectation = self.expectation(description: "Add new members to group failure")
         firebaseUser.addNewMembersToGroup(group: group, newMembers: ["member1"]) { result in
@@ -566,7 +564,7 @@ final class FirebaseUserTests: XCTestCase {
 
     // MARK: - Tests for removeMemberFromGroup
     func testRemoveMemberFromGroupSuccess() {
-        firestoreService.stubbedDocumentError = nil
+        firebaseService.stubbedDocumentError = nil
         let friednGroup = FriendGroup(id: "groupId", creator: "", name: "", members: ["member1"])
         firebaseUser.friendGroups = [friednGroup]
         
@@ -584,7 +582,7 @@ final class FirebaseUserTests: XCTestCase {
 
     func testRemoveMemberFromGroupFailure() {
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: ["member1"])
-        firestoreService.stubbedDocumentError = MyError.generalError
+        firebaseService.stubbedDocumentError = MyError.generalError
         
         let expectation = self.expectation(description: "Remove member from group failure")
         firebaseUser.removeMemberFromGroup(group: group, memberId: "member1") { result in
@@ -600,13 +598,17 @@ final class FirebaseUserTests: XCTestCase {
 
     // MARK: - Tests for generateUniqueCode
     func testGenerateUniqueCodeSuccess() {
-        firestoreService.stubbedQuerySnapshotData = []
+        firebaseService.stubbedQuerySnapshotData = []
         
         let expectation = self.expectation(description: "Generate unique code")
-        firebaseUser.generateUniqueCode() { code in
-            XCTAssertNotNil(code, "Code should not be nil")
-            XCTAssertFalse(code.isEmpty, "Code should not be empty")
-            expectation.fulfill()
+        firebaseUser.generateUniqueCode() { code,error  in
+            if let error = error {
+                print(error)
+            }else if let code = code {
+                XCTAssertNotNil(code, "Code should not be nil")
+                XCTAssertFalse(code.isEmpty, "Code should not be empty")
+                expectation.fulfill()
+            }
         }
         wait(for: [expectation], timeout: 1.0)
     }

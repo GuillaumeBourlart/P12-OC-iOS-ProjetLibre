@@ -43,6 +43,9 @@
 		D03084112A0F8CFB00A8FBB7 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */; };
 		D03084142A0F8D8200A8FBB7 /* AlamofireStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */; };
 		D03084152A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */; };
+		D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */; };
+		D05B8F432A1DF0420064795D /* PrivateLobbyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B8F422A1DF0420064795D /* PrivateLobbyVC.swift */; };
+		D05B8F462A1E2B3B0064795D /* InvitesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B8F452A1E2B3B0064795D /* InvitesVC.swift */; };
 		D084EC3A2A0F7EF400544AA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084EC392A0F7EF400544AA3 /* AppDelegate.swift */; };
 		D084EC3C2A0F7EF400544AA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */; };
 		D084EC442A0F7EF400544AA3 /* Quiz.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D084EC422A0F7EF400544AA3 /* Quiz.xcdatamodeld */; };
@@ -103,6 +106,10 @@
 		D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireStub.swift; sourceTree = "<group>"; };
 		D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTriviaDatabaseManagerTests.swift; sourceTree = "<group>"; };
+		D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePlayersVC.swift; sourceTree = "<group>"; };
+		D05B8F422A1DF0420064795D /* PrivateLobbyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateLobbyVC.swift; sourceTree = "<group>"; };
+		D05B8F442A1E11AC0064795D /* Quiz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Quiz.entitlements; sourceTree = "<group>"; };
+		D05B8F452A1E2B3B0064795D /* InvitesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesVC.swift; sourceTree = "<group>"; };
 		D084EC362A0F7EF400544AA3 /* Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D084EC392A0F7EF400544AA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -233,6 +240,7 @@
 		D084EC382A0F7EF400544AA3 /* Quiz */ = {
 			isa = PBXGroup;
 			children = (
+				D05B8F442A1E11AC0064795D /* Quiz.entitlements */,
 				D084EC722A0F7FD700544AA3 /* Others */,
 				D03083D72A0F8A3800A8FBB7 /* Controller */,
 				D03083FB2A0F8A9000A8FBB7 /* View */,
@@ -275,6 +283,7 @@
 				D03083E12A0F8A5100A8FBB7 /* QuizzGroupsVC.swift */,
 				D084FB132A10309200721B88 /* HistoryVC.swift */,
 				D03083DB2A0F8A4F00A8FBB7 /* QuizzVC.swift */,
+				D05B8F452A1E2B3B0064795D /* InvitesVC.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -293,6 +302,8 @@
 			children = (
 				D03083E02A0F8A5100A8FBB7 /* QuickPlayVC.swift */,
 				D03083DF2A0F8A5000A8FBB7 /* OpponentChoice.swift */,
+				D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */,
+				D05B8F422A1DF0420064795D /* PrivateLobbyVC.swift */,
 			);
 			path = QuickGame;
 			sourceTree = "<group>";
@@ -500,6 +511,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D05B8F432A1DF0420064795D /* PrivateLobbyVC.swift in Sources */,
 				D03083E72A0F8A5100A8FBB7 /* QuizzVC.swift in Sources */,
 				D03083E82A0F8A5100A8FBB7 /* ResultVC.swift in Sources */,
 				D03083EE2A0F8A5200A8FBB7 /* LoginVC.swift in Sources */,
@@ -525,8 +537,10 @@
 				D03083FA2A0F8A7900A8FBB7 /* Structures.swift in Sources */,
 				D084FB142A10309200721B88 /* HistoryVC.swift in Sources */,
 				D03083EB2A0F8A5200A8FBB7 /* OpponentChoice.swift in Sources */,
+				D05B8F462A1E2B3B0064795D /* InvitesVC.swift in Sources */,
 				D03083F92A0F8A7900A8FBB7 /* FirebaseUser.swift in Sources */,
 				D03084072A0F8CDD00A8FBB7 /* CustomButton.swift in Sources */,
+				D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */,
 				D03084022A0F8AB100A8FBB7 /* Settings.swift in Sources */,
 				D084EC3C2A0F7EF400544AA3 /* SceneDelegate.swift in Sources */,
 				D03083ED2A0F8A5200A8FBB7 /* QuizzGroupsVC.swift in Sources */,
@@ -688,6 +702,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Quiz/Quiz.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 45SY58GRA8;
@@ -720,6 +735,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Quiz/Quiz.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 45SY58GRA8;

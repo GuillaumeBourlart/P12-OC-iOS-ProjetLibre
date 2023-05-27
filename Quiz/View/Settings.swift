@@ -25,6 +25,7 @@ enum SettingsSection: Int, CaseIterable {
         case group
         case history
         case quizzes
+        case invites
         
         var title: String {
             switch self {
@@ -36,7 +37,10 @@ enum SettingsSection: Int, CaseIterable {
                 return "Historique"
             case .quizzes:
                 return "Quizzes"
+            case .invites:
+                return "Invites"
             }
+        
         }
         
         var segueIdentifier: String {
@@ -49,6 +53,8 @@ enum SettingsSection: Int, CaseIterable {
                 return "goToHistory"
             case .quizzes:
                 return "goToQuizzOrGroups"
+            case .invites:
+                return "goToInvites"
             }
         }
     }

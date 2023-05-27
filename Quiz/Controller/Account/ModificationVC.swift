@@ -249,7 +249,7 @@ class ModificationVC: UIViewController{
     func showAddFriendAlert() {
         let selectFriendsTableViewController = SelectFriendsTableViewController()
         
-        guard let friends = FirebaseUser.shared.fetchFriends() else { return }
+        let friends = FirebaseUser.shared.fetchFriends()
         
         selectFriendsTableViewController.friends = friends
         

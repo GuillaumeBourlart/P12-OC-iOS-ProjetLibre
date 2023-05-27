@@ -12,35 +12,56 @@ import FirebaseFirestore
 enum FirestoreCondition {
     case isEqualTo(String, Any)
     case arrayContains(String, Any)
-    case isIn(String, Any)
-    
+    case isIn(String, [Any])
+
 }
 
 enum MyError: Error, Equatable {
     case noUserConnected
+    case usernameAlreadyUsed
+    case documentDoesntExist
+    case failedToGetData
+    case cantAddYourself
+    case alreadyFriend
+    case alreadySentInvite
+    case userNotFound
+    case noCurrentLobby
+    case noWaitingLobby
+    case questionNotFound
     case generalError
+    case failedToMakeURL
+    case invalidJsonFormat
+    case noDataInResponse
     // Autres cas d'erreur...
 }
 
 
-
-protocol FirestoreServiceProtocol {
+protocol FirebaseServiceProtocol {
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String: Any]]?, Error?) -> Void)
     func getDocument(in collection: String, documentId: String, completion: @escaping ([String: Any]?, Error?) -> Void)
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void)
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
+    func updateDocumentWithImageUrl(in collection: String, documentId: String, imageUrl: URL, completion: @escaping (Result<URL, Error>) -> Void)
+    func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration
+    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration 
+    
+    var currentUserID: String? { get }
+    func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void)
 }
 
-class FirestoreService: FirestoreServiceProtocol {
-    
+class FirebaseService: FirebaseServiceProtocol{
     
     private let db = Firestore.firestore()
     
+    var currentUserID: String? {
+        return Auth.auth().currentUser?.uid
+    }
     
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String: Any]]?, Error?) -> Void) {
-        var collectionReference:  Query  = db.collection(collection)
-            
+        var collectionReference: Query = db.collection(collection)
+        
         for field in fields {
             switch field {
             case .isEqualTo(let key, let value):
@@ -48,10 +69,10 @@ class FirestoreService: FirestoreServiceProtocol {
             case .arrayContains(let key, let value):
                 collectionReference = collectionReference.whereField(key, arrayContains: value)
             case .isIn(let key, let value):
-                collectionReference = collectionReference.whereField(key, in: value as! [Any])
+                collectionReference = collectionReference.whereField(key, in: value)
             }
         }
-            
+        
         collectionReference.getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(nil, error)
@@ -63,23 +84,42 @@ class FirestoreService: FirestoreServiceProtocol {
     }
     
     func getDocument(in collection: String, documentId: String, completion: @escaping ([String: Any]?, Error?) -> Void) {
-            db.collection(collection).document(documentId).getDocument { (documentSnapshot, error) in
-                if let error = error {
-                    completion(nil, error)
-                } else {
-                    let documentData = documentSnapshot?.data()
-                    completion(documentData, nil)
-                }
+        db.collection(collection).document(documentId).getDocument { (documentSnapshot, error) in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                let documentData = documentSnapshot?.data()
+                completion(documentData, nil)
             }
         }
+    }
     
-    func getCompletedGames(currentUserId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let gamesRef = db.collection("games")
-        
-        gamesRef.whereField("status", isEqualTo: "completed").whereField("players", arrayContains: currentUserId)
-            .getDocuments { (querySnapshot, error) in
-                // votre code existant...
+    func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration {
+        let documentReference = db.collection(collection).document(documentId)
+        let listener = documentReference.addSnapshotListener { documentSnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let documentData = documentSnapshot?.data() {
+                completion(.success(documentData))
+            } else {
+                completion(.failure(MyError.documentDoesntExist))
             }
+        }
+        return listener
+    }
+        
+    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration {
+        let collectionReference = db.collection(collection)
+        let listener = collectionReference.addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let documentsData = querySnapshot?.documents.map({ $0.data() }) {
+                completion(.success(documentsData))
+            } else {
+                completion(.failure(MyError.generalError))
+            }
+        }
+        return listener
     }
     
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
@@ -93,28 +133,22 @@ class FirestoreService: FirestoreServiceProtocol {
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).updateData(data, completion: completion)
     }
-}
-
-
-
-protocol FirebaseAuthServiceProtocol {
-    var currentUserID: String? { get }
-    func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void)
-}
-
-class FirebaseAuthService: FirebaseAuthServiceProtocol {
     
-    
-    var currentUserID: String? {
-        return Auth.auth().currentUser?.uid
+    func updateDocumentWithImageUrl(in collection: String, documentId: String, imageUrl: URL, completion: @escaping (Result<URL, Error>) -> Void) {
+        db.collection(collection).document(documentId).updateData(["profile_picture": imageUrl.absoluteString]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(imageUrl))
+            }
+        }
     }
     
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { authData, error in
             if let error = error {
                 completion(.failure(error))
-            }else if authData != nil {
+            } else if authData != nil {
                 completion(.success(()))
             }
         }
@@ -124,7 +158,7 @@ class FirebaseAuthService: FirebaseAuthServiceProtocol {
         Auth.auth().createUser(withEmail: email, password: password) { authData, error in
             if let error = error {
                 completion(.failure(error))
-            }else if authData != nil {
+            } else if authData != nil {
                 completion(.success((authData?.user.uid)!))
             }
         }

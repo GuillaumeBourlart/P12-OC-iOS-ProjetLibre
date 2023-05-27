@@ -28,17 +28,17 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     }
     
     func loadCategories() {
-        apiManager.fetchCategories { [weak self] categories in
-            guard let categories = categories else {
-                print("Failed to fetch categories")
-                return
+        apiManager.fetchCategories { [weak self] result in
+            switch result {
+            case .failure(let error): print(error)
+            case .success(let categories):
+                self?.categories = categories
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
+                print(categories)
             }
             
-            self?.categories = categories
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-            print(categories)
         }
     }
     

@@ -14,22 +14,22 @@ final class GameTests: XCTestCase {
     
     var game: Game!
     var firebaseUser: FirebaseUser!
-    var firestoreService: FirestoreServiceStub!
-    var firebaseAuthService: FirebaseAuthServiceStub!
+    
+    var firebaseService: FirebaseServiceStub!
     var networkRequestStub: NetworkRequestStub!
     var service: Service!
+    
     override func setUp() {
         super.setUp()
-        firestoreService = FirestoreServiceStub()
-        firebaseAuthService = FirebaseAuthServiceStub()
-        game = Game(firestoreService: firestoreService, firebaseAuthService: firebaseAuthService)
-        firebaseUser = FirebaseUser(firestoreService: firestoreService, firebaseAuthService: firebaseAuthService)
+        firebaseService = FirebaseServiceStub()
+        game = Game(firebaseService: firebaseService)
+        firebaseUser = FirebaseUser(firebaseService: firebaseService)
     }
     
     override func tearDown() {
         game = nil
-        firestoreService = nil
-        firebaseAuthService = nil
+        firebaseUser = nil
+        firebaseService = nil
         super.tearDown()
     }
     
@@ -51,8 +51,7 @@ final class GameTests: XCTestCase {
     }
     
     func testSearchCompetitiveLobby_noLobbyFound() {
-        firebaseAuthService.userID = "TestUserId"
-        firestoreService.stubbedQuerySnapshotData = []
+        firebaseService.stubbedQuerySnapshotData = []
         
         let expectation = XCTestExpectation(description: "New lobby created")
         
@@ -66,8 +65,7 @@ final class GameTests: XCTestCase {
     }
     
     func testSearchCompetitiveLobby_LobbyFound() {
-        firebaseAuthService.userID = "TestUserId"
-        firestoreService.stubbedQuerySnapshotData = fakeResponsesData.testLobbiesData
+        firebaseService.stubbedQuerySnapshotData = fakeResponsesData.testLobbiesData
         
         networkRequestStub = NetworkRequestStub()
         service = Service(networkRequest: networkRequestStub)
@@ -85,8 +83,7 @@ final class GameTests: XCTestCase {
     }
     
     func testSearchCompetitiveLobby_getDocumentsError() {
-        firebaseAuthService.userID = "TestUserId"
-        firestoreService.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        firebaseService.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
         
         let expectation = XCTestExpectation(description: "getDocuments error")
         
@@ -116,7 +113,6 @@ final class GameTests: XCTestCase {
     }
 
     func testCreateCompetitiveLobby_success() {
-        firebaseAuthService.userID = "TestUserId"
         
         let expectation = XCTestExpectation(description: "New lobby created")
         
@@ -130,8 +126,7 @@ final class GameTests: XCTestCase {
     }
 
     func testCreateCompetitiveLobby_setDataError() {
-        firebaseAuthService.userID = "TestUserId"
-        firestoreService.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        firebaseService.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
         
         let expectation = XCTestExpectation(description: "setData error")
         
@@ -162,13 +157,12 @@ final class GameTests: XCTestCase {
 
     func testJoinCompetitiveLobby_success() {
         // Définir l'ID utilisateur factice
-        firebaseAuthService.userID = "TestUserId"
         
-        // Configurer les données factices pour firestoreService.getDocument
-        firestoreService.stubbedDocumentSnapshot = fakeResponsesData.testLobbyData
+        // Configurer les données factices pour firebaseService.getDocument
+        firebaseService.stubbedDocumentSnapshot = fakeResponsesData.testLobbyData
 
-        // Configurer les données factices pour firestoreService.updateDocument
-        firestoreService.stubbedDocumentError = nil
+        // Configurer les données factices pour firebaseService.updateDocument
+        firebaseService.stubbedDocumentError = nil
 
         // Définir un lobbyId factice
         let lobbyId = "TestLobbyId"
@@ -184,7 +178,7 @@ final class GameTests: XCTestCase {
         
         // Assurez-vous que fetchQuestions renvoie des données factices appropriées
 
-        // Configurer les données factices pour firestoreService.deleteDocument
+        // Configurer les données factices pour firebaseService.deleteDocument
         // Assurez-vous que la suppression de document renvoie nil pour une opération réussie
 
         let expectation = XCTestExpectation(description: "Join lobby success")
@@ -201,8 +195,7 @@ final class GameTests: XCTestCase {
     }
 
     func testJoinCompetitiveLobby_getDocumentError() {
-        firebaseAuthService.userID = "TestUserId"
-        firestoreService.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        firebaseService.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
         
         let expectation = XCTestExpectation(description: "getDocument error")
         
@@ -220,7 +213,7 @@ final class GameTests: XCTestCase {
     //-----------------------------------------------------------------------------------
     
     func testCancelSearch_noUserConnected() {
-        firebaseAuthService.userID = nil
+        firebaseService.currentUserID = nil
         
         let expectation = XCTestExpectation(description: "Completion handler invoked")
         var result: Result<Void, Error>?
@@ -239,7 +232,6 @@ final class GameTests: XCTestCase {
     }
     
     func testCancelSearch_noActiveLobby() {
-        firebaseAuthService.userID = "TestUserId"
         game.currentLobbyId = nil
         
         game.deleteCurrentLobby() { _ in
@@ -250,9 +242,8 @@ final class GameTests: XCTestCase {
     
     
     func testCancelSearch_success() {
-        firebaseAuthService.userID = "TestUserId"
         game.currentLobbyId = "TestLobbyId"
-        firestoreService.stubbedDocumentError = nil
+        firebaseService.stubbedDocumentError = nil
         
         let expectation = XCTestExpectation(description: "Completion handler invoked")
         var result: Result<Void, Error>?
@@ -271,10 +262,9 @@ final class GameTests: XCTestCase {
     }
     
     func testCancelSearch_deleteDocumentFails() {
-        firebaseAuthService.userID = "TestUserId"
         game.currentLobbyId = "TestLobbyId"
         let testError = NSError(domain: "Test", code: 1, userInfo: nil)
-        firestoreService.stubbedDocumentError = testError
+        firebaseService.stubbedDocumentError = testError
         
         let expectation = XCTestExpectation(description: "Completion handler invoked")
         var error: Error?
@@ -297,10 +287,9 @@ final class GameTests: XCTestCase {
     
     func testGetQuestions_success() {
         // Initialisation de l'environnement de test
-        firebaseAuthService.userID = "TestUserId"
         var gameId = "testGameId"
         
-        firestoreService.stubbedDocumentSnapshot = fakeResponsesData.mockGameData
+        firebaseService.stubbedDocumentSnapshot = fakeResponsesData.mockGameData
         
         game.getQuestions(gameId: gameId) { result in
             if case .success(let questions) = result {
@@ -312,7 +301,7 @@ final class GameTests: XCTestCase {
     
     func testGetQuestions_noUserConnected() {
         // Initialisation de l'environnement de test
-        firebaseAuthService.userID = nil
+        firebaseService.currentUserID = nil
         let gameId = "TestId"
         
         // Création de l'expectation
@@ -335,11 +324,9 @@ final class GameTests: XCTestCase {
     
     
     func testGetQuestions_cannotFetchGameData() {
-        // Initialisation de l'environnement de test
-        firebaseAuthService.userID = "TestUserId"
         let gameId = "TestId"
         let testError = NSError(domain: "Test", code: 1, userInfo: nil)
-        firestoreService.stubbedDocumentError = testError
+        firebaseService.stubbedDocumentError = testError
         
         // Création de l'expectation
         let expectation = XCTestExpectation(description: "Completion handler invoked")
@@ -365,9 +352,7 @@ final class GameTests: XCTestCase {
     //-----------------------------------------------------------------------------------
     
     func testGetCompletedGames_success() {
-        // Initialisation de l'environnement de test
-        firebaseAuthService.userID = "TestUserId"
-        firestoreService.stubbedQuerySnapshotData = fakeResponsesData.mockGamesData
+        firebaseService.stubbedQuerySnapshotData = fakeResponsesData.mockGamesData
         
         
         game.getCompletedGames() { result in
@@ -380,7 +365,7 @@ final class GameTests: XCTestCase {
     
     func testGetCompletedGames_noUserConnected() {
         // Initialisation de l'environnement de test
-        firebaseAuthService.userID = nil
+        firebaseService.currentUserID = nil
         
         
         game.getCompletedGames() { result in
@@ -398,7 +383,7 @@ final class GameTests: XCTestCase {
     
     func testGetGameData_fail() {
         // Initialisation de l'environnement de test
-        firebaseAuthService.userID = nil
+        firebaseService.currentUserID = nil
         
         game.getGameData(gameId: "hygtfr") { result in
             if case .success(let gameData) = result {
@@ -410,9 +395,8 @@ final class GameTests: XCTestCase {
     
     // MARK: - Tests for getCompletedGames
     func testGetCompletedGamesSuccess() {
-        firestoreService.stubbedQuerySnapshotData = fakeResponsesData.mockGamesData
-        firestoreService.stubbedDocumentError = nil
-        firebaseAuthService.userID = "user_id_1"
+        firebaseService.stubbedQuerySnapshotData = fakeResponsesData.mockGamesData
+        firebaseService.stubbedDocumentError = nil
         
         let expectation = self.expectation(description: "Get completed games")
         game.getCompletedGames() { result in
@@ -428,9 +412,8 @@ final class GameTests: XCTestCase {
     }
 
     func testGetCompletedGamesFailure() {
-        firestoreService.stubbedQuerySnapshotData = nil
-        firestoreService.stubbedDocumentError = MyError.generalError
-        firebaseAuthService.userID = "user_id_1"
+        firebaseService.stubbedQuerySnapshotData = nil
+        firebaseService.stubbedDocumentError = MyError.generalError
         
         let expectation = self.expectation(description: "Get completed games failure")
         game.getCompletedGames() { result in
@@ -445,7 +428,7 @@ final class GameTests: XCTestCase {
     }
 
     func testGetCompletedGamesNoUserConnected() {
-        firebaseAuthService.userID = nil
+        firebaseService.currentUserID = nil
         
         let expectation = self.expectation(description: "Get completed games no user connected")
         game.getCompletedGames() { result in
@@ -468,10 +451,9 @@ final class GameTests: XCTestCase {
     //-----------------------------------------------------------------------------------
     
     func testSaveStats_success() {
-        firebaseAuthService.userID = "TestUserId"
         let gameId = "TestId"
         let userAnswers = ["TestQuestionId": UserAnswer(selected_answer: "selected_answer", points: 0)]
-        firestoreService.stubbedDocumentSnapshot = fakeResponsesData.mockAnswersData
+        firebaseService.stubbedDocumentSnapshot = fakeResponsesData.mockAnswersData
         
         let expectation = XCTestExpectation(description: "Stats saved")
         
@@ -485,11 +467,10 @@ final class GameTests: XCTestCase {
     }
 
     func testSaveStats_failure() {
-        firebaseAuthService.userID = "TestUserId"
         let gameId = "TestId"
         let userAnswers = ["TestQuestionId": UserAnswer(selected_answer: "selected_answer", points: 0)]
         
-        firestoreService.stubbedDocumentError = MyError.noUserConnected
+        firebaseService.stubbedDocumentError = MyError.noUserConnected
         
         let expectation = XCTestExpectation(description: "Failed to save stats")
         
@@ -507,8 +488,7 @@ final class GameTests: XCTestCase {
     //-----------------------------------------------------------------------------------
     
     func testListenForGameStart_success() {
-        firebaseAuthService.userID = "TestUserId"
-        firestoreService.stubbedQuerySnapshotData = [["id": "TestGameId"]]
+        firebaseService.stubbedQuerySnapshotData = [["id": "TestGameId"]]
 
         let expectation = XCTestExpectation(description: "Game start listened for")
 
@@ -522,8 +502,7 @@ final class GameTests: XCTestCase {
     }
 
     func testListenForGameStart_failure() {
-        firebaseAuthService.userID = "TestUserId"
-        firestoreService.stubbedDocumentError = MyError.noUserConnected
+        firebaseService.stubbedDocumentError = MyError.noUserConnected
 
         let expectation = XCTestExpectation(description: "Failed to listen for game start")
 

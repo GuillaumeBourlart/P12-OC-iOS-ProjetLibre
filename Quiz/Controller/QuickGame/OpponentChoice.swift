@@ -25,7 +25,14 @@ class OpponentChoice: UIViewController {
             case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
             }
         }
-        case 1: performSegue(withIdentifier: "goToGameLobby", sender: sender)
+        case 1:
+            Game.shared.createRoom { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
+                }
+            }
+        
             
         default:
             print("error")
@@ -34,8 +41,11 @@ class OpponentChoice: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuizzVC {
-            destination.isCompetitiveMode = false
             destination.gameID = sender as? String
+        }
+        else if let destination = segue.destination as? PrivateLobbyVC {
+            destination.lobbyId = sender as? String
+            destination.isCreator = true
         }
     }
     

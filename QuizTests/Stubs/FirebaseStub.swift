@@ -9,12 +9,24 @@
 import FirebaseAuth
 import FirebaseFirestore
 
-class FirestoreServiceStub: FirestoreServiceProtocol {
+class FirebaseServiceStub: FirebaseServiceProtocol {
+    
     
     var stubbedQuerySnapshotData: [[String: Any]]?
     var stubbedDocumentSnapshot: [String: Any]?
     var stubbedDocumentError: Error?
     
+    
+    var userID: String? = "userId"
+    var currentUserID: String? {
+        get {
+            // Retourne un ID utilisateur factice
+            return userID
+        }
+        set {
+            userID = newValue
+        }
+    }
     
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String : Any]]?, Error?) -> Void) {
         completion(stubbedQuerySnapshotData, stubbedDocumentError)
@@ -37,19 +49,7 @@ class FirestoreServiceStub: FirestoreServiceProtocol {
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void) {
         completion(stubbedDocumentError)
     }
-}
-
-class FirebaseAuthServiceStub: FirebaseAuthServiceProtocol {
     
-    var stubbedQuerySnapshotData: [[String: Any]]?
-    var stubbedDocumentSnapshot: [String: Any]?
-    var stubbedDocumentError: Error?
-    
-    var currentUserID: String? {
-        // Retourne un ID utilisateur factice
-        return userID
-    }
-    var userID: String?
     
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         if stubbedDocumentError != nil {
@@ -68,3 +68,4 @@ class FirebaseAuthServiceStub: FirebaseAuthServiceProtocol {
         }
     }
 }
+

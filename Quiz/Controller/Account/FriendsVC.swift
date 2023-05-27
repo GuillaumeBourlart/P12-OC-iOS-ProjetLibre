@@ -19,16 +19,18 @@ class FriendsVC: UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
     
+
     var usernames: [String] {
         if isShowingFriendRequests {
-            return FirebaseUser.shared.fetchFriendRequests()!
-        }else{
-            return FirebaseUser.shared.fetchFriends()!
+            return FirebaseUser.shared.fetchFriendRequests()
+        } else {
+            return FirebaseUser.shared.fetchFriends()
         }
     }
     var isShowingFriendRequests = true
     
     override func viewDidLoad() {
+        
         setupUserListener()
         onSwitch(switchControl)
     }

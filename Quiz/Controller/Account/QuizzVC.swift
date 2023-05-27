@@ -10,7 +10,6 @@ import UIKit
 
 class QuizzVC: UIViewController {
     
-    var isCompetitiveMode: Bool = true
     var gameID: String?
     var userAnswers: [String: UserAnswer] = [:]
     

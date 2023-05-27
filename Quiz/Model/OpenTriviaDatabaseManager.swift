@@ -19,19 +19,18 @@ class OpenTriviaDatabaseManager {
     
     private var currentUserId: String? { return Auth.auth().currentUser?.uid }
     
-    func fetchCategories(completion: @escaping ([[String: Any]]?) -> Void) {
-        guard self.currentUserId != nil else { print("Aucun utilisateur connecté"); return}
+    func fetchCategories(completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
+        guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return}
         let urlString = "https://opentdb.com/api_category.php"
         
         guard let url = URL(string: urlString) else {
-            completion(nil)
+            completion(.failure(MyError.failedToMakeURL))
             return
         }
         
         service.load(url: url) { (data, response, error) in
             if let error = error {
-                print("Error: \(error.localizedDescription)")
-                completion(nil)
+                completion(.failure(error))
                 return
             }
             
@@ -40,21 +39,21 @@ class OpenTriviaDatabaseManager {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                     guard let json = jsonObject as? [String: Any],
                           let categoriesJSON = json["trivia_categories"] as? [[String: Any]] else {
-                        completion(nil)
+                        completion(.failure(MyError.invalidJsonFormat))
                         return
                     }
-                    completion(categoriesJSON)
+                    completion(.success(categoriesJSON))
                 } catch {
-                    completion(nil)
+                    completion(.failure(error))
                 }
             } else {
-                completion(nil)
+                completion(.failure(error ?? MyError.noDataInResponse))
             }
         }
     }
     
     func fetchQuestions(inCategory categoryId: Int?, amount: Int = 10, difficulty: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
-        guard self.currentUserId != nil else { print("Aucun utilisateur connecté"); return}
+        guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return}
         
         var urlString = "https://opentdb.com/api.php?amount=\(amount)&type=multiple"
         if let categoryId = categoryId { urlString += "&category=\(categoryId)"}
@@ -66,7 +65,6 @@ class OpenTriviaDatabaseManager {
         
         service.load(url: url) { (data, response, error) in
             if let error = error {
-                print("Error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
@@ -76,10 +74,9 @@ class OpenTriviaDatabaseManager {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                     guard let json = jsonObject as? [String: Any],
                           let questionsData = json["results"] as? [[String: Any]] else {
-                        completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON format"])))
+                        completion(.failure(MyError.invalidJsonFormat))
                         return
                     }
-                    
                     let jsonData = try JSONSerialization.data(withJSONObject: questionsData, options: [])
                     let decoder = JSONDecoder()
                     let questions = try decoder.decode([UniversalQuestion].self, from: jsonData)
@@ -88,7 +85,7 @@ class OpenTriviaDatabaseManager {
                     completion(.failure(error))
                 }
             } else {
-                completion(.failure(MyError.generalError))
+                completion(.failure(error ?? MyError.noDataInResponse))
             }
         }
     }
