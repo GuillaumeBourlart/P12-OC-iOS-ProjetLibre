@@ -228,7 +228,7 @@ class ModificationVC: UIViewController{
                     }
                 }
             } else {
-                FirebaseUser.shared.addQuestionToQuiz(quiz: self.quiz!, question: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
+                FirebaseUser.shared.addQuestionToQuiz(quiz: self.quiz!, question: question, correctAnswer: correctAnswer, wrongAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                     switch result {
                     case .success():
                         self.tableView.reloadData()

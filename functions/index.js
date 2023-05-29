@@ -26,8 +26,8 @@ exports.sendInviteNotification = functions.firestore
     .document("lobby/{lobbyId}")
     .onUpdate(async (change, context) => {
       // Obtain the list of invited players before and after the update
-      const oldInvitedPlayers = change.before.data().invited_players;
-      const newInvitedPlayers = change.after.data().invited_players;
+      const oldInvitedPlayers = change.before.data().invited_users;
+      const newInvitedPlayers = change.after.data().invited_users;
       // Check if any players have been added
       const addedPlayers = newInvitedPlayers
           .filter((player) => !oldInvitedPlayers || !oldInvitedPlayers

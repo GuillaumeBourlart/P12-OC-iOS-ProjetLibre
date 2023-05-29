@@ -21,13 +21,13 @@ struct UniversalQuestion: Decodable, Equatable {
     var dictionary: [String: Any] {
         return [
             
-            "category": category as Any,
-            "type": type as Any,
-            "difficulty": difficulty as Any,
-            "question": question,
-            "correct_answer": correct_answer,
-            "incorrect_answers": incorrect_answers,
-            "explanation": explanation as Any
+            FirestoreFields.Question.category: category as Any,
+            FirestoreFields.Question.type: type as Any,
+            FirestoreFields.Question.difficulty: difficulty as Any,
+            FirestoreFields.Question.question: question,
+            FirestoreFields.Question.correctAnswer: correct_answer,
+            FirestoreFields.Question.incorrectAnswers: incorrect_answers,
+            FirestoreFields.Question.explanation: explanation as Any
         ]
     }
     
@@ -110,8 +110,8 @@ struct UserAnswer: Decodable {
     
     var dictionary: [String: Any] {
         return [
-            "selected_answer": selected_answer,
-            "points": points
+            FirestoreFields.Game.UserAnswer.selected_answer: selected_answer,
+            FirestoreFields.Game.UserAnswer.points: points
         ]
     }
 }

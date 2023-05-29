@@ -52,7 +52,10 @@ class PrivateLobbyVC: UIViewController{
             listener.remove()
         }
         Game.shared.leaveLobby(lobbyId: lobbyId!) { error in
-            print(error)
+            if let error = error {
+                print(error)
+            }
+            
         }
     }
     
@@ -96,7 +99,7 @@ class PrivateLobbyVC: UIViewController{
                 if let players = data["players"] as? [String] {
                     self.players = players
                 }
-                if let invitedPlayers = data["invited_players"] as? [String] {
+                if let invitedPlayers = data["invited_users"] as? [String] {
                     self.invitedPlayers = invitedPlayers
                 }
                 if let code = data["join_code"] as? String {

@@ -32,7 +32,6 @@ enum MyError: Error, Equatable {
     case failedToMakeURL
     case invalidJsonFormat
     case noDataInResponse
-    // Autres cas d'erreur...
 }
 
 

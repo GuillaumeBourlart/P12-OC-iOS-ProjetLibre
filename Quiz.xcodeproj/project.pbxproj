@@ -60,6 +60,7 @@
 		D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDF2A159C74007B3431 /* GameTests.swift */; };
 		D0B6BDDB2A248884005B4C19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D0B6BDDA2A248884005B4C19 /* FirebaseFirestore */; };
 		D0B6BDDD2A24889B005B4C19 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = D0B6BDDC2A24889B005B4C19 /* FirebaseAppCheck */; };
+		D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */; };
 		D0B8D42C2A1BA5560033467D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8D42B2A1BA5560033467D /* HomeVC.swift */; };
 		D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */; };
 		E2E6EC46FBC38B53205941E5 /* Pods_QuizTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3755A998632E0A2D7B89F0 /* Pods_QuizTests.framework */; };
@@ -128,6 +129,7 @@
 		D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStub.swift; sourceTree = "<group>"; };
 		D0B35CDF2A159C74007B3431 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
+		D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFields.swift; sourceTree = "<group>"; };
 		D0B8D42B2A1BA5560033467D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -202,7 +204,7 @@
 				D03083F42A0F8A7900A8FBB7 /* FirebaseUser.swift */,
 				D03083F22A0F8A7800A8FBB7 /* Game.swift */,
 				D03083F12A0F8A7800A8FBB7 /* OpenTriviaDatabaseManager.swift */,
-				D03083F52A0F8A7900A8FBB7 /* Structures.swift */,
+				D0B8524E2A24AFD200A7D9B7 /* Structures */,
 				D0B35CE12A159CDE007B3431 /* services */,
 			);
 			path = Model;
@@ -332,6 +334,15 @@
 				D08E0ED82A163FAC00D09FAD /* FakeResponsesData.swift */,
 			);
 			path = Stubs;
+			sourceTree = "<group>";
+		};
+		D0B8524E2A24AFD200A7D9B7 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				D03083F52A0F8A7900A8FBB7 /* Structures.swift */,
+				D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */,
+			);
+			path = Structures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -550,6 +561,7 @@
 				D03083F92A0F8A7900A8FBB7 /* FirebaseUser.swift in Sources */,
 				D03084072A0F8CDD00A8FBB7 /* CustomButton.swift in Sources */,
 				D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */,
+				D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */,
 				D03084022A0F8AB100A8FBB7 /* Settings.swift in Sources */,
 				D08CAE722A23DE0800C835E9 /* JoinWithCodeVC.swift in Sources */,
 				D084EC3C2A0F7EF400544AA3 /* SceneDelegate.swift in Sources */,
