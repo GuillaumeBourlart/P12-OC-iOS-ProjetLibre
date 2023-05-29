@@ -6,8 +6,6 @@
 //
 
 @testable import Quiz
-import FirebaseAuth
-import FirebaseFirestore
 
 class FirebaseServiceStub: FirebaseServiceProtocol {
     
