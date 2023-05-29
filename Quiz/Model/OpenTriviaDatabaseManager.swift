@@ -53,7 +53,7 @@ class OpenTriviaDatabaseManager {
     }
     
     func fetchQuestions(inCategory categoryId: Int?, amount: Int = 10, difficulty: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
-        guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return}
+        guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return }
         
         var urlString = "https://opentdb.com/api.php?amount=\(amount)&type=multiple"
         if let categoryId = categoryId { urlString += "&category=\(categoryId)"}

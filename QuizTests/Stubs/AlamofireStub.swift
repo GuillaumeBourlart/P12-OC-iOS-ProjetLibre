@@ -5,7 +5,10 @@
 //  Created by Guillaume Bourlart on 13/05/2023.
 //
 @testable import Quiz
+import FirebaseAuth
+import FirebaseFirestore
 import Foundation
+
 class NetworkRequestStub: NetworkRequest {
     var data: Data?
     var error: Error?

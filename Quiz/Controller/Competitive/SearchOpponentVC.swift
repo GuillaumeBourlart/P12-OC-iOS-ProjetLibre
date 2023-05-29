@@ -30,7 +30,7 @@ class SearchOpponentVC: UIViewController{
         }
         
         if !isGameFound {
-            Game.shared.deleteCurrentLobby(){ result in
+            Game.shared.deleteCurrentRoom(){ result in
                 switch result {
                 case .success():
                     print("annulation réussie")
@@ -45,7 +45,7 @@ class SearchOpponentVC: UIViewController{
     
     func findOpponent() {
         
-        Game.shared.searchCompetitiveLobby(){ result in
+        Game.shared.searchCompetitiveRoom(){ result in
             switch result {
             case .success:
                 print("recherche réussie ")

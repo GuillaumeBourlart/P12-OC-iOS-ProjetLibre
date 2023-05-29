@@ -27,7 +27,10 @@ class InvitesVC: UIViewController {
     }
     
     func startListening() {
-        listener = Game.shared.ListenForChangeInDocument(in: "users", documentId: Game.shared.currentUserId!, completion: { result in
+        guard let currentUserId = Game.shared.currentUserId else {
+            return
+        }
+        listener = Game.shared.ListenForChangeInDocument(in: "users", documentId: currentUserId, completion: { result in
             switch result {
             case .success(let data):
                 if let invites = data["invites"] as? [String] {
@@ -51,7 +54,20 @@ class InvitesVC: UIViewController {
         }
     }
     
-    
+    func joinLobby(lobbyId: String){
+        Game.shared.joinRoom(lobbyId: lobbyId){ result in
+            switch result {
+            case .failure(let error): print(error)
+            case .success():
+                Game.shared.deleteInvite(inviteId: lobbyId) { result in
+                switch result {
+                    case .failure(let error): print(error)
+                    case .success(let inviteID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: inviteID)
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -61,13 +77,7 @@ extension InvitesVC: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let selectedInvitesID = invites[indexPath.row]
-        Game.shared.deleteInvite(inviteId: selectedInvitesID) { result in
-            switch result {
-            case .failure(let error): print(error)
-            case .success(let inviteID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: inviteID)
-            }
-        }
-        
+        self.joinLobby(lobbyId: selectedInvitesID)
     }
     
     

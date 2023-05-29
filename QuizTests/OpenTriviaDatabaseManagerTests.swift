@@ -89,6 +89,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
             // Then
             XCTAssertNil(fetchedCategories)
         }
+    }
         
         func testFetchQuestions_success() {
             // Given
@@ -133,4 +134,4 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
             XCTAssertNil(fetchedQuestions)
         }
     }
-}
+

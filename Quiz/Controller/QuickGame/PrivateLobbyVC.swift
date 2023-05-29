@@ -35,7 +35,6 @@ class PrivateLobbyVC: UIViewController{
             invteplayersButton.isHidden = false
             launchButton.isHidden = false
         }else{
-            joinLobby()
             startListeningForbegin()
         }
     }
@@ -64,7 +63,7 @@ class PrivateLobbyVC: UIViewController{
                 return
             }
             if self.isCreator != nil, self.isCreator == true {
-                Game.shared.deleteCurrentLobby { result in
+                Game.shared.deleteCurrentRoom { result in
                     switch result {
                     case .failure(let error): print(error)
                     case .success(): print("lobby supprimé")
@@ -82,7 +81,7 @@ class PrivateLobbyVC: UIViewController{
     }
     
     @IBAction func launchGame(){
-        Game.shared.createGame(competitive: false, players: self.players, creator: FirebaseUser.shared.currentUserId!) { result in
+        Game.shared.createGame(competitive: false, players: self.players) { result in
             switch result {
             case .failure(let error): print(error)
             case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
@@ -96,7 +95,6 @@ class PrivateLobbyVC: UIViewController{
             case .success(let data):
                 if let players = data["players"] as? [String] {
                     self.players = players
-                    print("with user \(Game.shared.currentUserId) : there is \(players)")
                 }
                 if let invitedPlayers = data["invited_players"] as? [String] {
                     self.invitedPlayers = invitedPlayers
@@ -123,14 +121,7 @@ class PrivateLobbyVC: UIViewController{
         }
     }
     
-    
-    func joinLobby(){
-        Game.shared.joinLobby(lobbyId: lobbyId!){ error in
-            if let error = error {
-                print(error)
-            }
-        }
-    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? InvitePlayersVC {

@@ -17,8 +17,9 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
             profileImageView.clipsToBounds = true
         
-        if let url = URL(string: FirebaseUser.shared.userInfo!.profile_picture) {
-            profileImageView.sd_setImage(with: url)
+        
+        if let imageData = Data(base64Encoded: FirebaseUser.shared.userInfo!.profile_picture) {
+            profileImageView.image = UIImage(data: imageData)
         }
         
         imagePickerController.delegate = self
@@ -87,8 +88,6 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         
         guard let settingsSection = SettingsSection(rawValue: indexPath.section) else { return }
         
-        
-        
         switch settingsSection {
         case .account:
             if let accountOption = SettingsSection.Account(rawValue: indexPath.row) {
@@ -144,15 +143,19 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             profileImageView.contentMode = .scaleAspectFill
             profileImageView.image = pickedImage
             
-            guard let imageData = pickedImage.jpegData(compressionQuality: 0.75) else { return }
-            
-            FirebaseUser.shared.saveProfilImage(data: imageData) { result in
-                switch result {
-                case .failure(let error): print(error)
-                case .success(let url):
-                    print("Image uploaded successfully and URL is \(url)")
+            if let imageData = pickedImage.jpegData(compressionQuality: 0.1) {
+                let base64String = imageData.base64EncodedString()
+                // Enregistrez base64String dans Firestore
+                FirebaseUser.shared.saveProfilImage(data: base64String) { result in
+                    switch result {
+                    case .failure(let error): print(error)
+                    case .success(let url):
+                        print("Image uploaded successfully and URL is \(url)")
+                    }
                 }
             }
+            
+            
         }
         
         picker.dismiss(animated: true, completion: nil)

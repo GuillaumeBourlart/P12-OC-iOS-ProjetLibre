@@ -18,8 +18,11 @@ class OpponentChoice: UIViewController {
     }
     
     @IBAction func onTap(_ sender: UIButton){
+        guard let currentUserId = Game.shared.currentUserId else {
+            return
+        }
         switch sender.tag {
-        case 0: Game.shared.createGame(competitive: false, players: [Game.shared.currentUserId!], creator: Game.shared.currentUserId!) { reuslt in
+        case 0: Game.shared.createGame(competitive: false, players: [currentUserId]) { reuslt in
             switch reuslt {
             case .failure(let error): print(error)
             case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)

@@ -42,7 +42,6 @@ protocol FirebaseServiceProtocol {
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void)
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
-    func updateDocumentWithImageUrl(in collection: String, documentId: String, imageUrl: URL, completion: @escaping (Result<URL, Error>) -> Void)
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration
     func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration 
     
@@ -132,16 +131,6 @@ class FirebaseService: FirebaseServiceProtocol{
     
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).updateData(data, completion: completion)
-    }
-    
-    func updateDocumentWithImageUrl(in collection: String, documentId: String, imageUrl: URL, completion: @escaping (Result<URL, Error>) -> Void) {
-        db.collection(collection).document(documentId).updateData(["profile_picture": imageUrl.absoluteString]) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(imageUrl))
-            }
-        }
     }
     
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {

@@ -182,34 +182,32 @@ class FirebaseUser {
         }
     }
     
-    func saveProfilImage(data: Data, completion: @escaping (Result<URL, Error>) -> Void) {
-        let storageRef = Storage.storage().reference().child("profile_picture/\(currentUserId!)")
+    func saveProfilImage(data: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(MyError.noUserConnected))
+            return
+        }
         
-        let metaData = StorageMetadata()
-        metaData.contentType = "image/jpg"
-        
-        storageRef.putData(data, metadata: metaData) { metaData, error in
+        self.firebaseService.updateDocument(in: "users", documentId: currentUserId, data: ["profile_picture": data]) { error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                storageRef.downloadURL { url, error in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else if let url = url {
-                        self.firebaseService.updateDocumentWithImageUrl(in: "users", documentId: self.currentUserId!, imageUrl: url) { result in
-                            switch result {
-                            case .failure(let error): print(error)
-                            case .success(let url): print("updated with \(url)")
-                            }
-                        }
-                    }
-                }
             }
+            completion(.success(()))
         }
     }
     
-    func updateUsername(){
+    func updateUsername(username: String, completion: @escaping (Result<Void, Error>) -> Void){
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(MyError.noUserConnected))
+            return
+        }
         
+        self.firebaseService.updateDocument(in: "users", documentId: currentUserId, data: ["username": username]) { error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            completion(.success(()))
+        }
     }
     
     //-----------------------------------------------------------------------------------
