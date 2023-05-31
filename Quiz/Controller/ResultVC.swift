@@ -40,9 +40,7 @@ class ResultVC: UIViewController {
                 }
             }
         }
-        
         displayWinner()
-        
     }
     
     
