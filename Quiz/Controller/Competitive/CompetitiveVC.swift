@@ -82,7 +82,9 @@ class CompetitiveVC: UIViewController{
         points.text = "\(Int(progress))/100"
     }
     
-    
+    @IBAction func unwindToCompetitive(segue: UIStoryboardSegue) {
+        // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
+    }
     
     
 }

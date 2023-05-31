@@ -12,6 +12,7 @@ class QuizzVC: UIViewController {
     
     var gameID: String?
     var userAnswers: [String: UserAnswer] = [:]
+    var isCompetitive: Bool?
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
@@ -21,11 +22,20 @@ class QuizzVC: UIViewController {
     var currentQuestionIndex = 0
     var timer: Timer?
     var timeRemaining = 10
+    var isAnswering = false // Ajoutez cette variable
+    var finalScore = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadQuestions()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+            tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     func loadQuestions() {
@@ -42,12 +52,14 @@ class QuizzVC: UIViewController {
         }
         
         func displayQuestion() {
+            
             if currentQuestionIndex >= questions.count {
                 finishQuiz()
                 return
             }
             
             let question = questions[currentQuestionIndex]
+            
             questionLabel.text = question.question
             
             var choices = question.incorrect_answers + [question.correct_answer]
@@ -59,8 +71,50 @@ class QuizzVC: UIViewController {
             }
             
             resetTimer()
+            isAnswering = false
         }
+    
         
+    @IBAction func leaveGame(_ sender: UIButton) {
+        if let gameID = gameID {
+            Game.shared.leaveGame(gameId: gameID){ result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success():
+                    if self.isCompetitive! {
+                        // Dismiss the view controller
+                        self.performSegue(withIdentifier: "unwindToCompetitive", sender: self)
+                    } else {
+                        if let navController = self.navigationController {
+                            var canUnwindToOpponentChoice = false
+
+                            for controller in navController.viewControllers {
+                                if controller is OpponentChoice {
+                                    // OpponentChoice est dans la pile de navigation
+                                    canUnwindToOpponentChoice = true
+                                    break // Sort de la boucle une fois OpponentChoice trouvé
+                                }
+                            }
+
+                            if canUnwindToOpponentChoice {
+                                // Si OpponentChoice est dans la pile de navigation, effectue l'unwind segue vers OpponentChoice
+                                print("unwindToOpponentChoice")
+                                self.performSegue(withIdentifier: "unwindToOpponentChoice", sender: self)
+                            } else {
+                                // Si OpponentChoice n'est pas dans la pile de navigation, effectue l'unwind segue vers Invites
+                                print("unwindToInvites")
+                                self.performSegue(withIdentifier: "unwindToInvites", sender: self)
+                            }
+                        }else{
+                            print("error")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
         func resetTimer() {
             timeRemaining = 10
             timerLabel.text = "\(timeRemaining)"
@@ -78,12 +132,14 @@ class QuizzVC: UIViewController {
         }
     
     @IBAction func answerButtonTapped(_ sender: UIButton) {
+        guard !isAnswering else { return } // Ignorez l'appui sur le bouton si l'utilisateur répond déjà à une question
+                isAnswering = true // Définissez isAnswering à vrai lorsque l'utilisateur sélectionne une réponse
         let selectedAnswer = sender.currentTitle!
             let correctAnswer = questions[currentQuestionIndex].correct_answer
             let questionId = questions[currentQuestionIndex].id // Assuming your questions have an 'id' field
 
         let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1 : 0)
-            
+        finalScore += selectedAnswer == correctAnswer ? 1 : 0
         userAnswers[questionId!] = userAnswer
                 
         
@@ -115,7 +171,7 @@ class QuizzVC: UIViewController {
     func finishQuiz() {
         // Naviguez vers un écran de résultats ou effectuez d'autres actions pour terminer le quizz
         print("Quizz terminé")
-        Game.shared.saveStats(userAnswers: userAnswers, gameID: gameID!){ result in
+        Game.shared.saveStats(finalScore: finalScore, userAnswers: userAnswers, gameID: gameID!){ result in
             switch result {
             case .success():
                 print("Statistiques enregistrés avec succès")
@@ -135,5 +191,6 @@ class QuizzVC: UIViewController {
             }
         }
     }
+    
 }
 

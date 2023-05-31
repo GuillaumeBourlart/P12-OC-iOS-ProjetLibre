@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E2ADAE6A451210C61441210 /* Pods_Quiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089E340D9324794E46456934 /* Pods_Quiz.framework */; };
 		D01EDCDC2A182A3400FF3163 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCDB2A182A3400FF3163 /* FirebaseAuth */; };
 		D01EDCDE2A182A3400FF3163 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCDD2A182A3400FF3163 /* FirebaseDatabase */; };
 		D01EDCE02A182A3400FF3163 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCDF2A182A3400FF3163 /* FirebaseFirestore */; };
@@ -38,17 +37,17 @@
 		D03084072A0F8CDD00A8FBB7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084062A0F8CDD00A8FBB7 /* CustomButton.swift */; };
 		D03084092A0F8CE500A8FBB7 /* CustomButton2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084082A0F8CE500A8FBB7 /* CustomButton2.swift */; };
 		D030840B2A0F8CEB00A8FBB7 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840A2A0F8CEB00A8FBB7 /* CategoryCell.swift */; };
-		D030840E2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840D2A0F8CF500A8FBB7 /* CustomCell.swift */; };
-		D030840F2A0F8CF500A8FBB7 /* CustomFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840C2A0F8CF400A8FBB7 /* CustomFriendCell.swift */; };
+		D030840F2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */; };
 		D03084112A0F8CFB00A8FBB7 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */; };
 		D03084142A0F8D8200A8FBB7 /* AlamofireStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */; };
 		D03084152A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */; };
 		D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */; };
 		D05B8F432A1DF0420064795D /* PrivateLobbyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B8F422A1DF0420064795D /* PrivateLobbyVC.swift */; };
 		D05B8F462A1E2B3B0064795D /* InvitesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B8F452A1E2B3B0064795D /* InvitesVC.swift */; };
+		D074D66E2A262CD6004942C4 /* CoredataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074D66D2A262CD6004942C4 /* CoredataStack.swift */; };
+		D074D6702A26A2A7004942C4 /* QuestionResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074D66F2A26A2A7004942C4 /* QuestionResultVC.swift */; };
 		D084EC3A2A0F7EF400544AA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084EC392A0F7EF400544AA3 /* AppDelegate.swift */; };
 		D084EC3C2A0F7EF400544AA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */; };
-		D084EC442A0F7EF400544AA3 /* Quiz.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D084EC422A0F7EF400544AA3 /* Quiz.xcdatamodeld */; };
 		D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D084EC452A0F7EF700544AA3 /* Assets.xcassets */; };
 		D084EC492A0F7EF700544AA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */; };
 		D084EC742A0F81FC00544AA3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D084EC732A0F81FC00544AA3 /* GoogleService-Info.plist */; };
@@ -61,9 +60,9 @@
 		D0B6BDDB2A248884005B4C19 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D0B6BDDA2A248884005B4C19 /* FirebaseFirestore */; };
 		D0B6BDDD2A24889B005B4C19 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = D0B6BDDC2A24889B005B4C19 /* FirebaseAppCheck */; };
 		D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */; };
+		D0B852532A2528D500A7D9B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = D0B852522A2528D500A7D9B7 /* Alamofire */; };
 		D0B8D42C2A1BA5560033467D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8D42B2A1BA5560033467D /* HomeVC.swift */; };
 		D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */; };
-		E2E6EC46FBC38B53205941E5 /* Pods_QuizTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3755A998632E0A2D7B89F0 /* Pods_QuizTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,12 +76,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		089E340D9324794E46456934 /* Pods_Quiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		142B5D75226800A730600D95 /* Pods-QuizTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizTests.release.xcconfig"; path = "Target Support Files/Pods-QuizTests/Pods-QuizTests.release.xcconfig"; sourceTree = "<group>"; };
-		1F3755A998632E0A2D7B89F0 /* Pods_QuizTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuizTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		561DA45D4A1E2A2D0F19F474 /* Pods-QuizTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizTests.debug.xcconfig"; path = "Target Support Files/Pods-QuizTests/Pods-QuizTests.debug.xcconfig"; sourceTree = "<group>"; };
-		7D8DC8EBCF4563F243A951F0 /* Pods-Quiz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz.debug.xcconfig"; path = "Target Support Files/Pods-Quiz/Pods-Quiz.debug.xcconfig"; sourceTree = "<group>"; };
-		8232A3BC6F8A90AD28DD6822 /* Pods-Quiz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quiz.release.xcconfig"; path = "Target Support Files/Pods-Quiz/Pods-Quiz.release.xcconfig"; sourceTree = "<group>"; };
 		D03083D82A0F8A4F00A8FBB7 /* CompetitiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompetitiveVC.swift; sourceTree = "<group>"; };
 		D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModificationVC.swift; sourceTree = "<group>"; };
 		D03083DA2A0F8A4F00A8FBB7 /* ProfilVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilVC.swift; sourceTree = "<group>"; };
@@ -105,8 +98,7 @@
 		D03084062A0F8CDD00A8FBB7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		D03084082A0F8CE500A8FBB7 /* CustomButton2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton2.swift; sourceTree = "<group>"; };
 		D030840A2A0F8CEB00A8FBB7 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
-		D030840C2A0F8CF400A8FBB7 /* CustomFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFriendCell.swift; sourceTree = "<group>"; };
-		D030840D2A0F8CF500A8FBB7 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireStub.swift; sourceTree = "<group>"; };
 		D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTriviaDatabaseManagerTests.swift; sourceTree = "<group>"; };
@@ -114,10 +106,11 @@
 		D05B8F422A1DF0420064795D /* PrivateLobbyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateLobbyVC.swift; sourceTree = "<group>"; };
 		D05B8F442A1E11AC0064795D /* Quiz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Quiz.entitlements; sourceTree = "<group>"; };
 		D05B8F452A1E2B3B0064795D /* InvitesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesVC.swift; sourceTree = "<group>"; };
+		D074D66D2A262CD6004942C4 /* CoredataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataStack.swift; sourceTree = "<group>"; };
+		D074D66F2A26A2A7004942C4 /* QuestionResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionResultVC.swift; sourceTree = "<group>"; };
 		D084EC362A0F7EF400544AA3 /* Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D084EC392A0F7EF400544AA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D084EC432A0F7EF400544AA3 /* Quiz.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Quiz.xcdatamodel; sourceTree = "<group>"; };
 		D084EC452A0F7EF700544AA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D084EC482A0F7EF700544AA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D084EC4A2A0F7EF700544AA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -140,11 +133,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D01EDCE42A182A3400FF3163 /* FirebaseMessaging in Frameworks */,
+				D0B852532A2528D500A7D9B7 /* Alamofire in Frameworks */,
 				D01EDCDE2A182A3400FF3163 /* FirebaseDatabase in Frameworks */,
 				D01EDCE02A182A3400FF3163 /* FirebaseFirestore in Frameworks */,
 				D01EDCE22A182A3400FF3163 /* FirebaseFunctions in Frameworks */,
 				D01EDCE62A182A3400FF3163 /* FirebaseStorage in Frameworks */,
-				5E2ADAE6A451210C61441210 /* Pods_Quiz.framework in Frameworks */,
 				D01EDCDC2A182A3400FF3163 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,7 +148,6 @@
 			files = (
 				D01EDCEA2A184E3900FF3163 /* FirebaseDatabase in Frameworks */,
 				D0B6BDDB2A248884005B4C19 /* FirebaseFirestore in Frameworks */,
-				E2E6EC46FBC38B53205941E5 /* Pods_QuizTests.framework in Frameworks */,
 				D0B6BDDD2A24889B005B4C19 /* FirebaseAppCheck in Frameworks */,
 				D01EDCE82A184E3900FF3163 /* FirebaseAuth in Frameworks */,
 			);
@@ -167,21 +159,8 @@
 		0050E3EF6CC934B1E1F05E77 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7D8DC8EBCF4563F243A951F0 /* Pods-Quiz.debug.xcconfig */,
-				8232A3BC6F8A90AD28DD6822 /* Pods-Quiz.release.xcconfig */,
-				561DA45D4A1E2A2D0F19F474 /* Pods-QuizTests.debug.xcconfig */,
-				142B5D75226800A730600D95 /* Pods-QuizTests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		0E7ACEB8B1CB8F44373F3D36 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				089E340D9324794E46456934 /* Pods_Quiz.framework */,
-				1F3755A998632E0A2D7B89F0 /* Pods_QuizTests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D03083D72A0F8A3800A8FBB7 /* Controller */ = {
@@ -200,7 +179,7 @@
 		D03083F02A0F8A5F00A8FBB7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D084EC422A0F7EF400544AA3 /* Quiz.xcdatamodeld */,
+				D074D66C2A262CC7004942C4 /* CoreData */,
 				D03083F42A0F8A7900A8FBB7 /* FirebaseUser.swift */,
 				D03083F22A0F8A7800A8FBB7 /* Game.swift */,
 				D03083F12A0F8A7800A8FBB7 /* OpenTriviaDatabaseManager.swift */,
@@ -213,17 +192,23 @@
 		D03083FB2A0F8A9000A8FBB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D03084062A0F8CDD00A8FBB7 /* CustomButton.swift */,
-				D03084082A0F8CE500A8FBB7 /* CustomButton2.swift */,
+				D0EB9A3E2A27AD01006D2A48 /* CustomButtons */,
 				D030840A2A0F8CEB00A8FBB7 /* CategoryCell.swift */,
-				D030840D2A0F8CF500A8FBB7 /* CustomCell.swift */,
-				D030840C2A0F8CF400A8FBB7 /* CustomFriendCell.swift */,
+				D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */,
 				D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */,
 				D03084002A0F8AB100A8FBB7 /* Main.storyboard */,
 				D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */,
 				D03083FD2A0F8AB000A8FBB7 /* Settings.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D074D66C2A262CC7004942C4 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D074D66D2A262CD6004942C4 /* CoredataStack.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		D084EC2D2A0F7EF400544AA3 = {
@@ -233,7 +218,6 @@
 				D084EC522A0F7EF700544AA3 /* QuizTests */,
 				D084EC372A0F7EF400544AA3 /* Products */,
 				0050E3EF6CC934B1E1F05E77 /* Pods */,
-				0E7ACEB8B1CB8F44373F3D36 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -293,6 +277,7 @@
 				D084FB132A10309200721B88 /* HistoryVC.swift */,
 				D03083DB2A0F8A4F00A8FBB7 /* QuizzVC.swift */,
 				D05B8F452A1E2B3B0064795D /* InvitesVC.swift */,
+				D074D66F2A26A2A7004942C4 /* QuestionResultVC.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -345,6 +330,15 @@
 			path = Structures;
 			sourceTree = "<group>";
 		};
+		D0EB9A3E2A27AD01006D2A48 /* CustomButtons */ = {
+			isa = PBXGroup;
+			children = (
+				D03084062A0F8CDD00A8FBB7 /* CustomButton.swift */,
+				D03084082A0F8CE500A8FBB7 /* CustomButton2.swift */,
+			);
+			path = CustomButtons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -352,11 +346,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D084EC632A0F7EF700544AA3 /* Build configuration list for PBXNativeTarget "Quiz" */;
 			buildPhases = (
-				418CCE91214D34A110A94E18 /* [CP] Check Pods Manifest.lock */,
 				D084EC322A0F7EF400544AA3 /* Sources */,
 				D084EC332A0F7EF400544AA3 /* Frameworks */,
 				D084EC342A0F7EF400544AA3 /* Resources */,
-				33A5DF13B6342471446BCAE2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -370,6 +362,7 @@
 				D01EDCE12A182A3400FF3163 /* FirebaseFunctions */,
 				D01EDCE32A182A3400FF3163 /* FirebaseMessaging */,
 				D01EDCE52A182A3400FF3163 /* FirebaseStorage */,
+				D0B852522A2528D500A7D9B7 /* Alamofire */,
 			);
 			productName = Quiz;
 			productReference = D084EC362A0F7EF400544AA3 /* Quiz.app */;
@@ -379,7 +372,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D084EC662A0F7EF700544AA3 /* Build configuration list for PBXNativeTarget "QuizTests" */;
 			buildPhases = (
-				AA5D41F05BA9EB9FAF5C775E /* [CP] Check Pods Manifest.lock */,
 				D084EC4B2A0F7EF700544AA3 /* Sources */,
 				D084EC4C2A0F7EF700544AA3 /* Frameworks */,
 				D084EC4D2A0F7EF700544AA3 /* Resources */,
@@ -430,6 +422,7 @@
 			mainGroup = D084EC2D2A0F7EF400544AA3;
 			packageReferences = (
 				D01EDCDA2A182A3400FF3163 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D0B852512A2528D500A7D9B7 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = D084EC372A0F7EF400544AA3 /* Products */;
 			projectDirPath = "";
@@ -462,70 +455,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		33A5DF13B6342471446BCAE2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Quiz/Pods-Quiz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Quiz/Pods-Quiz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quiz/Pods-Quiz-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		418CCE91214D34A110A94E18 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Quiz-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AA5D41F05BA9EB9FAF5C775E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-QuizTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		D084EC322A0F7EF400544AA3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -536,16 +465,14 @@
 				D03083E82A0F8A5100A8FBB7 /* ResultVC.swift in Sources */,
 				D03083EE2A0F8A5200A8FBB7 /* LoginVC.swift in Sources */,
 				D03083E42A0F8A5100A8FBB7 /* CompetitiveVC.swift in Sources */,
-				D030840F2A0F8CF500A8FBB7 /* CustomFriendCell.swift in Sources */,
+				D030840F2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */,
 				D03084092A0F8CE500A8FBB7 /* CustomButton2.swift in Sources */,
 				D084EC3A2A0F7EF400544AA3 /* AppDelegate.swift in Sources */,
 				D03083EA2A0F8A5200A8FBB7 /* FriendsVC.swift in Sources */,
-				D030840E2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */,
 				D03083EF2A0F8A5200A8FBB7 /* CreateAccountVC.swift in Sources */,
 				D0B8D42C2A1BA5560033467D /* HomeVC.swift in Sources */,
 				D03083E52A0F8A5100A8FBB7 /* ModificationVC.swift in Sources */,
 				D03083E92A0F8A5100A8FBB7 /* SearchOpponentVC.swift in Sources */,
-				D084EC442A0F7EF400544AA3 /* Quiz.xcdatamodeld in Sources */,
 				D030840B2A0F8CEB00A8FBB7 /* CategoryCell.swift in Sources */,
 				D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */,
 				D03084112A0F8CFB00A8FBB7 /* CustomTableView.swift in Sources */,
@@ -561,11 +488,13 @@
 				D03083F92A0F8A7900A8FBB7 /* FirebaseUser.swift in Sources */,
 				D03084072A0F8CDD00A8FBB7 /* CustomButton.swift in Sources */,
 				D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */,
+				D074D6702A26A2A7004942C4 /* QuestionResultVC.swift in Sources */,
 				D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */,
 				D03084022A0F8AB100A8FBB7 /* Settings.swift in Sources */,
 				D08CAE722A23DE0800C835E9 /* JoinWithCodeVC.swift in Sources */,
 				D084EC3C2A0F7EF400544AA3 /* SceneDelegate.swift in Sources */,
 				D03083ED2A0F8A5200A8FBB7 /* QuizzGroupsVC.swift in Sources */,
+				D074D66E2A262CD6004942C4 /* CoredataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,7 +649,6 @@
 		};
 		D084EC642A0F7EF700544AA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D8DC8EBCF4563F243A951F0 /* Pods-Quiz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -753,7 +681,6 @@
 		};
 		D084EC652A0F7EF700544AA3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8232A3BC6F8A90AD28DD6822 /* Pods-Quiz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -786,7 +713,6 @@
 		};
 		D084EC672A0F7EF700544AA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 561DA45D4A1E2A2D0F19F474 /* Pods-QuizTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -807,7 +733,6 @@
 		};
 		D084EC682A0F7EF700544AA3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 142B5D75226800A730600D95 /* Pods-QuizTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -867,6 +792,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		D0B852512A2528D500A7D9B7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -920,20 +853,12 @@
 			package = D01EDCDA2A182A3400FF3163 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAppCheck;
 		};
-/* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		D084EC422A0F7EF400544AA3 /* Quiz.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				D084EC432A0F7EF400544AA3 /* Quiz.xcdatamodel */,
-			);
-			currentVersion = D084EC432A0F7EF400544AA3 /* Quiz.xcdatamodel */;
-			path = Quiz.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+		D0B852522A2528D500A7D9B7 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0B852512A2528D500A7D9B7 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
-/* End XCVersionGroup section */
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D084EC2E2A0F7EF400544AA3 /* Project object */;
 }

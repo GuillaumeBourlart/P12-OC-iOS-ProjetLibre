@@ -9,7 +9,6 @@ import UIKit
 import CoreData
 import FirebaseCore
 import FirebaseMessaging
-import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,17 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        
-        UNUserNotificationCenter.current().delegate = self
-        Messaging.messaging().delegate = self
-        
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-            print("Permission granted: \(granted)")
-            guard granted else { return }
-            DispatchQueue.main.async {
-                application.registerForRemoteNotifications()
-            }
-        }
         
         return true
     }
@@ -93,58 +81,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
-    
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        Messaging.messaging().apnsToken = deviceToken
-    }
-    
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
-        
-        let firebaseService = FirebaseService() // Assurez-vous d'avoir une classe FirebaseService avec les méthodes appropriées
-        guard let currentUserID = firebaseService.currentUserID else { return }
-        let data = ["fcmToken": fcmToken ?? ""]
-        firebaseService.updateDocument(in: "users", documentId: currentUserID, data: data) { error in
-            if let error = error {
-                print("Error updating user's FCM token: \(error)")
-            } else {
-                print("Successfully updated user's FCM token.")
-            }
-        }
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
-        handleNotificationType(userInfo: userInfo)
-        completionHandler([.alert, .sound])
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
-        handleNotificationType(userInfo: userInfo)
-        completionHandler()
-    }
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        handleNotificationType(userInfo: userInfo)
-        completionHandler(UIBackgroundFetchResult.newData)
-    }
-    
-    private func handleNotificationType(userInfo: [AnyHashable: Any]) {
-        if let type = userInfo["type"] as? String {
-            switch type {
-            case "invitation":
-                if let lobbyID = userInfo["lobbyID"] as? String {
-                    if FirebaseUser.shared.userInfo != nil {
-                        FirebaseUser.shared.userInfo!.invites.append(lobbyID)
-                    }
-                }
-            // Ajouter ici d'autres cas en fonction de vos types de notification
-            default:
-                break
-            }
-        }
-    }
-}
+

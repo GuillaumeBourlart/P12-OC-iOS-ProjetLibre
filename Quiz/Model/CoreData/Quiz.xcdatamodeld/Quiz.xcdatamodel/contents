@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F66" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="FriendEntity" representedClassName="FriendEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="friendId" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="FriendRequestEntity" representedClassName="FriendRequestEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES"/>
+        <attribute name="friendRequestId" optional="YES"/>
+        <attribute name="status" optional="YES"/>
+    </entity>
+    <entity name="IncorrectAnswerEntity" representedClassName="IncorrectAnswerEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="attribute2" optional="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuestionEntity"/>
+    </entity>
+    <entity name="InviteEntity" representedClassName="InviteEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="inviteId" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="QuestionEntity" representedClassName="QuestionEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="YES"/>
+        <attribute name="correct_answer" optional="YES"/>
+        <attribute name="difficulty" optional="YES"/>
+        <attribute name="explanation" optional="YES"/>
+        <attribute name="id" optional="YES"/>
+        <attribute name="incorrect_answers" optional="YES"/>
+        <attribute name="question" optional="YES"/>
+        <attribute name="type" optional="YES"/>
+    </entity>
+    <entity name="QuizEntity" representedClassName="QuizEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="average_score" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="category_id" optional="YES" attributeType="String"/>
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="creator" optional="YES" attributeType="String"/>
+        <attribute name="difficulty" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="users_completed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="UserEntity" representedClassName="UserEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="birth_date" optional="YES"/>
+        <attribute name="first_name" optional="YES"/>
+        <attribute name="id" optional="YES"/>
+        <attribute name="inscription_date" optional="YES"/>
+        <attribute name="last_name" optional="YES" attributeType="String"/>
+        <attribute name="points" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="profile_picture" optional="YES" attributeType="String"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+    </entity>
+</model>

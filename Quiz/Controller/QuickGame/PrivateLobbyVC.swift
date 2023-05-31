@@ -28,22 +28,31 @@ class PrivateLobbyVC: UIViewController{
     var invitedGroups: [String] = []
     var players: [String] = []
     var listener: ListenerRegistration? = nil
+    var difficulty: String?
+    var category: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isCreator! {
-            joinCodeLabel.isHidden = false
-            invteplayersButton.isHidden = false
-            launchButton.isHidden = false
-        }else{
-            startListeningForbegin()
-        }
+        navigationController?.setNavigationBarHidden(true, animated: true)
+            tabBarController?.tabBar.isHidden = true
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let lobbyId = lobbyId {
             startListening(lobbyId: lobbyId)
+            
+            if isCreator! {
+                joinCodeLabel.isHidden = false
+                invteplayersButton.isHidden = false
+                launchButton.isHidden = false
+            }else{
+                startListeningForbegin()
+            }
         }
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,11 +75,11 @@ class PrivateLobbyVC: UIViewController{
                 return
             }
             if self.isCreator != nil, self.isCreator == true {
-                Game.shared.deleteCurrentRoom { result in
+                Game.shared.deleteCurrentRoom(lobbyId: self.lobbyId!) { result in
                     switch result {
                     case .failure(let error): print(error)
                     case .success(): print("lobby supprimé")
-                       
+                        
                     }
                 }
             }
@@ -84,7 +93,7 @@ class PrivateLobbyVC: UIViewController{
     }
     
     @IBAction func launchGame(){
-        Game.shared.createGame(competitive: false, players: self.players) { result in
+        Game.shared.createGame(category: category, difficulty: difficulty, with: lobbyId, competitive: false, players: self.players) { result in
             switch result {
             case .failure(let error): print(error)
             case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
@@ -113,24 +122,27 @@ class PrivateLobbyVC: UIViewController{
     }
     
     func startListeningForbegin() {
-        listener = Game.shared.ListenForGameLaunch() { [weak self] result in
+        listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: lobbyId!) { result in
             switch result {
-            case .success(let gameId):
-                print("Game found: \(gameId)")
-                self?.performSegue(withIdentifier: "goToQuizz", sender: gameId)
+            case .success(let gamedata):
+                if let gameID = gamedata["id"], let status = gamedata["status"] as? String , status == "waiting" {
+                    self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
+                }
             case .failure(let error):
                 print("Error fetching game: \(error)")
             }
         }
+        
     }
     
-
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? InvitePlayersVC {
             destination.lobbyID = lobbyId
         }else if let destination = segue.destination as? QuizzVC {
             destination.gameID = sender as? String
+            destination.isCompetitive = false
         }
     }
     
@@ -138,6 +150,26 @@ class PrivateLobbyVC: UIViewController{
 }
 
 extension PrivateLobbyVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+
+            let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
+                tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
+            headerLabel.font = UIFont(name: "Helvetica", size: 18)
+            headerLabel.textColor = UIColor.white  // couleur du texte
+            headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+            headerLabel.sizeToFit()
+            headerView.addSubview(headerLabel)
+
+            return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 70.0 // Remplacer par la hauteur désirée
+        }
+    
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2  // one for players, another for invitedPlayers
     }

@@ -12,19 +12,46 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var searchQuizField: UITextField!
     var categories: [[String: Any]] = []
     
     let apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()))
+    
+    var difficulty: String?
+    var category: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Masquer le bouton "back"
         //        self.navigationItem.hidesBackButton = true
+
         
         collectionView.dataSource = self
         collectionView.delegate = self
         loadCategories()
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+
+        // margins total = 40 (left) + 40 (right)
+        let margins: CGFloat = 40 + 40
+
+        // spacing between cells
+        let spacing: CGFloat = 25
+
+        // Get the screen's width
+        let screenWidth = UIScreen.main.bounds.width
+
+        // Calculate the width for each item
+        let itemWidth = (screenWidth - margins - spacing) / 2
+
+        // Set the item size
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
+
+        // Set the layout to the collectionView
+        collectionView.collectionViewLayout = layout
     }
     
     func loadCategories() {
@@ -42,6 +69,13 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? OpponentChoice {
+            destination.category = self.category
+            destination.difficulty = self.difficulty
+        }
+    }
+    
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -54,7 +88,7 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         let category = categories[indexPath.row]
         cell.categoryLabel.text = category["name"] as? String
         cell.tag = (category["id"] as? Int)!
-        
+        cell.layer.cornerRadius = 10
         return cell
         
     }
@@ -67,23 +101,23 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         
         // Accéder au tag de la cellule
         let cellTag = cell?.tag
-        Game.shared.category = cellTag
+        self.category = cellTag
         
         let alertController = UIAlertController(title: "Choisir la difficulté", message: nil, preferredStyle: .alert)
         
         let facileAction = UIAlertAction(title: "Facile", style: .default) { (action) in
             // Code à exécuter lorsque l'utilisateur choisit "Facile"
-            Game.shared.difficulty = "easy"
+            self.difficulty = "easy"
             self.performSegue(withIdentifier: "goToOpponentsList", sender: self)
         }
         let moyenAction = UIAlertAction(title: "Moyen", style: .default) { (action) in
             // Code à exécuter lorsque l'utilisateur choisit "Moyen"
-            Game.shared.difficulty = "medium"
+            self.difficulty = "medium"
             self.performSegue(withIdentifier: "goToOpponentsList", sender: self)
         }
         let difficileAction = UIAlertAction(title: "Difficile", style: .default) { (action) in
             // Code à exécuter lorsque l'utilisateur choisit "Difficile"
-            Game.shared.difficulty = "hard"
+            self.difficulty = "hard"
             self.performSegue(withIdentifier: "goToOpponentsList", sender: self)
         }
         

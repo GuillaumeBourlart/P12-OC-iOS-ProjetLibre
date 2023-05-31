@@ -38,6 +38,10 @@ class HistoryVC: UIViewController {
 
 
 extension HistoryVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 70.0 // Remplacer par la hauteur désirée
+        }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.games.count
     }
@@ -45,7 +49,13 @@ extension HistoryVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath) as? CustomCell else {return UITableViewCell()}
         
-        cell.label.text = self.games[indexPath.row].name
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Votre format de date ici.
+
+        let date = self.games[indexPath.row].date
+        let dateString = formatter.string(from: date)
+
+        cell.label.text = dateString
         
         return cell
     }

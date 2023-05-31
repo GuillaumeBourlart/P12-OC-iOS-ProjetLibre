@@ -133,7 +133,7 @@ class ModificationVC: UIViewController{
     
     func saveModifications(){
         if let quiz = quiz {
-            guard let name = nameField.text, let theme = themeField.text, let difficulty = difficultyField.text else {return}
+            guard let name = nameField.text, name != "", let theme = themeField.text,theme != "", let difficulty = difficultyField.text, difficulty != "" else {return}
             
             FirebaseUser.shared.updateQuiz(quizID: quiz.id, newName: name, newCategoryID: theme, newDifficulty: difficulty) { result in
                 switch result {
@@ -150,7 +150,7 @@ class ModificationVC: UIViewController{
         
         
         else if let group = group {
-            guard let name = nameField.text else {return}
+            guard let name = nameField.text, name != "" else {return}
             
             FirebaseUser.shared.updateGroupName(groupID: group.id, newName: name) { result in
                 switch result {
@@ -208,13 +208,15 @@ class ModificationVC: UIViewController{
         }
         
         let addAction = UIAlertAction(title: "Ajouter", style: .default) { _ in
-            guard let question = alertController.textFields?[0].text,
-                  let correctAnswer = alertController.textFields?[1].text,
-                  let incorrectAnswer1 = alertController.textFields?[2].text,
-                  let incorrectAnswer2 = alertController.textFields?[3].text,
-                  let incorrectAnswer3 = alertController.textFields?[4].text,
-                  let explanation = alertController.textFields?[5].text
+            guard let question = alertController.textFields?[0].text, !question.isEmpty,
+                  let correctAnswer = alertController.textFields?[1].text, !correctAnswer.isEmpty,
+                  let incorrectAnswer1 = alertController.textFields?[2].text, !incorrectAnswer1.isEmpty,
+                  let incorrectAnswer2 = alertController.textFields?[3].text, !incorrectAnswer2.isEmpty,
+                  let incorrectAnswer3 = alertController.textFields?[4].text, !incorrectAnswer3.isEmpty,
+                  let explanation = alertController.textFields?[5].text, !explanation.isEmpty
             else {
+                // vous pouvez afficher un message d'erreur ici
+                print("Tous les champs doivent être remplis.")
                 return
             }
             
@@ -262,6 +264,13 @@ class ModificationVC: UIViewController{
             
             let selectedFriends = selectFriendsTableViewController.selectedFriends
             
+            // Vérifier si au moins un ami a été sélectionné
+            guard !selectedFriends.isEmpty else {
+                // vous pouvez afficher un message d'erreur ici
+                print("Vous devez sélectionner au moins un ami.")
+                return
+            }
+            
             FirebaseUser.shared.addNewMembersToGroup(group: self.group!, newMembers: selectedFriends) { result in
                 switch result {
                 case .success():
@@ -283,6 +292,11 @@ class ModificationVC: UIViewController{
 }
 
 extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 70.0 // Remplacer par la hauteur désirée
+        }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let quiz = quiz {
             return quiz.questions.count
@@ -318,18 +332,18 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
                 if tableView.cellForRow(at: indexPath) is CustomCell {
                     print(3)
                     var questionToDelete: UniversalQuestion?
-
+                    
                     // Trouver la question correspondant à l'index
                     if indexPath.row < quiz.questions.count {
                         questionToDelete = quiz.questions[indexPath.row]
                     }
-
+                    
                     guard let question = questionToDelete else {
                         return
                     }
-
+                    
                     let questionText = question.question // Utilisez le texte de la question comme identifiant
-
+                    
                     // Supprimer la question de la base de données
                     FirebaseUser.shared.deleteQuestionFromQuiz(quiz: quiz, questionText: questionText) { result in
                         switch result {

@@ -10,9 +10,19 @@ import UIKit
 
 
 class InvitePlayersVC: UIViewController{
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+            tabBarController?.tabBar.isHidden = true
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -54,6 +64,11 @@ class InvitePlayersVC: UIViewController{
 }
 
 extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 70.0 // Remplacer par la hauteur désirée
+        }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isShowingFriends {
             return friends.count

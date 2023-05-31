@@ -14,7 +14,7 @@ class InvitesVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var invites: [String] { FirebaseUser.shared.userInfo?.invites ?? []}
+    var invites: [String: String] { FirebaseUser.shared.userInfo?.invites ?? [:]}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,20 +30,21 @@ class InvitesVC: UIViewController {
         guard let currentUserId = Game.shared.currentUserId else {
             return
         }
-        listener = Game.shared.ListenForChangeInDocument(in: "users", documentId: currentUserId, completion: { result in
+        listener = Game.shared.ListenForChangeInDocument(in: "users", documentId: currentUserId) { result in
             switch result {
             case .success(let data):
-                if let invites = data["invites"] as? [String] {
+                if let invites = data["invites"] as? [String: String] {
                     if FirebaseUser.shared.userInfo != nil {
                         FirebaseUser.shared.userInfo!.invites = invites
                     }
                 }
                 self.tableView.reloadData()
-                // Le nœud a été modifié, traiter les données mises à jour...
-            case .failure(let error): print(error)
-                // Gérer l'erreur...
+                // Handle the updated data...
+            case .failure(let error):
+                print(error)
+                // Handle the error...
             }
-        })
+        }
     }
     
     
@@ -68,20 +69,24 @@ class InvitesVC: UIViewController {
             }
         }
     }
+    
+    @IBAction func unwindToInvites(segue: UIStoryboardSegue) {
+        // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
+    }
 }
 
 
 extension InvitesVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 70.0 // Remplacer par la hauteur désirée
+        }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let selectedInvitesID = invites[indexPath.row]
-        self.joinLobby(lobbyId: selectedInvitesID)
+        let selectedInvite = Array(invites)[indexPath.row]
+        self.joinLobby(lobbyId: selectedInvite.value)
     }
-    
-    
-    
 }
 
 extension InvitesVC: UITableViewDataSource {
@@ -92,8 +97,8 @@ extension InvitesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
         
-        let invite = invites[indexPath.row]
-        cell.label.text = invite
+        let invite = Array(invites)[indexPath.row]
+        cell.label.text = "User: \(invite.key) - Lobby: \(invite.value)"
         
         return cell
     }

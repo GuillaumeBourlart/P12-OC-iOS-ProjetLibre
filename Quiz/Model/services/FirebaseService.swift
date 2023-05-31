@@ -39,6 +39,7 @@ protocol FirebaseServiceProtocol {
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String: Any]]?, Error?) -> Void)
     func getDocument(in collection: String, documentId: String, completion: @escaping ([String: Any]?, Error?) -> Void)
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
+    func setDataWithMerge(in collection: String, documentId: String, data: [String: Any], merge: Bool, completion: @escaping (Error?) -> Void)
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void)
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration
@@ -47,6 +48,7 @@ protocol FirebaseServiceProtocol {
     var currentUserID: String? { get }
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
     func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void)
+    func signOutUser(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class FirebaseService: FirebaseServiceProtocol{
@@ -56,6 +58,8 @@ class FirebaseService: FirebaseServiceProtocol{
     var currentUserID: String? {
         return Auth.auth().currentUser?.uid
     }
+    
+    
     
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String: Any]]?, Error?) -> Void) {
         var collectionReference: Query = db.collection(collection)
@@ -123,6 +127,10 @@ class FirebaseService: FirebaseServiceProtocol{
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).setData(data, completion: completion)
     }
+    // Ajout du paramètre 'merge' dans la méthode 'setData'
+    func setDataWithMerge(in collection: String, documentId: String, data: [String: Any], merge: Bool = false, completion: @escaping (Error?) -> Void) {
+        db.collection(collection).document(documentId).setData(data, merge: merge, completion: completion)
+    }
     
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).delete(completion: completion)
@@ -149,6 +157,15 @@ class FirebaseService: FirebaseServiceProtocol{
             } else if authData != nil {
                 completion(.success((authData?.user.uid)!))
             }
+        }
+    }
+    
+    func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {
+        do {
+            try Auth.auth().signOut()
+            completion(.success(()))
+        } catch let error {
+            completion(.failure(error))
         }
     }
 }

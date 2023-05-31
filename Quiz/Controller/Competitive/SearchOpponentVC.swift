@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 class SearchOpponentVC: UIViewController{
-    
+    var lobbyId: String?
     var listener: ListenerRegistration? = nil
     
     var isGameFound = false
@@ -17,10 +17,12 @@ class SearchOpponentVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        startListening()
         findOpponent()
         
     }
+    
+    
+
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -30,7 +32,7 @@ class SearchOpponentVC: UIViewController{
         }
         
         if !isGameFound {
-            Game.shared.deleteCurrentRoom(){ result in
+            Game.shared.deleteCurrentRoom(lobbyId: lobbyId!){ result in
                 switch result {
                 case .success():
                     print("annulation réussie")
@@ -39,6 +41,7 @@ class SearchOpponentVC: UIViewController{
                 }
             }
         }
+        
     }
     
     
@@ -47,8 +50,9 @@ class SearchOpponentVC: UIViewController{
         
         Game.shared.searchCompetitiveRoom(){ result in
             switch result {
-            case .success:
+            case .success(let lobbyId): self.lobbyId = lobbyId
                 print("recherche réussie ")
+                self.startListening()
             case .failure(let error):
                 print(error.localizedDescription.description)
             }
@@ -59,11 +63,12 @@ class SearchOpponentVC: UIViewController{
     
     
     func startListening() {
-        listener = Game.shared.ListenForGameFound() { [weak self] result in
+        listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: lobbyId!) { result in
             switch result {
-            case .success(let gameId):
-                print("Game found: \(gameId)")
-                self?.performSegue(withIdentifier: "goToQuizz", sender: gameId)
+            case .success(let gamedata):
+                if let gameID = gamedata["id"] {
+                    self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
+                }
             case .failure(let error):
                 print("Error fetching game: \(error)")
             }
@@ -75,6 +80,7 @@ class SearchOpponentVC: UIViewController{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuizzVC {
             destination.gameID = sender as? String
+            destination.isCompetitive = true
         }
     }
     

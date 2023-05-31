@@ -60,12 +60,12 @@ struct FirestoreFields {
 
     // Game fields
     struct Game {
-        static let name = "name"
         static let competitive = "competitive"
         static let players = "players"
         static let quizId = "quiz_id"
         static let questions = "questions"
         static let userAnswers = "user_answers"
+        static let finalScores = "final_scores"
         struct UserAnswer {
                 static let selected_answer = "selected_answer"
                 static let points = "points"

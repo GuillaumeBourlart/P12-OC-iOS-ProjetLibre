@@ -24,13 +24,29 @@ class CreateAccountVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if Auth.auth().currentUser != nil {
+            FirebaseUser.shared.getUserInfo { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
+                }
+            }
+        }
+    }
+    
     
     @IBAction func signUpUser(_ sender: Any) {
         guard let email = userEmail.text,
+              email != "",
               let password = userPassword.text,
+              password != "",
               let pseudo = userPseudo.text,
+              pseudo != "",
               let firstname = userFirstname.text,
-              let lastname = userLastname.text else {
+              firstname != "",
+              let lastname = userLastname.text,
+              lastname != "" else {
             return
         }
         
@@ -53,6 +69,8 @@ class CreateAccountVC: UIViewController {
         userPassword.resignFirstResponder()
         userDateOfBirth.resignFirstResponder()
     }
+    
+    
     
     
     @IBAction func dismiss(_ sender: Any) {

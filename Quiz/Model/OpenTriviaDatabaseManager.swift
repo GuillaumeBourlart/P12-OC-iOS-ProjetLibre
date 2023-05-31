@@ -72,11 +72,30 @@ class OpenTriviaDatabaseManager {
             if let data = data {
                 do {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-                    guard let json = jsonObject as? [String: Any],
-                          let questionsData = json["results"] as? [[String: Any]] else {
+                    guard var json = jsonObject as? [String: Any],
+                          var questionsData = json["results"] as? [[String: Any]] else {
                         completion(.failure(MyError.invalidJsonFormat))
                         return
                     }
+
+                    for (index, _) in questionsData.enumerated() {
+                        if var question = questionsData[index]["question"] as? String {
+                            question = question.stringByDecodingHTMLEntities ?? question
+                            questionsData[index]["question"] = question
+                        }
+                        if var correctAnswer = questionsData[index]["correct_answer"] as? String {
+                            correctAnswer = correctAnswer.stringByDecodingHTMLEntities ?? correctAnswer
+                            questionsData[index]["correct_answer"] = correctAnswer
+                        }
+                        if var incorrectAnswers = questionsData[index]["incorrect_answers"] as? [String] {
+                            for (i, _) in incorrectAnswers.enumerated() {
+                                incorrectAnswers[i] = incorrectAnswers[i].stringByDecodingHTMLEntities ?? incorrectAnswers[i]
+                            }
+                            questionsData[index]["incorrect_answers"] = incorrectAnswers
+                        }
+                    }
+
+                    json["results"] = questionsData
                     let jsonData = try JSONSerialization.data(withJSONObject: questionsData, options: [])
                     let decoder = JSONDecoder()
                     let questions = try decoder.decode([UniversalQuestion].self, from: jsonData)
@@ -90,4 +109,24 @@ class OpenTriviaDatabaseManager {
         }
     }
     
+}
+
+
+extension String {
+    var stringByDecodingHTMLEntities: String? {
+        guard let data = self.data(using: .utf8) else {
+            return nil
+        }
+
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+
+        guard let attributedString = try? NSAttributedString(data: data, options: options, documentAttributes: nil) else {
+            return nil
+        }
+
+        return attributedString.string
+    }
 }

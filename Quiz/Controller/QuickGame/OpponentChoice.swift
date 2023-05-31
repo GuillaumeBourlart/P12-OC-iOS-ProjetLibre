@@ -11,7 +11,8 @@ import UIKit
 class OpponentChoice: UIViewController {
     
     @IBOutlet var buttons: [UIButton]!
-    
+    var difficulty: String?
+    var category: Int?
     
     override func viewDidLoad(){
         
@@ -22,7 +23,7 @@ class OpponentChoice: UIViewController {
             return
         }
         switch sender.tag {
-        case 0: Game.shared.createGame(competitive: false, players: [currentUserId]) { reuslt in
+        case 0: Game.shared.createGame(category: category, difficulty: difficulty, with: nil, competitive: false, players: [currentUserId]) { reuslt in
             switch reuslt {
             case .failure(let error): print(error)
             case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
@@ -45,13 +46,21 @@ class OpponentChoice: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuizzVC {
             destination.gameID = sender as? String
+            destination.isCompetitive = false
+            
         }
         else if let destination = segue.destination as? PrivateLobbyVC {
             destination.lobbyId = sender as? String
             destination.isCreator = true
+            destination.category = self.category
+            destination.difficulty = self.difficulty
+            
         }
     }
     
+    @IBAction func unwindToOpponentChoice(segue: UIStoryboardSegue) {
+        // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
+    }
     
     
 }

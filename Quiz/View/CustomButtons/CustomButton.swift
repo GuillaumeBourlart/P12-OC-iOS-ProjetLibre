@@ -23,8 +23,6 @@ class CustomButton: UIButton {
             // Définissez la couleur du texte du bouton
             setTitleColor(.white, for: .normal)
             
-            // Définissez la couleur d'arrière-plan du bouton
-            backgroundColor = UIColor(named: "button")
             
             // Définissez le border radius (arrondissement des coins) du bouton
             

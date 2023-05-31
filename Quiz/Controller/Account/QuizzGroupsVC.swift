@@ -78,9 +78,9 @@ class QuizzGroupsVC: UIViewController{
         }
         
         let addAction = UIAlertAction(title: "Ajouter", style: .default) { (_) in
-            guard let name = alert.textFields?[0].text,
-                  let category = alert.textFields?[1].text,
-                  let difficulty = alert.textFields?[2].text else { return }
+            guard let name = alert.textFields?[0].text, !name.isEmpty,
+                  let category = alert.textFields?[1].text, !category.isEmpty,
+                  let difficulty = alert.textFields?[2].text, !difficulty.isEmpty else { return }
             
             FirebaseUser.shared.addQuiz(name: name, category_id: category, difficulty: difficulty) { result in
                 switch result {
@@ -109,7 +109,7 @@ class QuizzGroupsVC: UIViewController{
         }
         
         let addAction = UIAlertAction(title: "Ajouter", style: .default) { (_) in
-            guard let name = alert.textFields?[0].text else { return }
+            guard let name = alert.textFields?[0].text, !name.isEmpty else { return }
             
             FirebaseUser.shared.addGroup(name: name) { result in
                 switch result {
@@ -174,7 +174,9 @@ extension QuizzGroupsVC: UITableViewDelegate {
     }
     
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 70.0 // Remplacer par la hauteur désirée
+        }
     
     
     

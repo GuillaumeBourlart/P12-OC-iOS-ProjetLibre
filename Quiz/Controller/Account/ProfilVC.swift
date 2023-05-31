@@ -4,7 +4,6 @@
 //
 //  Created by Guillaume Bourlart on 24/04/2023.
 //
-import SDWebImage
 import Foundation
 import UIKit
 
@@ -15,7 +14,7 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         super.viewDidLoad()
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
-            profileImageView.clipsToBounds = true
+        profileImageView.clipsToBounds = true
         
         
         if let imageData = Data(base64Encoded: FirebaseUser.shared.userInfo!.profile_picture) {
@@ -29,6 +28,17 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGesture)
     }
+    
+    
+    @IBAction func logout(_ sender: Any) {
+        FirebaseUser.shared.signOut { result in
+            switch result {
+            case .failure(let error): print(error)
+            case .success(): self.performSegue(withIdentifier: "unwindToLogin", sender: self)
+            }
+        }
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuizzGroupsVC {

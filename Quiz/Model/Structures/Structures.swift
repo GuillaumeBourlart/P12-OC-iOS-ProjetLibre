@@ -69,7 +69,7 @@ struct aUser: Decodable {
     let inscription_date: Date
     let rank: Int
     let points: Int
-    var invites: [String]
+    var invites: [String: String]
     var profile_picture: String
     var friends: [String]
     var friendRequests: [String: FriendRequest]
@@ -93,7 +93,6 @@ struct FriendGroup: Decodable {
 
 struct GameData: Decodable {
     var id: String
-    let name: String
     let creator: String
     let competitive: Bool
     let status: String
@@ -102,6 +101,7 @@ struct GameData: Decodable {
     let quiz: String?
     var questions: [String: UniversalQuestion]
     var user_answers: [String: [String: UserAnswer]]
+    var final_scores: [String: Int]?
 }
 
 struct UserAnswer: Decodable {

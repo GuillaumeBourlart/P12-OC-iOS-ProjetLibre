@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
 
 class LoginVC: UIViewController{
     
@@ -18,10 +19,27 @@ class LoginVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if Auth.auth().currentUser != nil {
+            FirebaseUser.shared.getUserInfo { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
+                }
+            }
+            
+        }
     }
     
     @IBAction func loginUser(_ sender: UIButton) {
-        guard let email = userEmail.text, let password = userPassword.text else {
+        guard let email = userEmail.text,
+              email != "",
+              let password = userPassword.text,
+              password != "" else {
             return
         }
         
@@ -38,6 +56,11 @@ class LoginVC: UIViewController{
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         userEmail.resignFirstResponder()
         userPassword.resignFirstResponder()
+    }
+    
+    
+    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
+        // Vous pouvez utiliser cette méthode pour nettoyer toute donnée si nécessaire
     }
     
     

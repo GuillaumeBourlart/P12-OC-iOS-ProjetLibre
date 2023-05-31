@@ -19,7 +19,7 @@ class FriendsVC: UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
     
-
+    
     var usernames: [String] {
         if isShowingFriendRequests {
             return FirebaseUser.shared.fetchFriendRequests()
@@ -117,21 +117,23 @@ class FriendsVC: UIViewController{
 
 
 
-extension FriendsVC: UITableViewDataSource {
+extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return usernames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! CustomFriendCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! CustomCell
         
         // Configurez votre cellule avec les données de la demande d'ami
         if indexPath.row < usernames.count {
             let friendUID = usernames[indexPath.row]
-            cell.username!.text = friendUID
+            cell.label!.text = friendUID
             
+            // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
+            cell.configure(isFriendCell: true)
             // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
-            cell.addButton.isHidden = !isShowingFriendRequests
+            cell.addButton?.isHidden = !isShowingFriendRequests
             //            cell.removeButton.isHidden = !isShowingFriendRequests
             
             // Configurer les boutons et la délégation
@@ -143,11 +145,16 @@ extension FriendsVC: UITableViewDataSource {
             fatalError("IndexPath is out of bounds.")
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 70.0 // Remplacer par la hauteur désirée
+        }
 }
 
 
-extension FriendsVC: FriendTableViewCellDelegate {
-    func didTapAddButton(in cell: CustomFriendCell) {
+extension FriendsVC: CustomCellDelegate {
+    
+    func didTapAddButton(in cell: CustomCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             let friendUID = usernames[indexPath.row]
             
@@ -164,7 +171,7 @@ extension FriendsVC: FriendTableViewCellDelegate {
         }
     }
     
-    func didTapRemoveButton(in cell: CustomFriendCell) {
+    func didTapRemoveButton(in cell: CustomCell) {
         
         guard let indexPath = tableView.indexPath(for: cell) else {
             return

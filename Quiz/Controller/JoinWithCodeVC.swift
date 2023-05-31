@@ -19,7 +19,7 @@ class JoinWithCodeVC: UIViewController {
     }
     
     @IBAction func joinButtonPressed(sender: UIButton){
-        guard let code: String = self.codeField.text else { print("error"); return }
+        guard let code: String = self.codeField.text, !code.isEmpty else { print("error"); return }
         Game.shared.joinWithCode(code: code){result in
             switch result {
             case .failure(let error): print(error)
