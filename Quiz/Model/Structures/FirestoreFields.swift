@@ -35,6 +35,7 @@ struct FirestoreFields {
         static let profilePicture = "profile_picture"
         static let friends = "friends"
         static let friendRequests = "friendRequests"
+        static let senderUsername = "username"
     }
 
     // Quiz fields

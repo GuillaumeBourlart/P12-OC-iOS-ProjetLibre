@@ -71,12 +71,13 @@ struct aUser: Decodable {
     let points: Int
     var invites: [String: String]
     var profile_picture: String
-    var friends: [String]
+    var friends: [String: String]
     var friendRequests: [String: FriendRequest]
     
     struct FriendRequest: Decodable, Equatable {
         let status: String
         let date: Date
+        let senderUsername: String?
     }
 }
 

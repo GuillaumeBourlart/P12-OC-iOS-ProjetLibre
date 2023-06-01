@@ -81,19 +81,32 @@ exports.sendFriendRequest = functions.firestore
         if (addedFriendRequests.length > 0) {
           const userId = context.params.userId;
 
-          // Process each friend request
-          addedFriendRequests.forEach((friendId) => {
-            const friendRequest = {
-              status: "received",
-              date: newData.friendRequests[friendId].date,
-            };
+          // Get username of the sender
+          return admin.firestore().collection("users").doc(userId).get()
+              .then((doc) => {
+                const senderUsername = doc.data().username;
 
-            // Update each friend's document separately
-            admin.firestore().collection("users").doc(friendId)
-                .update({
-                  [`friendRequests.${userId}`]: friendRequest,
+                // Process each friend request
+                addedFriendRequests.forEach((friendId) => {
+                  // Check the status of the friend request
+                  if (newData.friendRequests[friendId].status === "sent") {
+                    const friendRequest = {
+                      status: "received",
+                      date: newData.friendRequests[friendId].date,
+                      senderUsername: senderUsername,
+                    };
+
+                    // Update each friend's document separately
+                    admin.firestore().collection("users").doc(friendId)
+                        .update({
+                          [`friendRequests.${userId}`]: friendRequest,
+                        });
+                  }
                 });
-          });
+              })
+              .catch((err) => {
+                console.log("Error getting document", err);
+              });
         }
       }
       return null;
@@ -107,25 +120,33 @@ exports.acceptFriendRequest = functions.firestore
       const newData = change.after.data();
 
       // Check if friends array has changed
-      if (oldData.friends.length !== newData.friends.length) {
-        const addedFriends = newData.friends
-            .filter((friend) => !oldData.friends.includes(friend));
+      if (Object.keys(oldData.friends).length !== Object
+          .keys(newData.friends).length) {
+        const addedFriends = Object.keys(newData.friends)
+            .filter((friend) => !(friend in oldData.friends));
 
         if (addedFriends.length > 0) {
           const userId = context.params.userId;
 
           // Process each friend acceptance
           addedFriends.forEach((friendId) => {
-            // Remove friend request from friend's document
-            const updateData = {};
-            updateData[`friendRequests.${userId}`] = admin
-                .firestore.FieldValue.delete();
-            updateData["friends"] = admin.firestore.FieldValue
-                .arrayUnion(userId);
+            // Get the username of the friend who accepted the request
+            return admin.firestore().collection("users").doc(friendId).get()
+                .then((doc) => {
+                  // Add the friend who accepted the request to the
+                  // user's friends and delete the friend request
+                  const updateDataFriend = {};
+                  updateDataFriend[`friends.${userId}`] = oldData.username;
+                  updateDataFriend[`friendRequests.${userId}`] = admin
+                      .firestore.FieldValue.delete();
 
-            // Update each friend's document separately
-            admin.firestore().collection("users").doc(friendId)
-                .update(updateData);
+                  // Update the friend's document
+                  return admin.firestore().collection("users").doc(friendId)
+                      .update(updateDataFriend);
+                })
+                .catch((err) => {
+                  console.log("Error getting document", err);
+                });
           });
         }
       }
@@ -169,10 +190,11 @@ exports.removeFriend = functions.firestore
       const oldData = change.before.data();
       const newData = change.after.data();
 
-      // Check if friends array has changed
-      if (oldData.friends.length !== newData.friends.length) {
-        const removedFriends = oldData.friends
-            .filter((friend) => !newData.friends.includes(friend));
+      // Check if friends object has changed
+      if (Object.keys(oldData.friends).length !== Object
+          .keys(newData.friends).length) {
+        const removedFriends = Object.keys(oldData.friends)
+            .filter((friend) => !(friend in newData.friends));
 
         if (removedFriends.length > 0) {
           const userId = context.params.userId;
@@ -181,10 +203,12 @@ exports.removeFriend = functions.firestore
           removedFriends.forEach((friendId) => {
             // Update each friend's document separately
             admin.firestore().collection("users").doc(friendId).update({
-              friends: admin.firestore.FieldValue.arrayRemove(userId),
+              [`friends.${userId}`]: admin.firestore.FieldValue.delete(),
             });
           });
         }
       }
       return null;
     });
+
+

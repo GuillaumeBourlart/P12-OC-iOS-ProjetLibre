@@ -6,20 +6,43 @@
 //
 import Foundation
 import UIKit
+import FirebaseStorage
 
 class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var username: UILabel!
+    
+    @IBOutlet weak var level: UILabel!
     let imagePickerController = UIImagePickerController()
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Make the navigation bar transparent
+           navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+           navigationController?.navigationBar.shadowImage = UIImage()
+           navigationController?.navigationBar.isTranslucent = true
+        
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
+        profileImageView.layer.borderWidth = 1
+        profileImageView.layer.borderColor = UIColor.white.cgColor
         
-        
-        if let imageData = Data(base64Encoded: FirebaseUser.shared.userInfo!.profile_picture) {
-            profileImageView.image = UIImage(data: imageData)
+        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.3)
+        // Récupérer l'URL de téléchargement de l'image depuis Firestore
+        let imageURL = FirebaseUser.shared.userInfo?.profile_picture ?? ""
+        // Appeler la fonction pour charger et afficher l'image
+        FirebaseUser.shared.downloadProfileImageFromURL(url: imageURL) { data in
+            if let data = data {
+                self.profileImageView.image = UIImage(data: data)
+            }
         }
+        
+        self.username.text = FirebaseUser.shared.userInfo!.username
+        self.level.text = String(FirebaseUser.shared.userInfo!.points)
+       
         
         imagePickerController.delegate = self
         
@@ -53,6 +76,21 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             }
             
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+
+            let headerLabel = UILabel(frame: CGRect(x: 15, y: 5, width:
+                tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
+            headerLabel.font = UIFont(name: "Helvetica", size: 18)
+            headerLabel.textColor = UIColor.white  // couleur du texte
+            headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+            headerLabel.sizeToFit()
+        headerView.backgroundColor = UIColor(named: "color3")
+            headerView.addSubview(headerLabel)
+
+            return headerView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -150,22 +188,25 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            profileImageView.contentMode = .scaleAspectFill
             profileImageView.image = pickedImage
             
             if let imageData = pickedImage.jpegData(compressionQuality: 0.1) {
-                let base64String = imageData.base64EncodedString()
-                // Enregistrez base64String dans Firestore
-                FirebaseUser.shared.saveProfilImage(data: base64String) { result in
+                FirebaseUser.shared.saveImageInStorage(imageData: imageData) { result in
                     switch result {
-                    case .failure(let error): print(error)
-                    case .success(let url):
-                        print("Image uploaded successfully and URL is \(url)")
+                    case .failure(let error):
+                        print("Error saving image in storage:", error)
+                    case .success(let downloadURL):
+                        FirebaseUser.shared.saveProfileImage(url: downloadURL) { result in
+                            switch result {
+                            case .failure(let error):
+                                print("Error saving profile image:", error)
+                            case .success:
+                                print("success saving profile image:")
+                            }
+                        }
                     }
                 }
             }
-            
-            
         }
         
         picker.dismiss(animated: true, completion: nil)
@@ -174,5 +215,6 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
 }
 

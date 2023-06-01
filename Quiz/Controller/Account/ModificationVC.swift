@@ -253,7 +253,7 @@ class ModificationVC: UIViewController{
         
         let friends = FirebaseUser.shared.fetchFriends()
         
-        selectFriendsTableViewController.friends = friends
+        selectFriendsTableViewController.friends = Array(friends.keys)
         
         let alertController = UIAlertController(title: "Ajouter des amis au groupe", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
         

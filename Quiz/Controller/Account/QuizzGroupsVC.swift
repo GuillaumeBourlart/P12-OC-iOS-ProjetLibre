@@ -27,6 +27,9 @@ class QuizzGroupsVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.3)
         if isQuizList! {
             FirebaseUser.shared.getUserQuizzes { result in
                 switch result {

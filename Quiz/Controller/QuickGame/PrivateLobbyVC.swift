@@ -105,17 +105,18 @@ class PrivateLobbyVC: UIViewController{
         listener = Game.shared.ListenForChangeInDocument(in: "lobby", documentId: lobbyId, completion: { result in
             switch result {
             case .success(let data):
-                if let players = data["players"] as? [String] {
-                    self.players = players
+                if let playersUID = data["players"] as? [String] {
+                    self.players = playersUID.compactMap { uid in FirebaseUser.shared.userInfo!.friends[uid] }
                 }
-                if let invitedPlayers = data["invited_users"] as? [String] {
-                    self.invitedPlayers = invitedPlayers
+                if let invitedPlayersUID = data["invited_users"] as? [String] {
+                    self.invitedPlayers = invitedPlayersUID.compactMap { uid in FirebaseUser.shared.userInfo!.friends[uid] }
                 }
                 if let code = data["join_code"] as? String {
                     self.joinCodeLabel.text = code
                 }
                 self.tableView.reloadData()
-            case .failure(let error): print(error)
+            case .failure(let error):
+                print(error)
                 self.navigationController?.popViewController(animated: true)
             }
         })
@@ -166,7 +167,7 @@ extension PrivateLobbyVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 70.0 // Remplacer par la hauteur désirée
+            return 50.0 // Remplacer par la hauteur désirée
         }
     
     

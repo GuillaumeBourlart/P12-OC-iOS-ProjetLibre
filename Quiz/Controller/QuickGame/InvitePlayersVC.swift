@@ -38,7 +38,7 @@ class InvitePlayersVC: UIViewController{
     
     var lobbyID: String?
     var isShowingFriends = true
-    var friends : [String] { return FirebaseUser.shared.userInfo?.friends ?? [] }
+    var friends : [String: String] { return FirebaseUser.shared.userInfo?.friends ?? [:] }
     var groups : [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] }
     
     var selectedFriends: [String] = []
@@ -81,7 +81,7 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
 
         if isShowingFriends {
-            let friend = friends[indexPath.row]
+            let friend = Array(friends.keys)[indexPath.row]
             cell.label.text = friend
 
             // Vérifiez si l'ami est dans la liste des amis sélectionnés et mettez en évidence la cellule en conséquence
@@ -100,7 +100,7 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isShowingFriends {
             // On récupère l'ami correspondant à l'index
-            let friend = friends[indexPath.row]
+            let friend = Array(friends.keys)[indexPath.row]
             
             // On vérifie si l'ami est déjà dans la liste des amis sélectionnés
             if let index = selectedFriends.firstIndex(of: friend) {

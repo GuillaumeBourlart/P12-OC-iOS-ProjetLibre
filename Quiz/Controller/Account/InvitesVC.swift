@@ -19,6 +19,7 @@ class InvitesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         startListening()
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {

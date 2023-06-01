@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
+import SDWebImage
 
 
 // FirebaseUser est une classe qui gère les opérations liées aux utilisateurs dans Firebase
@@ -193,17 +194,70 @@ class FirebaseUser {
         }
     }
     
-    func saveProfilImage(data: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    func saveImageInStorage(imageData: Data, completion: @escaping (Result<String, Error>) -> Void) {
+        // Générer un nom de fichier unique pour l'image
+        let imageFileName = "\(UUID().uuidString).jpg"
+        
+        // Référence à l'emplacement de stockage dans Firebase Storage
+        let storageRef = Storage.storage().reference().child("profile_images").child(imageFileName)
+        
+        // Mettre à jour le code pour télécharger l'image dans Firebase Storage
+        storageRef.putData(imageData, metadata: nil) { (metadata, error) in
+            if let error = error {
+                // Gestion des erreurs
+                print("Error uploading image to Firebase Storage:", error)
+                completion(.failure(error))
+                return
+            }
+            
+            // Récupérer l'URL de téléchargement de l'image
+            storageRef.downloadURL { (url, error) in
+                if let error = error {
+                    // Gestion des erreurs
+                    print("Error getting download URL:", error)
+                    completion(.failure(error))
+                    return
+                }
+                
+                if let downloadURL = url {
+                    completion(.success(downloadURL.absoluteString))
+                }
+            }
+        }
+    }
+    
+    func saveProfileImage(url: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
             return
         }
         
-        self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.profilePicture: data]) { error in
+        self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.profilePicture: url]) { error in
             if let error = error {
                 completion(.failure(error))
+            } else {
+                completion(.success(()))
             }
-            completion(.success(()))
+        }
+    }
+    
+    func downloadProfileImageFromURL(url: String, completion: @escaping (Data?) -> Void) {
+        guard let imageURL = URL(string: url) else {
+            // Gestion des erreurs
+            print("Invalid image URL")
+            completion(nil)
+            return
+        }
+        
+        SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, data, error, _) in
+            if let error = error {
+                // Gestion des erreurs
+                print("Error downloading profile image:", error)
+                completion(nil)
+                return
+            }
+            
+            completion(data)
         }
     }
     
@@ -225,8 +279,8 @@ class FirebaseUser {
     //                                 FRIENDS
     //-----------------------------------------------------------------------------------
     
-    func fetchFriends() -> [String] {
-        return self.userInfo?.friends ?? []
+    func fetchFriends() -> [String: String] {
+        return self.userInfo?.friends ?? [:]
     }
     
     func fetchUsername(with uid: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -290,18 +344,23 @@ class FirebaseUser {
     }
     
     
-    func fetchFriendRequests() -> [String]{
+    func fetchFriendRequests() -> [String: String]{
         let friendRequestsDict = self.userInfo?.friendRequests ?? [:]
-        let sentRequests = friendRequestsDict.filter { $1.status == "received" }
-        return Array(sentRequests.keys)
+        let receivedRequests = friendRequestsDict.filter { $1.status == "received" }
+        var friendsRequests = [String: String]()
+        for request in receivedRequests {
+            friendsRequests[request.key] = request.value.senderUsername!
+        }
+        return friendsRequests
+        
     }
     
     
-    func acceptFriendRequest(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    func acceptFriendRequest(friendID: String, friendUsername: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
         
         let data: [String: Any] = [
-            FirestoreFields.User.friends: FieldValue.arrayUnion([friendID]),
+            "\(FirestoreFields.User.friends).\(friendID)": friendUsername,
             "\(FirestoreFields.User.friendRequests).\(friendID)": FieldValue.delete()
         ]
         
@@ -336,7 +395,7 @@ class FirebaseUser {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
         
         let data: [String: Any] = [
-            FirestoreFields.User.friends: FieldValue.arrayRemove([friendID])
+            "\(FirestoreFields.User.friends).\(friendID)": FieldValue.delete()
         ]
         
         firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: data) { error in
@@ -347,6 +406,7 @@ class FirebaseUser {
             }
         }
     }
+    
     
     //-----------------------------------------------------------------------------------
     //                                 QUIZZES

@@ -19,7 +19,6 @@ class ResultVC: UIViewController {
     var questions: [UniversalQuestion]?
     var isResultAfterGame: Bool?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

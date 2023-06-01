@@ -63,6 +63,7 @@
 		D0B852532A2528D500A7D9B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = D0B852522A2528D500A7D9B7 /* Alamofire */; };
 		D0B8D42C2A1BA5560033467D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8D42B2A1BA5560033467D /* HomeVC.swift */; };
 		D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */; };
+		D0E8C9E32A28E7CD009E8A09 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = D0E8C9E22A28E7CD009E8A09 /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +135,7 @@
 			files = (
 				D01EDCE42A182A3400FF3163 /* FirebaseMessaging in Frameworks */,
 				D0B852532A2528D500A7D9B7 /* Alamofire in Frameworks */,
+				D0E8C9E32A28E7CD009E8A09 /* SDWebImage in Frameworks */,
 				D01EDCDE2A182A3400FF3163 /* FirebaseDatabase in Frameworks */,
 				D01EDCE02A182A3400FF3163 /* FirebaseFirestore in Frameworks */,
 				D01EDCE22A182A3400FF3163 /* FirebaseFunctions in Frameworks */,
@@ -355,6 +357,7 @@
 				D01EDCE32A182A3400FF3163 /* FirebaseMessaging */,
 				D01EDCE52A182A3400FF3163 /* FirebaseStorage */,
 				D0B852522A2528D500A7D9B7 /* Alamofire */,
+				D0E8C9E22A28E7CD009E8A09 /* SDWebImage */,
 			);
 			productName = Quiz;
 			productReference = D084EC362A0F7EF400544AA3 /* Quiz.app */;
@@ -415,6 +418,7 @@
 			packageReferences = (
 				D01EDCDA2A182A3400FF3163 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D0B852512A2528D500A7D9B7 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				D0E8C9E12A28E7CD009E8A09 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = D084EC372A0F7EF400544AA3 /* Products */;
 			projectDirPath = "";
@@ -792,6 +796,14 @@
 				version = 5.7.1;
 			};
 		};
+		D0E8C9E12A28E7CD009E8A09 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.15.8;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -849,6 +861,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D0B852512A2528D500A7D9B7 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		D0E8C9E22A28E7CD009E8A09 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0E8C9E12A28E7CD009E8A09 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
