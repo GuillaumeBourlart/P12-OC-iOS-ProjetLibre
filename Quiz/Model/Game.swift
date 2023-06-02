@@ -78,8 +78,9 @@ class Game {
                 }
                 
                 guard let lobbyData = lobbyData else { return }
-                let creator = lobbyData[FirestoreFields.creator] as! String
-                let players = [creator]
+                let creator = lobbyData[FirestoreFields.creator] as! [String: String]
+                var players = creator
+                players[currentUserId] = FirebaseUser.shared.userInfo?.username
                 
                 self.createGame(category: nil, difficulty: nil, with: lobbyId, competitive: true, players: players) { result in
                     switch result {
@@ -104,7 +105,8 @@ class Game {
         }
 
         let newLobbyId = UUID().uuidString
-        firebaseService.setData(in: FirestoreFields.lobbyCollection, documentId: newLobbyId, data: [FirestoreFields.id: newLobbyId, FirestoreFields.creator: currentUserId, FirestoreFields.Lobby.competitive: true, FirestoreFields.status: "waiting"]) { error in
+        
+        firebaseService.setData(in: FirestoreFields.lobbyCollection, documentId: newLobbyId, data: [FirestoreFields.id: newLobbyId, FirestoreFields.creator: [currentUserId: FirebaseUser.shared.userInfo?.username], FirestoreFields.Lobby.competitive: true, FirestoreFields.status: "waiting"]) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -178,7 +180,7 @@ class Game {
                     FirestoreFields.Lobby.joinCode: code,
                     FirestoreFields.Lobby.invitedUsers: [String](),
                     FirestoreFields.Lobby.invitedGroups: [String](),
-                    FirestoreFields.Lobby.players: [String]()
+                    FirestoreFields.Lobby.players: [String: String]()
                 ] as [String : Any]
                     
                 self.firebaseService.setData(in: FirestoreFields.lobbyCollection, documentId: newLobbyId, data: data) { error in
@@ -192,14 +194,14 @@ class Game {
         }
     }
 
-    func invitePlayerInRoom(lobbyId: String,invited_players: [String], invited_groups: [String], completion: @escaping (Result<Void, Error>) -> Void ){
+    func invitePlayerInRoom(lobbyId: String,invited_players: [String: String], invited_groups: [String], completion: @escaping (Result<Void, Error>) -> Void ){
         guard (firebaseService.currentUserID) != nil else {
             completion(.failure(MyError.noUserConnected)); return
         }
         let data = [
             FirestoreFields.Lobby.invitedUsers: invited_players,
             FirestoreFields.Lobby.invitedGroups: invited_groups
-        ]
+        ] as [String : Any]
         
         firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: data) { error in
             if let error = error {
@@ -230,30 +232,30 @@ class Game {
             completion(.failure(MyError.noUserConnected))
             return
         }
-        
+        print(lobbyId)
         firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { data, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
+            print(data)
             // Add player to "players"
-            var players: [String] = (data![FirestoreFields.Lobby.players] as? [String]) ?? []
-            players.append(currentUserId)
+            var players: [String: String] = (data?[FirestoreFields.Lobby.players] as? [String: String]) ?? [:]
+            players[currentUserId] = FirebaseUser.shared.userInfo?.username
             
             // Remove player from "invited_players"
-            guard let invitedPlayers = data?[FirestoreFields.Lobby.invitedUsers] as? [String] else {
+            guard var invitedPlayers = data?[FirestoreFields.Lobby.invitedUsers] as? [String: String] else {
                 completion(.failure(MyError.generalError))
                 return
             }
-            let updatedPlayers = invitedPlayers.filter { $0 != currentUserId }
+            invitedPlayers[currentUserId] = nil  // Remove the player using the key
             
             self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.players: players]) { error in
                 if let error = error {
                     completion(.failure(error))
                     return
                 }
-                self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.invitedUsers: updatedPlayers]) { error in
+                self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.invitedUsers: invitedPlayers]) { error in
                     if let error = error {
                         completion(.failure(error))
                     } else {
@@ -331,12 +333,12 @@ class Game {
             if let error = error {
                 completion(error)
             }
-            guard let players = data?[FirestoreFields.Lobby.players] as? [String], let currentUserId = self.firebaseService.currentUserID else {
+            guard var players = data?[FirestoreFields.Lobby.players] as? [String: String], let currentUserId = self.firebaseService.currentUserID else {
                 completion(MyError.generalError)
                 return
             }
-            let updatedPlayers = players.filter { $0 != currentUserId }
-            self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.players: updatedPlayers]) { error in
+            players[currentUserId] = nil
+            self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.players: players]) { error in
                 completion(error)
             }
         }
@@ -346,7 +348,7 @@ class Game {
     //                                 General
     //-----------------------------------------------------------------------------------
     
-    func createGame(category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
+    func createGame(category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String: String], completion: @escaping (Result<String, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
         }
@@ -363,11 +365,11 @@ class Game {
                 }
                 
                 var playersArray = players
-                playersArray.append(currentUserId)
+                playersArray[currentUserId] = FirebaseUser.shared.userInfo?.username
                 
                 let gameData: [String: Any] = [
                     FirestoreFields.id: gameId,
-                    FirestoreFields.creator: currentUserId,
+                    FirestoreFields.creator: [currentUserId: FirebaseUser.shared.userInfo?.username],
                     FirestoreFields.status: "waiting",
                     FirestoreFields.Game.players: playersArray,
                     FirestoreFields.date: FieldValue.serverTimestamp(),
@@ -425,17 +427,26 @@ class Game {
     func getCompletedGames(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
         
+        
+        
         let conditions: [FirestoreCondition] = [
             .isEqualTo(FirestoreFields.status, "completed"),
-            .arrayContains(FirestoreFields.Game.players, currentUserId)
         ]
         
         firebaseService.getDocuments(in: FirestoreFields.gamesCollection, whereFields: conditions) { gameData, error in
             if let error = error {
                 completion(.failure(error))
-            } else if let gameData = gameData, !gameData.isEmpty {
+            } else if let gamesData = gameData, !gamesData.isEmpty {
+                
+                let filteredGamesData = gamesData.filter { gameData in
+                    if let players = gameData["players"] as? [String: String] {
+                        return players.keys.contains(currentUserId)
+                    }
+                    return false
+                }
+                
                 do {
-                    let convertedGameDataWithDate = gameData.map { self.convertTimestampsToDate(in: $0) }
+                    let convertedGameDataWithDate = filteredGamesData.map { self.convertTimestampsToDate(in: $0) }
                     let jsonData = try JSONSerialization.data(withJSONObject: convertedGameDataWithDate, options: [])
                     let decoder = JSONDecoder()
                     decoder.dateDecodingStrategy = .iso8601

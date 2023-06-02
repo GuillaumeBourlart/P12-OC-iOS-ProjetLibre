@@ -86,7 +86,7 @@ struct FriendGroup: Decodable {
     var id: String
     var creator: String
     var name: String
-    var members: [String]
+    var members: [String: String]
 }
 
 
@@ -94,10 +94,10 @@ struct FriendGroup: Decodable {
 
 struct GameData: Decodable {
     var id: String
-    let creator: String
+    let creator: [String: String]
     let competitive: Bool
     let status: String
-    let players: [String]
+    let players: [String: String]
     let date: Date
     let quiz: String?
     var questions: [String: UniversalQuestion]

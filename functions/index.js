@@ -32,8 +32,8 @@ exports.sendInviteNotification = functions.firestore
       const oldInvitedPlayers = change.before.data().invited_users;
       const newInvitedPlayers = change.after.data().invited_users;
       // Check if any players have been added
-      const addedPlayers = newInvitedPlayers.filter(
-          (player) => !oldInvitedPlayers || !oldInvitedPlayers.includes(player),
+      const addedPlayers = Object.keys(newInvitedPlayers).filter(
+          (playerId) => !oldInvitedPlayers || !(playerId in oldInvitedPlayers),
       );
 
       // If there are no new players, stop the function here
@@ -51,7 +51,7 @@ exports.sendInviteNotification = functions.firestore
         // Add the lobbyID to the user's invites object
           const lobbyId = context.params.lobbyId;
           // Assuming the lobbyId is obtained from the context
-          playerInvites[playerId] = lobbyId;
+          playerInvites[newInvitedPlayers[playerId]] = lobbyId;
 
           // Update the invites object in the user document
           await playerDocRef.update({

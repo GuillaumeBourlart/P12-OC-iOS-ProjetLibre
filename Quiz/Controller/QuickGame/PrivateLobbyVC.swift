@@ -24,9 +24,9 @@ class PrivateLobbyVC: UIViewController{
     
     @IBOutlet weak var launchButton: CustomButton!
     var isCreator: Bool?
-    var invitedPlayers: [String] = []
+    var invitedPlayers: [String: String] = [:]
     var invitedGroups: [String] = []
-    var players: [String] = []
+    var players: [String: String] = [:]
     var listener: ListenerRegistration? = nil
     var difficulty: String?
     var category: Int?
@@ -105,11 +105,11 @@ class PrivateLobbyVC: UIViewController{
         listener = Game.shared.ListenForChangeInDocument(in: "lobby", documentId: lobbyId, completion: { result in
             switch result {
             case .success(let data):
-                if let playersUID = data["players"] as? [String] {
-                    self.players = playersUID.compactMap { uid in FirebaseUser.shared.userInfo!.friends[uid] }
+                if let playersDict = data["players"] as? [String: String] {
+                    self.players = playersDict
                 }
-                if let invitedPlayersUID = data["invited_users"] as? [String] {
-                    self.invitedPlayers = invitedPlayersUID.compactMap { uid in FirebaseUser.shared.userInfo!.friends[uid] }
+                if let invitedPlayersDict = data["invited_users"] as? [String: String] {
+                    self.invitedPlayers = invitedPlayersDict
                 }
                 if let code = data["join_code"] as? String {
                     self.joinCodeLabel.text = code
@@ -186,9 +186,11 @@ extension PrivateLobbyVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else { return UITableViewCell() }
         if indexPath.section == 0 {
-            cell.label.text = players[indexPath.row]
+            let playerKey = Array(players.keys)[indexPath.row]
+            cell.label.text = players[playerKey]
         } else {
-            cell.label.text = invitedPlayers[indexPath.row]
+            let invitedPlayerKey = Array(invitedPlayers.keys)[indexPath.row]
+            cell.label.text = invitedPlayers[invitedPlayerKey]
         }
         return cell
     }

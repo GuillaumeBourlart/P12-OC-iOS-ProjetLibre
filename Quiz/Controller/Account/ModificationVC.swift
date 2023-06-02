@@ -253,7 +253,8 @@ class ModificationVC: UIViewController{
         
         let friends = FirebaseUser.shared.fetchFriends()
         
-        selectFriendsTableViewController.friends = Array(friends.keys)
+        selectFriendsTableViewController.friends = friends
+        
         
         let alertController = UIAlertController(title: "Ajouter des amis au groupe", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
         
@@ -294,8 +295,8 @@ class ModificationVC: UIViewController{
 extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 70.0 // Remplacer par la hauteur désirée
-        }
+        return 70.0 // Remplacer par la hauteur désirée
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let quiz = quiz {
@@ -316,8 +317,8 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
             cell.label.text = question.question // Change question.text to question.question
         }
         else if let group = group {
-            let memberId = group.members[indexPath.row] // Get memberId from group.members keys
-            cell.label.text = memberId
+            let memberUsername = Array(group.members.values)[indexPath.row] // Get memberId from group.members keys
+            cell.label.text = memberUsername
         }
         
         return cell
@@ -356,16 +357,13 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             } else if let group = group {
-                // Récupérer l'ID du membre à supprimer
-                let memberId = group.members[indexPath.row]
-                // Supprimer le membre du groupe
-                FirebaseUser.shared.removeMemberFromGroup(group: group, memberId: memberId) { result in
+                let memberIdToRemove = Array(group.members.keys)[indexPath.row]
+                FirebaseUser.shared.removeMemberFromGroup(group: group, memberId: memberIdToRemove) { result in
                     switch result {
                     case .success():
-                        // Mettre à jour la table view
                         tableView.reloadData()
                     case .failure(let error):
-                        print("Erreur lors de la suppression du membre : \(error.localizedDescription)")
+                        print("Error deleting member: \(error.localizedDescription)")
                     }
                 }
             }

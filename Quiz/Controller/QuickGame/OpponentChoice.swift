@@ -23,7 +23,7 @@ class OpponentChoice: UIViewController {
             return
         }
         switch sender.tag {
-        case 0: Game.shared.createGame(category: category, difficulty: difficulty, with: nil, competitive: false, players: [currentUserId]) { reuslt in
+        case 0: Game.shared.createGame(category: category, difficulty: difficulty, with: nil, competitive: false, players: [currentUserId: FirebaseUser.shared.userInfo!.username]) { reuslt in
             switch reuslt {
             case .failure(let error): print(error)
             case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)

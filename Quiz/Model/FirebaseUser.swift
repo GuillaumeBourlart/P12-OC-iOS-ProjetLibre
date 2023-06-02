@@ -601,7 +601,7 @@ class FirebaseUser {
             if let error = error {
                 completion(.failure(error))
             } else {
-                let friendGroup = FriendGroup(id: groupID, creator: currentUserId, name: name, members: [])
+                let friendGroup = FriendGroup(id: groupID, creator: currentUserId, name: name, members: [:])
                 self.friendGroups?.append(friendGroup)
                 completion(.success(()))
             }
@@ -625,12 +625,12 @@ class FirebaseUser {
         }
     }
     
-    func addNewMembersToGroup(group: FriendGroup, newMembers: [String], completion: @escaping (Result<Void, Error>) -> Void) {
+    func addNewMembersToGroup(group: FriendGroup, newMembers: [String: String], completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
         
         var updatedMembers = group.members
         for member in newMembers {
-            updatedMembers.append(member)
+            updatedMembers[member.key] = member.value
         }
         
         let data = [FirestoreFields.Group.members: updatedMembers]
@@ -650,7 +650,8 @@ class FirebaseUser {
     func removeMemberFromGroup(group: FriendGroup, memberId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
         
-        let data = [FirestoreFields.Group.members: FieldValue.arrayRemove([memberId])]
+        // Mettre à jour la valeur associée à la clé du membre à retirer avec FieldValue.delete()
+        let data = [FirestoreFields.Group.members + "." + memberId: FieldValue.delete()]
         firebaseService.updateDocument(in: FirestoreFields.groupsCollection, documentId: group.id, data: data) { error in
             if let error = error {
                 completion(.failure(error))
@@ -658,10 +659,8 @@ class FirebaseUser {
                 // Mettre à jour friendGroups en supprimant le membre
                 if let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) {
                     // Supprimer le membre du groupe
-                    if let memberIndex = self.friendGroups?[groupIndex].members.firstIndex(of: memberId) {
-                        self.friendGroups?[groupIndex].members.remove(at: memberIndex)
-                        completion(.success(()))
-                    }
+                    self.friendGroups?[groupIndex].members.removeValue(forKey: memberId)
+                    completion(.success(()))
                 }
             }
         }
