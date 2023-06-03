@@ -10,16 +10,14 @@ import UIKit
 import Firebase
 class InvitesVC: UIViewController {
     
-    var listener : ListenerRegistration? = nil
-    
     @IBOutlet weak var tableView: UITableView!
     
+    var listener : ListenerRegistration? = nil
     var invites: [String: String] { FirebaseUser.shared.userInfo?.invites ?? [:]}
     
     override func viewDidLoad() {
         super.viewDidLoad()
         startListening()
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {

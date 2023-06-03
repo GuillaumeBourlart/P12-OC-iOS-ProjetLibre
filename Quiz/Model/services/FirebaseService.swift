@@ -44,6 +44,7 @@ protocol FirebaseServiceProtocol {
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration
     func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration 
+    func createGameAndDeleteLobby(gameData: [String: Any], gameId: String, lobbyId: String, completion: @escaping (Error?) -> Void)
     
     var currentUserID: String? { get }
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -123,6 +124,18 @@ class FirebaseService: FirebaseServiceProtocol{
         }
         return listener
     }
+    
+    func createGameAndDeleteLobby(gameData: [String: Any], gameId: String, lobbyId: String, completion: @escaping (Error?) -> Void) {
+            let batch = db.batch()
+
+            let gameRef = db.collection(FirestoreFields.gamesCollection).document(gameId)
+            batch.setData(gameData, forDocument: gameRef)
+
+            let lobbyRef = db.collection(FirestoreFields.lobbyCollection).document(lobbyId)
+            batch.deleteDocument(lobbyRef)
+
+            batch.commit(completion: completion)
+        }
     
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).setData(data, completion: completion)

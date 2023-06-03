@@ -12,6 +12,10 @@ class HistoryVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var games: [GameData] {
+        return FirebaseUser.shared.History ?? []
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         Game.shared.getCompletedGames { result in
@@ -22,13 +26,9 @@ class HistoryVC: UIViewController {
         }
     }
     
-    var games: [GameData] {
-        return FirebaseUser.shared.History ?? []
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ResultVC{
-            
             destination.gameData = sender as? GameData
         }
     }

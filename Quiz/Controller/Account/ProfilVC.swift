@@ -8,29 +8,34 @@ import Foundation
 import UIKit
 import FirebaseStorage
 
-class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class ProfilVC: UIViewController{
+    
     @IBOutlet weak var profileImageView: UIImageView!
-    
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var username: UILabel!
-    
     @IBOutlet weak var level: UILabel!
+    
     let imagePickerController = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Make the navigation bar transparent
-           navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-           navigationController?.navigationBar.shadowImage = UIImage()
-           navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+
+        configureProfileViews()
+        configureTableView()
+        imagePickerController.delegate = self
         
-        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
-        profileImageView.clipsToBounds = true
-        profileImageView.layer.borderWidth = 1
-        profileImageView.layer.borderColor = UIColor.white.cgColor
-        
-        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.3)
+        // Ajout d'un UITapGestureRecognizer à profileImageView pour permettre à l'utilisateur de changer la photo de profil lorsqu'il appuie sur l'image.
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(tapGesture)
+    }
+    
+    func configureProfileViews() {
         // Récupérer l'URL de téléchargement de l'image depuis Firestore
         let imageURL = FirebaseUser.shared.userInfo?.profile_picture ?? ""
         // Appeler la fonction pour charger et afficher l'image
@@ -40,18 +45,18 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             }
         }
         
-        self.username.text = FirebaseUser.shared.userInfo!.username
-        self.level.text = String(FirebaseUser.shared.userInfo!.points)
-       
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        profileImageView.clipsToBounds = true
+        profileImageView.layer.borderWidth = 1
+        profileImageView.layer.borderColor = UIColor.white.cgColor
         
-        imagePickerController.delegate = self
-        
-        // Ajout d'un UITapGestureRecognizer à profileImageView pour permettre à l'utilisateur de changer la photo de profil lorsqu'il appuie sur l'image.
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
-        profileImageView.isUserInteractionEnabled = true
-        profileImageView.addGestureRecognizer(tapGesture)
+        self.username.text = FirebaseUser.shared.userInfo?.username ?? "username"
+        self.level.text = String(FirebaseUser.shared.userInfo?.points ?? 0)
     }
     
+    func configureTableView(){
+        
+    }
     
     @IBAction func logout(_ sender: Any) {
         FirebaseUser.shared.signOut { result in
@@ -78,6 +83,74 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
     }
     
+    // Fonction qui sera appelée lorsque l'utilisateur appuie sur profileImageView.
+    @objc func profileImageTapped() {
+        let alert = UIAlertController(title: "Choisissez l'image", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Caméra", style: .default, handler: { _ in
+            self.openCamera()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Galerie", style: .default, handler: { _ in
+            self.openGallery()
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func openCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePickerController.sourceType = .camera
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+        else {
+            print("Camera not available")
+        }
+    }
+    
+    func openGallery() {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate Methods
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[.originalImage] as? UIImage {
+            profileImageView.image = pickedImage
+            
+            if let imageData = pickedImage.jpegData(compressionQuality: 0.1) {
+                FirebaseUser.shared.saveImageInStorage(imageData: imageData) { result in
+                    switch result {
+                    case .failure(let error):
+                        print("Error saving image in storage:", error)
+                    case .success(let downloadURL):
+                        FirebaseUser.shared.saveProfileImage(url: downloadURL) { result in
+                            switch result {
+                            case .failure(let error):
+                                print("Error saving profile image:", error)
+                            case .success:
+                                print("success saving profile image:")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
 
@@ -149,72 +222,4 @@ class ProfilVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             }
         }
     }
-    
-    
-    // Fonction qui sera appelée lorsque l'utilisateur appuie sur profileImageView.
-    @objc func profileImageTapped() {
-        let alert = UIAlertController(title: "Choisissez l'image", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Caméra", style: .default, handler: { _ in
-            self.openCamera()
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Galerie", style: .default, handler: { _ in
-            self.openGallery()
-        }))
-        
-        alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func openCamera() {
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imagePickerController.sourceType = .camera
-            self.present(imagePickerController, animated: true, completion: nil)
-        }
-        else {
-            print("Camera not available")
-        }
-    }
-    
-    func openGallery() {
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            imagePickerController.sourceType = .photoLibrary
-            self.present(imagePickerController, animated: true, completion: nil)
-        }
-    }
-    
-    // MARK: - UIImagePickerControllerDelegate Methods
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[.originalImage] as? UIImage {
-            profileImageView.image = pickedImage
-            
-            if let imageData = pickedImage.jpegData(compressionQuality: 0.1) {
-                FirebaseUser.shared.saveImageInStorage(imageData: imageData) { result in
-                    switch result {
-                    case .failure(let error):
-                        print("Error saving image in storage:", error)
-                    case .success(let downloadURL):
-                        FirebaseUser.shared.saveProfileImage(url: downloadURL) { result in
-                            switch result {
-                            case .failure(let error):
-                                print("Error saving profile image:", error)
-                            case .success:
-                                print("success saving profile image:")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
 }
-

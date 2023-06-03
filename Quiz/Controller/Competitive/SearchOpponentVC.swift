@@ -9,20 +9,15 @@ import Foundation
 import FirebaseFirestore
 
 class SearchOpponentVC: UIViewController{
+    
     var lobbyId: String?
     var listener: ListenerRegistration? = nil
-    
     var isGameFound = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         findOpponent()
-        
     }
-    
-    
-
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -41,13 +36,9 @@ class SearchOpponentVC: UIViewController{
                 }
             }
         }
-        
     }
     
-    
-    
     func findOpponent() {
-        
         Game.shared.searchCompetitiveRoom(){ result in
             switch result {
             case .success(let lobbyId): self.lobbyId = lobbyId
@@ -59,8 +50,6 @@ class SearchOpponentVC: UIViewController{
         }
         
     }
-    
-    
     
     func startListening() {
         listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: lobbyId!) { result in
@@ -74,8 +63,6 @@ class SearchOpponentVC: UIViewController{
             }
         }
     }
-    
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuizzVC {

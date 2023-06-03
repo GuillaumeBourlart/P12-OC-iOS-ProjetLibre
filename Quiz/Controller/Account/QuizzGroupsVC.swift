@@ -10,27 +10,18 @@ import UIKit
 
 class QuizzGroupsVC: UIViewController{
     
-    
+    @IBOutlet weak var tableView: UITableView!
     
     var isQuizList: Bool?
-    
-    var quizzes: [Quiz] {
-        return FirebaseUser.shared.userQuizzes ?? []
-    }
-    var groups: [FriendGroup] {
-        return FirebaseUser.shared.friendGroups ?? []
-    }
-    
-    
-    @IBOutlet weak var tableView: UITableView!
+    var quizzes: [Quiz] { return FirebaseUser.shared.userQuizzes ?? [] }
+    var groups: [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         tableView.separatorColor = UIColor(white: 1.0, alpha: 0.3)
-        if isQuizList! {
+        
+        if isQuizList != nil, isQuizList == true  {
             FirebaseUser.shared.getUserQuizzes { result in
                 switch result {
                 case .success():
@@ -55,15 +46,13 @@ class QuizzGroupsVC: UIViewController{
         }
     }
     
-    
     @IBAction func plusButtonTapped(_ sender: Any) {
-        if isQuizList! {
+        if isQuizList != nil, isQuizList == true  {
             displayAddQuizAlert()
         } else{
             displayAddGroupAlert()
         }
     }
-    
     
     func displayAddQuizAlert() {
         let alert = UIAlertController(title: "Ajouter un quizz", message: "Entrez le nom, la catégorie et la difficulté du quizz", preferredStyle: .alert)
@@ -150,7 +139,7 @@ extension QuizzGroupsVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if isQuizList! {
+            if isQuizList != nil, isQuizList == true {
                 let quizToDelete = quizzes[indexPath.row]
                 FirebaseUser.shared.deleteQuiz(quiz: quizToDelete) { result in
                     switch result {
@@ -176,18 +165,14 @@ extension QuizzGroupsVC: UITableViewDelegate {
         }
     }
     
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 70.0 // Remplacer par la hauteur désirée
         }
     
-    
-    
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
         
-        if isQuizList! {
+        if isQuizList != nil, isQuizList == true  {
             let selectedQuiz = quizzes[indexPath.row]
             print("Informations du quiz sélectionné : \(selectedQuiz)")
             performSegue(withIdentifier: "goToModification", sender: selectedQuiz)
@@ -203,7 +188,7 @@ extension QuizzGroupsVC: UITableViewDelegate {
 
 extension QuizzGroupsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isQuizList! {
+        if isQuizList != nil, isQuizList == true  {
             return quizzes.count
         }else{
             return groups.count
@@ -213,7 +198,7 @@ extension QuizzGroupsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCell
         
-        if isQuizList! {
+        if isQuizList != nil, isQuizList == true  {
             cell.label.text = quizzes[indexPath.row].name
         }else{
             cell.label.text = groups[indexPath.row].name

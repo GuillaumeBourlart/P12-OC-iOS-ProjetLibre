@@ -11,6 +11,15 @@ import UIKit
 
 class InvitePlayersVC: UIViewController{
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    var lobbyID: String?
+    var isShowingFriends = true
+    var friends : [String: String] { return FirebaseUser.shared.userInfo?.friends ?? [:] }
+    var groups : [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] }
+    var selectedFriends: [String: String] = [:]
+    var selectedGroups: [FriendGroup] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -22,10 +31,6 @@ class InvitePlayersVC: UIViewController{
         navigationController?.setNavigationBarHidden(false, animated: animated)
         tabBarController?.tabBar.isHidden = false
     }
-
-    
-    @IBOutlet weak var tableView: UITableView!
-    
     
     @IBAction func validateButton(_ sender: Any) {
         Game.shared.invitePlayerInRoom(lobbyId: lobbyID!, invited_players: selectedFriends, invited_groups: selectedGroups.map { $0.id }) { result in
@@ -36,13 +41,7 @@ class InvitePlayersVC: UIViewController{
         }
     }
     
-    var lobbyID: String?
-    var isShowingFriends = true
-    var friends : [String: String] { return FirebaseUser.shared.userInfo?.friends ?? [:] }
-    var groups : [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] }
     
-    var selectedFriends: [String: String] = [:]
-    var selectedGroups: [FriendGroup] = []
     
     @IBAction func onSwitch(_ sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex

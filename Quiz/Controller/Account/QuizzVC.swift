@@ -10,14 +10,13 @@ import UIKit
 
 class QuizzVC: UIViewController {
     
-    var gameID: String?
-    var userAnswers: [String: UserAnswer] = [:]
-    var isCompetitive: Bool?
-    
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
     
+    var gameID: String?
+    var userAnswers: [String: UserAnswer] = [:]
+    var isCompetitive: Bool = false
     var questions: [UniversalQuestion] = []
     var currentQuestionIndex = 0
     var timer: Timer?
@@ -29,7 +28,7 @@ class QuizzVC: UIViewController {
         super.viewDidLoad()
         loadQuestions()
         navigationController?.setNavigationBarHidden(true, animated: true)
-            tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -82,7 +81,7 @@ class QuizzVC: UIViewController {
                 case .failure(let error):
                     print(error)
                 case .success():
-                    if self.isCompetitive! {
+                    if self.isCompetitive != nil, self.isCompetitive == true {
                         // Dismiss the view controller
                         self.performSegue(withIdentifier: "unwindToCompetitive", sender: self)
                     } else {

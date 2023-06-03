@@ -195,8 +195,12 @@ class FirebaseUser {
     }
     
     func saveImageInStorage(imageData: Data, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(MyError.noUserConnected))
+            return
+        }
         // Générer un nom de fichier unique pour l'image
-        let imageFileName = "\(UUID().uuidString).jpg"
+        let imageFileName = "\(currentUserId).jpg"
         
         // Référence à l'emplacement de stockage dans Firebase Storage
         let storageRef = Storage.storage().reference().child("profile_images").child(imageFileName)
@@ -204,8 +208,6 @@ class FirebaseUser {
         // Mettre à jour le code pour télécharger l'image dans Firebase Storage
         storageRef.putData(imageData, metadata: nil) { (metadata, error) in
             if let error = error {
-                // Gestion des erreurs
-                print("Error uploading image to Firebase Storage:", error)
                 completion(.failure(error))
                 return
             }
@@ -213,8 +215,6 @@ class FirebaseUser {
             // Récupérer l'URL de téléchargement de l'image
             storageRef.downloadURL { (url, error) in
                 if let error = error {
-                    // Gestion des erreurs
-                    print("Error getting download URL:", error)
                     completion(.failure(error))
                     return
                 }
@@ -595,7 +595,12 @@ class FirebaseUser {
         guard let currentUserId = firebaseService.currentUserID else {  completion(.failure(MyError.noUserConnected)); return}
         
         let groupID = UUID().uuidString
-        let newGroup: [String: Any] = [FirestoreFields.id: groupID, FirestoreFields.creator: currentUserId, FirestoreFields.Group.name: name, FirestoreFields.Group.members: [String]()]
+        let newGroup: [String: Any] = [
+            FirestoreFields.id: groupID,
+            FirestoreFields.creator: currentUserId,
+            FirestoreFields.Group.name: name,
+            FirestoreFields.Group.members: [String]()
+        ]
         
         firebaseService.setData(in: FirestoreFields.groupsCollection, documentId: groupID, data: newGroup) { (error) in
             if let error = error {
@@ -626,23 +631,20 @@ class FirebaseUser {
     }
     
     func addNewMembersToGroup(group: FriendGroup, newMembers: [String: String], completion: @escaping (Result<Void, Error>) -> Void) {
-        guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
-        
-        var updatedMembers = group.members
-        for member in newMembers {
-            updatedMembers[member.key] = member.value
+        guard let currentUserID = firebaseService.currentUserID else {
+            completion(.failure(MyError.noUserConnected))
+            return
         }
+        let data = [FirestoreFields.Group.members: newMembers]
         
-        let data = [FirestoreFields.Group.members: updatedMembers]
-        firebaseService.updateDocument(in: FirestoreFields.groupsCollection, documentId: group.id, data: data) { error in
+        firebaseService.setDataWithMerge(in: FirestoreFields.groupsCollection, documentId: group.id, data: data, merge: true) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
                 if let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) {
-                    self.friendGroups?[groupIndex].members = updatedMembers
+                    self.friendGroups?[groupIndex].members.merge(newMembers) { (_, new) in new }
                     completion(.success(()))
                 }
-                
             }
         }
     }

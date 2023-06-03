@@ -12,14 +12,10 @@ import UIKit
 
 class FriendsVC: UIViewController{
     
-    var userListener: ListenerRegistration?
-    
     @IBOutlet weak var switchControl: UISegmentedControl!
-    
-    
     @IBOutlet weak var tableView: UITableView!
     
-    
+    var userListener: ListenerRegistration?
     var users: [String: String] {
         if isShowingFriendRequests {
             return FirebaseUser.shared.fetchFriendRequests()
@@ -27,15 +23,13 @@ class FriendsVC: UIViewController{
             return FirebaseUser.shared.fetchFriends()
         }
     }
-    
     var isShowingFriendRequests = true
     
     override func viewDidLoad() {
-        
+        super.viewDidLoad()
         setupUserListener()
         onSwitch(switchControl)
     }
-    
     
     @IBAction func onSwitch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {

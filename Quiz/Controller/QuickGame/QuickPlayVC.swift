@@ -11,37 +11,24 @@ import Alamofire
 class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var searchQuizField: UITextField!
+    
     var categories: [[String: Any]] = []
-    
     let apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()))
-    
     var difficulty: String?
     var category: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Masquer le bouton "back"
-        //        self.navigationItem.hidesBackButton = true
-
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
         loadCategories()
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-
         // margins total = 40 (left) + 40 (right)
         let margins: CGFloat = 40 + 40
-
         // spacing between cells
         let spacing: CGFloat = 25
-
         // Get the screen's width
         let screenWidth = UIScreen.main.bounds.width
-
         // Calculate the width for each item
         let itemWidth = (screenWidth - margins - spacing) / 2
 

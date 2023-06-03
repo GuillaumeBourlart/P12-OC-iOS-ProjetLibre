@@ -12,16 +12,10 @@ import UIKit
 class CompetitiveVC: UIViewController{
     
     @IBOutlet weak var rankBar: UIProgressView!
-    
     @IBOutlet weak var points: UILabel!
-    
     @IBOutlet weak var previousRank: UIImageView!
-    
     @IBOutlet weak var currentRank: UIImageView!
-    
     @IBOutlet weak var nextRank: UIImageView!
-    
-    
     
     let colorBronze = UIColor(red: 205/255, green: 127/255, blue: 50/255, alpha: 1.0) // Bronze
     let colorSilver = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0) // Argent
@@ -45,7 +39,7 @@ class CompetitiveVC: UIViewController{
         let progress = rank.truncatingRemainder(dividingBy: 1) * 100
         print(progress)
         DispatchQueue.main.async { [self] in
-            
+        
             self.rankBar.progress = Float(progress) / 100
             switch level {
             case 0: self.previousRank.tintColor = UIColor.clear

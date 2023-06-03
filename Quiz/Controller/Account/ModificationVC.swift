@@ -11,33 +11,22 @@ import UIKit
 class ModificationVC: UIViewController{
     
     @IBOutlet weak var modifyButton: UIButton!
-    
     @IBOutlet weak var nameLabel: UILabel!
-    
     @IBOutlet weak var nameField: UITextField!
-    
     @IBOutlet weak var themeLabel: UILabel!
-    
     @IBOutlet weak var themeField: UITextField!
-    
     @IBOutlet weak var difficultyLabel: UILabel!
-    
     @IBOutlet weak var difficultyField: UITextField!
-    
-    
     @IBOutlet weak var tableView: UITableView!
     
     var quizID: String?
     var groupID: String?
-    
     var quiz: Quiz? {
         return FirebaseUser.shared.userQuizzes?.first(where: { $0.id == quizID })
     }
-    
     var group: FriendGroup? {
         return FirebaseUser.shared.friendGroups?.first(where: { $0.id == groupID })
     }
-    
     var isModifying = false
     
     override func viewDidLoad() {
@@ -56,8 +45,6 @@ class ModificationVC: UIViewController{
         }
         
     }
-    
-    
     
     @IBAction func modifyButtonWasTapped(_ sender: Any) {
         if quiz != nil {
@@ -94,10 +81,7 @@ class ModificationVC: UIViewController{
                 modifyButton.backgroundColor = UIColor.green
             }
             
-        }
-        
-        
-        else if group != nil {
+        } else if group != nil {
             if isModifying {
                 isModifying = false
                 nameField.layer.borderColor = UIColor.clear.cgColor
@@ -145,11 +129,7 @@ class ModificationVC: UIViewController{
                     print("Erreur lors de la modification des infos du quiz : \(error.localizedDescription)")
                 }
             }
-            
-        }
-        
-        
-        else if let group = group {
+        } else if let group = group {
             guard let name = nameField.text, name != "" else {return}
             
             FirebaseUser.shared.updateGroupName(groupID: group.id, newName: name) { result in
@@ -164,9 +144,6 @@ class ModificationVC: UIViewController{
             }
         }
     }
-    
-    
-    
     
     @IBAction func addButtonTapped(_ sender: Any) {
         if quiz != nil {

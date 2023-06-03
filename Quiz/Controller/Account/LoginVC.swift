@@ -13,15 +13,10 @@ class LoginVC: UIViewController{
     
     @IBOutlet private weak var userEmail: UITextField!
     @IBOutlet private weak var userPassword: UITextField!
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
     }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         if Auth.auth().currentUser != nil {
@@ -51,13 +46,10 @@ class LoginVC: UIViewController{
         }
     }
     
-    
-    
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         userEmail.resignFirstResponder()
         userPassword.resignFirstResponder()
     }
-    
     
     @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
         // Vous pouvez utiliser cette méthode pour nettoyer toute donnée si nécessaire

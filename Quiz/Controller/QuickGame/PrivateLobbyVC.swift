@@ -11,18 +11,15 @@ import Firebase
 
 
 class PrivateLobbyVC: UIViewController{
-    var lobbyId: String?
+    
     
     @IBOutlet weak var joinCodeLabel: UILabel!
-    
-    
     @IBOutlet weak var leave: UIButton!
-    
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var invteplayersButton: UIButton!
-    
     @IBOutlet weak var launchButton: CustomButton!
+    
+    var lobbyId: String?
     var isCreator: Bool?
     var invitedPlayers: [String: String] = [:]
     var invitedGroups: [String] = []
@@ -33,10 +30,9 @@ class PrivateLobbyVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(true, animated: true)
-            tabBarController?.tabBar.isHidden = true
+        // Cacher le bouton retour
+        self.navigationItem.hidesBackButton = true
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,24 +43,14 @@ class PrivateLobbyVC: UIViewController{
                 joinCodeLabel.isHidden = false
                 invteplayersButton.isHidden = false
                 launchButton.isHidden = false
-            }else{
-                startListeningForbegin()
             }
         }
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let listener = listener {
             listener.remove()
-        }
-        Game.shared.leaveLobby(lobbyId: lobbyId!) { error in
-            if let error = error {
-                print(error)
-            }
-            
         }
     }
     
@@ -96,7 +82,7 @@ class PrivateLobbyVC: UIViewController{
         Game.shared.createGame(category: category, difficulty: difficulty, with: lobbyId, competitive: false, players: self.players) { result in
             switch result {
             case .failure(let error): print(error)
-            case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
+            case .success: print("succes")
             }
         }
     }
@@ -117,24 +103,22 @@ class PrivateLobbyVC: UIViewController{
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
-                self.navigationController?.popViewController(animated: true)
+                Game.shared.checkIfGameExist(gameID: lobbyId) { result in
+                    switch result {
+                    case .success(let gameId):
+                            self.performSegue(withIdentifier: "goToQuizz", sender: gameId)
+                        
+                    case .failure(let error):
+                        print("Error fetching game: \(error)")
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+                
             }
         })
     }
     
-    func startListeningForbegin() {
-        listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: lobbyId!) { result in
-            switch result {
-            case .success(let gamedata):
-                if let gameID = gamedata["id"], let status = gamedata["status"] as? String , status == "waiting" {
-                    self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
-                }
-            case .failure(let error):
-                print("Error fetching game: \(error)")
-            }
-        }
-        
-    }
+    
     
     
     

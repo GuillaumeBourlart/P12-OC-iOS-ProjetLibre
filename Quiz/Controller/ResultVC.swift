@@ -10,11 +10,12 @@ import UIKit
 
 
 class ResultVC: UIViewController {
-    @IBOutlet weak var label : UILabel!
-    var gameID: String?
-    @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var label : UILabel!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var goToAppLobby: UIButton!
+    
+    var gameID: String?
     var gameData: GameData?
     var questions: [UniversalQuestion]?
     var isResultAfterGame: Bool?
@@ -39,7 +40,22 @@ class ResultVC: UIViewController {
                 }
             }
         }
+        
         displayWinner()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if isResultAfterGame != nil, isResultAfterGame == true{
+            navigationController?.setNavigationBarHidden(true, animated: true)
+                tabBarController?.tabBar.isHidden = true
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if isResultAfterGame != nil, isResultAfterGame == true{
+            navigationController?.setNavigationBarHidden(false, animated: true)
+                tabBarController?.tabBar.isHidden = false
+        }
     }
     
     

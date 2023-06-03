@@ -11,11 +11,12 @@ import UIKit
 class OpponentChoice: UIViewController {
     
     @IBOutlet var buttons: [UIButton]!
+    
     var difficulty: String?
     var category: Int?
     
     override func viewDidLoad(){
-        
+        super.viewDidLoad()
     }
     
     @IBAction func onTap(_ sender: UIButton){

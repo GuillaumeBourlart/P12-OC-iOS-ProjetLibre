@@ -11,7 +11,6 @@ import UIKit
 class JoinWithCodeVC: UIViewController {
     
     @IBOutlet weak var codeField: UITextField!
-    
     @IBOutlet weak var joinButton: UIButton!
     
     override func viewDidLoad() {

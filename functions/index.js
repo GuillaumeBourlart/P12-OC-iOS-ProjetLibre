@@ -212,3 +212,18 @@ exports.removeFriend = functions.firestore
     });
 
 
+exports.checkPlayersAndDeleteGame = functions.firestore
+    .document("games/{gameId}")
+    .onUpdate((change, context) => {
+      const newValue = change.after.data();
+      const players = newValue.players;
+
+      // Si le tableau "players" est vide, supprimer le document
+      if (Object.keys(players).length === 0) {
+        return admin.firestore().collection("games").doc(context.params.gameId)
+            .delete();
+      } else {
+        console.log("Players array is not empty.");
+        return null;
+      }
+    });
