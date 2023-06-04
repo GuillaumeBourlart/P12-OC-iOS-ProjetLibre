@@ -21,9 +21,9 @@ class PrivateLobbyVC: UIViewController{
     
     var lobbyId: String?
     var isCreator: Bool?
-    var invitedPlayers: [String: String] = [:]
+    var invitedPlayers: [String] = []
     var invitedGroups: [String] = []
-    var players: [String: String] = [:]
+    var players: [String] = []
     var listener: ListenerRegistration? = nil
     var difficulty: String?
     var category: Int?
@@ -91,10 +91,10 @@ class PrivateLobbyVC: UIViewController{
         listener = Game.shared.ListenForChangeInDocument(in: "lobby", documentId: lobbyId, completion: { result in
             switch result {
             case .success(let data):
-                if let playersDict = data["players"] as? [String: String] {
+                if let playersDict = data["players"] as? [String] {
                     self.players = playersDict
                 }
-                if let invitedPlayersDict = data["invited_users"] as? [String: String] {
+                if let invitedPlayersDict = data["invited_users"] as? [String] {
                     self.invitedPlayers = invitedPlayersDict
                 }
                 if let code = data["join_code"] as? String {
@@ -170,11 +170,9 @@ extension PrivateLobbyVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else { return UITableViewCell() }
         if indexPath.section == 0 {
-            let playerKey = Array(players.keys)[indexPath.row]
-            cell.label.text = players[playerKey]
+            cell.label.text = players[indexPath.row]
         } else {
-            let invitedPlayerKey = Array(invitedPlayers.keys)[indexPath.row]
-            cell.label.text = invitedPlayers[invitedPlayerKey]
+            cell.label.text = invitedPlayers[indexPath.row]
         }
         return cell
     }

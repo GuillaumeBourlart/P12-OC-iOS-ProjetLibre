@@ -95,9 +95,9 @@ class FirebaseUser {
                         FirestoreFields.User.inscriptionDate: inscriptionDate,
                         FirestoreFields.User.rank: 1,
                         FirestoreFields.User.points: 0,
-                        FirestoreFields.User.invites: [String: String](),
+                        FirestoreFields.User.invites: [String](),
                         FirestoreFields.User.profilePicture: "",
-                        FirestoreFields.User.friends: [String: String](),
+                        FirestoreFields.User.friends: [String](),
                         FirestoreFields.User.friendRequests: [String:Any]()
                     ]
                     self.firebaseService.setData(in: FirestoreFields.usersCollection, documentId: uid, data: userData) { error in
@@ -144,30 +144,46 @@ class FirebaseUser {
     }
     
     func getUserQuizzes(completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(MyError.noUserConnected))
-            return
-        }
-        
-        let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.creator, currentUserId)]
-        firebaseService.getDocuments(in: FirestoreFields.quizzesCollection, whereFields: conditions) { quizzesData, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let quizzesData = quizzesData {
-                do {
-                    let jsonData = try JSONSerialization.data(withJSONObject: quizzesData, options: [])
-                    let decoder = JSONDecoder()
-                    let quizzes = try decoder.decode([Quiz].self, from: jsonData)
-                    self.userQuizzes = quizzes
-                    completion(.success(()))
-                } catch {
+            guard let currentUserId = firebaseService.currentUserID else {
+                completion(.failure(MyError.noUserConnected))
+                return
+            }
+            
+            let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.creator, currentUserId)]
+            firebaseService.getDocuments(in: FirestoreFields.quizzesCollection, whereFields: conditions) { quizzesData, error in
+                if let error = error {
                     completion(.failure(error))
+                } else if let quizzesData = quizzesData {
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: quizzesData, options: [])
+                        let decoder = JSONDecoder()
+                        let quizzes = try decoder.decode([Quiz].self, from: jsonData)
+                        self.userQuizzes = quizzes
+                        completion(.success(()))
+                    } catch let DecodingError.dataCorrupted(context) {
+                        print("Data corrupted: ", context)
+                        completion(.failure(error!))
+                    } catch let DecodingError.keyNotFound(key, context) {
+                        print("Key '\(key)' not found: ", context.debugDescription)
+                        print("codingPath: ", context.codingPath)
+                        completion(.failure(error!))
+                    } catch let DecodingError.valueNotFound(value, context) {
+                        print("Value '\(value)' not found: ", context.debugDescription)
+                        print("codingPath: ", context.codingPath)
+                        completion(.failure(error!))
+                    } catch let DecodingError.typeMismatch(type, context) {
+                        print("Type '\(type)' mismatch: ", context.debugDescription)
+                        print("codingPath: ", context.codingPath)
+                        completion(.failure(error!))
+                    } catch {
+                        print("error: ", error)
+                        completion(.failure(error))
+                    }
+                } else {
+                    completion(.success(())) // no quizzes found
                 }
-            } else {
-                completion(.success(())) // no quizzes found
             }
         }
-    }
     
     func getUserGroups(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -279,8 +295,61 @@ class FirebaseUser {
     //                                 FRIENDS
     //-----------------------------------------------------------------------------------
     
-    func fetchFriends() -> [String: String] {
-        return self.userInfo?.friends ?? [:]
+    func fetchFriends(completion: @escaping ([String: String]?, Error?) -> Void) {
+        guard let frinedUIDs = self.userInfo?.friends else {
+                completion(nil, MyError.userNotFound) // Provide appropriate error
+                return
+            }
+        var players = [String: String]()
+        
+        let group = DispatchGroup()
+
+        for friendUID in frinedUIDs {
+            group.enter()
+            
+            fetchUsername(with: friendUID) { result in
+                switch result {
+                case .failure(let error):
+                    print("Error: \(error)")
+                case .success(let username):
+                    players[friendUID] = username
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            print(players)
+            completion(players, nil)
+        }
+    }
+    
+    func fetchInvites(completion: @escaping ([String: String]?, Error?) -> Void) {
+        guard let invites = self.userInfo?.invites else {
+                completion(nil, MyError.userNotFound) // Provide appropriate error
+                return
+            }
+        var invitations = [String: String]()
+        
+        let group = DispatchGroup()
+
+        for (key, value) in invites {
+            group.enter()
+            
+            fetchUsername(with: key) { result in
+                switch result {
+                case .failure(let error):
+                    print("Error: \(error)")
+                case .success(let username):
+                    invitations[username] = value
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            completion(invitations, nil)
+        }
     }
     
     func fetchUsername(with uid: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -344,15 +413,34 @@ class FirebaseUser {
     }
     
     
-    func fetchFriendRequests() -> [String: String]{
-        let friendRequestsDict = self.userInfo?.friendRequests ?? [:]
-        let receivedRequests = friendRequestsDict.filter { $1.status == "received" }
-        var friendsRequests = [String: String]()
-        for request in receivedRequests {
-            friendsRequests[request.key] = request.value.senderUsername!
-        }
-        return friendsRequests
+    func fetchFriendRequests(completion: @escaping ([String: String]?, Error?) -> Void){
+        guard let friendRequests = self.userInfo?.friendRequests else {
+                completion(nil, MyError.userNotFound) // Provide appropriate error
+                return
+            }
         
+        var players = [String: String]()
+        
+        let group = DispatchGroup()
+        let receivedRequests = friendRequests.filter { $0.value.status == "received" }
+        let keysArray = Array(receivedRequests.keys)
+        for friendUID in keysArray {
+            group.enter()
+            
+            fetchUsername(with: friendUID) { result in
+                switch result {
+                case .failure(let error):
+                    print("Error: \(error)")
+                case .success(let username):
+                    players[friendUID] = username
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            completion(players, nil)
+        }
     }
     
     
@@ -360,11 +448,11 @@ class FirebaseUser {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
         
         let data: [String: Any] = [
-            "\(FirestoreFields.User.friends).\(friendID)": friendUsername,
+            "\(FirestoreFields.User.friends)": [friendID],
             "\(FirestoreFields.User.friendRequests).\(friendID)": FieldValue.delete()
         ]
         
-        firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: data) { error in
+        firebaseService.setDataWithMerge(in: FirestoreFields.usersCollection, documentId: currentUserId, data: data, merge: true) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -390,19 +478,18 @@ class FirebaseUser {
         }
     }
     
-    
     func removeFriend(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
-        
+
         let data: [String: Any] = [
-            "\(FirestoreFields.User.friends).\(friendID)": FieldValue.delete()
+            "\(FirestoreFields.User.friends)": FieldValue.arrayRemove([friendID])
         ]
-        
+
         firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: data) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
-                        completion(.success(()))
+                completion(.success(()))
             }
         }
     }
@@ -422,14 +509,13 @@ class FirebaseUser {
                 completion(.failure(error))
             } else if let code = code {
                 let newQuiz: [String: Any] = [
-                    FirestoreFields.id: quizID,
                     FirestoreFields.Quiz.name: name,
                     FirestoreFields.Quiz.categoryId: category_id,
                     FirestoreFields.Quiz.difficulty: difficulty,
                     FirestoreFields.creator: currentUserId,
                     FirestoreFields.Quiz.averageScore: 0,
                     FirestoreFields.Quiz.usersCompleted: 0,
-                    FirestoreFields.Quiz.questions: [[String: Any]](),
+                    FirestoreFields.Quiz.questions: [String: Any](),
                     FirestoreFields.Quiz.code: code
                 ]
                 
@@ -443,7 +529,7 @@ class FirebaseUser {
                             category_id: category_id,
                             creator: currentUserId,
                             difficulty: difficulty,
-                            questions: [],
+                            questions: [:],
                             average_score: 0,
                             users_completed: 0,
                             code: code
@@ -470,17 +556,23 @@ class FirebaseUser {
         }
     }
     
-    func addQuestionToQuiz(quiz: Quiz, question: String, correctAnswer: String, wrongAnswers: [String], explanation: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
+    func addQuestionToQuiz(quiz: Quiz, questionText: String, correctAnswer: String, incorrectAnswers: [String], explanation: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard firebaseService.currentUserID != nil else {
+            completion(.failure(MyError.noUserConnected));
+            return
+        }
         
         let questionID = UUID().uuidString
         let questionsField = "\(FirestoreFields.Quiz.questions).\(questionID)"
         
         let questionDict: [String: Any] = [
-            FirestoreFields.Question.question: question,
-            FirestoreFields.Question.incorrectAnswers: wrongAnswers,
+            FirestoreFields.Question.question: questionText,
+            FirestoreFields.Question.incorrectAnswers: incorrectAnswers,
             FirestoreFields.Question.correctAnswer: correctAnswer,
-            FirestoreFields.Question.explanation: explanation
+            FirestoreFields.Question.explanation: explanation,
+            FirestoreFields.Question.category: "Custom",
+            FirestoreFields.Question.type: "Custom",
+            FirestoreFields.Question.difficulty: "Custom"
         ]
         
         firebaseService.updateDocument(in: FirestoreFields.quizzesCollection, documentId: quiz.id, data: [questionsField: questionDict]) { error in
@@ -488,8 +580,8 @@ class FirebaseUser {
                 completion(.failure(error))
             } else {
                 if let quizIndex = self.userQuizzes?.firstIndex(where: { $0.id == quiz.id }) {
-                    let newQuestion = UniversalQuestion(id: questionID, category: nil, type: nil, difficulty: nil, question: question, correct_answer: correctAnswer, incorrect_answers: wrongAnswers, explanation: explanation)
-                    self.userQuizzes?[quizIndex].questions.append(newQuestion)
+                    let newQuestion = UniversalQuestion(id: questionID, category: "Custom", type: "Custom", difficulty: "Custom", question: questionText, correct_answer: correctAnswer, incorrect_answers: incorrectAnswers, explanation: explanation)
+                    self.userQuizzes?[quizIndex].questions[questionID] = newQuestion
                     completion(.success(()))
                 }
             }
@@ -519,14 +611,17 @@ class FirebaseUser {
         }
     }
     
-    func deleteQuestionFromQuiz(quiz: Quiz, questionText: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
-        guard let question = quiz.questions.first(where: { $0.question == questionText }) else {
+    func deleteQuestionFromQuiz(quiz: Quiz, questionId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard firebaseService.currentUserID != nil else {
+            completion(.failure(MyError.noUserConnected));
+            return
+        }
+        guard quiz.questions.keys.contains(questionId) else {
             completion(.failure(MyError.questionNotFound))
             return
         }
         let data = [
-            "\(FirestoreFields.Quiz.questions).\(question.id!)": FieldValue.delete()
+            "\(FirestoreFields.Quiz.questions).\(questionId)": FieldValue.delete()
         ]
         
         firebaseService.updateDocument(in: FirestoreFields.quizzesCollection, documentId: quiz.id, data: data) { error in
@@ -534,39 +629,48 @@ class FirebaseUser {
                 completion(.failure(error))
             } else {
                 if let quizIndex = self.userQuizzes?.firstIndex(where: { $0.id == quiz.id }) {
-                    if let questionIndex = self.userQuizzes?[quizIndex].questions.firstIndex(where: { $0.id == question.id }) {
-                        self.userQuizzes?[quizIndex].questions.remove(at: questionIndex)
-                    }
+                    self.userQuizzes?[quizIndex].questions.removeValue(forKey: questionId)
                 }
                 completion(.success(()))
             }
         }
     }
     
-    func updateQuestionInQuiz(quiz: Quiz, oldQuestion: UniversalQuestion, newQuestionText: String, correctAnswer: String, incorrectAnswers: [String], explanation: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
+    func updateQuestionInQuiz(quiz: Quiz, oldQuestionId: String, newQuestionText: String, correctAnswer: String, incorrectAnswers: [String], explanation: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard firebaseService.currentUserID != nil else {
+            completion(.failure(MyError.noUserConnected));
+            return
+        }
+        
+        guard let oldQuestion = quiz.questions[oldQuestionId] else {
+            completion(.failure(MyError.questionNotFound))
+            return
+        }
+
+        guard let oldQuestionData = oldQuestion as? [String: Any] else {
+            completion(.failure(MyError.generalError))
+            return
+        }
         
         let updatedQuestionDict: [String: Any] = [
             FirestoreFields.Question.question: newQuestionText,
             FirestoreFields.Question.incorrectAnswers: incorrectAnswers,
             FirestoreFields.Question.correctAnswer: correctAnswer,
-            FirestoreFields.Question.explanation: explanation
+            FirestoreFields.Question.explanation: explanation,
         ]
         
-        let updatedQuestion = UniversalQuestion(id: oldQuestion.id, category: oldQuestion.category, type: oldQuestion.type, difficulty: oldQuestion.difficulty, question: newQuestionText, correct_answer: correctAnswer, incorrect_answers: incorrectAnswers, explanation: explanation)
+        let updatedQuestion = UniversalQuestion(id: oldQuestionId, category: oldQuestionData["category"] as? String, type: oldQuestionData["type"] as? String, difficulty: oldQuestionData["difficulty"] as? String, question: newQuestionText, correct_answer: correctAnswer, incorrect_answers: incorrectAnswers, explanation: explanation)
         
-        let data = ["\(FirestoreFields.Quiz.questions).\(String(describing: oldQuestion.id))": updatedQuestionDict]
-        firebaseService.updateDocument(in: FirestoreFields.quizzesCollection, documentId: quiz.id, data: data){ error in
+        let data = ["\(FirestoreFields.Quiz.questions).\(oldQuestionId)": updatedQuestionDict]
+        
+        firebaseService.updateDocument(in: FirestoreFields.quizzesCollection, documentId: quiz.id, data: data) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
                 if let quizIndex = self.userQuizzes?.firstIndex(where: { $0.id == quiz.id }) {
-                    if let questionIndex = self.userQuizzes?[quizIndex].questions.firstIndex(where: { $0.id == oldQuestion.id }) {
-                        self.userQuizzes?[quizIndex].questions[questionIndex] = updatedQuestion
-                        completion(.success(()))
-                    }
+                    self.userQuizzes?[quizIndex].questions[oldQuestionId] = updatedQuestion
                 }
-                
+                completion(.success(()))
             }
         }
     }
@@ -596,7 +700,6 @@ class FirebaseUser {
         
         let groupID = UUID().uuidString
         let newGroup: [String: Any] = [
-            FirestoreFields.id: groupID,
             FirestoreFields.creator: currentUserId,
             FirestoreFields.Group.name: name,
             FirestoreFields.Group.members: [String]()
@@ -606,7 +709,7 @@ class FirebaseUser {
             if let error = error {
                 completion(.failure(error))
             } else {
-                let friendGroup = FriendGroup(id: groupID, creator: currentUserId, name: name, members: [:])
+                let friendGroup = FriendGroup(id: groupID, creator: currentUserId, name: name, members: [])
                 self.friendGroups?.append(friendGroup)
                 completion(.success(()))
             }
@@ -630,40 +733,57 @@ class FirebaseUser {
         }
     }
     
-    func addNewMembersToGroup(group: FriendGroup, newMembers: [String: String], completion: @escaping (Result<Void, Error>) -> Void) {
+    func addNewMembersToGroup(group: FriendGroup, newMembers: [String], completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserID = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
             return
         }
-        let data = [FirestoreFields.Group.members: newMembers]
+        
+        // Assurez-vous d'avoir une référence valide à friendGroups et à l'index du groupe.
+        guard let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) else {
+            completion(.failure(MyError.generalError))
+            return
+        }
+        
+        // Ajouter les nouveaux membres à la liste existante.
+        let updatedMembers = (self.friendGroups?[groupIndex].members ?? []) + newMembers
+        let data = [FirestoreFields.Group.members: updatedMembers]
         
         firebaseService.setDataWithMerge(in: FirestoreFields.groupsCollection, documentId: group.id, data: data, merge: true) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
-                if let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) {
-                    self.friendGroups?[groupIndex].members.merge(newMembers) { (_, new) in new }
-                    completion(.success(()))
-                }
+                // Mettre à jour la liste locale des membres du groupe.
+                self.friendGroups?[groupIndex].members = updatedMembers
+                completion(.success(()))
             }
         }
     }
     
     func removeMemberFromGroup(group: FriendGroup, memberId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
+        guard firebaseService.currentUserID != nil else {
+            completion(.failure(MyError.noUserConnected))
+            return
+        }
+
+        // Assurez-vous d'avoir une référence valide à friendGroups et à l'index du groupe.
+        guard let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) else {
+            completion(.failure(MyError.generalError))
+            return
+        }
+
+        // Retirer le membre du tableau des membres.
+        let updatedMembers = self.friendGroups?[groupIndex].members.filter { $0 != memberId }
+
+        let data = [FirestoreFields.Group.members: updatedMembers ?? []]
         
-        // Mettre à jour la valeur associée à la clé du membre à retirer avec FieldValue.delete()
-        let data = [FirestoreFields.Group.members + "." + memberId: FieldValue.delete()]
-        firebaseService.updateDocument(in: FirestoreFields.groupsCollection, documentId: group.id, data: data) { error in
+        firebaseService.setDataWithMerge(in: FirestoreFields.groupsCollection, documentId: group.id, data: data, merge: true) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
-                // Mettre à jour friendGroups en supprimant le membre
-                if let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) {
-                    // Supprimer le membre du groupe
-                    self.friendGroups?[groupIndex].members.removeValue(forKey: memberId)
-                    completion(.success(()))
-                }
+                // Mettre à jour la liste locale des membres du groupe.
+                self.friendGroups?[groupIndex].members = updatedMembers ?? []
+                completion(.success(()))
             }
         }
     }

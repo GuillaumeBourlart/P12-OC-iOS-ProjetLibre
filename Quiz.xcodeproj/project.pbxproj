@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D00BD4422A2BCC530021230E /* AddQuestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00BD4412A2BCC530021230E /* AddQuestionVC.swift */; };
+		D00BD4442A2BCC670021230E /* AddMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00BD4432A2BCC670021230E /* AddMemberVC.swift */; };
 		D01EDCDC2A182A3400FF3163 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCDB2A182A3400FF3163 /* FirebaseAuth */; };
 		D01EDCDE2A182A3400FF3163 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCDD2A182A3400FF3163 /* FirebaseDatabase */; };
 		D01EDCE02A182A3400FF3163 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCDF2A182A3400FF3163 /* FirebaseFirestore */; };
@@ -38,7 +40,6 @@
 		D03084092A0F8CE500A8FBB7 /* CustomButton2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084082A0F8CE500A8FBB7 /* CustomButton2.swift */; };
 		D030840B2A0F8CEB00A8FBB7 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840A2A0F8CEB00A8FBB7 /* CategoryCell.swift */; };
 		D030840F2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */; };
-		D03084112A0F8CFB00A8FBB7 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */; };
 		D03084142A0F8D8200A8FBB7 /* AlamofireStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */; };
 		D03084152A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */; };
 		D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */; };
@@ -77,6 +78,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D00BD4412A2BCC530021230E /* AddQuestionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuestionVC.swift; sourceTree = "<group>"; };
+		D00BD4432A2BCC670021230E /* AddMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberVC.swift; sourceTree = "<group>"; };
 		D03083D82A0F8A4F00A8FBB7 /* CompetitiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompetitiveVC.swift; sourceTree = "<group>"; };
 		D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModificationVC.swift; sourceTree = "<group>"; };
 		D03083DA2A0F8A4F00A8FBB7 /* ProfilVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilVC.swift; sourceTree = "<group>"; };
@@ -100,7 +103,6 @@
 		D03084082A0F8CE500A8FBB7 /* CustomButton2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton2.swift; sourceTree = "<group>"; };
 		D030840A2A0F8CEB00A8FBB7 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
-		D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireStub.swift; sourceTree = "<group>"; };
 		D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTriviaDatabaseManagerTests.swift; sourceTree = "<group>"; };
 		D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePlayersVC.swift; sourceTree = "<group>"; };
@@ -190,7 +192,6 @@
 				D0EB9A3E2A27AD01006D2A48 /* CustomButtons */,
 				D030840A2A0F8CEB00A8FBB7 /* CategoryCell.swift */,
 				D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */,
-				D03084102A0F8CFB00A8FBB7 /* CustomTableView.swift */,
 				D03084002A0F8AB100A8FBB7 /* Main.storyboard */,
 				D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */,
 				D03083FD2A0F8AB000A8FBB7 /* Settings.swift */,
@@ -272,6 +273,8 @@
 				D03083DB2A0F8A4F00A8FBB7 /* QuizzVC.swift */,
 				D05B8F452A1E2B3B0064795D /* InvitesVC.swift */,
 				D074D66F2A26A2A7004942C4 /* QuestionResultVC.swift */,
+				D00BD4412A2BCC530021230E /* AddQuestionVC.swift */,
+				D00BD4432A2BCC670021230E /* AddMemberVC.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -471,12 +474,12 @@
 				D03083E92A0F8A5100A8FBB7 /* SearchOpponentVC.swift in Sources */,
 				D030840B2A0F8CEB00A8FBB7 /* CategoryCell.swift in Sources */,
 				D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */,
-				D03084112A0F8CFB00A8FBB7 /* CustomTableView.swift in Sources */,
 				D03083F82A0F8A7900A8FBB7 /* AlamofireService.swift in Sources */,
 				D03083EC2A0F8A5200A8FBB7 /* QuickPlayVC.swift in Sources */,
 				D03083F62A0F8A7900A8FBB7 /* OpenTriviaDatabaseManager.swift in Sources */,
 				D03083E62A0F8A5100A8FBB7 /* ProfilVC.swift in Sources */,
 				D03083F72A0F8A7900A8FBB7 /* Game.swift in Sources */,
+				D00BD4442A2BCC670021230E /* AddMemberVC.swift in Sources */,
 				D03083FA2A0F8A7900A8FBB7 /* Structures.swift in Sources */,
 				D084FB142A10309200721B88 /* HistoryVC.swift in Sources */,
 				D03083EB2A0F8A5200A8FBB7 /* OpponentChoice.swift in Sources */,
@@ -484,6 +487,7 @@
 				D03083F92A0F8A7900A8FBB7 /* FirebaseUser.swift in Sources */,
 				D03084072A0F8CDD00A8FBB7 /* CustomButton.swift in Sources */,
 				D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */,
+				D00BD4422A2BCC530021230E /* AddQuestionVC.swift in Sources */,
 				D074D6702A26A2A7004942C4 /* QuestionResultVC.swift in Sources */,
 				D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */,
 				D03084022A0F8AB100A8FBB7 /* Settings.swift in Sources */,

@@ -16,19 +16,36 @@ class FriendsVC: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var userListener: ListenerRegistration?
-    var users: [String: String] {
-        if isShowingFriendRequests {
-            return FirebaseUser.shared.fetchFriendRequests()
-        } else {
-            return FirebaseUser.shared.fetchFriends()
-        }
-    }
+    var friends: [String: String] = [:]
+    var friendRequests: [String: String] = [:]
     var isShowingFriendRequests = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadArrays()
         setupUserListener()
         onSwitch(switchControl)
+    }
+    
+    func loadArrays(){
+        FirebaseUser.shared.fetchFriends { data, error in
+            if let error = error {
+                print(error)
+            }
+            if let data = data {
+                self.friends = data
+                self.tableView.reloadData()
+            }
+        }
+        FirebaseUser.shared.fetchFriendRequests() { data, error in
+            if let error = error {
+                print(error)
+            }
+            if let data = data {
+                self.friendRequests = data
+                self.tableView.reloadData()
+            }
+        }
     }
     
     @IBAction func onSwitch(_ sender: UISegmentedControl) {
@@ -96,7 +113,7 @@ class FriendsVC: UIViewController{
                 // Mettre à jour les données utilisateur localement
                 FirebaseUser.shared.getUserInfo() { result in
                     switch result {
-                    case .success(): self.onSwitch(self.switchControl)
+                    case .success(): self.loadArrays()
                         print("fait")
                     case .failure(let error): print(error)
                     }
@@ -114,32 +131,62 @@ class FriendsVC: UIViewController{
 
 extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        if isShowingFriendRequests {
+            return friendRequests.count
+        }else{
+            return friends.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! CustomCell
         
-        // Configurez votre cellule avec les données de la demande d'ami
-        if indexPath.row < users.count {
-            let friendUID = Array(users.keys)[indexPath.row]
-            let friendUsername = Array(users.values)[indexPath.row]
-            cell.label!.text = friendUsername
+        if isShowingFriendRequests {
+            // Configurez votre cellule avec les données de la demande d'ami
+            if indexPath.row < friendRequests.count {
+                let friendUID = Array(friendRequests.keys)[indexPath.row]
+                let friendUsername = Array(friendRequests.values)[indexPath.row]
+                cell.label!.text = friendUsername
+                
+                // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
+                cell.configure(isFriendCell: true)
+                // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
+                cell.addButton?.isHidden = !isShowingFriendRequests
+                //            cell.removeButton.isHidden = !isShowingFriendRequests
+                
+                // Configurer les boutons et la délégation
+                cell.delegate = self
+                
+                
+            } else {
+                // Gérez l'erreur ici
+                fatalError("IndexPath is out of bounds.")
+            }
             
-            // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
-            cell.configure(isFriendCell: true)
-            // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
-            cell.addButton?.isHidden = !isShowingFriendRequests
-            //            cell.removeButton.isHidden = !isShowingFriendRequests
+        }else{
+            // Configurez votre cellule avec les données de la demande d'ami
+            if indexPath.row < friends.count {
+                let friendUID = Array(friends.keys)[indexPath.row]
+                let friendUsername = Array(friends.values)[indexPath.row]
+                cell.label!.text = friendUsername
+                
+                // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
+                cell.configure(isFriendCell: true)
+                // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
+                cell.addButton?.isHidden = !isShowingFriendRequests
+                //            cell.removeButton.isHidden = !isShowingFriendRequests
+                
+                // Configurer les boutons et la délégation
+                cell.delegate = self
+                
+                
+            } else {
+                // Gérez l'erreur ici
+                fatalError("IndexPath is out of bounds.")
+            }
             
-            // Configurer les boutons et la délégation
-            cell.delegate = self
-            
-            return cell
-        } else {
-            // Gérez l'erreur ici
-            fatalError("IndexPath is out of bounds.")
         }
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -152,8 +199,8 @@ extension FriendsVC: CustomCellDelegate {
     
     func didTapAddButton(in cell: CustomCell) {
         if let indexPath = tableView.indexPath(for: cell) {
-            let friendUID = Array(users.keys)[indexPath.row]
-            let friendUsername = Array(users.values)[indexPath.row]
+            let friendUID = Array(friendRequests.keys)[indexPath.row]
+            let friendUsername = Array(friendRequests.values)[indexPath.row]
             // Ajouter l'ami à la liste d'amis ou effectuer d'autres actions avec l'UID de l'ami
             FirebaseUser.shared.acceptFriendRequest(friendID: friendUID, friendUsername: friendUsername) { result in
                 switch result {
@@ -173,10 +220,12 @@ extension FriendsVC: CustomCellDelegate {
             return
         }
         
-        let friendUID = Array(users.keys)[indexPath.row]
+        let friendUID : String?
+        
         
         if isShowingFriendRequests {
-            FirebaseUser.shared.rejectFriendRequest(friendID: friendUID) { result in
+            friendUID = Array(friendRequests.keys)[indexPath.row]
+            FirebaseUser.shared.rejectFriendRequest(friendID: friendUID!) { result in
                 switch result {
                 case .success:
                     self.onSwitch(self.switchControl)
@@ -185,7 +234,8 @@ extension FriendsVC: CustomCellDelegate {
                 }
             }
         } else {
-            FirebaseUser.shared.removeFriend(friendID: friendUID) { result in
+            friendUID = Array(friends.keys)[indexPath.row]
+            FirebaseUser.shared.removeFriend(friendID: friendUID!) { result in
                 switch result {
                 case .success:
                     self.onSwitch(self.switchControl)

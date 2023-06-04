@@ -12,8 +12,18 @@ class HistoryVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var gameModeControl: UISegmentedControl!
+    
     var games: [GameData] {
-        return FirebaseUser.shared.History ?? []
+        let allGames = FirebaseUser.shared.History ?? []
+        switch gameModeControl.selectedSegmentIndex {
+        case 0: // competitive games
+            return allGames.filter { $0.competitive }
+        case 1: // non-competitive games
+            return allGames.filter { !$0.competitive }
+        default:
+            return allGames
+        }
     }
     
     override func viewDidLoad() {
@@ -24,6 +34,10 @@ class HistoryVC: UIViewController {
             case .failure(let error): print(error)
             }
         }
+    }
+    
+    @IBAction func gameModeChanged(_ sender: UISegmentedControl) {
+        tableView.reloadData()
     }
     
     

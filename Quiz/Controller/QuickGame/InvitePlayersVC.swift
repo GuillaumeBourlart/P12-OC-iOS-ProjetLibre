@@ -15,15 +15,17 @@ class InvitePlayersVC: UIViewController{
     
     var lobbyID: String?
     var isShowingFriends = true
-    var friends : [String: String] { return FirebaseUser.shared.userInfo?.friends ?? [:] }
+    var friends : [String: String] = [:]
     var groups : [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] }
-    var selectedFriends: [String: String] = [:]
+    var selectedFriends: [String] = []
     var selectedGroups: [FriendGroup] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
             tabBarController?.tabBar.isHidden = true
+        
+        loadFriends()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -41,7 +43,17 @@ class InvitePlayersVC: UIViewController{
         }
     }
     
-    
+    func loadFriends(){
+        FirebaseUser.shared.fetchFriends { data, error in
+            if let error = error {
+                print(error)
+            }
+            if let data = data{
+                self.friends = data
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     @IBAction func onSwitch(_ sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex
@@ -85,7 +97,7 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
             cell.label.text = friendName
 
             // Vérifiez si l'ami est dans la liste des amis sélectionnés et mettez en évidence la cellule en conséquence
-            cell.accessoryType = selectedFriends.keys.contains(friendKey) ? .checkmark : .none
+            cell.accessoryType = selectedFriends.contains(friendKey) ? .checkmark : .none
         } else {
             let group = groups[indexPath.row]
             cell.label!.text = group.name
@@ -102,12 +114,12 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
             let friendKey = Array(friends.keys)[indexPath.row]
             let friendName = friends[friendKey] ?? ""
 
-            if selectedFriends.keys.contains(friendKey) {
+            if let index = selectedFriends.firstIndex(of: friendKey) {
                 // Si oui, on le supprime de la liste
-                selectedFriends.removeValue(forKey: friendKey)
+                selectedFriends.remove(at: index)
             } else {
                 // Sinon, on l'ajoute à la liste
-                selectedFriends[friendKey] = friendName
+                selectedFriends.append(friendKey)
             }
         } else {
             let group = groups[indexPath.row]
@@ -117,9 +129,11 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
                 selectedGroups.remove(at: index)
 
                 // Supprimer les membres du groupe de la liste des amis sélectionnés
-                let groupMemberIds = Array(group.members.keys)
+                let groupMemberIds = group.members
                 for memberId in groupMemberIds {
-                    selectedFriends.removeValue(forKey: memberId)
+                    if let index = selectedFriends.firstIndex(of: memberId) {
+                        selectedFriends.remove(at: index)
+                    }
                 }
             } else {
                 // Si le groupe n'est pas dans la liste des groupes sélectionnés, on l'ajoute
@@ -127,13 +141,12 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
 
                 // Ajouter les membres du groupe à la liste des amis sélectionnés
                 let groupMembers = group.members
-                for memberId in groupMembers.keys {
-                    selectedFriends[memberId] = friends[memberId] ?? ""
+                for memberId in groupMembers {
+                    selectedFriends.append(memberId)
                 }
             }
 
             tableView.reloadData()
         }
     }
-    
 }

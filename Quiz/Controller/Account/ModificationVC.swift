@@ -46,6 +46,11 @@ class ModificationVC: UIViewController{
         
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     @IBAction func modifyButtonWasTapped(_ sender: Any) {
         if quiz != nil {
             if isModifying {
@@ -147,126 +152,25 @@ class ModificationVC: UIViewController{
     
     @IBAction func addButtonTapped(_ sender: Any) {
         if quiz != nil {
-            showAddQuestionAlert()
+            performSegue(withIdentifier: "goToAddQuestion", sender: self)
         } else if group != nil {
-            showAddFriendAlert()
+            performSegue(withIdentifier: "goToAddMember", sender: self)
         }
     }
     
-    func showAddQuestionAlert(for existingQuestion: UniversalQuestion? = nil) {
-        let alertController = UIAlertController(title: "Ajouter une question", message: nil, preferredStyle: .alert)
-        
-        alertController.addTextField { textField in
-            textField.placeholder = "Question"
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? AddQuestionVC {
+            destination.existingQuestion = sender as? UniversalQuestion
+            destination.quiz = self.quiz
         }
-        alertController.addTextField { textField in
-            textField.placeholder = "Bonne réponse"
+        if let destination = segue.destination as? AddMemberVC {
+            destination.group = self.group
         }
-        alertController.addTextField { textField in
-            textField.placeholder = "Mauvaise réponse 1"
-        }
-        alertController.addTextField { textField in
-            textField.placeholder = "Mauvaise réponse 2"
-        }
-        alertController.addTextField { textField in
-            textField.placeholder = "Mauvaise réponse 3"
-        }
-        alertController.addTextField { textField in
-            textField.placeholder = "Explication"
-        }
-        
-        if let question = existingQuestion {
-            alertController.textFields?[0].text = question.question
-            alertController.textFields?[1].text = question.correct_answer
-            alertController.textFields?[2].text = question.incorrect_answers[0]
-            alertController.textFields?[3].text = question.incorrect_answers[1]
-            alertController.textFields?[4].text = question.incorrect_answers[2]
-            alertController.textFields?[5].text = question.explanation
-        }
-        
-        let addAction = UIAlertAction(title: "Ajouter", style: .default) { _ in
-            guard let question = alertController.textFields?[0].text, !question.isEmpty,
-                  let correctAnswer = alertController.textFields?[1].text, !correctAnswer.isEmpty,
-                  let incorrectAnswer1 = alertController.textFields?[2].text, !incorrectAnswer1.isEmpty,
-                  let incorrectAnswer2 = alertController.textFields?[3].text, !incorrectAnswer2.isEmpty,
-                  let incorrectAnswer3 = alertController.textFields?[4].text, !incorrectAnswer3.isEmpty,
-                  let explanation = alertController.textFields?[5].text, !explanation.isEmpty
-            else {
-                // vous pouvez afficher un message d'erreur ici
-                print("Tous les champs doivent être remplis.")
-                return
-            }
-            
-            if let existingQuestion = existingQuestion {
-                FirebaseUser.shared.updateQuestionInQuiz(quiz: self.quiz!, oldQuestion: existingQuestion, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
-                    switch result {
-                    case .success():
-                        self.tableView.reloadData()
-                    case .failure(let error):
-                        print("Erreur lors de la mise à jour de la question : \(error)")
-                    }
-                }
-            } else {
-                FirebaseUser.shared.addQuestionToQuiz(quiz: self.quiz!, question: question, correctAnswer: correctAnswer, wrongAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
-                    switch result {
-                    case .success():
-                        self.tableView.reloadData()
-                    case .failure(let error):
-                        print("Erreur lors de l'ajout de la question : \(error)")
-                    }
-                }
-            }
-        }
-        alertController.addAction(addAction)
-        
-        let cancelAction = UIAlertAction(title: "Annuler", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
     }
     
-    func showAddFriendAlert() {
-        let selectFriendsTableViewController = SelectFriendsTableViewController()
-        
-        let friends = FirebaseUser.shared.fetchFriends()
-        
-        selectFriendsTableViewController.friends = friends
-        
-        
-        let alertController = UIAlertController(title: "Ajouter des amis au groupe", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
-        
-        alertController.setValue(selectFriendsTableViewController, forKey: "contentViewController")
-        
-        let addAction = UIAlertAction(title: "Ajouter", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            
-            let selectedFriends = selectFriendsTableViewController.selectedFriends
-            
-            // Vérifier si au moins un ami a été sélectionné
-            guard !selectedFriends.isEmpty else {
-                // vous pouvez afficher un message d'erreur ici
-                print("Vous devez sélectionner au moins un ami.")
-                return
-            }
-            
-            FirebaseUser.shared.addNewMembersToGroup(group: self.group!, newMembers: selectedFriends) { result in
-                switch result {
-                case .success():
-                    self.tableView.reloadData()
-                case .failure(let error):
-                    print("Error adding new members to group: \(error.localizedDescription)")
-                }
-            }
-        }
-        
-        alertController.addAction(addAction)
-        
-        let cancelAction = UIAlertAction(title: "Annuler", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-    }
+    
+    
+   
 }
 
 extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
@@ -290,11 +194,11 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
         
         if let quiz = quiz {
-            let question = quiz.questions[indexPath.row]
+            let question = Array(quiz.questions.values)[indexPath.row]
             cell.label.text = question.question // Change question.text to question.question
         }
         else if let group = group {
-            let memberUsername = Array(group.members.values)[indexPath.row] // Get memberId from group.members keys
+            let memberUsername = group.members[indexPath.row] // Get memberId from group.members keys
             cell.label.text = memberUsername
         }
         
@@ -309,21 +213,10 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
                 print("IndexPath: \(indexPath)")
                 if tableView.cellForRow(at: indexPath) is CustomCell {
                     print(3)
-                    var questionToDelete: UniversalQuestion?
-                    
-                    // Trouver la question correspondant à l'index
-                    if indexPath.row < quiz.questions.count {
-                        questionToDelete = quiz.questions[indexPath.row]
-                    }
-                    
-                    guard let question = questionToDelete else {
-                        return
-                    }
-                    
-                    let questionText = question.question // Utilisez le texte de la question comme identifiant
+                    let questionIdToDelete = Array(quiz.questions.keys)[indexPath.row]
                     
                     // Supprimer la question de la base de données
-                    FirebaseUser.shared.deleteQuestionFromQuiz(quiz: quiz, questionText: questionText) { result in
+                    FirebaseUser.shared.deleteQuestionFromQuiz(quiz: quiz, questionId: questionIdToDelete) { result in
                         switch result {
                         case .success():
                             // Supprimer la question de la table view
@@ -334,7 +227,7 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             } else if let group = group {
-                let memberIdToRemove = Array(group.members.keys)[indexPath.row]
+                let memberIdToRemove = group.members[indexPath.row]
                 FirebaseUser.shared.removeMemberFromGroup(group: group, memberId: memberIdToRemove) { result in
                     switch result {
                     case .success():
@@ -346,12 +239,15 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true) // Désélectionner la cellule après le clic
         if let quiz = quiz {
-            let selectedQuestion = quiz.questions[indexPath.row]
-            showAddQuestionAlert(for: selectedQuestion)
+            let selectedQuestionId = Array(quiz.questions.keys)[indexPath.row]
+            guard let questionDictionary = quiz.questions[selectedQuestionId] as? [String: Any] else {
+                return
+            }
+            performSegue(withIdentifier: "goToAddQuestion", sender: questionDictionary)
         }
     }
     

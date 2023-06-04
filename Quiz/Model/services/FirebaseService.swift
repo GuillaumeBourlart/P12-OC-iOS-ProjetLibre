@@ -60,8 +60,6 @@ class FirebaseService: FirebaseServiceProtocol{
         return Auth.auth().currentUser?.uid
     }
     
-    
-    
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String: Any]]?, Error?) -> Void) {
         var collectionReference: Query = db.collection(collection)
         
@@ -80,43 +78,56 @@ class FirebaseService: FirebaseServiceProtocol{
             if let error = error {
                 completion(nil, error)
             } else {
-                let documentsData = querySnapshot?.documents.map { $0.data() }
+                let documentsData = querySnapshot?.documents.map {
+                    var data = $0.data()
+                    data["id"] = $0.documentID
+                    return data
+                }
+                print(documentsData)
                 completion(documentsData, nil)
             }
         }
     }
-    
+
     func getDocument(in collection: String, documentId: String, completion: @escaping ([String: Any]?, Error?) -> Void) {
         db.collection(collection).document(documentId).getDocument { (documentSnapshot, error) in
             if let error = error {
                 completion(nil, error)
             } else {
-                let documentData = documentSnapshot?.data()
+                var documentData = documentSnapshot?.data()
+                documentData?["id"] = documentSnapshot?.documentID
                 completion(documentData, nil)
             }
         }
     }
-    
+
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration {
         let documentReference = db.collection(collection).document(documentId)
         let listener = documentReference.addSnapshotListener { documentSnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else if let documentData = documentSnapshot?.data() {
-                completion(.success(documentData))
+                var data = documentData
+                data["id"] = documentSnapshot?.documentID
+                completion(.success(data))
             } else {
                 completion(.failure(MyError.documentDoesntExist))
             }
         }
         return listener
     }
-        
+
     func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration {
         let collectionReference = db.collection(collection)
         let listener = collectionReference.addSnapshotListener { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
-            } else if let documentsData = querySnapshot?.documents.map({ $0.data() }) {
+            } else if let documents = querySnapshot?.documents {
+                let documentsData = documents.map { document in
+                    var data = document.data()
+                    data["id"] = document.documentID
+                    return data
+                }
                 completion(.success(documentsData))
             } else {
                 completion(.failure(MyError.generalError))

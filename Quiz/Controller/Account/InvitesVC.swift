@@ -13,16 +13,31 @@ class InvitesVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var listener : ListenerRegistration? = nil
-    var invites: [String: String] { FirebaseUser.shared.userInfo?.invites ?? [:]}
+    var invites: [String: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        startListening()
+        
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        startListening()
+        loadInvites()
+    }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         listener = nil
+    }
+    
+    func loadInvites(){
+        FirebaseUser.shared.fetchInvites { data, error in
+            if let error = error {
+                print(error)
+            }
+            if let data = data {
+                self.invites = data
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func startListening() {
@@ -32,12 +47,14 @@ class InvitesVC: UIViewController {
         listener = Game.shared.ListenForChangeInDocument(in: "users", documentId: currentUserId) { result in
             switch result {
             case .success(let data):
+                print("cece")
                 if let invites = data["invites"] as? [String: String] {
                     if FirebaseUser.shared.userInfo != nil {
                         FirebaseUser.shared.userInfo!.invites = invites
+                        self.loadInvites()
                     }
                 }
-                self.tableView.reloadData()
+                
                 // Handle the updated data...
             case .failure(let error):
                 print(error)
