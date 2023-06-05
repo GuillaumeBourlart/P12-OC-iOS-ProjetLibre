@@ -14,31 +14,30 @@ class OpponentChoice: UIViewController {
     
     var difficulty: String?
     var category: Int?
+    var quizId: String?
     
-    override func viewDidLoad(){
+    override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    @IBAction func onTap(_ sender: UIButton){
+    @IBAction func onTap(_ sender: UIButton) {
         guard let currentUserId = Game.shared.currentUserId else {
             return
         }
         switch sender.tag {
-        case 0: Game.shared.createGame(category: category, difficulty: difficulty, with: nil, competitive: false, players: [currentUserId]) { reuslt in
+        case 0: Game.shared.createQuestionsForGame(quizId: quizId, category: category, difficulty: difficulty, with: nil, competitive: false, players: [currentUserId]) { reuslt in
             switch reuslt {
             case .failure(let error): print(error)
             case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
             }
         }
         case 1:
-            Game.shared.createRoom { result in
+            Game.shared.createRoom(quizID: quizId) { result in
                 switch result {
                 case .failure(let error): print(error)
                 case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
                 }
             }
-        
-            
         default:
             print("error")
         }
@@ -51,11 +50,11 @@ class OpponentChoice: UIViewController {
             
         }
         else if let destination = segue.destination as? PrivateLobbyVC {
+            destination.quizId = quizId
             destination.lobbyId = sender as? String
             destination.isCreator = true
             destination.category = self.category
             destination.difficulty = self.difficulty
-            
         }
     }
     

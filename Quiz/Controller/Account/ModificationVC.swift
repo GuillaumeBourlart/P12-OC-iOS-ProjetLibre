@@ -159,15 +159,35 @@ class ModificationVC: UIViewController{
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? AddQuestionVC {
-            destination.existingQuestion = sender as? UniversalQuestion
+        if let destination = segue.destination as? AddQuestionVC,
+            let questionData = sender as? (id: String, question: UniversalQuestion) {
+            destination.existingQuestionId = questionData.id
+            destination.existingQuestion = questionData.question
             destination.quiz = self.quiz
         }
+        
         if let destination = segue.destination as? AddMemberVC {
             destination.group = self.group
         }
+        if let destination = segue.destination as? OpponentChoice{
+            destination.quizId = quizID
+        }
     }
     
+    
+    
+   
+    
+    
+    
+    @IBAction func lauchQuizButtonPressed(_ sender: Any) {
+        Game.shared.createRoom(quizID: quizID!) { result in
+            switch result {
+            case .failure(let error): print(error)
+            case .success(let lobbyId): self.performSegue(withIdentifier: "goToOpponentChoice", sender: lobbyId)
+            }
+        }
+    }
     
     
    
@@ -244,12 +264,12 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true) // Désélectionner la cellule après le clic
         if let quiz = quiz {
             let selectedQuestionId = Array(quiz.questions.keys)[indexPath.row]
-            guard let questionDictionary = quiz.questions[selectedQuestionId] as? [String: Any] else {
+            guard let question = quiz.questions[selectedQuestionId] else {
                 return
             }
-            performSegue(withIdentifier: "goToAddQuestion", sender: questionDictionary)
+            let questionData = (id: selectedQuestionId, question: question)
+            performSegue(withIdentifier: "goToAddQuestion", sender: questionData)
         }
     }
-    
     
 }

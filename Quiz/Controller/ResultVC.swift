@@ -17,7 +17,7 @@ class ResultVC: UIViewController {
     
     var gameID: String?
     var gameData: GameData?
-    var questions: [UniversalQuestion]?
+    var questions: [String: UniversalQuestion]?
     var isResultAfterGame: Bool?
     
     override func viewDidLoad() {
@@ -28,17 +28,21 @@ class ResultVC: UIViewController {
         }
         
         if let gameID = gameID {
-            Game.shared.getGameData(gameId: gameID) { [weak self] result in
+            Game.shared.getGameData(gameId: gameID) { result in
                 switch result {
                 case .success(let gameData):
-                    self?.gameData = gameData
+                    self.gameData = gameData
+                    self.questions = gameData.questions
+                    print(gameData.questions)
                     DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                        self.tableView.reloadData()
                     }
                 case .failure(let error):
                     print("Failed to fetch game data: \(error)")
                 }
             }
+        } else if let gameData = gameData {
+            self.questions = gameData.questions
         }
         
         displayWinner()
@@ -101,8 +105,10 @@ class ResultVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? QuestionResultVC {
-            destination.question = sender as? UniversalQuestion
+        if let destination = segue.destination as? QuestionResultVC,
+           let selectedQuestionDict = sender as? [String: UniversalQuestion] {
+            destination.question = selectedQuestionDict
+            destination.usersAnswer = gameData?.user_answers
         }
     }
 }
@@ -114,13 +120,14 @@ extension ResultVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gameData?.questions.count ?? 0
+        print(self.questions?.count)
+        return self.questions?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionCell", for: indexPath) as? CustomCell else { return UITableViewCell() }
         
-        let questionsArray = Array(gameData?.questions ?? [:])
+        let questionsArray = Array(self.questions ?? [:])
         if indexPath.row < questionsArray.count {
             let question = questionsArray[indexPath.row]
             cell.label.text = question.value.question
@@ -132,12 +139,21 @@ extension ResultVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Question sélectionnée à la ligne: \(indexPath.row)")
         
-        
         tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
         
-        let selectedQuestion = questions![indexPath.row]
-            print("Informations du quiz sélectionné : \(selectedQuestion)")
-        performSegue(withIdentifier: "goToQuestionResult", sender: selectedQuestion)
+        guard let questionsDict = questions else {
+            print("questions is nil")
+            return
+        }
+        
+        let questionsArray = Array(questionsDict)
+        if indexPath.row < questionsArray.count {
+            let selectedQuestionKey = questionsArray[indexPath.row].0
+            let selectedQuestionValue = questionsArray[indexPath.row].1
+            let selectedQuestionDict = [selectedQuestionKey: selectedQuestionValue]
+            print("Informations du quiz sélectionné : \(selectedQuestionDict)")
+            performSegue(withIdentifier: "goToQuestionResult", sender: selectedQuestionDict)
+        }
     }
     
     

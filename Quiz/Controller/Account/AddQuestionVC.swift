@@ -18,6 +18,7 @@ class AddQuestionVC: UIViewController {
     @IBOutlet weak var explanationField: UITextField!
     
     var existingQuestion: UniversalQuestion?
+    var existingQuestionId: String?
     var quiz: Quiz?
     
     override func viewDidLoad() {
@@ -50,8 +51,8 @@ class AddQuestionVC: UIViewController {
             return
         }
         
-        if let existingQuestion = existingQuestion {
-            FirebaseUser.shared.updateQuestionInQuiz(quiz: self.quiz!, oldQuestionId: existingQuestion.id!, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
+        if let existingQuestion = existingQuestion,let existingQuestionId = existingQuestionId {
+            FirebaseUser.shared.updateQuestionInQuiz(quiz: self.quiz!, oldQuestionId: existingQuestionId, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                 switch result {
                 case .success():print("question ajouté")
                     self.navigationController?.popViewController(animated: true)

@@ -646,11 +646,6 @@ class FirebaseUser {
             completion(.failure(MyError.questionNotFound))
             return
         }
-
-        guard let oldQuestionData = oldQuestion as? [String: Any] else {
-            completion(.failure(MyError.generalError))
-            return
-        }
         
         let updatedQuestionDict: [String: Any] = [
             FirestoreFields.Question.question: newQuestionText,
@@ -659,7 +654,7 @@ class FirebaseUser {
             FirestoreFields.Question.explanation: explanation,
         ]
         
-        let updatedQuestion = UniversalQuestion(id: oldQuestionId, category: oldQuestionData["category"] as? String, type: oldQuestionData["type"] as? String, difficulty: oldQuestionData["difficulty"] as? String, question: newQuestionText, correct_answer: correctAnswer, incorrect_answers: incorrectAnswers, explanation: explanation)
+        let updatedQuestion = UniversalQuestion(id: oldQuestionId, category: oldQuestion.category, type: oldQuestion.type, difficulty: oldQuestion.difficulty, question: newQuestionText, correct_answer: correctAnswer, incorrect_answers: incorrectAnswers, explanation: explanation)
         
         let data = ["\(FirestoreFields.Quiz.questions).\(oldQuestionId)": updatedQuestionDict]
         
@@ -727,7 +722,7 @@ class FirebaseUser {
                     self.friendGroups?[groupIndex].name = newName
                     completion(.success(()))
                 } else {
-                    completion(.failure(MyError.generalError))
+                    completion(.failure(MyError.failedToUpdateGroupName))
                 }
             }
         }
@@ -741,7 +736,7 @@ class FirebaseUser {
         
         // Assurez-vous d'avoir une référence valide à friendGroups et à l'index du groupe.
         guard let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) else {
-            completion(.failure(MyError.generalError))
+            completion(.failure(MyError.failedToUpdateGroupMembers))
             return
         }
         
@@ -768,7 +763,7 @@ class FirebaseUser {
 
         // Assurez-vous d'avoir une référence valide à friendGroups et à l'index du groupe.
         guard let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) else {
-            completion(.failure(MyError.generalError))
+            completion(.failure(MyError.failedToRemoveMembersFromGroup))
             return
         }
 

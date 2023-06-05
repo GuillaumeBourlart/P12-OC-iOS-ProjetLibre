@@ -27,6 +27,7 @@ class PrivateLobbyVC: UIViewController{
     var listener: ListenerRegistration? = nil
     var difficulty: String?
     var category: Int?
+    var quizId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +80,7 @@ class PrivateLobbyVC: UIViewController{
     }
     
     @IBAction func launchGame(){
-        Game.shared.createGame(category: category, difficulty: difficulty, with: lobbyId, competitive: false, players: self.players) { result in
+        Game.shared.createQuestionsForGame(quizId: quizId ,category: category, difficulty: difficulty, with: lobbyId, competitive: false, players: self.players) { result in
             switch result {
             case .failure(let error): print(error)
             case .success: print("succes")

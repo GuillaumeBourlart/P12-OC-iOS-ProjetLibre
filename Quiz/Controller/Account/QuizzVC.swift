@@ -38,7 +38,7 @@ class QuizzVC: UIViewController {
     }
     
     func loadQuestions() {
-            Game.shared.getQuestions(gameId: gameID!) { result in
+        Game.shared.getQuestions(quizId: nil, gameId: gameID!) { result in
                 switch result {
                 case .success(let questions):
                     self.questions = questions

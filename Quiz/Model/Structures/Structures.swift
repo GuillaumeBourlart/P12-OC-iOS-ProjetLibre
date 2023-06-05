@@ -91,7 +91,7 @@ struct GameData: Decodable {
     let status: String
     let players: [String]
     let date: Date
-    let quiz: String?
+    let quiz_id: String?
     var questions: [String: UniversalQuestion]
     var user_answers: [String: [String: UserAnswer]]?
     var final_scores: [String: Int]?

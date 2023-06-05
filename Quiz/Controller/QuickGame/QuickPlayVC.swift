@@ -63,6 +63,8 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         }
     }
     
+    
+    
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

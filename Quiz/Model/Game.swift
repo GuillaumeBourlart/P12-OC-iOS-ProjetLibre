@@ -81,7 +81,7 @@ class Game {
                 var players = [creator]
                 players.append(currentUserId)
                 
-                self.createGame(category: nil, difficulty: nil, with: lobbyId, competitive: true, players: players) { result in
+                self.createQuestionsForGame(quizId: nil, category: nil, difficulty: nil, with: lobbyId, competitive: true, players: players) { result in
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))
@@ -112,10 +112,20 @@ class Game {
 
     
 
-    func getQuestions(gameId: String, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
+    func getQuestions(quizId: String? ,gameId: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
         guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
         
-        firebaseService.getDocument(in: FirestoreFields.gamesCollection, documentId: gameId) { gameData, error in
+        var collection = ""
+        var id = ""
+        if let quizId = quizId {
+            collection = FirestoreFields.quizzesCollection
+            id = quizId
+        }else if let gameId = gameId {
+            collection = FirestoreFields.gamesCollection
+            id = gameId
+        }
+        
+        firebaseService.getDocument(in: collection, documentId: id) { gameData, error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -155,7 +165,7 @@ class Game {
     //-----------------------------------------------------------------------------------
     
     
-    func createRoom(completion: @escaping (Result<String, Error>) -> Void ) {
+    func createRoom(quizID: String?, completion: @escaping (Result<String, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
         }
@@ -165,7 +175,7 @@ class Game {
                 completion(.failure(error))
             }
             else if let code = code {
-                let data = [
+                var data = [
                     FirestoreFields.creator: currentUserId,
                     FirestoreFields.Lobby.competitive: false,
                     FirestoreFields.status: "Private",
@@ -174,6 +184,10 @@ class Game {
                     FirestoreFields.Lobby.invitedGroups: [String](),
                     FirestoreFields.Lobby.players: [String]()
                 ] as [String : Any]
+                
+                if let quizID = quizID {
+                    data[FirestoreFields.Lobby.quizId] = quizID
+                }
                     
                 self.firebaseService.setData(in: FirestoreFields.lobbyCollection, documentId: newLobbyId, data: data) { error in
                     if let error = error {
@@ -235,7 +249,7 @@ class Game {
             
             // Remove player from "invited_players"
             guard var invitedPlayers = data?[FirestoreFields.Lobby.invitedUsers] as? [String] else {
-                completion(.failure(MyError.generalError))
+                completion(.failure(MyError.failedToGetPlayers))
                 return
             }
             if let index = invitedPlayers.firstIndex(of: currentUserId) {
@@ -327,7 +341,7 @@ class Game {
             }
             guard var players = data?[FirestoreFields.Lobby.players] as? [String], let currentUserId = self.firebaseService.currentUserID else {
                 print("arreureee")
-                completion(MyError.generalError)
+                completion(MyError.failedToGetPlayers)
                 return
             }
             if let index = players.firstIndex(of: currentUserId) {
@@ -344,45 +358,75 @@ class Game {
     //                                 General
     //-----------------------------------------------------------------------------------
     
-    func createGame(category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
+    func createQuestionsForGame(quizId: String?, category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
         }
-        self.apiManager.fetchQuestions(inCategory: category, difficulty: difficulty) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let questions):
-                let gameId = documentId ?? UUID().uuidString
-                
-                var questionsDict = [String: [String: Any]]()
-                for var question in questions {
-                    question.id = UUID().uuidString
-                    questionsDict[question.id!] = question.dictionary
-                }
-                
-                var playersArray = players
-                playersArray.append(currentUserId)
-                
-                let gameData: [String: Any] = [
-                    FirestoreFields.creator: currentUserId,
-                    FirestoreFields.status: "waiting",
-                    FirestoreFields.Game.players: playersArray,
-                    FirestoreFields.date: FieldValue.serverTimestamp(),
-                    FirestoreFields.Game.competitive: competitive,
-                    FirestoreFields.Game.questions: questionsDict
-                ]
-                
-                // Perform create game and delete lobby operation
-                self.firebaseService.createGameAndDeleteLobby(gameData: gameData, gameId: gameId, lobbyId: gameId, completion: { error in
-                    if let error = error {
-                        completion(.failure(error))
-                        return
+        if let quizId = quizId {
+            self.getQuestions(quizId: quizId, gameId: nil) { result in
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success(let questions):
+                    self.createGame(questions: questions, with: documentId, competitive: competitive, players: players) { result in
+                        switch result {
+                        case .failure(let error): completion(.failure(error))
+                        case .success(let gameId): completion(.success(gameId))
+                        }
                     }
-                    completion(.success(gameId))
-                })
+                }
+            }
+        } else{
+            self.apiManager.fetchQuestions(inCategory: category, difficulty: difficulty) { result in
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success(let questions):
+                    self.createGame(questions: questions, with: documentId, competitive: competitive, players: players) { result in
+                        switch result {
+                        case .failure(let error): completion(.failure(error))
+                        case .success(let gameId): completion(.success(gameId))
+                        }
+                    }
+                }
             }
         }
+    }
+    
+    func createGame(questions: [UniversalQuestion], with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(MyError.noUserConnected)); return
+        }
+        
+        let gameId = documentId ?? UUID().uuidString
+        
+        var questionsDict = [String: [String: Any]]()
+        for var question in questions {
+            question.id = UUID().uuidString
+            questionsDict[question.id!] = question.dictionary
+        }
+        
+        var playersArray = players
+        playersArray.append(currentUserId)
+        
+        let gameData: [String: Any] = [
+            FirestoreFields.creator: currentUserId,
+            FirestoreFields.status: "waiting",
+            FirestoreFields.Game.players: playersArray,
+            FirestoreFields.date: FieldValue.serverTimestamp(),
+            FirestoreFields.Game.competitive: competitive,
+            FirestoreFields.Game.questions: questionsDict
+        ]
+        
+        // Perform create game and delete lobby operation
+        self.firebaseService.createGameAndDeleteLobby(gameData: gameData, gameId: gameId, lobbyId: gameId, completion: { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            completion(.success(gameId))
+        })
+
     }
     
     
@@ -397,7 +441,7 @@ class Game {
             }
             
             guard var players = data?[FirestoreFields.Game.players] as? [String], let currentUserId = self.firebaseService.currentUserID else {
-                completion(.failure(MyError.generalError))
+                completion(.failure(MyError.failedToGetPlayers))
                 return
             }
             if let index = players.firstIndex(of: currentUserId) {
@@ -510,7 +554,7 @@ class Game {
         }
         
         let data: [String: Any] = [
-            "\(FirestoreFields.Game.userAnswers).\(currentUserId)": answersData,
+            "\(FirestoreFields.Game.userAnswers)": [currentUserId: answersData],
             "\(FirestoreFields.Game.finalScores)": [currentUserId: finalScore]
         ]
         

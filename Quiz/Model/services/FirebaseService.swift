@@ -28,10 +28,13 @@ enum MyError: Error, Equatable {
     case noCurrentLobby
     case noWaitingLobby
     case questionNotFound
-    case generalError
     case failedToMakeURL
     case invalidJsonFormat
     case noDataInResponse
+    case failedToGetPlayers
+    case failedToUpdateGroupName
+    case failedToUpdateGroupMembers
+    case failedToRemoveMembersFromGroup
 }
 
 
@@ -130,7 +133,7 @@ class FirebaseService: FirebaseServiceProtocol{
                 }
                 completion(.success(documentsData))
             } else {
-                completion(.failure(MyError.generalError))
+                completion(.failure(MyError.documentDoesntExist))
             }
         }
         return listener
