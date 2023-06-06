@@ -32,12 +32,9 @@ class CompetitiveVC: UIViewController{
     }
     
     func updateRank() {
-        let rank = Double((FirebaseUser.shared.userInfo?.rank)!)
-        print(rank)
+        let rank = Double((FirebaseUser.shared.userInfo?.rank ?? 0))
         let level = Int(rank)
-        print(level)
         let progress = rank.truncatingRemainder(dividingBy: 1) * 100
-        print(progress)
         DispatchQueue.main.async { [self] in
         
             self.rankBar.progress = Float(progress) / 100

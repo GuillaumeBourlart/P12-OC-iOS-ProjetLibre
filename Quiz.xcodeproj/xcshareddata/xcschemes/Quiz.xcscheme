@@ -48,6 +48,17 @@
                </Test>
             </SkippedTests>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D04FCDDB2A2E9D5B000E688E"
+               BuildableName = "QuizTests2.xctest"
+               BlueprintName = "QuizTests2"
+               ReferencedContainer = "container:Quiz.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

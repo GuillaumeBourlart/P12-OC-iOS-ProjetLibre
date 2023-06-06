@@ -32,12 +32,16 @@ class Game {
             completion(.failure(MyError.noUserConnected)); return
         }
         
-        let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.status, "waiting"), .isEqualTo(FirestoreFields.Lobby.competitive, true)]
+        let conditions: [FirestoreCondition] = [
+            .isEqualTo(FirestoreFields.status, "waiting"),
+            .isEqualTo(FirestoreFields.Lobby.competitive, true)
+        ]
+        
         firebaseService.getDocuments(in: FirestoreFields.lobbyCollection, whereFields: conditions) { lobbyData, error in
             if let error = error {
                 completion(.failure(error))
             } else if let lobbyData = lobbyData, !lobbyData.isEmpty {
-                let lobbyId = lobbyData.first![FirestoreFields.id] as! String
+                guard let lobbyId = lobbyData.first?[FirestoreFields.id] as? String else { completion(.failure(MyError.unableToDecodeLobbyId)) ;return }
                 self.joinCompetitiveRoom(lobbyId: lobbyId) { success in
                     switch success {
                     case .success():

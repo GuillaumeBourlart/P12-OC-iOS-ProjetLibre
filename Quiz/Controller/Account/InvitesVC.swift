@@ -50,7 +50,7 @@ class InvitesVC: UIViewController {
                 print("cece")
                 if let invites = data["invites"] as? [String: String] {
                     if FirebaseUser.shared.userInfo != nil {
-                        FirebaseUser.shared.userInfo!.invites = invites
+                        FirebaseUser.shared.userInfo?.invites = invites
                         self.loadInvites()
                     }
                 }

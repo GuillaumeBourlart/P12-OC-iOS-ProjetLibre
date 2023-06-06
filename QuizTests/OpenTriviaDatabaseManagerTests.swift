@@ -6,10 +6,7 @@
 //
 
 import XCTest
-
-
 @testable import Quiz
-import FirebaseAuth
 
 
 final class OpenTriviaDatabaseManagerTests: XCTestCase {

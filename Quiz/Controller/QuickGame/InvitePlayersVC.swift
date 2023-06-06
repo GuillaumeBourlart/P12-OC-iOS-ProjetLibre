@@ -35,7 +35,8 @@ class InvitePlayersVC: UIViewController{
     }
     
     @IBAction func validateButton(_ sender: Any) {
-        Game.shared.invitePlayerInRoom(lobbyId: lobbyID!, invited_players: selectedFriends, invited_groups: selectedGroups.map { $0.id }) { result in
+        guard let lobbyID = lobbyID else { return}
+        Game.shared.invitePlayerInRoom(lobbyId: lobbyID, invited_players: selectedFriends, invited_groups: selectedGroups.map { $0.id }) { result in
             switch result {
             case .failure(let error): print(error)
             case .success():self.navigationController?.popViewController(animated: true)
@@ -100,7 +101,12 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
             cell.accessoryType = selectedFriends.contains(friendKey) ? .checkmark : .none
         } else {
             let group = groups[indexPath.row]
-            cell.label!.text = group.name
+            if let label = cell.label {
+                           label.text = group.name
+                       } else {
+                           // Gérez l'erreur ici
+                           fatalError("Label is nil.")
+                       }
 
             // Vérifiez si le groupe est dans la liste des groupes sélectionnés et mettez en évidence la cellule en conséquence
             cell.accessoryType = selectedGroups.contains(where: { $0.name == group.name }) ? .checkmark : .none

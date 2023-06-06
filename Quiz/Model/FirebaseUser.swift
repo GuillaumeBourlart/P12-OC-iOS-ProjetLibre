@@ -95,7 +95,7 @@ class FirebaseUser {
                         FirestoreFields.User.inscriptionDate: inscriptionDate,
                         FirestoreFields.User.rank: 1,
                         FirestoreFields.User.points: 0,
-                        FirestoreFields.User.invites: [String](),
+                        FirestoreFields.User.invites: [String: String](),
                         FirestoreFields.User.profilePicture: "",
                         FirestoreFields.User.friends: [String](),
                         FirestoreFields.User.friendRequests: [String:Any]()

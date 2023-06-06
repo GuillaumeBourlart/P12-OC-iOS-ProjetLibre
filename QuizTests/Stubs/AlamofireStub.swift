@@ -5,7 +5,8 @@
 //  Created by Guillaume Bourlart on 13/05/2023.
 //
 @testable import Quiz
-import Foundation
+import XCTest
+
 
 class NetworkRequestStub: NetworkRequest {
     var data: Data?

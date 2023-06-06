@@ -146,8 +146,13 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
             if indexPath.row < friendRequests.count {
                 let friendUID = Array(friendRequests.keys)[indexPath.row]
                 let friendUsername = Array(friendRequests.values)[indexPath.row]
-                cell.label!.text = friendUsername
                 
+                if let label = cell.label {
+                    label.text = friendUsername
+                } else {
+                    // Gérez l'erreur ici
+                    fatalError("Label is nil.")
+                }
                 // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
                 cell.configure(isFriendCell: true)
                 // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
@@ -168,7 +173,12 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
             if indexPath.row < friends.count {
                 let friendUID = Array(friends.keys)[indexPath.row]
                 let friendUsername = Array(friends.values)[indexPath.row]
-                cell.label!.text = friendUsername
+                if let label = cell.label {
+                    label.text = friendUsername
+                } else {
+                    // Gérez l'erreur ici
+                    fatalError("Label is nil.")
+                }
                 
                 // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
                 cell.configure(isFriendCell: true)
@@ -224,23 +234,28 @@ extension FriendsVC: CustomCellDelegate {
         
         
         if isShowingFriendRequests {
+            
             friendUID = Array(friendRequests.keys)[indexPath.row]
-            FirebaseUser.shared.rejectFriendRequest(friendID: friendUID!) { result in
-                switch result {
-                case .success:
-                    self.onSwitch(self.switchControl)
-                case .failure(let error):
-                    print("Erreur lors du rejet de la demande d'ami : \(error.localizedDescription)")
+            if let friendUID = friendUID {
+                FirebaseUser.shared.rejectFriendRequest(friendID: friendUID) { result in
+                    switch result {
+                    case .success:
+                        self.onSwitch(self.switchControl)
+                    case .failure(let error):
+                        print("Erreur lors du rejet de la demande d'ami : \(error.localizedDescription)")
+                    }
                 }
             }
         } else {
             friendUID = Array(friends.keys)[indexPath.row]
-            FirebaseUser.shared.removeFriend(friendID: friendUID!) { result in
-                switch result {
-                case .success:
-                    self.onSwitch(self.switchControl)
-                case .failure(let error):
-                    print("Erreur lors de la suppression de l'ami : \(error.localizedDescription)")
+            if let friendUID = friendUID {
+                FirebaseUser.shared.removeFriend(friendID: friendUID) { result in
+                    switch result {
+                    case .success:
+                        self.onSwitch(self.switchControl)
+                    case .failure(let error):
+                        print("Erreur lors de la suppression de l'ami : \(error.localizedDescription)")
+                    }
                 }
             }
         }

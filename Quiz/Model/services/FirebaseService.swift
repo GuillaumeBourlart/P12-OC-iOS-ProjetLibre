@@ -13,7 +13,6 @@ enum FirestoreCondition {
     case isEqualTo(String, Any)
     case arrayContains(String, Any)
     case isIn(String, [Any])
-
 }
 
 enum MyError: Error, Equatable {
@@ -35,6 +34,7 @@ enum MyError: Error, Equatable {
     case failedToUpdateGroupName
     case failedToUpdateGroupMembers
     case failedToRemoveMembersFromGroup
+    case unableToDecodeLobbyId
 }
 
 

@@ -27,7 +27,8 @@ class SearchOpponentVC: UIViewController{
         }
         
         if !isGameFound {
-            Game.shared.deleteCurrentRoom(lobbyId: lobbyId!){ result in
+            guard let lobbyId = lobbyId else { return }
+            Game.shared.deleteCurrentRoom(lobbyId: lobbyId){ result in
                 switch result {
                 case .success():
                     print("annulation réussie")
@@ -52,7 +53,8 @@ class SearchOpponentVC: UIViewController{
     }
     
     func startListening() {
-        listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: lobbyId!) { result in
+        guard let lobbyId = lobbyId else { return }
+        listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: lobbyId) { result in
             switch result {
             case .success(let gamedata):
                 if let gameID = gamedata["id"] {

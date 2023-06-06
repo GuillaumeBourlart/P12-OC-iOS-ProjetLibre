@@ -6,9 +6,6 @@
 //
 @testable import Quiz
 import XCTest
-import Firebase
-import FirebaseAuth
-import FirebaseFirestore
 
 final class FirebaseUserTests: XCTestCase {
     

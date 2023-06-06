@@ -32,10 +32,12 @@ class AddMemberVC: UIViewController {
     }
     
     @IBAction func validateButtonPressed(_ sender: Any) {
-        FirebaseUser.shared.addNewMembersToGroup(group: group!, newMembers: selectedFriends) { result in
-            switch result {
-            case .failure(let error): print(error)
-            case .success: self.navigationController?.popViewController(animated: true)
+        if let group = group {
+            FirebaseUser.shared.addNewMembersToGroup(group: group, newMembers: selectedFriends) { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success: self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     

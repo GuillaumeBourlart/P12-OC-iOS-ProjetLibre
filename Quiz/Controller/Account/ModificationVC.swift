@@ -181,10 +181,12 @@ class ModificationVC: UIViewController{
     
     
     @IBAction func lauchQuizButtonPressed(_ sender: Any) {
-        Game.shared.createRoom(quizID: quizID!) { result in
-            switch result {
-            case .failure(let error): print(error)
-            case .success(let lobbyId): self.performSegue(withIdentifier: "goToOpponentChoice", sender: lobbyId)
+        if let quizID = quizID {
+            Game.shared.createRoom(quizID: quizID) { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(let lobbyId): self.performSegue(withIdentifier: "goToOpponentChoice", sender: lobbyId)
+                }
             }
         }
     }

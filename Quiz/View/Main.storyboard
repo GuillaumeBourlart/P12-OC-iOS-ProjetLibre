@@ -156,10 +156,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hnv-sF-ItT" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="80" y="184" width="232" height="65"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hnv-sF-ItT" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
+                                <rect key="frame" x="100" y="252" width="193" height="65"/>
                                 <color key="backgroundColor" red="0.98360043760000004" green="0.83306229109999996" blue="0.39340591429999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="UuD-6E-oKC"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Partie rapide  ">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -168,19 +170,23 @@
                                     <segue destination="zeR-P5-oDk" kind="show" id="YeR-TR-uzX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Boy-4v-VRM" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="80" y="384" width="232" height="65"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Boy-4v-VRM" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
+                                <rect key="frame" x="100" y="452" width="193" height="65"/>
                                 <color key="backgroundColor" red="0.98360043760000004" green="0.83306229109999996" blue="0.39340591429999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="kPe-Yo-RwK"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Mes quizz">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                             </button>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z20-j0-kOm" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="80" y="282" width="232" height="65"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z20-j0-kOm" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
+                                <rect key="frame" x="100" y="352" width="193" height="65"/>
                                 <color key="backgroundColor" red="0.98360043760000004" green="0.83306229109999996" blue="0.39340591429999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="ejz-v5-7sz"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Compétitif">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -189,10 +195,12 @@
                                     <segue destination="7lf-Th-VS0" kind="show" id="ebd-sL-8sj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49h-Vt-RA6" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="114" y="600" width="164" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49h-Vt-RA6" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
+                                <rect key="frame" x="115" y="662" width="163" height="50"/>
                                 <color key="backgroundColor" red="0.98360043760000004" green="0.83306229109999996" blue="0.39340591429999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Wz3-Ko-fx8"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Rejoindre un salon">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -204,6 +212,20 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="APv-gN-CJK"/>
                         <color key="backgroundColor" name="background"/>
+                        <constraints>
+                            <constraint firstItem="Boy-4v-VRM" firstAttribute="centerX" secondItem="FgK-h7-DBG" secondAttribute="centerX" id="2wk-GC-YQM"/>
+                            <constraint firstItem="Hnv-sF-ItT" firstAttribute="leading" secondItem="APv-gN-CJK" secondAttribute="leading" constant="100" id="4ZD-Us-yqv"/>
+                            <constraint firstItem="Hnv-sF-ItT" firstAttribute="centerX" secondItem="FgK-h7-DBG" secondAttribute="centerX" id="6Bg-TH-VQK"/>
+                            <constraint firstItem="Boy-4v-VRM" firstAttribute="top" secondItem="Z20-j0-kOm" secondAttribute="bottom" constant="35" id="Cfs-tN-gdp"/>
+                            <constraint firstItem="Z20-j0-kOm" firstAttribute="centerX" secondItem="FgK-h7-DBG" secondAttribute="centerX" id="DBJ-7M-DLw"/>
+                            <constraint firstItem="49h-Vt-RA6" firstAttribute="top" secondItem="Boy-4v-VRM" secondAttribute="bottom" constant="145" id="DbI-eT-R0I"/>
+                            <constraint firstItem="Z20-j0-kOm" firstAttribute="centerY" secondItem="FgK-h7-DBG" secondAttribute="centerY" id="EVt-lT-yOs"/>
+                            <constraint firstItem="Z20-j0-kOm" firstAttribute="leading" secondItem="APv-gN-CJK" secondAttribute="leading" constant="100" id="JTH-5V-ch3"/>
+                            <constraint firstItem="49h-Vt-RA6" firstAttribute="leading" secondItem="APv-gN-CJK" secondAttribute="leading" constant="115" id="NDC-Sa-XJc"/>
+                            <constraint firstItem="Boy-4v-VRM" firstAttribute="leading" secondItem="APv-gN-CJK" secondAttribute="leading" constant="100" id="NKK-Hd-nbj"/>
+                            <constraint firstItem="Z20-j0-kOm" firstAttribute="top" secondItem="Hnv-sF-ItT" secondAttribute="bottom" constant="35" id="XyU-7d-5rn"/>
+                            <constraint firstItem="49h-Vt-RA6" firstAttribute="centerX" secondItem="FgK-h7-DBG" secondAttribute="centerX" id="brf-12-WxQ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5kY-vd-fha"/>
                 </viewController>
@@ -1143,6 +1165,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="Nas-EO-Jgf" secondAttribute="trailing" id="KF5-Tl-KIE"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="background"/>
                                         <connections>
                                             <outlet property="label" destination="Nas-EO-Jgf" id="r8G-RF-OkV"/>
                                         </connections>

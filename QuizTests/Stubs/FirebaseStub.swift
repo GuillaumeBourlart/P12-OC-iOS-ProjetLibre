@@ -4,10 +4,13 @@
 //
 //  Created by Guillaume Bourlart on 18/05/2023.
 //
-
+import XCTest
 @testable import Quiz
+import Firebase
 
 class FirebaseServiceStub: FirebaseServiceProtocol {
+   
+    
     
     
     var stubbedQuerySnapshotData: [[String: Any]]?
@@ -32,6 +35,27 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     
     func getDocument(in collection: String, documentId: String, completion: @escaping ([String : Any]?, Error?) -> Void) {
         completion(stubbedDocumentSnapshot, stubbedDocumentError)
+    }
+    
+    func setDataWithMerge(in collection: String, documentId: String, data: [String : Any], merge: Bool, completion: @escaping (Error?) -> Void) {
+        
+    }
+    
+    func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String : Any], Error>) -> Void) -> ListenerRegistration {
+        
+       
+    }
+    
+    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String : Any]], Error>) -> Void) -> ListenerRegistration {
+        
+    }
+    
+    func createGameAndDeleteLobby(gameData: [String : Any], gameId: String, lobbyId: String, completion: @escaping (Error?) -> Void) {
+        
+    }
+    
+    func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {
+        
     }
 
     

@@ -32,7 +32,12 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return Array(usersAnswer!.keys)[section]
+        if let usersAnswer = usersAnswer, !usersAnswer.keys.isEmpty {
+            let keys = Array(usersAnswer.keys)
+            return keys[section]
+        } else {
+            return nil // or return "" if you want to return an empty string
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,6 +61,7 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let usersAnswer = usersAnswer else { return UIView() }
         let headerView = UIView()
         headerView.backgroundColor = tableView.backgroundColor // À définir selon vos préférences
 
@@ -63,7 +69,7 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
             tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
         headerLabel.font = UIFont(name: "Helvetica", size: 20) // À définir selon vos préférences
         headerLabel.textColor = .white
-        headerLabel.text = Array(usersAnswer!.keys)[section]
+        headerLabel.text = Array(usersAnswer.keys)[section]
         headerLabel.sizeToFit()
 
         headerView.addSubview(headerLabel)

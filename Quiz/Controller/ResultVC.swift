@@ -82,26 +82,34 @@ class ResultVC: UIViewController {
     
     
     func displayWinner() {
-        guard let finalScores = gameData?.final_scores, finalScores.count >= (gameData?.players.count)! else {
-            // Si nous n'avons pas encore les scores finaux de deux joueurs, nous demandons à l'utilisateur de rafraîchir plus tard.
-            self.label.text = "Veuillez rafraîchir plus tard pour voir le vainqueur. Tout les jouerus n'ont pas encore terminé"
+        guard let finalScores = gameData?.final_scores, finalScores.count == gameData?.players.count else {
+            self.label.text = "Veuillez rafraîchir plus tard pour voir le vainqueur. Tous les joueurs n'ont pas encore terminé"
             return
         }
-        
-        // Ici, je suppose que vous avez les identifiants des utilisateurs dans les clés du dictionnaire finalScores.
+
+        // Find the best score
         var bestScore = 0
-        var winner = [String: Int]()
-        for (key, value) in finalScores {
+        for (_, value) in finalScores {
             if value > bestScore {
                 bestScore = value
-                winner = [:]
-                winner[key] = value
             }
-            
-            
         }
-        
-        self.label.text = "le joeur \(winner.first!.key) à gagné avec \(winner.first!.value) points"
+
+        // Find all players with the best score
+        var winners = [String]()
+        for (key, value) in finalScores {
+            if value == bestScore {
+                winners.append(key)
+            }
+        }
+
+        // Display the winners
+        if winners.count > 1 {
+            let winnersList = winners.joined(separator: ", ")
+            self.label.text = "Les joueurs \(winnersList) ont gagné avec \(bestScore) points"
+        } else {
+            self.label.text = "Le joueur \(winners.first) a gagné avec \(bestScore) points"
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

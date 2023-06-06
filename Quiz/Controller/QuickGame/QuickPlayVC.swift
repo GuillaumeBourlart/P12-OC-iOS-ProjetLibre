@@ -76,7 +76,7 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         
         let category = categories[indexPath.row]
         cell.categoryLabel.text = category["name"] as? String
-        cell.tag = (category["id"] as? Int)!
+        cell.tag = category["id"] as? Int ?? 0
         cell.layer.cornerRadius = 10
         return cell
         

@@ -39,8 +39,8 @@ class PrivateLobbyVC: UIViewController{
         super.viewWillAppear(animated)
         if let lobbyId = lobbyId {
             startListening(lobbyId: lobbyId)
-            
-            if isCreator! {
+            guard let isCreator = isCreator else { return }
+            if isCreator {
                 joinCodeLabel.isHidden = false
                 invteplayersButton.isHidden = false
                 launchButton.isHidden = false
@@ -56,13 +56,14 @@ class PrivateLobbyVC: UIViewController{
     }
     
     @IBAction func leaveLobbyWasPressed(_ sender: Any) {
-        Game.shared.leaveLobby(lobbyId: lobbyId!) { error in
+        guard let lobbyId = lobbyId else { return }
+        Game.shared.leaveLobby(lobbyId: lobbyId) { error in
             if let error = error {
                 print(error)
                 return
             }
             if self.isCreator != nil, self.isCreator == true {
-                Game.shared.deleteCurrentRoom(lobbyId: self.lobbyId!) { result in
+                Game.shared.deleteCurrentRoom(lobbyId: lobbyId) { result in
                     switch result {
                     case .failure(let error): print(error)
                     case .success(): print("lobby supprimé")

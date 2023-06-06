@@ -133,13 +133,15 @@ class QuizzVC: UIViewController {
     @IBAction func answerButtonTapped(_ sender: UIButton) {
         guard !isAnswering else { return } // Ignorez l'appui sur le bouton si l'utilisateur répond déjà à une question
                 isAnswering = true // Définissez isAnswering à vrai lorsque l'utilisateur sélectionne une réponse
-        let selectedAnswer = sender.currentTitle!
-            let correctAnswer = questions[currentQuestionIndex].correct_answer
-            let questionId = questions[currentQuestionIndex].id // Assuming your questions have an 'id' field
+        guard let selectedAnswer = sender.currentTitle else { print("error"); return }
+        let correctAnswer = questions[currentQuestionIndex].correct_answer
+
+        guard let questionId = questions[currentQuestionIndex].id else { print("error"); return }
+// Assuming your questions have an 'id' field
 
         let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1 : 0)
         finalScore += selectedAnswer == correctAnswer ? 1 : 0
-        userAnswers[questionId!] = userAnswer
+        userAnswers[questionId] = userAnswer
                 
         
         sender.backgroundColor = selectedAnswer == correctAnswer ? .systemGreen : .systemRed
@@ -170,11 +172,12 @@ class QuizzVC: UIViewController {
     func finishQuiz() {
         // Naviguez vers un écran de résultats ou effectuez d'autres actions pour terminer le quizz
         print("Quizz terminé")
-        Game.shared.saveStats(finalScore: finalScore, userAnswers: userAnswers, gameID: gameID!){ result in
+        guard let gameId = gameID else { print("error"); return }
+        Game.shared.saveStats(finalScore: finalScore, userAnswers: userAnswers, gameID: gameId){ result in
             switch result {
             case .success():
                 print("Statistiques enregistrés avec succès")
-                self.performSegue(withIdentifier: "goToResult", sender: self.gameID!)
+                self.performSegue(withIdentifier: "goToResult", sender: gameId)
             case .failure(let error):
                 print("Erreur lors de l'enregistrement des statistiques': \(error.localizedDescription)")
             }

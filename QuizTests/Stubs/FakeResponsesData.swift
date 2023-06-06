@@ -5,9 +5,8 @@
 //  Created by Guillaume Bourlart on 18/05/2023.
 //
 
-import Foundation
-import FirebaseFirestore
 import XCTest
+@testable import Quiz
 
 class fakeResponsesData {
     

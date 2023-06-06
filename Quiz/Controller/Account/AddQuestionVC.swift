@@ -51,8 +51,8 @@ class AddQuestionVC: UIViewController {
             return
         }
         
-        if let existingQuestion = existingQuestion,let existingQuestionId = existingQuestionId {
-            FirebaseUser.shared.updateQuestionInQuiz(quiz: self.quiz!, oldQuestionId: existingQuestionId, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
+        if let existingQuestion = existingQuestion, let existingQuestionId = existingQuestionId, let quiz = quiz {
+            FirebaseUser.shared.updateQuestionInQuiz(quiz: quiz, oldQuestionId: existingQuestionId, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                 switch result {
                 case .success():print("question ajouté")
                     self.navigationController?.popViewController(animated: true)
@@ -60,8 +60,8 @@ class AddQuestionVC: UIViewController {
                     print("Erreur lors de la mise à jour de la question : \(error)")
                 }
             }
-        } else {
-            FirebaseUser.shared.addQuestionToQuiz(quiz: self.quiz!, questionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
+        } else if let quiz = quiz {
+            FirebaseUser.shared.addQuestionToQuiz(quiz: quiz, questionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                 switch result {
                 case .success():print("question ajoutées")
                     self.navigationController?.popViewController(animated: true)
