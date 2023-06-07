@@ -89,7 +89,7 @@ class FirebaseUser {
                         FirestoreFields.User.lastName: lastName,
                         FirestoreFields.User.birthDate: birthDateTimestamp,
                         FirestoreFields.User.inscriptionDate: inscriptionDate,
-                        FirestoreFields.User.rank: 1,
+                        FirestoreFields.User.rank: 1.0,
                         FirestoreFields.User.points: 0,
                         FirestoreFields.User.invites: [String: String](),
                         FirestoreFields.User.profilePicture: "",

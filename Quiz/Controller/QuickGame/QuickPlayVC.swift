@@ -10,6 +10,8 @@ import Alamofire
 
 class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchQuizField: UITextField!
     
@@ -42,17 +44,26 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     }
     
     func loadCategories() {
-        apiManager.fetchCategories { [weak self] result in
-            switch result {
-            case .failure(let error): print(error)
-            case .success(let categories):
-                self?.categories = categories
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                }
-                print(categories)
+        if let categories = OpenTriviaDatabaseManager.categories, !categories.isEmpty {
+            self.categories = categories
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
             }
-            
+        } else {
+            activityIndicator.startAnimating()
+            apiManager.fetchCategories { [weak self] result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(let categories):
+                    self?.activityIndicator.stopAnimating()
+                    self?.categories = categories
+                    DispatchQueue.main.async {
+                        self?.collectionView.reloadData()
+                    }
+                    print(categories)
+                }
+                
+            }
         }
     }
     

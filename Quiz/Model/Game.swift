@@ -81,8 +81,7 @@ class Game {
                 }
                 
                 guard let lobbyData = lobbyData else { return }
-                let creator = lobbyData[FirestoreFields.creator] as! String
-                var players = [creator]
+                var players = lobbyData[FirestoreFields.Lobby.players] as! [String]
                 players.append(currentUserId)
                 
                 self.createQuestionsForGame(quizId: nil, category: nil, difficulty: nil, with: lobbyId, competitive: true, players: players) { result in
@@ -104,7 +103,7 @@ class Game {
 
         let newLobbyId = UUID().uuidString
         
-        firebaseService.setData(in: FirestoreFields.lobbyCollection, documentId: newLobbyId, data: [FirestoreFields.creator: currentUserId, FirestoreFields.Lobby.competitive: true, FirestoreFields.status: "waiting"]) { error in
+        firebaseService.setData(in: FirestoreFields.lobbyCollection, documentId: newLobbyId, data: [FirestoreFields.creator: currentUserId, FirestoreFields.Lobby.competitive: true, FirestoreFields.status: "waiting",  FirestoreFields.Lobby.players: [currentUserId]]) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -184,7 +183,7 @@ class Game {
                     FirestoreFields.Lobby.joinCode: code,
                     FirestoreFields.Lobby.invitedUsers: [String](),
                     FirestoreFields.Lobby.invitedGroups: [String](),
-                    FirestoreFields.Lobby.players: [String]()
+                    FirestoreFields.Lobby.players: [currentUserId]
                 ] as [String : Any]
                 
                 if let quizID = quizID {
@@ -412,7 +411,6 @@ class Game {
         }
         
         var playersArray = players
-        playersArray.append(currentUserId)
         
         let gameData: [String: Any] = [
             FirestoreFields.creator: currentUserId,

@@ -19,6 +19,7 @@ class InvitesVC: UIViewController {
         super.viewDidLoad()
         
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         startListening()
         loadInvites()

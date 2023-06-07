@@ -31,6 +31,15 @@ class CompetitiveVC: UIViewController{
         updateRank()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        FirebaseUser.shared.getUserInfo { result in
+            switch result {
+            case .failure(let error): print(error)
+            case .success(): self.updateRank()
+            }
+        }
+    }
+    
     func updateRank() {
         let rank = Double((FirebaseUser.shared.userInfo?.rank ?? 0))
         let level = Int(rank)
@@ -75,6 +84,7 @@ class CompetitiveVC: UIViewController{
     
     @IBAction func unwindToCompetitive(segue: UIStoryboardSegue) {
         // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
+        
     }
     
     

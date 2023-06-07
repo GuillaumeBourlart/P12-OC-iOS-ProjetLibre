@@ -17,6 +17,7 @@ class OpenTriviaDatabaseManager {
         self.service = service
     }
     private var currentUserId: String? { return Auth.auth().currentUser?.uid } // get current UID
+    static var categories: [[String: Any]]?
     
     // Function to display TriviaDB categories
     func fetchCategories(completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
@@ -42,6 +43,7 @@ class OpenTriviaDatabaseManager {
                         completion(.failure(MyError.invalidJsonFormat))
                         return
                     }
+                    OpenTriviaDatabaseManager.categories = categoriesJSON
                     completion(.success(categoriesJSON))
                 } catch {
                     completion(.failure(error))

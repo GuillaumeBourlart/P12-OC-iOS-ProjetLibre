@@ -34,7 +34,15 @@ class JoinWithCodeVC: UIViewController {
         }
     }
     
-    @IBAction func lauchQuizButtonPressed(_ sender: Any) {
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        codeField.resignFirstResponder()
     }
     
+}
+
+extension JoinWithCodeVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        codeField.resignFirstResponder()
+        return true
+    }
 }

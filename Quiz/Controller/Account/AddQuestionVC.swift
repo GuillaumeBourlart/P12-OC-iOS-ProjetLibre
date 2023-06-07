@@ -24,6 +24,9 @@ class AddQuestionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadExistingQuestion()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear(_:)), name: UIViewController.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear(_:)), name: UIViewController.keyboardWillHideNotification, object: nil)
     }
     
     
@@ -75,4 +78,38 @@ class AddQuestionVC: UIViewController {
         }
     }
     
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        questionField.resignFirstResponder()
+        correctAnswerField.resignFirstResponder()
+        incorrectAnswersFields[0].resignFirstResponder()
+        incorrectAnswersFields[1].resignFirstResponder()
+        incorrectAnswersFields[2].resignFirstResponder()
+        explanationField.resignFirstResponder()
+    }
+    
+}
+extension AddQuestionVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        questionField.resignFirstResponder()
+        correctAnswerField.resignFirstResponder()
+        incorrectAnswersFields[0].resignFirstResponder()
+        incorrectAnswersFields[1].resignFirstResponder()
+        incorrectAnswersFields[2].resignFirstResponder()
+        explanationField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func keyboardAppear(_ notification: Notification) {
+            guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+            let keyboardFrame = frame.cgRectValue
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardFrame.height
+            }
+        }
+
+    @objc func keyboardDisappear(_ notification: Notification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
 }

@@ -202,3 +202,82 @@ exports.checkPlayersAndDeleteGame = functions.firestore
         return null;
       }
     });
+
+exports.determineWinner = functions.firestore
+    .document("games/{gameId}")
+    .onUpdate((change, context) => {
+      const newValue = change.after.data();
+      const previousValue = change.before.data();
+
+      if (newValue.final_scores !== previousValue.final_scores) {
+        const finalScores = newValue.final_scores;
+        const players = newValue.players;
+
+        if (Object.keys(finalScores).length === players.length) {
+          let maxScore = -Infinity;
+          let winnerUserId = null;
+          for (const userId in finalScores) {
+            if (finalScores[userId] > maxScore) {
+              maxScore = finalScores[userId];
+              winnerUserId = userId;
+            }
+          }
+
+          const gameRef = admin.firestore().collection("games")
+              .doc(context.params.gameId);
+          return gameRef.update({winner: winnerUserId});
+        }
+      }
+      return null;
+    });
+
+
+exports.updateRank = functions.firestore
+    .document("games/{gameId}")
+    .onUpdate((change, context) => {
+      const newValue = change.after.data();
+
+      if (newValue.competitive && newValue.winner) {
+        const finalScores = newValue.final_scores;
+        const winnerUserId = newValue.winner;
+
+        const winnerRef = admin.firestore().collection("users")
+            .doc(winnerUserId);
+
+        return admin.firestore().runTransaction(async (transaction) => {
+          const winnerDoc = await transaction.get(winnerRef);
+          if (!winnerDoc.exists) {
+            throw new Error("Winner Document does not exist!");
+          }
+
+          // Store loser docs to update after all reads
+          const loserDocs = [];
+
+          for (const loserUserId in finalScores) {
+            if (loserUserId !== winnerUserId) {
+              const loserRef = admin.firestore()
+                  .collection("users").doc(loserUserId);
+              const loserDoc = await transaction.get(loserRef);
+              if (!loserDoc.exists) {
+                throw new Error("Loser Document does not exist!");
+              }
+              loserDocs.push({ref: loserRef, doc: loserDoc});
+            }
+          }
+
+          // Update winner rank
+          const newWinnerRank = winnerDoc.data().rank + 0.1;
+          transaction.update(winnerRef, {rank: newWinnerRank});
+
+          // Update loser ranks
+          for (const {ref, doc} of loserDocs) {
+            let newLoserRank = doc.data().rank - 0.1;
+            if (newLoserRank < 0) {
+              newLoserRank = 0;
+            }
+            transaction.update(ref, {rank: newLoserRank});
+          }
+        });
+      }
+      return null;
+    });

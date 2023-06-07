@@ -22,6 +22,8 @@ class CreateAccountVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear(_:)), name: UIViewController.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear(_:)), name: UIViewController.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,5 +82,30 @@ class CreateAccountVC: UIViewController {
     
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+extension CreateAccountVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        userEmail.resignFirstResponder()
+        userPseudo.resignFirstResponder()
+        userLastname.resignFirstResponder()
+        userFirstname.resignFirstResponder()
+        userPassword.resignFirstResponder()
+        userDateOfBirth.resignFirstResponder()
+        return true
+    }
+    
+    @objc func keyboardAppear(_ notification: Notification) {
+            guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+            let keyboardFrame = frame.cgRectValue
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardFrame.height
+            }
+        }
+
+    @objc func keyboardDisappear(_ notification: Notification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
 }

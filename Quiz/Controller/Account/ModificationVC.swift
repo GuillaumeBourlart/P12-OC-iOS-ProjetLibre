@@ -18,6 +18,7 @@ class ModificationVC: UIViewController{
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var difficultyField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var launchQuizButton: UIButton!
     
     var quizID: String?
     var groupID: String?
@@ -42,6 +43,7 @@ class ModificationVC: UIViewController{
             themeLabel.isHidden = true
             difficultyField.isHidden = true
             difficultyLabel.isHidden = true
+            launchQuizButton.isHidden = true
         }
         
     }
@@ -178,7 +180,11 @@ class ModificationVC: UIViewController{
         }
     }
     
-    
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        nameField.resignFirstResponder()
+        themeField.resignFirstResponder()
+        difficultyField.resignFirstResponder()
+    }
     
     
     @IBAction func lauchQuizButtonPressed(_ sender: Any) {
@@ -275,4 +281,12 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+}
+extension ModificationVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        nameField.resignFirstResponder()
+        themeField.resignFirstResponder()
+        difficultyField.resignFirstResponder()
+        return true
+    }
 }

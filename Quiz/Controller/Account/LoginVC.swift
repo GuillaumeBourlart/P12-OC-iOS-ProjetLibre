@@ -64,3 +64,12 @@ class LoginVC: UIViewController{
     
     
 }
+extension LoginVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        userEmail.resignFirstResponder()
+        userPassword.resignFirstResponder()
+        return true
+    }
+    
+   
+}
