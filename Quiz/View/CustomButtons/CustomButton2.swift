@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Custom button 2
 class CustomButton2: UIButton {
 
     override init(frame: CGRect) {

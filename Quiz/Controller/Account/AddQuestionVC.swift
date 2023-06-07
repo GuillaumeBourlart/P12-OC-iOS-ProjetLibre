@@ -60,7 +60,7 @@ class AddQuestionVC: UIViewController {
                     print("Erreur lors de la mise à jour de la question : \(error)")
                 }
             }
-        } else if let quiz = quiz {
+        } else if let quiz = self.quiz {
             FirebaseUser.shared.addQuestionToQuiz(quiz: quiz, questionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                 switch result {
                 case .success():print("question ajoutées")
@@ -69,6 +69,9 @@ class AddQuestionVC: UIViewController {
                     print("Erreur lors de l'ajout de la question : \(error)")
                 }
             }
+        } else {
+            print("erreur")
+            print(quiz)
         }
     }
     

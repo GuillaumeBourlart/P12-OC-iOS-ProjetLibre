@@ -11,14 +11,14 @@ import FirebaseAuth
 
 class OpenTriviaDatabaseManager {
     
-    var service = Service(networkRequest: AlamofireNetworkRequest())
+    var service = Service(networkRequest: AlamofireNetworkRequest()) // service that allows to stub alamofire
     // The initializer for the RecipeService class
     init(service: Service) {
         self.service = service
     }
+    private var currentUserId: String? { return Auth.auth().currentUser?.uid } // get current UID
     
-    private var currentUserId: String? { return Auth.auth().currentUser?.uid }
-    
+    // Function to display TriviaDB categories
     func fetchCategories(completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
         guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return}
         let urlString = "https://opentdb.com/api_category.php"
@@ -52,6 +52,7 @@ class OpenTriviaDatabaseManager {
         }
     }
     
+    // Function to get questions from TrviaDB
     func fetchQuestions(inCategory categoryId: Int?, amount: Int = 10, difficulty: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
         guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return }
         
@@ -111,7 +112,7 @@ class OpenTriviaDatabaseManager {
     
 }
 
-
+// Extension to decode HTML entities
 extension String {
     var stringByDecodingHTMLEntities: String? {
         guard let data = self.data(using: .utf8) else {

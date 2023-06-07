@@ -12,27 +12,23 @@ import FirebaseStorage
 import SDWebImage
 
 
-// FirebaseUser est une classe qui gère les opérations liées aux utilisateurs dans Firebase
+// handle action and information concerning user
 class FirebaseUser {
     
     static let shared = FirebaseUser()
-    
-    var currentUserId: String? { return firebaseService.currentUserID }
-    
+    var currentUserId: String? { return firebaseService.currentUserID } // get current UID
     private var firebaseService: FirebaseServiceProtocol
-    
     init(firebaseService: FirebaseServiceProtocol = FirebaseService()) {
         self.firebaseService = firebaseService
     }
+    var userInfo: aUser? // User's informations
+    var friendGroups: [FriendGroup]? // User's groups
+    var userQuizzes: [Quiz]? // User's quizzes
+    var History: [GameData]? // User's history
     
-    var userInfo: aUser?
-    var friendGroups: [FriendGroup]?
-    var userQuizzes: [Quiz]?
-    var History: [GameData]?
-    
-    
+    // Function to sign out
     func signOut(completion: @escaping (Result<Void, Error>) -> Void ) {
-        guard let currentUserId = currentUserId else { return }
+        guard currentUserId != nil else { return }
         firebaseService.signOutUser { result in
             switch result {
             case .failure(let error): completion(.failure(error))
@@ -41,7 +37,7 @@ class FirebaseUser {
         }
     }
     
-    // Fonction pour connecter un utilisateur
+    // Function to sign out
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         firebaseService.signInUser(email: email, password: password) { result in
             switch result {
@@ -58,10 +54,10 @@ class FirebaseUser {
         }
     }
     
-    // Fonction pour créer un utilisateur
+    // Function to create user
     func createUser(email: String, password: String, pseudo: String, firstName: String, lastName: String, birthDate: Date, completion: @escaping (String?, Error?) -> Void) {
         
-        // Vérifiez si le nom d'utilisateur est déjà utilisé
+        // Check if username already exist
         let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.User.username, pseudo)]
         firebaseService.getDocuments(in: FirestoreFields.usersCollection, whereFields: conditions) { (querySnapshot, error) in
             if let error = error {
@@ -74,7 +70,7 @@ class FirebaseUser {
                 return
             }
             
-            // Créez un nouvel utilisateur
+            // Create user
             self.firebaseService.createUser(withEmail: email, password: password) { result in
                 switch result {
                 case .failure(let error): completion(nil, error)
@@ -112,6 +108,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to get user's information
     func getUserInfo(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
@@ -143,6 +140,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to get user's quizzes
     func getUserQuizzes(completion: @escaping (Result<Void, Error>) -> Void) {
             guard let currentUserId = firebaseService.currentUserID else {
                 completion(.failure(MyError.noUserConnected))
@@ -180,11 +178,12 @@ class FirebaseUser {
                         completion(.failure(error))
                     }
                 } else {
-                    completion(.success(())) // no quizzes found
+                    completion(.success(()))
                 }
             }
         }
     
+    // Function to get user's groups
     func getUserGroups(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
@@ -210,25 +209,22 @@ class FirebaseUser {
         }
     }
     
+    // Function to save user's profile image on Firestore Storage
     func saveImageInStorage(imageData: Data, completion: @escaping (Result<String, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
             return
         }
-        // Générer un nom de fichier unique pour l'image
+        
         let imageFileName = "\(currentUserId).jpg"
-        
-        // Référence à l'emplacement de stockage dans Firebase Storage
         let storageRef = Storage.storage().reference().child("profile_images").child(imageFileName)
-        
-        // Mettre à jour le code pour télécharger l'image dans Firebase Storage
         storageRef.putData(imageData, metadata: nil) { (metadata, error) in
             if let error = error {
                 completion(.failure(error))
                 return
             }
             
-            // Récupérer l'URL de téléchargement de l'image
+            // Get URL image
             storageRef.downloadURL { (url, error) in
                 if let error = error {
                     completion(.failure(error))
@@ -242,6 +238,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to save Firestore Storage URL of the profile image in Firestore user's document
     func saveProfileImage(url: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
@@ -257,9 +254,9 @@ class FirebaseUser {
         }
     }
     
+    // Function to get Firestore storage Image from URL
     func downloadProfileImageFromURL(url: String, completion: @escaping (Data?) -> Void) {
         guard let imageURL = URL(string: url) else {
-            // Gestion des erreurs
             print("Invalid image URL")
             completion(nil)
             return
@@ -267,16 +264,15 @@ class FirebaseUser {
         
         SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, data, error, _) in
             if let error = error {
-                // Gestion des erreurs
                 print("Error downloading profile image:", error)
                 completion(nil)
                 return
             }
-            
             completion(data)
         }
     }
     
+    // Function to save user's new username
     func updateUsername(username: String, completion: @escaping (Result<Void, Error>) -> Void){
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
@@ -295,9 +291,10 @@ class FirebaseUser {
     //                                 FRIENDS
     //-----------------------------------------------------------------------------------
     
+    // Function to display freinds for UID's
     func fetchFriends(completion: @escaping ([String: String]?, Error?) -> Void) {
         guard let frinedUIDs = self.userInfo?.friends else {
-                completion(nil, MyError.userNotFound) // Provide appropriate error
+                completion(nil, MyError.userNotFound)
                 return
             }
         var players = [String: String]()
@@ -324,9 +321,10 @@ class FirebaseUser {
         }
     }
     
+    // Function to display invites form ID
     func fetchInvites(completion: @escaping ([String: String]?, Error?) -> Void) {
         guard let invites = self.userInfo?.invites else {
-                completion(nil, MyError.userNotFound) // Provide appropriate error
+                completion(nil, MyError.userNotFound)
                 return
             }
         var invitations = [String: String]()
@@ -352,6 +350,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to get user's username from their UID
     func fetchUsername(with uid: String, completion: @escaping (Result<String, Error>) -> Void) {
         firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: uid) { (documentData, error) in
             if let error = error {
@@ -367,6 +366,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to send Friend request
     func sendFriendRequest(username: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
@@ -381,7 +381,7 @@ class FirebaseUser {
             }
             
             if let friendDocumentData = documentsData?.first, friendDocumentData["id"] != nil {
-                let friendID = friendDocumentData["id"] as! String // Supposing the ID is stored under the key "id"
+                let friendID = friendDocumentData["id"] as! String
                 
                 if friendID == currentUserId {
                     completion(.failure(MyError.cantAddYourself))
@@ -412,10 +412,10 @@ class FirebaseUser {
         }
     }
     
-    
+    // Function to display friend requests
     func fetchFriendRequests(completion: @escaping ([String: String]?, Error?) -> Void){
         guard let friendRequests = self.userInfo?.friendRequests else {
-                completion(nil, MyError.userNotFound) // Provide appropriate error
+                completion(nil, MyError.userNotFound)
                 return
             }
         
@@ -443,7 +443,7 @@ class FirebaseUser {
         }
     }
     
-    
+    // Function to accept a friend  and add him in friends list
     func acceptFriendRequest(friendID: String, friendUsername: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
         
@@ -461,7 +461,7 @@ class FirebaseUser {
         }
     }
     
-    
+    // Function to reject friend request  and delete friend request
     func rejectFriendRequest(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
         
@@ -478,6 +478,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to remove a friend from friends list
     func removeFriend(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
 
@@ -499,6 +500,7 @@ class FirebaseUser {
     //                                 QUIZZES
     //-----------------------------------------------------------------------------------
     
+    // Function to add/create a new quizz
     func addQuiz(name: String, category_id: String, difficulty: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
         
@@ -542,6 +544,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to delete a quiz from quizzes
     func deleteQuiz(quiz: Quiz, completion: @escaping (Result<Void, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else { completion(.failure(MyError.noUserConnected)); return }
         
@@ -556,6 +559,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to add Question to a quiz
     func addQuestionToQuiz(quiz: Quiz, questionText: String, correctAnswer: String, incorrectAnswers: [String], explanation: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else {
             completion(.failure(MyError.noUserConnected));
@@ -588,6 +592,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to pdate a quiz from it's quiz iD
     func updateQuiz(quizID: String, newName: String, newCategoryID: String, newDifficulty: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
         
@@ -611,6 +616,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to delete a question from quizz
     func deleteQuestionFromQuiz(quiz: Quiz, questionId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else {
             completion(.failure(MyError.noUserConnected));
@@ -636,6 +642,7 @@ class FirebaseUser {
         }
     }
     
+    // Update a question in a quiz
     func updateQuestionInQuiz(quiz: Quiz, oldQuestionId: String, newQuestionText: String, correctAnswer: String, incorrectAnswers: [String], explanation: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else {
             completion(.failure(MyError.noUserConnected));
@@ -674,7 +681,7 @@ class FirebaseUser {
     //                                 GROUPS
     //-----------------------------------------------------------------------------------
     
-    
+    // Function to delete a group from groups
     func deleteGroup(group: FriendGroup, completion: @escaping (Result<Void, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else {  completion(.failure(MyError.noUserConnected)); return}
         let groupID = group.id
@@ -690,6 +697,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to add a new group
     func addGroup(name: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {  completion(.failure(MyError.noUserConnected)); return}
         
@@ -711,6 +719,7 @@ class FirebaseUser {
         }
     }
     
+    // Function to update a group's name
     func updateGroupName(groupID: String, newName: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else {completion(.failure(MyError.noUserConnected)); return}
         let data = [FirestoreFields.Group.name: newName]
@@ -728,19 +737,18 @@ class FirebaseUser {
         }
     }
     
+    // Function to add new members to a group
     func addNewMembersToGroup(group: FriendGroup, newMembers: [String], completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserID = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
             return
         }
         
-        // Assurez-vous d'avoir une référence valide à friendGroups et à l'index du groupe.
         guard let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) else {
             completion(.failure(MyError.failedToUpdateGroupMembers))
             return
         }
         
-        // Ajouter les nouveaux membres à la liste existante.
         let updatedMembers = (self.friendGroups?[groupIndex].members ?? []) + newMembers
         let data = [FirestoreFields.Group.members: updatedMembers]
         
@@ -748,26 +756,24 @@ class FirebaseUser {
             if let error = error {
                 completion(.failure(error))
             } else {
-                // Mettre à jour la liste locale des membres du groupe.
                 self.friendGroups?[groupIndex].members = updatedMembers
                 completion(.success(()))
             }
         }
     }
     
+    // Function to remove a member from a group
     func removeMemberFromGroup(group: FriendGroup, memberId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else {
             completion(.failure(MyError.noUserConnected))
             return
         }
-
-        // Assurez-vous d'avoir une référence valide à friendGroups et à l'index du groupe.
+        
         guard let groupIndex = self.friendGroups?.firstIndex(where: { $0.id == group.id }) else {
             completion(.failure(MyError.failedToRemoveMembersFromGroup))
             return
         }
 
-        // Retirer le membre du tableau des membres.
         let updatedMembers = self.friendGroups?[groupIndex].members.filter { $0 != memberId }
 
         let data = [FirestoreFields.Group.members: updatedMembers ?? []]
@@ -776,13 +782,13 @@ class FirebaseUser {
             if let error = error {
                 completion(.failure(error))
             } else {
-                // Mettre à jour la liste locale des membres du groupe.
                 self.friendGroups?[groupIndex].members = updatedMembers ?? []
                 completion(.success(()))
             }
         }
     }
     
+    // Function to generate a unique code
     func generateUniqueCode(completion: @escaping (String?, Error?) -> Void) {
         let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let codeLength = 6
@@ -794,10 +800,8 @@ class FirebaseUser {
                 completion(nil, error)
             } else {
                 if quizzesData?.isEmpty == true {
-                    // Le code est unique pour les quiz
                     completion(uniqueCode, nil)
                 } else {
-                    // Le code existe déjà pour les quiz, générer un nouveau code
                     self.generateUniqueCode(completion: completion)
                 }
             }

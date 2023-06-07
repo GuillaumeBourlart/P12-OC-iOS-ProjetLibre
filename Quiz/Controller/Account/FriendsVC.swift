@@ -15,6 +15,7 @@ class FriendsVC: UIViewController{
     @IBOutlet weak var switchControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
+    // variables
     var userListener: ListenerRegistration?
     var friends: [String: String] = [:]
     var friendRequests: [String: String] = [:]
@@ -27,6 +28,12 @@ class FriendsVC: UIViewController{
         onSwitch(switchControl)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        userListener?.remove()
+        userListener = nil
+    }
+    
+    // Load friends array and friend requests array for displaying
     func loadArrays(){
         FirebaseUser.shared.fetchFriends { data, error in
             if let error = error {
@@ -48,6 +55,7 @@ class FriendsVC: UIViewController{
         }
     }
     
+    // Function called when switching UIsegmentedCotroll index
     @IBAction func onSwitch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0: isShowingFriendRequests = false
@@ -61,6 +69,7 @@ class FriendsVC: UIViewController{
         }
     }
     
+    // Function called when player wants to add a friend
     @IBAction func addFriend(sender: UIButton){
         let alertController = UIAlertController(title: "Ajouter un ami", message: "Entrez le nom d'utilisateur de votre ami", preferredStyle: .alert)
         
@@ -93,6 +102,8 @@ class FriendsVC: UIViewController{
         self.present(alertController, animated: true, completion: nil)
     }
     
+    
+    // Set up a listener to get any changes in document
     func setupUserListener() {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             print("Aucun utilisateur connecté")
@@ -102,7 +113,7 @@ class FriendsVC: UIViewController{
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(currentUserID)
         
-        // Ajouter un listener sur le document utilisateur
+        // add listener
         userListener = userRef.addSnapshotListener { (documentSnapshot, error) in
             if let error = error {
                 print("Erreur lors de l'écoute des modifications de l'utilisateur: \(error.localizedDescription)")
@@ -110,7 +121,7 @@ class FriendsVC: UIViewController{
             }
             
             if documentSnapshot != nil {
-                // Mettre à jour les données utilisateur localement
+                // update local data
                 FirebaseUser.shared.getUserInfo() { result in
                     switch result {
                     case .success(): self.loadArrays()

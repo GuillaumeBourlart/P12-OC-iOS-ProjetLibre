@@ -34,7 +34,6 @@ class AlamofireNetworkRequest: NetworkRequest {
 }
 
 class Service {
-    
     var networkRequest: NetworkRequest
 
     init(networkRequest: NetworkRequest) {

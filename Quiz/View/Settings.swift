@@ -6,11 +6,11 @@
 //
 
 import Foundation
-
+// Structure to set section et rows in parameters
 enum SettingsSection: Int, CaseIterable {
     case account = 0
     case security
-    
+    // title
     var title: String {
         switch self {
         case .account:
@@ -19,14 +19,14 @@ enum SettingsSection: Int, CaseIterable {
             return "Sécurité"
         }
     }
-    
+    // Section 1
     enum Account: Int, CaseIterable {
         case friends
         case group
         case history
         case quizzes
         case invites
-        
+        // titles
         var title: String {
             switch self {
             case .friends:
@@ -42,7 +42,7 @@ enum SettingsSection: Int, CaseIterable {
             }
         
         }
-        
+        // Segue's IDS
         var segueIdentifier: String {
             switch self {
             case .friends:
@@ -58,7 +58,7 @@ enum SettingsSection: Int, CaseIterable {
             }
         }
     }
-    
+    // Section 2
     enum Security: Int, CaseIterable {
         case option1
         case option2
@@ -66,11 +66,11 @@ enum SettingsSection: Int, CaseIterable {
         case option4
         case option5
         case option6
-        
+        // titles
         var title: String {
             return "Option Sécurité \(self.rawValue + 1)"
         }
-        
+        // segue's IDS
         var segueIdentifier: String {
             return "showSecurityOption\(self.rawValue + 1)"
         }

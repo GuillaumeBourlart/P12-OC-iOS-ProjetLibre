@@ -17,7 +17,6 @@ struct UniversalQuestion: Decodable, Equatable {
     let incorrect_answers: [String]
     let explanation: String?
     
-    // Conversion en dictionnaire
     var dictionary: [String: Any] {
         return [
             
@@ -31,7 +30,6 @@ struct UniversalQuestion: Decodable, Equatable {
         ]
     }
     
-    // Initializer pour les données directes
     init(id: String? = nil, category: String?, type: String?, difficulty: String?, question: String, correct_answer: String, incorrect_answers: [String], explanation: String?) {
         self.id = id
         self.category = category

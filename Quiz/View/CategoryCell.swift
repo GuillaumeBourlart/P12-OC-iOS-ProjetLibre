@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// Custom category cell for CollectionView
 class CategoryCell: UICollectionViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
 }

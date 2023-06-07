@@ -159,24 +159,25 @@ class ModificationVC: UIViewController{
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? AddQuestionVC,
-            let questionData = sender as? (id: String, question: UniversalQuestion) {
-            destination.existingQuestionId = questionData.id
-            destination.existingQuestion = questionData.question
-            destination.quiz = self.quiz
+        if let destination = segue.destination as? AddQuestionVC {
+            if let questionData = sender as? (id: String, question: UniversalQuestion) {
+                destination.existingQuestionId = questionData.id
+                destination.existingQuestion = questionData.question
+                destination.quiz = self.quiz
+            } else {
+                destination.quiz = self.quiz
+            }
         }
         
         if let destination = segue.destination as? AddMemberVC {
             destination.group = self.group
         }
         if let destination = segue.destination as? OpponentChoice{
+            
             destination.quizId = quizID
         }
     }
     
-    
-    
-   
     
     
     

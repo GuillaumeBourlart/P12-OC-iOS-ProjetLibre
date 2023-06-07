@@ -25,6 +25,11 @@ class CreateAccountVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        tryToGetUser()
+    }
+    
+    // check if user is already connected
+    func tryToGetUser(){
         if Auth.auth().currentUser != nil {
             FirebaseUser.shared.getUserInfo { result in
                 switch result {
@@ -35,7 +40,7 @@ class CreateAccountVC: UIViewController {
         }
     }
     
-    
+    // try to sign up user
     @IBAction func signUpUser(_ sender: Any) {
         guard let email = userEmail.text,
               email != "",
@@ -60,7 +65,7 @@ class CreateAccountVC: UIViewController {
     }
     
     
-    
+    // Handle keyboard dismissing
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         userEmail.resignFirstResponder()
         userPseudo.resignFirstResponder()

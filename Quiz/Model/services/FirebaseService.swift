@@ -9,12 +9,14 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
+// Enum to add condition in firestore requests
 enum FirestoreCondition {
     case isEqualTo(String, Any)
     case arrayContains(String, Any)
     case isIn(String, [Any])
 }
 
+// Enum to handle errors
 enum MyError: Error, Equatable {
     case noUserConnected
     case usernameAlreadyUsed
@@ -55,14 +57,15 @@ protocol FirebaseServiceProtocol {
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
+// Class to handle Firebase services
 class FirebaseService: FirebaseServiceProtocol{
     
-    private let db = Firestore.firestore()
-    
+    private let db = Firestore.firestore() // firestore reference
     var currentUserID: String? {
-        return Auth.auth().currentUser?.uid
+        return Auth.auth().currentUser?.uid // get current UID
     }
     
+    // Function to get documents data
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String: Any]]?, Error?) -> Void) {
         var collectionReference: Query = db.collection(collection)
         
@@ -86,12 +89,12 @@ class FirebaseService: FirebaseServiceProtocol{
                     data["id"] = $0.documentID
                     return data
                 }
-                print(documentsData)
                 completion(documentsData, nil)
             }
         }
     }
 
+    // Function to get document data
     func getDocument(in collection: String, documentId: String, completion: @escaping ([String: Any]?, Error?) -> Void) {
         db.collection(collection).document(documentId).getDocument { (documentSnapshot, error) in
             if let error = error {
@@ -104,6 +107,7 @@ class FirebaseService: FirebaseServiceProtocol{
         }
     }
 
+    // Function add snapshot listener to a document
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration {
         let documentReference = db.collection(collection).document(documentId)
         let listener = documentReference.addSnapshotListener { documentSnapshot, error in
@@ -120,6 +124,7 @@ class FirebaseService: FirebaseServiceProtocol{
         return listener
     }
 
+    // Function to add collection snaphot to a collection
     func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration {
         let collectionReference = db.collection(collection)
         let listener = collectionReference.addSnapshotListener { querySnapshot, error in
@@ -139,6 +144,7 @@ class FirebaseService: FirebaseServiceProtocol{
         return listener
     }
     
+    // Function to create a game and remove the linked lobby ID (which has same ID)
     func createGameAndDeleteLobby(gameData: [String: Any], gameId: String, lobbyId: String, completion: @escaping (Error?) -> Void) {
             let batch = db.batch()
 
@@ -150,23 +156,23 @@ class FirebaseService: FirebaseServiceProtocol{
 
             batch.commit(completion: completion)
         }
-    
+    // Function set Data in a document
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).setData(data, completion: completion)
     }
-    // Ajout du paramètre 'merge' dans la méthode 'setData'
+    // Function to merge data in a document
     func setDataWithMerge(in collection: String, documentId: String, data: [String: Any], merge: Bool = false, completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).setData(data, merge: merge, completion: completion)
     }
-    
+    // Function to delete a document from it's ID
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).delete(completion: completion)
     }
-    
+    // Function to update a document from it's ID
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).updateData(data, completion: completion)
     }
-    
+    // Function to sign a user
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { authData, error in
             if let error = error {
@@ -176,7 +182,7 @@ class FirebaseService: FirebaseServiceProtocol{
             }
         }
     }
-    
+    // Function to create a user
     func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authData, error in
             if let error = error {
@@ -186,7 +192,7 @@ class FirebaseService: FirebaseServiceProtocol{
             }
         }
     }
-    
+    // Function to sign out user
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {
         do {
             try Auth.auth().signOut()

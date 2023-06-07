@@ -19,6 +19,11 @@ class LoginVC: UIViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        tryToGetUser()
+    }
+    // check if user is already connected
+    func tryToGetUser() {
         if Auth.auth().currentUser != nil {
             FirebaseUser.shared.getUserInfo { result in
                 switch result {
@@ -30,6 +35,7 @@ class LoginVC: UIViewController{
         }
     }
     
+    // Func to try to log user
     @IBAction func loginUser(_ sender: UIButton) {
         guard let email = userEmail.text,
               email != "",
@@ -46,6 +52,7 @@ class LoginVC: UIViewController{
         }
     }
     
+    // Func that handle keyboard
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         userEmail.resignFirstResponder()
         userPassword.resignFirstResponder()

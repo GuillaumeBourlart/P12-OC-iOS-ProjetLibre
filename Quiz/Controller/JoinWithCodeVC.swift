@@ -34,7 +34,6 @@ class JoinWithCodeVC: UIViewController {
         }
     }
     
-    
     @IBAction func lauchQuizButtonPressed(_ sender: Any) {
     }
     

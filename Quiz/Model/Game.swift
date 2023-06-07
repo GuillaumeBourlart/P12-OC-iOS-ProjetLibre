@@ -12,21 +12,19 @@ import FirebaseAuth
 class Game {
     
     static let shared = Game()
-    
-    var apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()))
-    
+    var apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest())) // API manager reference (for TriviaDB)
     private var firebaseService: FirebaseServiceProtocol
-    
     init(firebaseService: FirebaseServiceProtocol = FirebaseService()) {
         self.firebaseService = firebaseService
     }
-    var currentUserId: String? { return firebaseService.currentUserID }
+    var currentUserId: String? { return firebaseService.currentUserID } // get current UID
     
     
     //-----------------------------------------------------------------------------------
     //                                 Competitive
     //-----------------------------------------------------------------------------------
     
+    // Function to search a competitive room
     func searchCompetitiveRoom(completion: @escaping (Result<String, Error>) -> Void ) {
         guard (firebaseService.currentUserID) != nil else {
             completion(.failure(MyError.noUserConnected)); return
@@ -37,6 +35,7 @@ class Game {
             .isEqualTo(FirestoreFields.Lobby.competitive, true)
         ]
         
+    
         firebaseService.getDocuments(in: FirestoreFields.lobbyCollection, whereFields: conditions) { lobbyData, error in
             if let error = error {
                 completion(.failure(error))
@@ -63,6 +62,7 @@ class Game {
         }
     }
     
+    // Function to join a competitive room from it's lobby ID
     func joinCompetitiveRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
@@ -96,6 +96,7 @@ class Game {
         }
     }
 
+    // Function to create competitive room
     func createCompetitiveRoom(completion: @escaping (Result<String, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
@@ -112,10 +113,7 @@ class Game {
         }
     }
 
-    
-
-    
-
+    // Function to get questions from a quiz ID (when launching a custom quiz) or from gameID when game starts
     func getQuestions(quizId: String? ,gameId: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
         guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
         
@@ -168,7 +166,7 @@ class Game {
     //                                 Quick play
     //-----------------------------------------------------------------------------------
     
-    
+    // Function to create a private room
     func createRoom(quizID: String?, completion: @escaping (Result<String, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
@@ -204,6 +202,7 @@ class Game {
         }
     }
 
+    // Funcrtion to invite a pplayer in a private room
     func invitePlayerInRoom(lobbyId: String,invited_players: [String], invited_groups: [String], completion: @escaping (Result<Void, Error>) -> Void ){
         guard (firebaseService.currentUserID) != nil else {
             completion(.failure(MyError.noUserConnected)); return
@@ -221,6 +220,7 @@ class Game {
         }
     }
     
+    // Function to delete current room
     func deleteCurrentRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void ) {
         guard firebaseService.currentUserID != nil else {
             completion(.failure(MyError.noUserConnected)); return
@@ -236,7 +236,7 @@ class Game {
     }
     
     
-
+    // Function to join a private room
     func joinRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
@@ -247,11 +247,10 @@ class Game {
                 completion(.failure(error))
                 return
             }
-            // Add player to "players"
+            
             var players = (data?[FirestoreFields.Lobby.players] as? [String]) ?? []
             players.append(currentUserId)
             
-            // Remove player from "invited_players"
             guard var invitedPlayers = data?[FirestoreFields.Lobby.invitedUsers] as? [String] else {
                 completion(.failure(MyError.failedToGetPlayers))
                 return
@@ -269,7 +268,6 @@ class Game {
                     if let error = error {
                         completion(.failure(error))
                     } else {
-                        // The player has joined the lobby successfully
                         completion(.success(()))
                     }
                 }
@@ -277,7 +275,7 @@ class Game {
         }
     }
     
-    
+    // Function to join a room with it's code
     func joinWithCode(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else {
             completion(.failure(MyError.noUserConnected))
@@ -293,7 +291,6 @@ class Game {
             }
 
             guard let data = data, !data.isEmpty, let lobbyData = data.first, let lobbyId = lobbyData["id"] as? String else {
-                // Handle the case where the data is not as expected
                 return
             }
 
@@ -309,6 +306,7 @@ class Game {
         }
     }
 
+    // Function to delete invite from invites
     func deleteInvite(inviteId: String,  completion: @escaping (Result<String, Error>) -> Void){
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
@@ -338,6 +336,7 @@ class Game {
         }
     }
 
+    // Function to leave a private room
     func leaveLobby(lobbyId: String, completion: @escaping (Error?) -> Void) {
         firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { data, error in
             if let error = error {
@@ -362,6 +361,7 @@ class Game {
     //                                 General
     //-----------------------------------------------------------------------------------
     
+    // Function to create question of the game, depending of it is a custom quiz or a TriviaDB quiz
     func createQuestionsForGame(quizId: String?, category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
@@ -397,6 +397,7 @@ class Game {
         }
     }
     
+    // Function to create a game, with it's questions
     func createGame(questions: [UniversalQuestion], with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected)); return
@@ -433,7 +434,7 @@ class Game {
 
     }
     
-    
+    // Function to leave a game
     func leaveGame(gameId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else {
             completion(.failure(MyError.noUserConnected)); return
@@ -469,6 +470,7 @@ class Game {
     //                                 GAME DATA
     //-----------------------------------------------------------------------------------
     
+    // Function to check if a game exist
     func checkIfGameExist(gameID: String, completion: @escaping (Result<String, Error>) -> Void){
         guard (firebaseService.currentUserID) != nil else { completion(.failure(MyError.noUserConnected)); return }
         
@@ -483,11 +485,9 @@ class Game {
         }
     }
     
-    
+    // Function to get user's completed games
     func getCompletedGames(completion: @escaping (Result<Void, Error>) -> Void) {
            guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
-           
-           
            
            let conditions: [FirestoreCondition] = [
                .isEqualTo(FirestoreFields.status, "waiting"),
@@ -517,6 +517,7 @@ class Game {
            }
        }
     
+    // Function to get a game data from it's gameID
     func getGameData(gameId: String, completion: @escaping (Result<GameData, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
         
@@ -545,7 +546,7 @@ class Game {
         }
     }
     
-    
+    // Function to save player stats of the game
     func saveStats(finalScore: Int, userAnswers: [String: UserAnswer], gameID: String, completion: @escaping (Result<Void, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(MyError.noUserConnected))
@@ -580,7 +581,7 @@ class Game {
     //                                 LISTENER FOR GAME STARTING
     //-----------------------------------------------------------------------------------
     
-    
+    // Function to listen for change in a document
     func ListenForChangeInDocument(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration {
         return firebaseService.addDocumentSnapshotListener(in: collection, documentId: documentId) { result in
             switch result {
@@ -594,7 +595,7 @@ class Game {
         }
     }
     
-    
+    // Function to convert timestamps to data
     func convertTimestampsToDate(in data: [String: Any]) -> [String: Any] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"

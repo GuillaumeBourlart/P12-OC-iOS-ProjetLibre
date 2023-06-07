@@ -15,30 +15,31 @@ class ProfilVC: UIViewController{
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var level: UILabel!
     
+    
     let imagePickerController = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Make the navigation bar transparent
+        // Make the navigation bar transparent (only needed in root page of controller)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
 
         configureProfileViews()
-        configureTableView()
         imagePickerController.delegate = self
         
-        // Ajout d'un UITapGestureRecognizer à profileImageView pour permettre à l'utilisateur de changer la photo de profil lorsqu'il appuie sur l'image.
+        // Add UITapGestureRecognizer to profilImage view
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGesture)
     }
     
+    // display informations and set UI
     func configureProfileViews() {
-        // Récupérer l'URL de téléchargement de l'image depuis Firestore
+        // Get profilImage URL
         let imageURL = FirebaseUser.shared.userInfo?.profile_picture ?? ""
-        // Appeler la fonction pour charger et afficher l'image
+        // Call function that load and display image
         FirebaseUser.shared.downloadProfileImageFromURL(url: imageURL) { data in
             if let data = data {
                 self.profileImageView.image = UIImage(data: data)
@@ -47,17 +48,16 @@ class ProfilVC: UIViewController{
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
-        profileImageView.layer.borderWidth = 1
-        profileImageView.layer.borderColor = UIColor.white.cgColor
+        profileImageView.layer.borderWidth = 2
+        profileImageView.layer.borderColor = UIColor.gray.cgColor
         
         self.username.text = FirebaseUser.shared.userInfo?.username ?? "username"
         self.level.text = String(FirebaseUser.shared.userInfo?.points ?? 0)
-    }
-    
-    func configureTableView(){
+        
         
     }
     
+    // Call function to log out
     @IBAction func logout(_ sender: Any) {
         FirebaseUser.shared.signOut { result in
             switch result {
@@ -100,6 +100,8 @@ class ProfilVC: UIViewController{
     }
 }
 
+
+// Extension for image picker, to change profil Image
 extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -153,17 +155,21 @@ extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
 extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-
-            let headerLabel = UILabel(frame: CGRect(x: 15, y: 5, width:
+        
+            let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
                 tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
             headerLabel.font = UIFont(name: "Helvetica", size: 18)
             headerLabel.textColor = UIColor.white  // couleur du texte
             headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
             headerLabel.sizeToFit()
-        headerView.backgroundColor = UIColor(named: "color3")
+        headerView.backgroundColor = UIColor(named: "background")
             headerView.addSubview(headerLabel)
 
             return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -182,7 +188,10 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
+            return UITableViewCell()
+        }
+
         
         guard let settingsSection = SettingsSection(rawValue: indexPath.section) else { return cell }
         
