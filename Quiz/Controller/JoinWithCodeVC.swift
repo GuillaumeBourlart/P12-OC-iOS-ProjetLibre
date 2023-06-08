@@ -17,12 +17,19 @@ class JoinWithCodeVC: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.joinButton.isEnabled = true
+    }
+    
     @IBAction func joinButtonPressed(sender: UIButton){
+        joinButton.isEnabled = false
         guard let code: String = self.codeField.text, !code.isEmpty else { print("error"); return }
         Game.shared.joinWithCode(code: code){result in
             switch result {
             case .failure(let error): print(error)
+                self.joinButton.isEnabled = true
             case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
+                
             }
         }
     }

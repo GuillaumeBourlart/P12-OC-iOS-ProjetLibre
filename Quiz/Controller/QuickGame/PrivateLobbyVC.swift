@@ -56,17 +56,21 @@ class PrivateLobbyVC: UIViewController{
     }
     
     @IBAction func leaveLobbyWasPressed(_ sender: Any) {
+        self.leave.isEnabled = false
         guard let lobbyId = lobbyId else { return }
         Game.shared.leaveLobby(lobbyId: lobbyId) { error in
             if let error = error {
                 print(error)
+                self.leave.isEnabled = true
                 return
             }
             if self.isCreator != nil, self.isCreator == true {
                 Game.shared.deleteCurrentRoom(lobbyId: lobbyId) { result in
                     switch result {
                     case .failure(let error): print(error)
+                        self.leave.isEnabled = true
                     case .success(): print("lobby supprimé")
+                        self.leave.isEnabled = true
                         
                     }
                 }
@@ -81,10 +85,13 @@ class PrivateLobbyVC: UIViewController{
     }
     
     @IBAction func launchGame(){
+        self.launchButton.isEnabled = false
         Game.shared.createQuestionsForGame(quizId: quizId ,category: category, difficulty: difficulty, with: lobbyId, competitive: false, players: self.players) { result in
             switch result {
             case .failure(let error): print(error)
+                self.launchButton.isEnabled = true
             case .success: print("succes")
+                
             }
         }
     }
@@ -109,7 +116,7 @@ class PrivateLobbyVC: UIViewController{
                     switch result {
                     case .success(let gameId):
                             self.performSegue(withIdentifier: "goToQuizz", sender: gameId)
-                        
+                        self.launchButton.isEnabled = true
                     case .failure(let error):
                         print("Error fetching game: \(error)")
                         self.navigationController?.popViewController(animated: true)

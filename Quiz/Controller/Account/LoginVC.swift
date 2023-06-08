@@ -13,7 +13,8 @@ class LoginVC: UIViewController{
     
     @IBOutlet private weak var userEmail: UITextField!
     @IBOutlet private weak var userPassword: UITextField!
-
+    @IBOutlet weak var loginButton: CustomButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -21,6 +22,7 @@ class LoginVC: UIViewController{
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         tryToGetUser()
+        self.loginButton.isEnabled = true
     }
     // check if user is already connected
     func tryToGetUser() {
@@ -37,6 +39,7 @@ class LoginVC: UIViewController{
     
     // Func to try to log user
     @IBAction func loginUser(_ sender: UIButton) {
+        loginButton.isEnabled = false
         guard let email = userEmail.text,
               email != "",
               let password = userPassword.text,
@@ -47,7 +50,9 @@ class LoginVC: UIViewController{
         FirebaseUser.shared.signInUser(email: email, password: password) { result in
             switch result {
             case .success():self.performSegue(withIdentifier: "goToMenu", sender: self)
+                
             case .failure(let error):print("Error logging in user: \(error.localizedDescription)")
+                self.loginButton.isEnabled = true
             }
         }
     }

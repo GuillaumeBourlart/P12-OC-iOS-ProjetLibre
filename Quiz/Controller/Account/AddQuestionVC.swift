@@ -29,7 +29,6 @@ class AddQuestionVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear(_:)), name: UIViewController.keyboardWillHideNotification, object: nil)
     }
     
-    
     func loadExistingQuestion(){
         if let existingQuestion = existingQuestion {
             questionField.text = existingQuestion.question
@@ -42,6 +41,7 @@ class AddQuestionVC: UIViewController {
     }
     
     @IBAction func validateButtonPressed(_ sender: Any) {
+        validateButton.isEnabled = false
         guard let question = questionField.text, !question.isEmpty,
               let correctAnswer = correctAnswerField.text, !correctAnswer.isEmpty,
               let incorrectAnswer1 = incorrectAnswersFields[0].text, !incorrectAnswer1.isEmpty,
@@ -51,6 +51,7 @@ class AddQuestionVC: UIViewController {
         else {
             // vous pouvez afficher un message d'erreur ici
             print("Tous les champs doivent être remplis.")
+            validateButton.isEnabled = true
             return
         }
         
@@ -61,6 +62,7 @@ class AddQuestionVC: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 case .failure(let error):
                     print("Erreur lors de la mise à jour de la question : \(error)")
+                    self.validateButton.isEnabled = true
                 }
             }
         } else if let quiz = self.quiz {
@@ -70,11 +72,13 @@ class AddQuestionVC: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 case .failure(let error):
                     print("Erreur lors de l'ajout de la question : \(error)")
+                    self.validateButton.isEnabled = true
                 }
             }
         } else {
             print("erreur")
             print(quiz)
+            validateButton.isEnabled = true
         }
     }
     

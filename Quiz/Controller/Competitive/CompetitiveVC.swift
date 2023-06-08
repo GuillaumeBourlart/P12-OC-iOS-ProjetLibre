@@ -16,6 +16,7 @@ class CompetitiveVC: UIViewController{
     @IBOutlet weak var previousRank: UIImageView!
     @IBOutlet weak var currentRank: UIImageView!
     @IBOutlet weak var nextRank: UIImageView!
+    @IBOutlet weak var startButton: CustomButton2!
     
     let colorBronze = UIColor(red: 205/255, green: 127/255, blue: 50/255, alpha: 1.0) // Bronze
     let colorSilver = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0) // Argent
@@ -30,6 +31,8 @@ class CompetitiveVC: UIViewController{
         //            self.navigationItem.hidesBackButton = true
         updateRank()
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         FirebaseUser.shared.getUserInfo { result in
@@ -78,7 +81,6 @@ class CompetitiveVC: UIViewController{
                 self.currentRank.tintColor = self.colorMaster
             }
         }
-        
         points.text = "\(Int(progress))/100"
     }
     

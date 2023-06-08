@@ -13,6 +13,7 @@ class QuizzVC: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
+    @IBOutlet weak var leaveButton: CustomButton!
     
     var gameID: String?
     var userAnswers: [String: UserAnswer] = [:]
@@ -75,15 +76,18 @@ class QuizzVC: UIViewController {
     
         
     @IBAction func leaveGame(_ sender: UIButton) {
+        leaveButton.isEnabled = false
         if let gameID = gameID {
             Game.shared.leaveGame(gameId: gameID){ result in
                 switch result {
                 case .failure(let error):
                     print(error)
+                    self.leaveButton.isEnabled = true
                 case .success():
                     if self.isCompetitive != nil, self.isCompetitive == true {
                         // Dismiss the view controller
                         self.performSegue(withIdentifier: "unwindToCompetitive", sender: self)
+                        
                     } else {
                         if let navController = self.navigationController {
                             var canUnwindToOpponentChoice = false
@@ -107,6 +111,7 @@ class QuizzVC: UIViewController {
                             }
                         }else{
                             print("error")
+                            self.leaveButton.isEnabled = true
                         }
                     }
                 }

@@ -17,7 +17,7 @@ class CreateAccountVC: UIViewController {
     @IBOutlet  weak var userDateOfBirth: UIDatePicker!
     @IBOutlet private weak var userPassword: UITextField!
     @IBOutlet private weak var userEmail: UITextField!
-    
+    @IBOutlet weak var signinButton: CustomButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,7 @@ class CreateAccountVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         tryToGetUser()
+        self.signinButton.isEnabled = true
     }
     
     // check if user is already connected
@@ -44,6 +45,7 @@ class CreateAccountVC: UIViewController {
     
     // try to sign up user
     @IBAction func signUpUser(_ sender: Any) {
+        signinButton.isEnabled = false
         guard let email = userEmail.text,
               email != "",
               let password = userPassword.text,
@@ -60,8 +62,10 @@ class CreateAccountVC: UIViewController {
         FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo, firstName: firstname, lastName: lastname, birthDate: userDateOfBirth.date) { _, error in
             if let error = error {
                 print("Error creating user: \(error.localizedDescription)")
+                self.signinButton.isEnabled = true
             } else {
                 self.dismiss(animated: true)
+                
             }
         }
     }

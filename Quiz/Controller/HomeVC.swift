@@ -10,6 +10,7 @@ import UIKit
 
 class HomeVC: UIViewController{
     
+    @IBOutlet var buttons: [UIButton]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,11 +24,20 @@ class HomeVC: UIViewController{
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        for button in buttons {
+            button.isEnabled = true
+        }
+    }
+    
     @IBAction func unwindToHomeVC(segue: UIStoryboardSegue) {
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        for button in buttons {
+            button.isEnabled = false
+        }
         if let destination = segue.destination as? QuizzGroupsVC {
             destination.isQuizList = true
         }

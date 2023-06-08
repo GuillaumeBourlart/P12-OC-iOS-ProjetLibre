@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -146,7 +146,7 @@
                     <navigationItem key="navigationItem" id="4JI-Xi-8A3"/>
                     <connections>
                         <outlet property="codeField" destination="FF4-NQ-Ldx" id="GhN-cL-dYN"/>
-                        <outlet property="joinButton" destination="Nw6-2g-Kne" id="mdQ-qf-Urt"/>
+                        <outlet property="joinButton" destination="Nw6-2g-Kne" id="rXi-RA-Uev"/>
                         <segue destination="TCV-aZ-6oU" kind="show" identifier="goToPrivateLobby" id="2mD-dg-9fD"/>
                     </connections>
                 </viewController>
@@ -242,6 +242,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5kY-vd-fha"/>
+                    <connections>
+                        <outletCollection property="buttons" destination="Hnv-sF-ItT" collectionClass="NSMutableArray" id="bZb-a5-AHj"/>
+                        <outletCollection property="buttons" destination="Z20-j0-kOm" collectionClass="NSMutableArray" id="X7B-gD-OhC"/>
+                        <outletCollection property="buttons" destination="Boy-4v-VRM" collectionClass="NSMutableArray" id="UgS-2h-MYk"/>
+                        <outletCollection property="buttons" destination="49h-Vt-RA6" collectionClass="NSMutableArray" id="WaU-m2-Q8f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vQ-Le-3QZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -333,6 +339,7 @@
                         <outlet property="points" destination="c3c-z7-JnY" id="SoP-FZ-F9t"/>
                         <outlet property="previousRank" destination="8Cs-pY-b70" id="H3F-JT-HFD"/>
                         <outlet property="rankBar" destination="K3B-fY-aTD" id="cj1-pp-dmo"/>
+                        <outlet property="startButton" destination="UJS-pN-0nw" id="Z45-Ut-P8Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3JC-mt-UUt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -495,6 +502,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Onw-uE-Yan"/>
                     <connections>
+                        <outlet property="leaveButton" destination="5gm-hJ-CWH" id="EiJ-sM-QWB"/>
                         <outlet property="questionLabel" destination="5bM-De-r7t" id="7Qt-v2-vIn"/>
                         <outlet property="timerLabel" destination="QLd-xk-IDy" id="OWk-vX-bWN"/>
                         <outletCollection property="answerButtons" destination="Uem-di-lTH" collectionClass="NSMutableArray" id="Tec-6a-hBU"/>
@@ -595,7 +603,7 @@
             <objects>
                 <viewController id="BKf-Ad-cFK" customClass="ResultVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aYq-e3-JaU">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3e-rz-BUl">
@@ -608,7 +616,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="CD1-Em-2EA">
-                                <rect key="frame" x="40" y="278" width="313" height="491"/>
+                                <rect key="frame" x="40" y="278" width="313" height="540"/>
                                 <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="QuestionCell" id="0oO-BN-yAg" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
@@ -694,11 +702,11 @@
             <objects>
                 <viewController id="Ggw-Bz-1q7" customClass="QuestionResultVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VnT-KT-ryP">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Jqk-8m-jZP">
-                                <rect key="frame" x="40" y="198.66666666666669" width="313" height="570.33333333333326"/>
+                                <rect key="frame" x="40" y="198.66666666666669" width="313" height="619.33333333333326"/>
                                 <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="w0j-o9-oLK">
@@ -1174,6 +1182,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="wBr-2F-nEL"/>
                     <connections>
+                        <outlet property="addQuestionButton" destination="EA1-Dw-ehh" id="QPE-9o-Nb2"/>
                         <outlet property="difficultyField" destination="0FS-gv-tPK" id="Vbf-3Q-qC3"/>
                         <outlet property="difficultyLabel" destination="giF-Ps-7d8" id="feB-e8-xcQ"/>
                         <outlet property="launchQuizButton" destination="eqz-gr-ieR" id="jgs-gg-HGD"/>
@@ -1270,6 +1279,7 @@
                     <navigationItem key="navigationItem" id="1yN-t6-4HF"/>
                     <connections>
                         <outlet property="tableView" destination="qRb-Eg-huI" id="27g-Fa-Elu"/>
+                        <outlet property="validateButton" destination="mFL-ab-1Jp" id="MfW-xH-JeY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4pz-tr-gOf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1413,7 +1423,7 @@
                         <outlet property="correctAnswerField" destination="Nzo-DW-rhy" id="xeT-oQ-EJe"/>
                         <outlet property="explanationField" destination="BC0-SB-Htk" id="KfD-6Y-kbf"/>
                         <outlet property="questionField" destination="jw1-SY-Of9" id="ilJ-IW-kPS"/>
-                        <outlet property="validateButton" destination="1cu-04-f1V" id="2ds-yB-Z34"/>
+                        <outlet property="validateButton" destination="1cu-04-f1V" id="ZkU-Ex-y66"/>
                         <outletCollection property="incorrectAnswersFields" destination="a8T-GI-zEL" collectionClass="NSMutableArray" id="8RS-L6-vdI"/>
                         <outletCollection property="incorrectAnswersFields" destination="UVf-fS-zb4" collectionClass="NSMutableArray" id="3kN-Py-4n7"/>
                         <outletCollection property="incorrectAnswersFields" destination="yLj-vl-6QF" collectionClass="NSMutableArray" id="G7S-wp-91S"/>
@@ -2124,6 +2134,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="loginButton" destination="676-G7-ZuZ" id="rLA-jw-aVm"/>
                         <outlet property="userEmail" destination="6n4-qw-W9F" id="GEt-PI-MBo"/>
                         <outlet property="userPassword" destination="vOP-j1-sOt" id="flC-4G-meI"/>
                         <segue destination="pfQ-ph-GRb" kind="presentation" identifier="goToMenu" modalPresentationStyle="fullScreen" id="qat-no-1n0"/>
@@ -2258,6 +2269,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="signinButton" destination="GLh-lL-XXi" id="rQN-ff-GBO"/>
                         <outlet property="userDateOfBirth" destination="MVK-y8-mNg" id="TYj-f7-Yd4"/>
                         <outlet property="userEmail" destination="2ff-Bb-QW1" id="Cna-P2-rge"/>
                         <outlet property="userFirstname" destination="zr6-0n-lEh" id="kCY-Lr-VRO"/>
@@ -2278,11 +2290,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SyW-dz-AQx"/>
+        <segue reference="2mD-dg-9fD"/>
         <segue reference="gqc-Rr-G6f"/>
         <segue reference="d2N-Xu-Vri"/>
         <segue reference="qAE-Zc-maS"/>
-        <segue reference="sSV-FG-nyi"/>
+        <segue reference="azW-KV-7M1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.right" catalog="system" width="128" height="95"/>

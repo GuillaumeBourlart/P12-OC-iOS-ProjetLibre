@@ -11,6 +11,8 @@ import UIKit
 class AddMemberVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var validateButton: CustomButton!
+    
     var group: FriendGroup?
     var friends: [String: String] = [:]
     var selectedFriends: [String] = []
@@ -32,10 +34,12 @@ class AddMemberVC: UIViewController {
     }
     
     @IBAction func validateButtonPressed(_ sender: Any) {
+        self.validateButton.isEnabled = false
         if let group = group {
             FirebaseUser.shared.addNewMembersToGroup(group: group, newMembers: selectedFriends) { result in
                 switch result {
                 case .failure(let error): print(error)
+                    self.validateButton.isEnabled = true
                 case .success: self.navigationController?.popViewController(animated: true)
                 }
             }

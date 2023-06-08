@@ -21,6 +21,9 @@ class OpponentChoice: UIViewController {
     }
     
     @IBAction func onTap(_ sender: UIButton) {
+        for button in buttons {
+            button.isEnabled = false
+        }
         guard let currentUserId = Game.shared.currentUserId else {
             return
         }
@@ -28,18 +31,33 @@ class OpponentChoice: UIViewController {
         case 0: Game.shared.createQuestionsForGame(quizId: quizId, category: category, difficulty: difficulty, with: nil, competitive: false, players: [currentUserId]) { reuslt in
             switch reuslt {
             case .failure(let error): print(error)
+                for button in self.buttons {
+                    button.isEnabled = true
+                }
             case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
+                for button in self.buttons {
+                    button.isEnabled = true
+                }
             }
         }
         case 1:
             Game.shared.createRoom(quizID: quizId) { result in
                 switch result {
                 case .failure(let error): print(error)
+                    for button in self.buttons {
+                        button.isEnabled = true
+                    }
                 case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
+                    for button in self.buttons {
+                        button.isEnabled = true
+                    }
                 }
             }
         default:
             print("error")
+            for button in self.buttons {
+                button.isEnabled = true
+            }
         }
     }
     

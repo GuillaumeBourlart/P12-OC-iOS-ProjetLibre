@@ -19,6 +19,7 @@ class ModificationVC: UIViewController{
     @IBOutlet weak var difficultyField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var launchQuizButton: UIButton!
+    @IBOutlet weak var addQuestionButton: UIButton!
     
     var quizID: String?
     var groupID: String?
@@ -51,9 +52,14 @@ class ModificationVC: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
+        launchQuizButton.isEnabled = true
+        addQuestionButton.isEnabled = true
+        modifyButton.isEnabled = true
     }
     
     @IBAction func modifyButtonWasTapped(_ sender: Any) {
+        addQuestionButton.isEnabled = false
+        launchQuizButton.isEnabled = false
         if quiz != nil {
             if isModifying {
                 isModifying = false
@@ -131,10 +137,11 @@ class ModificationVC: UIViewController{
                 case .success():
                     print("Quiz modifié avec succès.")
                     self.tableView.reloadData()
-                    
                 case .failure(let error):
                     print("Erreur lors de la modification des infos du quiz : \(error.localizedDescription)")
                 }
+                self.addQuestionButton.isEnabled = true
+                self.launchQuizButton.isEnabled = true
             }
         } else if let group = group {
             guard let name = nameField.text, name != "" else {return}
@@ -144,15 +151,20 @@ class ModificationVC: UIViewController{
                 case .success():
                     print("Groupe modifié avec succès.")
                     self.tableView.reloadData()
-                    
                 case .failure(let error):
                     print("Erreur lors de la modification du nom du groupe d'amis : \(error.localizedDescription)")
                 }
+                self.addQuestionButton.isEnabled = true
+                self.launchQuizButton.isEnabled = true
             }
         }
+        
     }
     
     @IBAction func addButtonTapped(_ sender: Any) {
+        addQuestionButton.isEnabled = false
+        modifyButton.isEnabled = false
+        launchQuizButton.isEnabled = false
         if quiz != nil {
             performSegue(withIdentifier: "goToAddQuestion", sender: self)
         } else if group != nil {
@@ -188,10 +200,14 @@ class ModificationVC: UIViewController{
     
     
     @IBAction func lauchQuizButtonPressed(_ sender: Any) {
+        addQuestionButton.isEnabled = false
+        launchQuizButton.isEnabled = false
+        modifyButton.isEnabled = false
         if let quizID = quizID {
             Game.shared.createRoom(quizID: quizID) { result in
                 switch result {
                 case .failure(let error): print(error)
+                    self.launchQuizButton.isEnabled = true
                 case .success(let lobbyId): self.performSegue(withIdentifier: "goToOpponentChoice", sender: lobbyId)
                 }
             }
