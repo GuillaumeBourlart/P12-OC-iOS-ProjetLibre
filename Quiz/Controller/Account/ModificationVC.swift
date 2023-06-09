@@ -57,73 +57,75 @@ class ModificationVC: UIViewController{
         modifyButton.isEnabled = true
     }
     
-    @IBAction func modifyButtonWasTapped(_ sender: Any) {
-        addQuestionButton.isEnabled = false
-        launchQuizButton.isEnabled = false
-        if quiz != nil {
-            if isModifying {
-                isModifying = false
-                nameField.layer.borderColor = UIColor.clear.cgColor
-                nameField.isUserInteractionEnabled = false
-                themeField.layer.borderColor = UIColor.clear.cgColor
-                themeField.isUserInteractionEnabled = false
-                difficultyField.layer.borderColor = UIColor.clear.cgColor
-                difficultyField.isUserInteractionEnabled = false
-                modifyButton.setImage(UIImage(systemName: "pencil"), for: .normal)
-                modifyButton.backgroundColor = UIColor.red
+    @IBAction func modifyButtonWasTapped(_ sender: UIButton) {
+        CustomAnimations.buttonPressAnimation(for: sender) {
+            self.addQuestionButton.isEnabled = false
+            self.launchQuizButton.isEnabled = false
+            if self.quiz != nil {
+                if self.isModifying {
+                    self.isModifying = false
+                    self.nameField.layer.borderColor = UIColor.clear.cgColor
+                    self.nameField.isUserInteractionEnabled = false
+                    self.themeField.layer.borderColor = UIColor.clear.cgColor
+                    self.themeField.isUserInteractionEnabled = false
+                    self.difficultyField.layer.borderColor = UIColor.clear.cgColor
+                    self.difficultyField.isUserInteractionEnabled = false
+                    self.modifyButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+                    self.modifyButton.backgroundColor = UIColor.red
+                    
+                    self.nameField.layer.borderWidth = 0
+                    self.themeField.layer.borderWidth = 0
+                    self.difficultyField.layer.borderWidth = 0
+                    
+                    self.saveModifications()
+                }else {
+                    self.isModifying = true
+                    self.nameField.layer.borderColor = UIColor.green.cgColor
+                    self.nameField.isUserInteractionEnabled = true
+                    self.themeField.layer.borderColor = UIColor.green.cgColor
+                    self.themeField.isUserInteractionEnabled = true
+                    self.difficultyField.layer.borderColor = UIColor.green.cgColor
+                    self.difficultyField.isUserInteractionEnabled = true
+                    
+                    self.nameField.layer.borderWidth = 1
+                    self.themeField.layer.borderWidth = 1
+                    self.difficultyField.layer.borderWidth = 1
+                    
+                    self.modifyButton.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+                    self.modifyButton.backgroundColor = UIColor.green
+                }
                 
-                nameField.layer.borderWidth = 0
-                themeField.layer.borderWidth = 0
-                difficultyField.layer.borderWidth = 0
-                
-                saveModifications()
-            }else {
-                isModifying = true
-                nameField.layer.borderColor = UIColor.green.cgColor
-                nameField.isUserInteractionEnabled = true
-                themeField.layer.borderColor = UIColor.green.cgColor
-                themeField.isUserInteractionEnabled = true
-                difficultyField.layer.borderColor = UIColor.green.cgColor
-                difficultyField.isUserInteractionEnabled = true
-                
-                nameField.layer.borderWidth = 1
-                themeField.layer.borderWidth = 1
-                difficultyField.layer.borderWidth = 1
-                
-                modifyButton.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
-                modifyButton.backgroundColor = UIColor.green
-            }
-            
-        } else if group != nil {
-            if isModifying {
-                isModifying = false
-                nameField.layer.borderColor = UIColor.clear.cgColor
-                
-                nameField.isUserInteractionEnabled = false
-                themeField.isUserInteractionEnabled = false
-                difficultyField.isUserInteractionEnabled = false
-                
-                nameField.layer.borderWidth = 0
-                themeField.layer.borderWidth = 0
-                difficultyField.layer.borderWidth = 0
-                
-                modifyButton.backgroundColor = UIColor.red
-                modifyButton.setImage(UIImage(systemName: "pencil"), for: .normal)
-                
-                saveModifications()
-            }else {
-                isModifying = true
-                nameField.layer.borderColor = UIColor.green.cgColor
-                nameField.isUserInteractionEnabled = true
-                themeField.isUserInteractionEnabled = true
-                difficultyField.isUserInteractionEnabled = true
-                
-                nameField.layer.borderWidth = 1
-                themeField.layer.borderWidth = 1
-                difficultyField.layer.borderWidth = 1
-                
-                modifyButton.backgroundColor = UIColor.green
-                modifyButton.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+            } else if self.group != nil {
+                if self.isModifying {
+                    self.isModifying = false
+                    self.nameField.layer.borderColor = UIColor.clear.cgColor
+                    
+                    self.nameField.isUserInteractionEnabled = false
+                    self.themeField.isUserInteractionEnabled = false
+                    self.difficultyField.isUserInteractionEnabled = false
+                    
+                    self.nameField.layer.borderWidth = 0
+                    self.themeField.layer.borderWidth = 0
+                    self.difficultyField.layer.borderWidth = 0
+                    
+                    self.modifyButton.backgroundColor = UIColor.red
+                    self.modifyButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+                    
+                    self.saveModifications()
+                }else {
+                    self.isModifying = true
+                    self.nameField.layer.borderColor = UIColor.green.cgColor
+                    self.nameField.isUserInteractionEnabled = true
+                    self.themeField.isUserInteractionEnabled = true
+                    self.difficultyField.isUserInteractionEnabled = true
+                    
+                    self.nameField.layer.borderWidth = 1
+                    self.themeField.layer.borderWidth = 1
+                    self.difficultyField.layer.borderWidth = 1
+                    
+                    self.modifyButton.backgroundColor = UIColor.green
+                    self.modifyButton.setImage(UIImage(systemName: "square.and.arrow.down"), for: .normal)
+                }
             }
         }
     }
@@ -161,14 +163,16 @@ class ModificationVC: UIViewController{
         
     }
     
-    @IBAction func addButtonTapped(_ sender: Any) {
-        addQuestionButton.isEnabled = false
-        modifyButton.isEnabled = false
-        launchQuizButton.isEnabled = false
-        if quiz != nil {
-            performSegue(withIdentifier: "goToAddQuestion", sender: self)
-        } else if group != nil {
-            performSegue(withIdentifier: "goToAddMember", sender: self)
+    @IBAction func addButtonTapped(_ sender: UIButton) {
+        CustomAnimations.buttonPressAnimation(for: sender) {
+            self.addQuestionButton.isEnabled = false
+            self.modifyButton.isEnabled = false
+            self.launchQuizButton.isEnabled = false
+            if self.quiz != nil {
+                self.performSegue(withIdentifier: "goToAddQuestion", sender: self)
+            } else if self.group != nil {
+                self.performSegue(withIdentifier: "goToAddMember", sender: self)
+            }
         }
     }
     
@@ -199,16 +203,18 @@ class ModificationVC: UIViewController{
     }
     
     
-    @IBAction func lauchQuizButtonPressed(_ sender: Any) {
-        addQuestionButton.isEnabled = false
-        launchQuizButton.isEnabled = false
-        modifyButton.isEnabled = false
-        if let quizID = quizID {
-            Game.shared.createRoom(quizID: quizID) { result in
-                switch result {
-                case .failure(let error): print(error)
-                    self.launchQuizButton.isEnabled = true
-                case .success(let lobbyId): self.performSegue(withIdentifier: "goToOpponentChoice", sender: lobbyId)
+    @IBAction func lauchQuizButtonPressed(_ sender: UIButton) {
+        CustomAnimations.buttonPressAnimation(for: sender) {
+            self.addQuestionButton.isEnabled = false
+            self.launchQuizButton.isEnabled = false
+            self.modifyButton.isEnabled = false
+            if let quizID = self.quizID {
+                Game.shared.createRoom(quizID: quizID) { result in
+                    switch result {
+                    case .failure(let error): print(error)
+                        self.launchQuizButton.isEnabled = true
+                    case .success(let lobbyId): self.performSegue(withIdentifier: "goToOpponentChoice", sender: lobbyId)
+                    }
                 }
             }
         }
@@ -296,7 +302,6 @@ extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
             performSegue(withIdentifier: "goToAddQuestion", sender: questionData)
         }
     }
-    
 }
 extension ModificationVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

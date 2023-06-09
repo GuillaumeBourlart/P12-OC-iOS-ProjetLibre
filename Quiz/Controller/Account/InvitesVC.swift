@@ -17,7 +17,6 @@ class InvitesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,6 +75,12 @@ class InvitesVC: UIViewController {
         Game.shared.joinRoom(lobbyId: lobbyId){ result in
             switch result {
             case .failure(let error): print(error)
+                Game.shared.deleteInvite(inviteId: lobbyId) { result in
+                switch result {
+                    case .failure(let error): print(error)
+                case .success: self.loadInvites()
+                    }
+                }
             case .success():
                 Game.shared.deleteInvite(inviteId: lobbyId) { result in
                 switch result {
@@ -116,6 +121,7 @@ extension InvitesVC: UITableViewDataSource {
         
         let invite = Array(invites)[indexPath.row]
         cell.label.text = "User: \(invite.key) - Lobby: \(invite.value)"
+        cell.configure(isFriendCell: false, cellType: .none)
         
         return cell
     }

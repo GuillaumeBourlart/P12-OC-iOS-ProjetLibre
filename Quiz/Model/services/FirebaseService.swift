@@ -83,13 +83,15 @@ class FirebaseService: FirebaseServiceProtocol{
         collectionReference.getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(nil, error)
-            } else {
+            } else if let snapshot = querySnapshot {
                 let documentsData = querySnapshot?.documents.map {
                     var data = $0.data()
                     data["id"] = $0.documentID
                     return data
                 }
                 completion(documentsData, nil)
+            } else {
+                completion(nil, nil)
             }
         }
     }

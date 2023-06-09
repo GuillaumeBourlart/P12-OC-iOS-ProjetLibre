@@ -21,44 +21,48 @@ class OpponentChoice: UIViewController {
     }
     
     @IBAction func onTap(_ sender: UIButton) {
-        for button in buttons {
-            button.isEnabled = false
-        }
-        guard let currentUserId = Game.shared.currentUserId else {
-            return
-        }
-        switch sender.tag {
-        case 0: Game.shared.createQuestionsForGame(quizId: quizId, category: category, difficulty: difficulty, with: nil, competitive: false, players: [currentUserId]) { reuslt in
-            switch reuslt {
-            case .failure(let error): print(error)
-                for button in self.buttons {
-                    button.isEnabled = true
-                }
-            case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
-                for button in self.buttons {
-                    button.isEnabled = true
-                }
+        // Début de l'animation
+        CustomAnimations.buttonPressAnimation(for: sender) {
+            for button in self.buttons {
+                button.isEnabled = false
             }
-        }
-        case 1:
-            Game.shared.createRoom(quizID: quizId) { result in
-                switch result {
+            guard let currentUserId = Game.shared.currentUserId else {
+                return
+            }
+            switch sender.tag {
+            case 0: Game.shared.createQuestionsForGame(quizId: self.quizId, category: self.category, difficulty: self.difficulty, with: nil, competitive: false, players: [currentUserId]) { reuslt in
+                switch reuslt {
                 case .failure(let error): print(error)
                     for button in self.buttons {
                         button.isEnabled = true
                     }
-                case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
+                case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
                     for button in self.buttons {
                         button.isEnabled = true
                     }
                 }
             }
-        default:
-            print("error")
-            for button in self.buttons {
-                button.isEnabled = true
+            case 1:
+                Game.shared.createRoom(quizID: self.quizId) { result in
+                    switch result {
+                    case .failure(let error): print(error)
+                        for button in self.buttons {
+                            button.isEnabled = true
+                        }
+                    case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
+                        for button in self.buttons {
+                            button.isEnabled = true
+                        }
+                    }
+                }
+            default:
+                print("error")
+                for button in self.buttons {
+                    button.isEnabled = true
+                }
             }
         }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

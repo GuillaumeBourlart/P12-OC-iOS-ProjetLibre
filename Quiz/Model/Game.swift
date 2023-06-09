@@ -479,6 +479,8 @@ class Game {
                 guard let gameId = data["id"] as? String, let status = data["status"] as? String, status == "waiting" else { completion(.failure(MyError.documentDoesntExist));return }
                     completion(.success(gameId))
                 
+            } else {
+                completion(.failure(MyError.documentDoesntExist))
             }
         }
     }

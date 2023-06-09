@@ -43,6 +43,9 @@ class CompetitiveVC: UIViewController{
         }
     }
     
+ 
+    
+    
     func updateRank() {
         let rank = Double((FirebaseUser.shared.userInfo?.rank ?? 0))
         let level = Int(rank)
@@ -89,5 +92,15 @@ class CompetitiveVC: UIViewController{
         
     }
     
-    
+    @IBAction func findOpponentButtonPressed(_ sender: Any) {
+        
+        
+        CustomAnimations.buttonPressAnimation(for: self.startButton) {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "goToFindOpponent", sender: self)
+            }
+        }
+                               
+                           
+    }
 }

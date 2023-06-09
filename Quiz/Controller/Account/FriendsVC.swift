@@ -165,7 +165,7 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
                     fatalError("Label is nil.")
                 }
                 // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
-                cell.configure(isFriendCell: true)
+                cell.configure(isFriendCell: true, cellType: .none)
                 // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
                 cell.addButton?.isHidden = !isShowingFriendRequests
                 //            cell.removeButton.isHidden = !isShowingFriendRequests
@@ -192,7 +192,7 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
                 }
                 
                 // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
-                cell.configure(isFriendCell: true)
+                cell.configure(isFriendCell: true, cellType: .none)
                 // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
                 cell.addButton?.isHidden = !isShowingFriendRequests
                 //            cell.removeButton.isHidden = !isShowingFriendRequests
@@ -217,6 +217,14 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
 
 
 extension FriendsVC: CustomCellDelegate {
+    func didChangeSwitchValue(in cell: CustomCell, isOn: Bool) {
+        
+    }
+    
+    func didChangeSliderValue(in cell: CustomCell, value: Float) {
+        
+    }
+    
     
     func didTapAddButton(in cell: CustomCell) {
         if let indexPath = tableView.indexPath(for: cell) {

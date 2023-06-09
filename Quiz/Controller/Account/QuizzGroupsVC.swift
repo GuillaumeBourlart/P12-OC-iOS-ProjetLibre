@@ -203,7 +203,7 @@ extension QuizzGroupsVC: UITableViewDataSource {
         }else{
             cell.label.text = groups[indexPath.row].name
         }
-        
+        cell.configure(isFriendCell: false, cellType: .none)
         
         return cell
     }

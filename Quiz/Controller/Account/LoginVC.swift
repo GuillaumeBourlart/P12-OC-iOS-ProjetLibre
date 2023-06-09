@@ -39,22 +39,25 @@ class LoginVC: UIViewController{
     
     // Func to try to log user
     @IBAction func loginUser(_ sender: UIButton) {
-        loginButton.isEnabled = false
-        guard let email = userEmail.text,
-              email != "",
-              let password = userPassword.text,
-              password != "" else {
-            return
-        }
-        
-        FirebaseUser.shared.signInUser(email: email, password: password) { result in
-            switch result {
-            case .success():self.performSegue(withIdentifier: "goToMenu", sender: self)
-                
-            case .failure(let error):print("Error logging in user: \(error.localizedDescription)")
-                self.loginButton.isEnabled = true
+        CustomAnimations.buttonPressAnimation(for: self.loginButton) {
+            self.loginButton.isEnabled = false
+            guard let email = self.userEmail.text,
+                  email != "",
+                  let password = self.userPassword.text,
+                  password != "" else {
+                return
+            }
+            
+            FirebaseUser.shared.signInUser(email: email, password: password) { result in
+                switch result {
+                case .success():self.performSegue(withIdentifier: "goToMenu", sender: self)
+                    
+                case .failure(let error):print("Error logging in user: \(error.localizedDescription)")
+                    self.loginButton.isEnabled = true
+                }
             }
         }
+        
     }
     
     // Func that handle keyboard

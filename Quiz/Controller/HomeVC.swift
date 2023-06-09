@@ -22,12 +22,18 @@ class HomeVC: UIViewController{
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2")]
         
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         for button in buttons {
-            button.isEnabled = true
-        }
+               button.isEnabled = true
+               button.transform = .identity
+               button.alpha = 1
+           }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.playSound(soundName: "appMusic", fileType: "mp3")
     }
     
     @IBAction func unwindToHomeVC(segue: UIStoryboardSegue) {
@@ -37,7 +43,15 @@ class HomeVC: UIViewController{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         for button in buttons {
             button.isEnabled = false
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                // Déplace le bouton vers la gauche en soustrayant la largeur de la vue du bouton
+                button.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
+                button.alpha = 0
+            })
+            
         }
+        
         if let destination = segue.destination as? QuizzGroupsVC {
             destination.isQuizList = true
         }

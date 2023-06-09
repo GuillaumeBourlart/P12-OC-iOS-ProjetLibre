@@ -51,72 +51,84 @@ class QuizzVC: UIViewController {
             }
         }
         
-        func displayQuestion() {
-            
-            if currentQuestionIndex >= questions.count {
-                finishQuiz()
-                return
-            }
-            
-            let question = questions[currentQuestionIndex]
-            
-            questionLabel.text = question.question
-            
-            var choices = question.incorrect_answers + [question.correct_answer]
-            choices.shuffle()
-            
-            for (index, button) in answerButtons.enumerated() {
-                button.setTitle(choices[index], for: .normal)
-                button.backgroundColor = .systemBlue
-            }
-            
-            resetTimer()
-            isAnswering = false
+    
+    func displayQuestion() {
+        if currentQuestionIndex >= questions.count {
+            finishQuiz()
+            return
         }
+        
+        let question = questions[currentQuestionIndex]
+        
+        questionLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.questionLabel.transform = CGAffineTransform.identity
+        })
+        
+        questionLabel.text = question.question
+        
+        var choices = question.incorrect_answers + [question.correct_answer]
+        choices.shuffle()
+        
+        for (index, button) in answerButtons.enumerated() {
+            button.transform = index % 2 == 0 ? CGAffineTransform(translationX: -self.view.bounds.width, y: 0) : CGAffineTransform(translationX: self.view.bounds.width, y: 0)
+            UIView.animate(withDuration: 0.5, delay: Double(index) * 0.2, options: [], animations: {
+                button.transform = .identity
+            }, completion: nil)
+            button.setTitle(choices[index], for: .normal)
+            button.backgroundColor = .systemBlue
+        }
+        
+        resetTimer()
+        isAnswering = false
+    }
     
         
     @IBAction func leaveGame(_ sender: UIButton) {
-        leaveButton.isEnabled = false
-        if let gameID = gameID {
-            Game.shared.leaveGame(gameId: gameID){ result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                    self.leaveButton.isEnabled = true
-                case .success():
-                    if self.isCompetitive != nil, self.isCompetitive == true {
-                        // Dismiss the view controller
-                        self.performSegue(withIdentifier: "unwindToCompetitive", sender: self)
-                        
-                    } else {
-                        if let navController = self.navigationController {
-                            var canUnwindToOpponentChoice = false
+        CustomAnimations.buttonPressAnimation(for: self.leaveButton) {
+            self.leaveButton.isEnabled = false
+            if let gameID = self.gameID {
+                Game.shared.leaveGame(gameId: gameID){ result in
+                    switch result {
+                    case .failure(let error):
+                        print(error)
+                        self.leaveButton.isEnabled = true
+                    case .success():
+                        if self.isCompetitive != nil, self.isCompetitive == true {
+                            // Dismiss the view controller
+                            self.performSegue(withIdentifier: "unwindToCompetitive", sender: self)
+                            
+                        } else {
+                            if let navController = self.navigationController {
+                                var canUnwindToOpponentChoice = false
 
-                            for controller in navController.viewControllers {
-                                if controller is OpponentChoice {
-                                    // OpponentChoice est dans la pile de navigation
-                                    canUnwindToOpponentChoice = true
-                                    break // Sort de la boucle une fois OpponentChoice trouvé
+                                for controller in navController.viewControllers {
+                                    if controller is OpponentChoice {
+                                        // OpponentChoice est dans la pile de navigation
+                                        canUnwindToOpponentChoice = true
+                                        break // Sort de la boucle une fois OpponentChoice trouvé
+                                    }
                                 }
-                            }
 
-                            if canUnwindToOpponentChoice {
-                                // Si OpponentChoice est dans la pile de navigation, effectue l'unwind segue vers OpponentChoice
-                                print("unwindToOpponentChoice")
-                                self.performSegue(withIdentifier: "unwindToOpponentChoice", sender: self)
-                            } else {
-                                // Si OpponentChoice n'est pas dans la pile de navigation, effectue l'unwind segue vers Invites
-                                print("unwindToInvites")
-                                self.performSegue(withIdentifier: "unwindToInvites", sender: self)
+                                if canUnwindToOpponentChoice {
+                                    // Si OpponentChoice est dans la pile de navigation, effectue l'unwind segue vers OpponentChoice
+                                    print("unwindToOpponentChoice")
+                                    self.performSegue(withIdentifier: "unwindToOpponentChoice", sender: self)
+                                } else {
+                                    // Si OpponentChoice n'est pas dans la pile de navigation, effectue l'unwind segue vers Invites
+                                    print("unwindToInvites")
+                                    self.performSegue(withIdentifier: "unwindToInvites", sender: self)
+                                }
+                            }else{
+                                print("error")
+                                self.leaveButton.isEnabled = true
                             }
-                        }else{
-                            print("error")
-                            self.leaveButton.isEnabled = true
                         }
                     }
                 }
             }
         }
+        
     }
     
         func resetTimer() {
@@ -158,7 +170,9 @@ class QuizzVC: UIViewController {
         
     }
     
-    func showCorrectAnswerAndProceed() {
+   
+    
+    @objc func showCorrectAnswerAndProceed() {
         let correctAnswer = questions[currentQuestionIndex].correct_answer
         for button in answerButtons {
             if button.currentTitle == correctAnswer {
@@ -168,9 +182,13 @@ class QuizzVC: UIViewController {
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.currentQuestionIndex += 1
-            self.displayQuestion()
+        UIView.animate(withDuration: 0.5, animations: {
+            self.questionLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        }) { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.currentQuestionIndex += 1
+                self.displayQuestion()
+            }
         }
     }
     

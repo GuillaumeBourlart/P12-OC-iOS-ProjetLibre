@@ -45,29 +45,32 @@ class CreateAccountVC: UIViewController {
     
     // try to sign up user
     @IBAction func signUpUser(_ sender: Any) {
-        signinButton.isEnabled = false
-        guard let email = userEmail.text,
-              email != "",
-              let password = userPassword.text,
-              password != "",
-              let pseudo = userPseudo.text,
-              pseudo != "",
-              let firstname = userFirstname.text,
-              firstname != "",
-              let lastname = userLastname.text,
-              lastname != "" else {
-            return
-        }
-        
-        FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo, firstName: firstname, lastName: lastname, birthDate: userDateOfBirth.date) { _, error in
-            if let error = error {
-                print("Error creating user: \(error.localizedDescription)")
-                self.signinButton.isEnabled = true
-            } else {
-                self.dismiss(animated: true)
-                
+        CustomAnimations.buttonPressAnimation(for: self.signinButton) {
+            self.signinButton.isEnabled = false
+            guard let email = self.userEmail.text,
+                  email != "",
+                  let password = self.userPassword.text,
+                  password != "",
+                  let pseudo = self.userPseudo.text,
+                  pseudo != "",
+                  let firstname = self.userFirstname.text,
+                  firstname != "",
+                  let lastname = self.userLastname.text,
+                  lastname != "" else {
+                return
+            }
+            
+            FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo, firstName: firstname, lastName: lastname, birthDate: self.userDateOfBirth.date) { _, error in
+                if let error = error {
+                    print("Error creating user: \(error.localizedDescription)")
+                    self.signinButton.isEnabled = true
+                } else {
+                    self.dismiss(animated: true)
+                    
+                }
             }
         }
+        
     }
     
     

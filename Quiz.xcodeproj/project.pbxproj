@@ -40,6 +40,7 @@
 		D030840F2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */; };
 		D03084142A0F8D8200A8FBB7 /* AlamofireStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */; };
 		D03084152A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */; };
+		D04A5B922A321B950049F02A /* appMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D04A5B912A321B950049F02A /* appMusic.mp3 */; };
 		D04FCDE72A2EA08A000E688E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D04FCDE62A2EA08A000E688E /* FirebaseAnalytics */; };
 		D04FCDEF2A2EA08A000E688E /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = D04FCDEE2A2EA08A000E688E /* FirebaseAppCheck */; };
 		D04FCDF32A2EA08A000E688E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D04FCDF22A2EA08A000E688E /* FirebaseAuth */; };
@@ -65,6 +66,7 @@
 		D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */; };
 		D0B35CDE2A159B3D007B3431 /* FirebaseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */; };
 		D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDF2A159C74007B3431 /* GameTests.swift */; };
+		D0B582452A33622D00C0D5E2 /* CustomAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */; };
 		D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */; };
 		D0B852532A2528D500A7D9B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = D0B852522A2528D500A7D9B7 /* Alamofire */; };
 		D0B8D42C2A1BA5560033467D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8D42B2A1BA5560033467D /* HomeVC.swift */; };
@@ -110,6 +112,7 @@
 		D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		D03084122A0F8D8200A8FBB7 /* AlamofireStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireStub.swift; sourceTree = "<group>"; };
 		D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTriviaDatabaseManagerTests.swift; sourceTree = "<group>"; };
+		D04A5B912A321B950049F02A /* appMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = appMusic.mp3; sourceTree = "<group>"; };
 		D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePlayersVC.swift; sourceTree = "<group>"; };
 		D05B8F422A1DF0420064795D /* PrivateLobbyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateLobbyVC.swift; sourceTree = "<group>"; };
 		D05B8F442A1E11AC0064795D /* Quiz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Quiz.entitlements; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 		D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStub.swift; sourceTree = "<group>"; };
 		D0B35CDF2A159C74007B3431 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
+		D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimations.swift; sourceTree = "<group>"; };
 		D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFields.swift; sourceTree = "<group>"; };
 		D0B8D42B2A1BA5560033467D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 				D03084002A0F8AB100A8FBB7 /* Main.storyboard */,
 				D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */,
 				D03083FD2A0F8AB000A8FBB7 /* Settings.swift */,
+				D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 		D084EC722A0F7FD700544AA3 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				D04A5B912A321B950049F02A /* appMusic.mp3 */,
 				D084EC452A0F7EF700544AA3 /* Assets.xcassets */,
 				D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */,
 				D084EC392A0F7EF400544AA3 /* AppDelegate.swift */,
@@ -457,6 +463,7 @@
 				D03084052A0F8AB100A8FBB7 /* Main.storyboard in Resources */,
 				D084EC742A0F81FC00544AA3 /* GoogleService-Info.plist in Resources */,
 				D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */,
+				D04A5B922A321B950049F02A /* appMusic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +508,7 @@
 				D05B8F462A1E2B3B0064795D /* InvitesVC.swift in Sources */,
 				D03083F92A0F8A7900A8FBB7 /* FirebaseUser.swift in Sources */,
 				D03084072A0F8CDD00A8FBB7 /* CustomButton.swift in Sources */,
+				D0B582452A33622D00C0D5E2 /* CustomAnimations.swift in Sources */,
 				D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */,
 				D00BD4422A2BCC530021230E /* AddQuestionVC.swift in Sources */,
 				D074D6702A26A2A7004942C4 /* QuestionResultVC.swift in Sources */,
@@ -677,6 +685,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -709,6 +718,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;

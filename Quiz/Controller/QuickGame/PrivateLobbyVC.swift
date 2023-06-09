@@ -56,27 +56,31 @@ class PrivateLobbyVC: UIViewController{
     }
     
     @IBAction func leaveLobbyWasPressed(_ sender: Any) {
-        self.leave.isEnabled = false
-        guard let lobbyId = lobbyId else { return }
-        Game.shared.leaveLobby(lobbyId: lobbyId) { error in
-            if let error = error {
-                print(error)
-                self.leave.isEnabled = true
-                return
-            }
-            if self.isCreator != nil, self.isCreator == true {
-                Game.shared.deleteCurrentRoom(lobbyId: lobbyId) { result in
-                    switch result {
-                    case .failure(let error): print(error)
-                        self.leave.isEnabled = true
-                    case .success(): print("lobby supprimé")
-                        self.leave.isEnabled = true
-                        
+        CustomAnimations.buttonPressAnimation(for: self.leave) {
+            self.leave.isEnabled = false
+            guard let lobbyId = self.lobbyId else { return }
+            Game.shared.leaveLobby(lobbyId: lobbyId) { error in
+                if let error = error {
+                    print(error)
+                    self.leave.isEnabled = true
+                    self.navigationController?.popViewController(animated: true)
+                    return
+                }
+                if self.isCreator != nil, self.isCreator == true {
+                    Game.shared.deleteCurrentRoom(lobbyId: lobbyId) { result in
+                        switch result {
+                        case .failure(let error): print(error)
+                            self.leave.isEnabled = true
+                        case .success(): print("lobby supprimé")
+                            self.leave.isEnabled = true
+                            
+                        }
                     }
                 }
+                self.navigationController?.popViewController(animated: true)
             }
-            self.navigationController?.popViewController(animated: true)
         }
+        
     }
     
     
@@ -85,37 +89,41 @@ class PrivateLobbyVC: UIViewController{
     }
     
     @IBAction func launchGame(){
-        self.launchButton.isEnabled = false
-        Game.shared.createQuestionsForGame(quizId: quizId ,category: category, difficulty: difficulty, with: lobbyId, competitive: false, players: self.players) { result in
-            switch result {
-            case .failure(let error): print(error)
-                self.launchButton.isEnabled = true
-            case .success: print("succes")
-                
+        CustomAnimations.buttonPressAnimation(for: self.launchButton) {
+            self.launchButton.isEnabled = false
+            Game.shared.createQuestionsForGame(quizId: self.quizId ,category: self.category, difficulty: self.difficulty, with: self.lobbyId, competitive: false, players: self.players) { result in
+                switch result {
+                case .failure(let error): print(error)
+                    self.launchButton.isEnabled = true
+                case .success: print("succes")
+                    
+                }
             }
         }
+        
     }
     
     func startListening(lobbyId: String) {
         listener = Game.shared.ListenForChangeInDocument(in: "lobby", documentId: lobbyId, completion: { result in
             switch result {
             case .success(let data):
-                if let playersDict = data["players"] as? [String] {
-                    self.players = playersDict
-                }
-                if let invitedPlayersDict = data["invited_users"] as? [String] {
-                    self.invitedPlayers = invitedPlayersDict
-                }
-                if let code = data["join_code"] as? String {
-                    self.joinCodeLabel.text = code
-                }
+                
+                guard let playersDict = data["players"] as? [String] else { self.navigationController?.popViewController(animated: true); return }
+                guard let invitedPlayersDict = data["invited_users"] as? [String] else { self.navigationController?.popViewController(animated: true); return }
+                guard let code = data["join_code"] as? String else { self.navigationController?.popViewController(animated: true); return }
+                
+                self.players = playersDict
+                self.invitedPlayers = invitedPlayersDict
+                self.joinCodeLabel.text = code
+                
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
                 Game.shared.checkIfGameExist(gameID: lobbyId) { result in
                     switch result {
                     case .success(let gameId):
-                            self.performSegue(withIdentifier: "goToQuizz", sender: gameId)
+                        print("gameID : \(gameId)")
+                        self.performSegue(withIdentifier: "goToQuizz", sender: gameId)
                         self.launchButton.isEnabled = true
                     case .failure(let error):
                         print("Error fetching game: \(error)")

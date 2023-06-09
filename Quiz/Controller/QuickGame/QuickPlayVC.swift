@@ -99,6 +99,8 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         // Récupérer la cellule à partir de l'indexPath
         let cell = collectionView.cellForItem(at: indexPath)
         
+        
+        
         // Accéder au tag de la cellule
         let cellTag = cell?.tag
         self.category = cellTag
@@ -126,11 +128,11 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         alertController.addAction(difficileAction)
         
         // Changer la couleur de fond de l'alerte
-        alertController.view.tintColor = UIColor(red: 239/255, green: 76/255, blue: 81/255, alpha: 1)
-        alertController.view.backgroundColor = UIColor(red: 243/255, green: 243/255, blue: 243/255, alpha: 1)
+        alertController.view.tintColor = UIColor.black
         
         present(alertController, animated: true, completion: nil)
     }
+    
     
 }
 

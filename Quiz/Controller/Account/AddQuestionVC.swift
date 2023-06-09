@@ -20,6 +20,7 @@ class AddQuestionVC: UIViewController {
     var existingQuestion: UniversalQuestion?
     var existingQuestionId: String?
     var quiz: Quiz?
+    var activeTextField: UITextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,10 @@ class AddQuestionVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear(_:)), name: UIViewController.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear(_:)), name: UIViewController.keyboardWillHideNotification, object: nil)
     }
+    
+   
+    
+    
     
     func loadExistingQuestion(){
         if let existingQuestion = existingQuestion {
@@ -41,45 +46,49 @@ class AddQuestionVC: UIViewController {
     }
     
     @IBAction func validateButtonPressed(_ sender: Any) {
-        validateButton.isEnabled = false
-        guard let question = questionField.text, !question.isEmpty,
-              let correctAnswer = correctAnswerField.text, !correctAnswer.isEmpty,
-              let incorrectAnswer1 = incorrectAnswersFields[0].text, !incorrectAnswer1.isEmpty,
-              let incorrectAnswer2 = incorrectAnswersFields[1].text, !incorrectAnswer2.isEmpty,
-              let incorrectAnswer3 = incorrectAnswersFields[2].text, !incorrectAnswer3.isEmpty,
-              let explanation = explanationField.text, !explanation.isEmpty
-        else {
-            // vous pouvez afficher un message d'erreur ici
-            print("Tous les champs doivent être remplis.")
-            validateButton.isEnabled = true
-            return
+        CustomAnimations.buttonPressAnimation(for: self.validateButton) {
+            
+            self.validateButton.isEnabled = false
+            guard let question = self.questionField.text, !question.isEmpty,
+                  let correctAnswer = self.correctAnswerField.text, !correctAnswer.isEmpty,
+                  let incorrectAnswer1 = self.incorrectAnswersFields[0].text, !incorrectAnswer1.isEmpty,
+                  let incorrectAnswer2 = self.incorrectAnswersFields[1].text, !incorrectAnswer2.isEmpty,
+                  let incorrectAnswer3 = self.incorrectAnswersFields[2].text, !incorrectAnswer3.isEmpty,
+                  let explanation = self.explanationField.text, !explanation.isEmpty
+            else {
+                // vous pouvez afficher un message d'erreur ici
+                print("Tous les champs doivent être remplis.")
+                self.validateButton.isEnabled = true
+                return
+            }
+            
+            if let existingQuestion = self.existingQuestion, let existingQuestionId = self.existingQuestionId, let quiz = self.quiz {
+                FirebaseUser.shared.updateQuestionInQuiz(quiz: quiz, oldQuestionId: existingQuestionId, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
+                    switch result {
+                    case .success():print("question ajouté")
+                        self.navigationController?.popViewController(animated: true)
+                    case .failure(let error):
+                        print("Erreur lors de la mise à jour de la question : \(error)")
+                        self.validateButton.isEnabled = true
+                    }
+                }
+            } else if let quiz = self.quiz {
+                FirebaseUser.shared.addQuestionToQuiz(quiz: quiz, questionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
+                    switch result {
+                    case .success():print("question ajoutées")
+                        self.navigationController?.popViewController(animated: true)
+                    case .failure(let error):
+                        print("Erreur lors de l'ajout de la question : \(error)")
+                        self.validateButton.isEnabled = true
+                    }
+                }
+            } else {
+                print("erreur")
+                print(self.quiz)
+                self.validateButton.isEnabled = true
+            }
         }
         
-        if let existingQuestion = existingQuestion, let existingQuestionId = existingQuestionId, let quiz = quiz {
-            FirebaseUser.shared.updateQuestionInQuiz(quiz: quiz, oldQuestionId: existingQuestionId, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
-                switch result {
-                case .success():print("question ajouté")
-                    self.navigationController?.popViewController(animated: true)
-                case .failure(let error):
-                    print("Erreur lors de la mise à jour de la question : \(error)")
-                    self.validateButton.isEnabled = true
-                }
-            }
-        } else if let quiz = self.quiz {
-            FirebaseUser.shared.addQuestionToQuiz(quiz: quiz, questionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
-                switch result {
-                case .success():print("question ajoutées")
-                    self.navigationController?.popViewController(animated: true)
-                case .failure(let error):
-                    print("Erreur lors de l'ajout de la question : \(error)")
-                    self.validateButton.isEnabled = true
-                }
-            }
-        } else {
-            print("erreur")
-            print(quiz)
-            validateButton.isEnabled = true
-        }
     }
     
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
@@ -104,16 +113,24 @@ extension AddQuestionVC: UITextFieldDelegate {
     }
     
     @objc func keyboardAppear(_ notification: Notification) {
-            guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-            let keyboardFrame = frame.cgRectValue
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardFrame.height
-            }
-        }
-
-    @objc func keyboardDisappear(_ notification: Notification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
+           guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+           let keyboardFrame = frame.cgRectValue
+           guard let activeTextField = activeTextField else { return }
+           let activeTextFieldFrame = activeTextField.convert(activeTextField.bounds, to: self.view)
+           
+           if self.view.frame.origin.y == 0 && activeTextFieldFrame.maxY > keyboardFrame.origin.y {
+               self.view.frame.origin.y -= activeTextFieldFrame.maxY - keyboardFrame.origin.y + 20 // +20 for a little extra space
+           }
+       }
+       
+       @objc func keyboardDisappear(_ notification: Notification) {
+           if self.view.frame.origin.y != 0 {
+               self.view.frame.origin.y = 0
+           }
+       }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
     }
+    
 }

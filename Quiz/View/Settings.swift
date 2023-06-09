@@ -7,6 +7,13 @@
 
 import Foundation
 // Structure to set section et rows in parameters
+enum CellControlType {
+    case none
+    case `switch`
+    case slider
+}
+
+
 enum SettingsSection: Int, CaseIterable {
     case account = 0
     case security
@@ -40,10 +47,10 @@ enum SettingsSection: Int, CaseIterable {
             case .invites:
                 return "Invites"
             }
-        
+            
         }
         // Segue's IDS
-        var segueIdentifier: String {
+        var segueIdentifier: String? {
             switch self {
             case .friends:
                 return "goToFriends"
@@ -57,22 +64,37 @@ enum SettingsSection: Int, CaseIterable {
                 return "goToInvites"
             }
         }
+        
     }
+    
     // Section 2
     enum Security: Int, CaseIterable {
-        case option1
-        case option2
-        case option3
-        case option4
-        case option5
-        case option6
+        case sounds
+        case sounds_volume
         // titles
         var title: String {
-            return "Option Sécurité \(self.rawValue + 1)"
+            switch self {
+            case .sounds:
+                return "Sounds"
+            case .sounds_volume:
+                return "Sounds volume"
+            }
         }
         // segue's IDS
-        var segueIdentifier: String {
-            return "showSecurityOption\(self.rawValue + 1)"
+        var segueIdentifier: String? {
+            switch self {
+            case .sounds:
+                return nil // pas de segue pour 'sounds'
+            case .sounds_volume:
+                return nil // pas de segue pour 'sounds_volume'
+            }
+        }
+        
+        var controlType: CellControlType {
+            switch self {
+            case .sounds: return .switch
+            case .sounds_volume: return .slider
+            }
         }
     }
     

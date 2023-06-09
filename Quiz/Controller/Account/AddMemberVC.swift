@@ -34,16 +34,19 @@ class AddMemberVC: UIViewController {
     }
     
     @IBAction func validateButtonPressed(_ sender: Any) {
-        self.validateButton.isEnabled = false
-        if let group = group {
-            FirebaseUser.shared.addNewMembersToGroup(group: group, newMembers: selectedFriends) { result in
-                switch result {
-                case .failure(let error): print(error)
-                    self.validateButton.isEnabled = true
-                case .success: self.navigationController?.popViewController(animated: true)
+        CustomAnimations.buttonPressAnimation(for: self.validateButton) {
+            self.validateButton.isEnabled = false
+            if let group = self.group {
+                FirebaseUser.shared.addNewMembersToGroup(group: group, newMembers: self.selectedFriends) { result in
+                    switch result {
+                    case .failure(let error): print(error)
+                        self.validateButton.isEnabled = true
+                    case .success: self.navigationController?.popViewController(animated: true)
+                    }
                 }
             }
         }
+        
     
     }
     

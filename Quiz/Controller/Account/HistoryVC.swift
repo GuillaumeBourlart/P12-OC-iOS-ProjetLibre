@@ -70,6 +70,7 @@ extension HistoryVC: UITableViewDelegate, UITableViewDataSource {
         let dateString = formatter.string(from: date)
 
         cell.label.text = dateString
+        cell.configure(isFriendCell: false, cellType: .none)
         
         return cell
     }

@@ -9,10 +9,64 @@ import UIKit
 import CoreData
 import FirebaseCore
 import FirebaseMessaging
+import AVFoundation
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
+    var audioPlayer: AVAudioPlayer?
+    
+    
+    func playSound(soundName: String, fileType: String) {
+        let defaults = UserDefaults.standard
 
+        let sound: Bool
+        if let _ = defaults.object(forKey: "sound") {
+            // L'utilisateur a déjà défini une valeur pour "sound", utilisez cette valeur.
+            sound = defaults.bool(forKey: "sound")
+        } else {
+            // L'utilisateur n'a jamais défini une valeur pour "sound", utilisez une valeur par défaut.
+            defaults.setValue(true, forKey: "sound")
+            sound = true
+        }
+
+        let volume: Float
+        if let _ = defaults.object(forKey: "volume") {
+            // L'utilisateur a déjà défini une valeur pour "volume", utilisez cette valeur.
+            volume = defaults.float(forKey: "volume")
+        } else {
+            // L'utilisateur n'a jamais défini une valeur pour "volume", utilisez une valeur par défaut.
+            defaults.setValue(0.5, forKey: "volume")
+            volume = 0.5
+        }
+        UserDefaults.standard.synchronize()
+
+        if let path = Bundle.main.path(forResource: soundName, ofType: fileType) {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                setVolume(volume: volume)
+                // Si le son est désactivé, ne jouez pas le son et retournez de la fonction
+                if sound {
+                    audioPlayer?.play()
+                }
+            } catch {
+                print("Could not find and play the sound file.")
+            }
+        }
+    }
+    
+    func stopSound() {
+        audioPlayer?.stop()
+        
+    }
+    func resumeSound() {
+        audioPlayer?.play()
+    }
+    func setVolume(volume: Float) {
+        audioPlayer?.volume = volume
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()

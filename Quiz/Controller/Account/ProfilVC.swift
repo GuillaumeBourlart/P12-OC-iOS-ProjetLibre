@@ -10,12 +10,14 @@ import FirebaseStorage
 
 class ProfilVC: UIViewController{
     
+    
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var level: UILabel!
     
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let imagePickerController = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -87,18 +89,22 @@ class ProfilVC: UIViewController{
     
     // Fonction qui sera appelée lorsque l'utilisateur appuie sur profileImageView.
     @objc func profileImageTapped() {
-        let alert = UIAlertController(title: "Choisissez l'image", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Caméra", style: .default, handler: { _ in
-            self.openCamera()
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Galerie", style: .default, handler: { _ in
-            self.openGallery()
-        }))
-        
-        alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
+        // Effet de ressort
+        CustomAnimations.imagePressAnimation(for: self.profileImageView) {
+            
+            let alert = UIAlertController(title: "Choisissez l'image", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Caméra", style: .default, handler: { _ in
+                self.openCamera()
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Galerie", style: .default, handler: { _ in
+                self.openGallery()
+            }))
+            
+            alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 
@@ -152,6 +158,24 @@ extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+    private func configureControl(for cell: CustomCell, with controlType: CellControlType) {
+        // Hide all controls initially
+        cell.customSwitch?.isHidden = true
+        cell.customSlider?.isHidden = true
+
+        // Unhide and configure the required control
+        switch controlType {
+        case .none:
+            break
+        case .switch:
+            cell.customSwitch?.isHidden = false
+            // Further configuration for the switch, if necessary
+        case .slider:
+            cell.customSlider?.isHidden = false
+            // Further configuration for the slider, if necessary
+        }
+    }
 }
 
 extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
@@ -189,11 +213,12 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
             return UITableViewCell()
         }
-
         
         guard let settingsSection = SettingsSection(rawValue: indexPath.section) else { return cell }
         
@@ -201,15 +226,19 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
         case .account:
             if let accountOption = SettingsSection.Account(rawValue: indexPath.row) {
                 cell.textLabel?.text = accountOption.title
+                cell.configure(isFriendCell: false, cellType: .none)
             }
         case .security:
             if let securityOption = SettingsSection.Security(rawValue: indexPath.row) {
                 cell.textLabel?.text = securityOption.title
+                cell.configure(isFriendCell: false, cellType: securityOption.controlType)
             }
         }
-        
+        // Assign the delegate
+        cell.delegate = self
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return SettingsSection(rawValue: section)?.title
@@ -224,13 +253,46 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
         case .account:
             if let accountOption = SettingsSection.Account(rawValue: indexPath.row) {
                 print("L'utilisateur a sélectionné l'option \(accountOption.title) dans la section Compte")
-                performSegue(withIdentifier: accountOption.segueIdentifier, sender: accountOption.title)
+                if let identifier = accountOption.segueIdentifier {
+                    performSegue(withIdentifier: identifier, sender: accountOption.title)
+                }
             }
         case .security:
             if let securityOption = SettingsSection.Security(rawValue: indexPath.row) {
                 print("L'utilisateur a sélectionné l'option \(securityOption.title) dans la section Sécurité")
-                performSegue(withIdentifier: securityOption.segueIdentifier, sender: securityOption.title)
+                if let identifier = securityOption.segueIdentifier {
+                    performSegue(withIdentifier: identifier, sender: securityOption.title)
+                }
             }
         }
+    }
+}
+
+
+extension ProfilVC: CustomCellDelegate{
+    
+    func didTapAddButton(in cell: CustomCell) {
+        
+    }
+    
+    func didTapRemoveButton(in cell: CustomCell) {
+        
+    }
+    
+    func didChangeSwitchValue(in cell: CustomCell, isOn: Bool) {
+        print("1")
+        switch isOn {
+        case true : appDelegate.resumeSound()
+        case false : appDelegate.stopSound()
+        }
+        UserDefaults.standard.setValue(isOn, forKey: "sound")
+        UserDefaults.standard.synchronize()
+    }
+    
+    func didChangeSliderValue(in cell: CustomCell, value: Float) {
+        print("2")
+        appDelegate.setVolume(volume: value)
+        UserDefaults.standard.setValue(value, forKey: "volume")
+        UserDefaults.standard.synchronize()
     }
 }
