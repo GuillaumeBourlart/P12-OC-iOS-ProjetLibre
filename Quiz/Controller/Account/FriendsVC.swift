@@ -211,7 +211,7 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 60.0 // Remplacer par la hauteur désirée
+            return 50.0 // Remplacer par la hauteur désirée
         }
 }
 

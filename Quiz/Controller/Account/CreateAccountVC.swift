@@ -19,6 +19,8 @@ class CreateAccountVC: UIViewController {
     @IBOutlet private weak var userEmail: UITextField!
     @IBOutlet weak var signinButton: CustomButton!
     
+    var activeTextField: UITextField?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -57,6 +59,7 @@ class CreateAccountVC: UIViewController {
                   firstname != "",
                   let lastname = self.userLastname.text,
                   lastname != "" else {
+                self.signinButton.isEnabled = true
                 return
             }
             
@@ -103,16 +106,23 @@ extension CreateAccountVC: UITextFieldDelegate {
     }
     
     @objc func keyboardAppear(_ notification: Notification) {
-            guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-            let keyboardFrame = frame.cgRectValue
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardFrame.height
-            }
-        }
-
-    @objc func keyboardDisappear(_ notification: Notification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
+           guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+           let keyboardFrame = frame.cgRectValue
+           guard let activeTextField = activeTextField else { return }
+           let activeTextFieldFrame = activeTextField.convert(activeTextField.bounds, to: self.view)
+           
+           if self.view.frame.origin.y == 0 && activeTextFieldFrame.maxY > keyboardFrame.origin.y {
+               self.view.frame.origin.y -= activeTextFieldFrame.maxY - keyboardFrame.origin.y + 20 // +20 for a little extra space
+           }
+       }
+       
+       @objc func keyboardDisappear(_ notification: Notification) {
+           if self.view.frame.origin.y != 0 {
+               self.view.frame.origin.y = 0
+           }
+       }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
     }
 }

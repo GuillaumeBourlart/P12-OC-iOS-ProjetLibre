@@ -290,6 +290,7 @@ class Game {
             }
 
             guard let data = data, !data.isEmpty, let lobbyData = data.first, let lobbyId = lobbyData["id"] as? String else {
+                completion(.failure(MyError.noDataInResponse))
                 return
             }
 

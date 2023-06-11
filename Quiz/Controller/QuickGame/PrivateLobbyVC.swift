@@ -28,6 +28,7 @@ class PrivateLobbyVC: UIViewController{
     var difficulty: String?
     var category: Int?
     var quizId: String?
+    var usernamesForUIDs = [String: String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,8 @@ class PrivateLobbyVC: UIViewController{
                 launchButton.isHidden = false
             }
         }
+        
+        getUsernames()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,6 +56,23 @@ class PrivateLobbyVC: UIViewController{
         if let listener = listener {
             listener.remove()
         }
+    }
+    
+    func getUsernames(){
+        let allPlayerUIDs = players + invitedPlayers
+            FirebaseUser.shared.getUsernames(with: allPlayerUIDs) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let usernamesDict):
+                    self?.usernamesForUIDs = usernamesDict
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
+                }
+            }
+        
+        
     }
     
     @IBAction func leaveLobbyWasPressed(_ sender: Any) {
@@ -116,7 +136,8 @@ class PrivateLobbyVC: UIViewController{
                 self.invitedPlayers = invitedPlayersDict
                 self.joinCodeLabel.text = code
                 
-                self.tableView.reloadData()
+                self.getUsernames()
+                
             case .failure(let error):
                 print(error)
                 Game.shared.checkIfGameExist(gameID: lobbyId) { result in
@@ -134,10 +155,6 @@ class PrivateLobbyVC: UIViewController{
             }
         })
     }
-    
-    
-    
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? InvitePlayersVC {
@@ -186,11 +203,14 @@ extension PrivateLobbyVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else { return UITableViewCell() }
+        var uid = ""
         if indexPath.section == 0 {
-            cell.label.text = players[indexPath.row]
+            uid = players[indexPath.row]
         } else {
-            cell.label.text = invitedPlayers[indexPath.row]
+            uid = invitedPlayers[indexPath.row]
         }
+        // Use the username if available, otherwise use the UID
+        cell.label.text = usernamesForUIDs[uid] ?? uid
         return cell
     }
     

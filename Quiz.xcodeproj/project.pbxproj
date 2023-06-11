@@ -282,12 +282,12 @@
 				D03083E32A0F8A5100A8FBB7 /* CreateAccountVC.swift */,
 				D03083DA2A0F8A4F00A8FBB7 /* ProfilVC.swift */,
 				D03083DE2A0F8A5000A8FBB7 /* FriendsVC.swift */,
-				D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */,
 				D03083E12A0F8A5100A8FBB7 /* QuizzGroupsVC.swift */,
 				D084FB132A10309200721B88 /* HistoryVC.swift */,
 				D03083DB2A0F8A4F00A8FBB7 /* QuizzVC.swift */,
 				D05B8F452A1E2B3B0064795D /* InvitesVC.swift */,
 				D074D66F2A26A2A7004942C4 /* QuestionResultVC.swift */,
+				D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */,
 				D00BD4412A2BCC530021230E /* AddQuestionVC.swift */,
 				D00BD4432A2BCC670021230E /* AddMemberVC.swift */,
 			);
@@ -688,7 +688,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -721,7 +721,7 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

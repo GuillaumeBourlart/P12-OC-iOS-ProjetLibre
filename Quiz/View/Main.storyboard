@@ -85,7 +85,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FF4-NQ-Ldx">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FF4-NQ-Ldx">
                                 <rect key="frame" x="70" y="240" width="253" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -168,7 +168,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hnv-sF-ItT" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="100" y="252" width="193" height="65"/>
+                                <rect key="frame" x="100" y="183" width="193" height="65"/>
                                 <color key="backgroundColor" name="button2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="UuD-6E-oKC"/>
@@ -182,7 +182,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Boy-4v-VRM" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="100" y="452" width="193" height="65"/>
+                                <rect key="frame" x="100" y="383" width="193" height="65"/>
                                 <color key="backgroundColor" name="button2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="kPe-Yo-RwK"/>
@@ -196,7 +196,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z20-j0-kOm" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="100" y="352" width="193" height="65"/>
+                                <rect key="frame" x="100" y="283" width="193" height="65"/>
                                 <color key="backgroundColor" name="button2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="ejz-v5-7sz"/>
@@ -210,7 +210,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="49h-Vt-RA6" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="115" y="662" width="163" height="50"/>
+                                <rect key="frame" x="115" y="669" width="163" height="50"/>
                                 <color key="backgroundColor" name="button2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Wz3-Ko-fx8"/>
@@ -230,15 +230,16 @@
                             <constraint firstItem="Boy-4v-VRM" firstAttribute="centerX" secondItem="FgK-h7-DBG" secondAttribute="centerX" id="2wk-GC-YQM"/>
                             <constraint firstItem="Hnv-sF-ItT" firstAttribute="leading" secondItem="APv-gN-CJK" secondAttribute="leading" constant="100" id="4ZD-Us-yqv"/>
                             <constraint firstItem="Hnv-sF-ItT" firstAttribute="centerX" secondItem="FgK-h7-DBG" secondAttribute="centerX" id="6Bg-TH-VQK"/>
+                            <constraint firstItem="Hnv-sF-ItT" firstAttribute="top" secondItem="APv-gN-CJK" secondAttribute="top" constant="80" id="70D-bo-euZ"/>
                             <constraint firstItem="Boy-4v-VRM" firstAttribute="top" secondItem="Z20-j0-kOm" secondAttribute="bottom" constant="35" id="Cfs-tN-gdp"/>
                             <constraint firstItem="Z20-j0-kOm" firstAttribute="centerX" secondItem="FgK-h7-DBG" secondAttribute="centerX" id="DBJ-7M-DLw"/>
-                            <constraint firstItem="49h-Vt-RA6" firstAttribute="top" secondItem="Boy-4v-VRM" secondAttribute="bottom" constant="145" id="DbI-eT-R0I"/>
-                            <constraint firstItem="Z20-j0-kOm" firstAttribute="centerY" secondItem="FgK-h7-DBG" secondAttribute="centerY" id="EVt-lT-yOs"/>
+                            <constraint firstItem="49h-Vt-RA6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Boy-4v-VRM" secondAttribute="bottom" constant="50" id="DbI-eT-R0I"/>
                             <constraint firstItem="Z20-j0-kOm" firstAttribute="leading" secondItem="APv-gN-CJK" secondAttribute="leading" constant="100" id="JTH-5V-ch3"/>
                             <constraint firstItem="49h-Vt-RA6" firstAttribute="leading" secondItem="APv-gN-CJK" secondAttribute="leading" constant="115" id="NDC-Sa-XJc"/>
                             <constraint firstItem="Boy-4v-VRM" firstAttribute="leading" secondItem="APv-gN-CJK" secondAttribute="leading" constant="100" id="NKK-Hd-nbj"/>
                             <constraint firstItem="Z20-j0-kOm" firstAttribute="top" secondItem="Hnv-sF-ItT" secondAttribute="bottom" constant="35" id="XyU-7d-5rn"/>
                             <constraint firstItem="49h-Vt-RA6" firstAttribute="centerX" secondItem="FgK-h7-DBG" secondAttribute="centerX" id="brf-12-WxQ"/>
+                            <constraint firstItem="APv-gN-CJK" firstAttribute="bottom" secondItem="49h-Vt-RA6" secondAttribute="bottom" constant="50" id="vsr-Lb-70g"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5kY-vd-fha"/>
@@ -1014,14 +1015,14 @@
                                 <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xtz-Zc-n5j" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="333" height="42.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="333" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xtz-Zc-n5j" id="6cY-t0-Wh1">
-                                            <rect key="frame" x="0.0" y="0.0" width="333" height="42.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="333" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ5-5x-9jZ">
-                                                    <rect key="frame" x="20" y="11" width="293" height="21.666666666666671"/>
+                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ5-5x-9jZ">
+                                                    <rect key="frame" x="20" y="11" width="293" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -1089,6 +1090,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="a3Z-fP-t8P"/>
                                 </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -1102,6 +1104,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="7ia-VO-e8X"/>
                                     <constraint firstAttribute="height" constant="30" id="8VM-dJ-0xP"/>
                                 </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -1116,6 +1119,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="YZQ-n6-np9"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="pAO-W3-WB4"/>
                                 </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -1181,6 +1185,7 @@
                         <outlet property="nameField" destination="oBf-Pg-Xh6" id="7pm-Rw-pXQ"/>
                         <outlet property="nameLabel" destination="7bU-Me-f3y" id="pDh-32-6NZ"/>
                         <outlet property="tableView" destination="vco-bj-5Wm" id="QX0-Z9-TWR"/>
+                        <outlet property="tapGestureRecognizer" destination="YWg-6L-mJF" id="O1J-TR-lNy"/>
                         <outlet property="themeField" destination="YaM-h3-ySn" id="hsO-MS-I10"/>
                         <outlet property="themeLabel" destination="wQd-D8-m12" id="p39-vD-vOJ"/>
                         <segue destination="A90-DV-z4D" kind="show" identifier="goToAddQuestion" id="vCV-A5-GSW"/>
@@ -1465,14 +1470,14 @@
                                 <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="lqm-GX-d03" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="313" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="313" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lqm-GX-d03" id="fur-qU-bea">
-                                            <rect key="frame" x="0.0" y="0.0" width="313" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="313" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsD-7w-KZb">
-                                                    <rect key="frame" x="16" y="11.000000000000002" width="281" height="21.666666666666671"/>
+                                                    <rect key="frame" x="16" y="11" width="281" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -2066,6 +2071,8 @@
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6n4-qw-W9F">
                                         <rect key="frame" x="0.0" y="0.0" width="313" height="65"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -2074,6 +2081,8 @@
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vOP-j1-sOt">
                                         <rect key="frame" x="0.0" y="85" width="313" height="65"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -2192,26 +2201,36 @@
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="lastname" textAlignment="natural" minimumFontSize="17" background="firebase_28dp.png" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="zr6-0n-lEh">
                                         <rect key="frame" x="0.0" y="0.0" width="313" height="44.666666666666664"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="family-name"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qko-4v-8fT">
                                         <rect key="frame" x="0.0" y="64.666666666666686" width="313" height="44.333333333333343"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="name"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="pseudo" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zNz-hZ-TWk">
                                         <rect key="frame" x="0.0" y="129" width="313" height="44.666666666666657"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="username"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2ff-Bb-QW1">
                                         <rect key="frame" x="0.0" y="193.66666666666669" width="313" height="44.333333333333343"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hte-ge-dVW">
                                         <rect key="frame" x="0.0" y="258" width="313" height="44.666666666666686"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
@@ -2284,9 +2303,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SyW-dz-AQx"/>
+        <segue reference="2mD-dg-9fD"/>
         <segue reference="gqc-Rr-G6f"/>
-        <segue reference="d2N-Xu-Vri"/>
+        <segue reference="VMf-YG-tkp"/>
         <segue reference="qAE-Zc-maS"/>
         <segue reference="mgT-Y3-Laq"/>
     </inferredMetricsTieBreakers>

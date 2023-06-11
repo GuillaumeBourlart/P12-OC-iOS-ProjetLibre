@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-
+import FirebaseFirestore
 
 class ResultVC: UIViewController {
     
@@ -45,7 +45,7 @@ class ResultVC: UIViewController {
             self.questions = gameData.questions
         }
         
-        displayWinner()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +53,7 @@ class ResultVC: UIViewController {
             navigationController?.setNavigationBarHidden(true, animated: true)
                 tabBarController?.tabBar.isHidden = true
         }
+        displayResults()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,34 +82,47 @@ class ResultVC: UIViewController {
     }
     
     
-    func displayWinner() {
-        guard let finalScores = gameData?.final_scores, finalScores.count == gameData?.players.count else {
-            self.label.text = "Veuillez rafraîchir plus tard pour voir le vainqueur. Tous les joueurs n'ont pas encore terminé"
+    func displayResults() {
+        guard let gameData = self.gameData else {
+            print("No game data available.")
             return
         }
-
-        // Find the best score
-        var bestScore = 0
-        for (_, value) in finalScores {
-            if value > bestScore {
-                bestScore = value
+        
+        var finalScores = gameData.final_scores ?? [:]
+        let UIDS = Array(finalScores.keys)
+        FirebaseUser.shared.getUsernames(with: UIDS) { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let UidsWithusernames):
+                var final_scoresWithUsernames = [String: Int]()
+                for (key, value) in UidsWithusernames {
+                    final_scoresWithUsernames[value] = finalScores[key]
+                }
+                finalScores = final_scoresWithUsernames
+                
+                let competitive = gameData.competitive
+                
+                DispatchQueue.main.async {  // Make sure UI updates are on main thread
+                    if competitive {
+                        // Competitive game, just show winner and loser
+                        let sortedScores = finalScores.sorted { $0.value > $1.value }
+                        let winner = sortedScores.first?.key ?? "Unknown"
+                        let loser = sortedScores.last?.key ?? "Unknown"
+                        
+                        self.label.text = "Le gagnant est \(winner), et le perdant est \(loser)."
+                    } else {
+                        // Non-competitive game, display ranking
+                        let sortedScores = finalScores.sorted { $0.value > $1.value }
+                        var rankingText = "Classement :\n"
+                        for (index, element) in sortedScores.enumerated() {
+                            rankingText += "\(index + 1). \(element.key) avec \(element.value) points\n"
+                        }
+                        
+                        self.label.text = rankingText
+                    }
+                }
             }
-        }
-
-        // Find all players with the best score
-        var winners = [String]()
-        for (key, value) in finalScores {
-            if value == bestScore {
-                winners.append(key)
-            }
-        }
-
-        // Display the winners
-        if winners.count > 1 {
-            let winnersList = winners.joined(separator: ", ")
-            self.label.text = "Les joueurs \(winnersList) ont gagné avec \(bestScore) points"
-        } else {
-            self.label.text = "Le joueur \(winners.first) a gagné avec \(bestScore) points"
         }
     }
     

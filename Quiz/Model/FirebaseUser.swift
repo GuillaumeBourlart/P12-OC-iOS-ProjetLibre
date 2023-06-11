@@ -298,70 +298,65 @@ class FirebaseUser {
                 return
             }
         var players = [String: String]()
-        
-        let group = DispatchGroup()
 
-        for friendUID in frinedUIDs {
-            group.enter()
-            
-            fetchUsername(with: friendUID) { result in
-                switch result {
-                case .failure(let error):
-                    print("Error: \(error)")
-                case .success(let username):
-                    players[friendUID] = username
-                }
-                group.leave()
+        getUsernames(with: frinedUIDs) { result in
+            switch result {
+            case .failure(let error): completion(nil, error)
+            case .success(let  friends): players = friends
+                completion(players, nil)
             }
-        }
-        
-        group.notify(queue: .main) {
-            print(players)
-            completion(players, nil)
+
         }
     }
     
     // Function to display invites form ID
     func fetchInvites(completion: @escaping ([String: String]?, Error?) -> Void) {
         guard let invites = self.userInfo?.invites else {
-                completion(nil, MyError.userNotFound)
-                return
-            }
-        var invitations = [String: String]()
-        
-        let group = DispatchGroup()
-
-        for (key, value) in invites {
-            group.enter()
-            
-            fetchUsername(with: key) { result in
-                switch result {
-                case .failure(let error):
-                    print("Error: \(error)")
-                case .success(let username):
-                    invitations[username] = value
-                }
-                group.leave()
-            }
+            completion(nil, MyError.userNotFound)
+            return
         }
-        
-        group.notify(queue: .main) {
-            completion(invitations, nil)
+
+        let uids = Array(invites.keys)
+        getUsernames(with: uids) { result in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+            case .success(let usernameDict):
+                var invitations = [String: String]()
+                for (uid, inviteId) in invites {
+                    if let username = usernameDict[uid] {
+                        invitations[username] = inviteId
+                    }
+                }
+                completion(invitations, nil)
+            }
         }
     }
     
     // Function to get user's username from their UID
-    func fetchUsername(with uid: String, completion: @escaping (Result<String, Error>) -> Void) {
-        firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: uid) { (documentData, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
+    func getUsernames(with uids: [String], completion: @escaping (Result<[String: String], Error>) -> Void) {
+        var usernames = [String: String]() // Dictionnaire pour stocker les UID et les usernames correspondants
+        let dispatchGroup = DispatchGroup() // Groupe pour gérer les appels asynchrones multiples
+        
+        for uid in uids {
+            dispatchGroup.enter()
+            firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: uid) { (documentData, error) in
+                defer { dispatchGroup.leave() }
+                if let error = error {
+                    print("Failed to fetch user for uid: \(uid), error: \(error)")
+                } else if let documentData = documentData, let username = documentData["username"] as? String {
+                    usernames[uid] = username
+                } else {
+                    print("User not found for uid: \(uid)")
+                }
             }
-            
-            if let documentData = documentData, let username = documentData["username"] as? String {
-                completion(.success(username))
-            } else {
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            if usernames.isEmpty {
                 completion(.failure(MyError.userNotFound))
+            } else {
+                completion(.success(usernames))
             }
         }
     }
@@ -421,25 +416,15 @@ class FirebaseUser {
         
         var players = [String: String]()
         
-        let group = DispatchGroup()
         let receivedRequests = friendRequests.filter { $0.value.status == "received" }
         let keysArray = Array(receivedRequests.keys)
-        for friendUID in keysArray {
-            group.enter()
-            
-            fetchUsername(with: friendUID) { result in
-                switch result {
-                case .failure(let error):
-                    print("Error: \(error)")
-                case .success(let username):
-                    players[friendUID] = username
-                }
-                group.leave()
-            }
-        }
         
-        group.notify(queue: .main) {
-            completion(players, nil)
+        getUsernames(with: keysArray) { result in
+            switch result {
+            case .failure(let error): completion(nil, error)
+            case .success(let  requests): players = requests
+                completion(players, nil)
+            }
         }
     }
     
@@ -733,6 +718,20 @@ class FirebaseUser {
                 } else {
                     completion(.failure(MyError.failedToUpdateGroupName))
                 }
+            }
+        }
+    }
+    
+    
+    func fetchGroupMembers(group: FriendGroup, completion: @escaping (Result<[String: String], Error>) -> Void) {
+        let members = group.members
+        print(members)
+        getUsernames(with: members) { result in
+            switch result {
+            case .failure(let error): completion(.failure(error))
+            case .success(let membersWitchUsernames):
+                print(membersWitchUsernames)
+                completion(.success(membersWitchUsernames))
             }
         }
     }

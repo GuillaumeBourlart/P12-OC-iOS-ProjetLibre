@@ -15,14 +15,30 @@ class QuestionResultVC: UIViewController {
     
     var usersAnswer: [String: [String: UserAnswer]]?
     var question: [String: UniversalQuestion]?
+    var usernamesForUIDs = [String: String]()
     
     override func viewDidLoad() {
-            super.viewDidLoad()
+        super.viewDidLoad()
 
-            guard let questionData = question?.values.first else { return }
-            questionLabel.text = questionData.question
-            correctAnswerLabel.text = "Bonne réponse : \(questionData.correct_answer)"
+        guard let questionData = question?.values.first else { return }
+        questionLabel.text = questionData.question
+        correctAnswerLabel.text = "Bonne réponse : \(questionData.correct_answer)"
+        
+        // Get usernames for UIDs
+        if let userIDs = usersAnswer?.keys {
+            FirebaseUser.shared.getUsernames(with: Array(userIDs)) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let usernamesDict):
+                    self?.usernamesForUIDs = usernamesDict
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
+                }
+            }
         }
+    }
     
 }
 
@@ -34,7 +50,9 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let usersAnswer = usersAnswer, !usersAnswer.keys.isEmpty {
             let keys = Array(usersAnswer.keys)
-            return keys[section]
+            let userID = keys[section]
+            // Use the username if available, otherwise use the UID
+            return usernamesForUIDs[userID] ?? userID
         } else {
             return nil // or return "" if you want to return an empty string
         }
@@ -69,7 +87,11 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
             tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
         headerLabel.font = UIFont(name: "Helvetica", size: 20) // À définir selon vos préférences
         headerLabel.textColor = .white
-        headerLabel.text = Array(usersAnswer.keys)[section]
+        
+        let userID = Array(usersAnswer.keys)[section]
+        // Use the username if available, otherwise use the UID
+        headerLabel.text = usernamesForUIDs[userID] ?? userID
+        
         headerLabel.sizeToFit()
 
         headerView.addSubview(headerLabel)

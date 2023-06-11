@@ -45,6 +45,7 @@ class LoginVC: UIViewController{
                   email != "",
                   let password = self.userPassword.text,
                   password != "" else {
+                self.loginButton.isEnabled = true
                 return
             }
             
