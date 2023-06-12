@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>537301824309-3rct404okl7v21r814j4a3eeh2lvtgua.apps.googleusercontent.com</string>
+	<string>537301824309-4ahtf9g3bkfte5dvrabctt5ut6itvaut.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.537301824309-3rct404okl7v21r814j4a3eeh2lvtgua</string>
+	<string>com.googleusercontent.apps.537301824309-4ahtf9g3bkfte5dvrabctt5ut6itvaut</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDovm6Vm5MYXtlhNIVkh1co5dSETqvnShU</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.guillaume.Quiz</string>
+	<string>com.guillaume.QuizApp</string>
 	<key>PROJECT_ID</key>
 	<string>quiz-60f58</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:537301824309:ios:4479f7ad5dbf214d11527c</string>
+	<string>1:537301824309:ios:c9fbc3e864c7105311527c</string>
 </dict>
 </plist>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7ED6FEF42A3772F6001AC0DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6FEF32A3772F6001AC0DE /* GoogleService-Info.plist */; };
 		D00BD4422A2BCC530021230E /* AddQuestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00BD4412A2BCC530021230E /* AddQuestionVC.swift */; };
 		D00BD4442A2BCC670021230E /* AddMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00BD4432A2BCC670021230E /* AddMemberVC.swift */; };
 		D01EDCDC2A182A3400FF3163 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCDB2A182A3400FF3163 /* FirebaseAuth */; };
@@ -59,7 +60,6 @@
 		D084EC3C2A0F7EF400544AA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */; };
 		D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D084EC452A0F7EF700544AA3 /* Assets.xcassets */; };
 		D084EC492A0F7EF700544AA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */; };
-		D084EC742A0F81FC00544AA3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D084EC732A0F81FC00544AA3 /* GoogleService-Info.plist */; };
 		D084FB142A10309200721B88 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084FB132A10309200721B88 /* HistoryVC.swift */; };
 		D08CAE722A23DE0800C835E9 /* JoinWithCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08CAE712A23DE0800C835E9 /* JoinWithCodeVC.swift */; };
 		D08E0ED92A163FAC00D09FAD /* FakeResponsesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08E0ED82A163FAC00D09FAD /* FakeResponsesData.swift */; };
@@ -85,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7ED6FEF32A3772F6001AC0DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D00BD4412A2BCC530021230E /* AddQuestionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuestionVC.swift; sourceTree = "<group>"; };
 		D00BD4432A2BCC670021230E /* AddMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberVC.swift; sourceTree = "<group>"; };
 		D03083D82A0F8A4F00A8FBB7 /* CompetitiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompetitiveVC.swift; sourceTree = "<group>"; };
@@ -125,7 +126,6 @@
 		D084EC482A0F7EF700544AA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D084EC4A2A0F7EF700544AA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D084EC4F2A0F7EF700544AA3 /* QuizTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D084EC732A0F81FC00544AA3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D084FB132A10309200721B88 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		D08CAE712A23DE0800C835E9 /* JoinWithCodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinWithCodeVC.swift; sourceTree = "<group>"; };
 		D08E0ED82A163FAC00D09FAD /* FakeResponsesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponsesData.swift; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 				D03083FB2A0F8A9000A8FBB7 /* View */,
 				D03083F02A0F8A5F00A8FBB7 /* Model */,
 				D084EC4A2A0F7EF700544AA3 /* Info.plist */,
-				D084EC732A0F81FC00544AA3 /* GoogleService-Info.plist */,
+				7ED6FEF32A3772F6001AC0DE /* GoogleService-Info.plist */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -461,7 +461,7 @@
 			files = (
 				D084EC492A0F7EF700544AA3 /* LaunchScreen.storyboard in Resources */,
 				D03084052A0F8AB100A8FBB7 /* Main.storyboard in Resources */,
-				D084EC742A0F81FC00544AA3 /* GoogleService-Info.plist in Resources */,
+				7ED6FEF42A3772F6001AC0DE /* GoogleService-Info.plist in Resources */,
 				D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */,
 				D04A5B922A321B950049F02A /* appMusic.mp3 in Resources */,
 			);

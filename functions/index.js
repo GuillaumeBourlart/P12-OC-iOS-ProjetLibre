@@ -20,9 +20,10 @@
 // Import Firebase Functions and Firebase Admin SDK
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-
 // Initialize Firebase Admin to gain elevated privileges
 admin.initializeApp();
+// Initialiser le service de messagerie
+const messaging = admin.messaging();
 
 exports.sendInviteNotification = functions.firestore
     .document("lobby/{lobbyId}")
@@ -31,7 +32,7 @@ exports.sendInviteNotification = functions.firestore
       // Obtain the list of invited players before and after the update
       const oldInvitedPlayers = change.before.data().invited_users || [];
       const newInvitedPlayers = change.after.data().invited_users || [];
-
+      const lobbyId = context.params.lobbyId;
       // Check if any players have been added
       const addedPlayers = newInvitedPlayers.filter(
           (playerId) => !oldInvitedPlayers.includes(playerId),
@@ -47,10 +48,12 @@ exports.sendInviteNotification = functions.firestore
             .doc(playerId);
         const playerDoc = await playerDocRef.get();
         const playerInvites = playerDoc.data().invites || {};
+        // Ajouté pour obtenir le token du joueur
+        const playerToken = playerDoc.data().token || null;
 
         try {
           // Add the lobbyID to the user's invites object
-          const lobbyId = context.params.lobbyId;
+
           const invitingUserId = change.after.data().creator;
           // Assuming 'creator' field stores UID of the user who invites
           playerInvites[invitingUserId] = lobbyId;
@@ -63,15 +66,29 @@ exports.sendInviteNotification = functions.firestore
           console.error("Error updating user invites:", error);
           return null; // Stop execution in case of error
         }
+
+        // Send a notification to the player receiving the invite
+        const message = {
+          "notification": {
+            "title": "Game invite",
+            "body": `You have been invited to join a room`,
+          },
+          "data": {
+            "notificationType": "gameInvitation",
+            "lobbyID": lobbyId,
+          },
+          "token": playerToken, // Utiliser le token du joueur
+        };
+
+        await messaging.send(message);
       }
 
       return null;
     });
 
-// Triggered when a friend request is sent
 exports.sendFriendRequest = functions.firestore
     .document("users/{userId}")
-    .onUpdate((change, context) => {
+    .onUpdate(async (change, context) => {
       const oldData = change.before.data();
       const newData = change.after.data();
 
@@ -83,21 +100,42 @@ exports.sendFriendRequest = functions.firestore
         if (addedFriendRequests.length > 0) {
           const userId = context.params.userId;
 
-          addedFriendRequests.forEach((friendId) => {
+          for (const friendId of addedFriendRequests) {
+          // Get the user document
+            const playerDocRef = admin.firestore().collection("users")
+                .doc(friendId);
+            const playerDoc = await playerDocRef.get();
+            const playerToken = playerDoc.data().token || null;
+
             if (newData.friendRequests[friendId].status === "sent") {
               const friendRequest = {
                 status: "received",
                 date: newData.friendRequests[friendId].date,
               };
 
-              admin.firestore().collection("users").doc(friendId)
+              await admin.firestore().collection("users").doc(friendId)
                   .update({
                     [`friendRequests.${userId}`]: friendRequest,
                   });
             }
-          });
+
+            // Send a notification to the player receiving the invite
+            const message = {
+              "notification": {
+                "title": "New friend request",
+                "body": "You received a new friend request",
+              },
+              "data": {
+                "notificationType": "friendRequest",
+              },
+              "token": playerToken,
+            };
+
+            await admin.messaging().send(message);
+          }
         }
       }
+
       return null;
     });
 
@@ -108,64 +146,104 @@ exports.acceptFriendRequest = functions.firestore
       const oldData = change.before.data();
       const newData = change.after.data();
 
-      // Check if friends array has changed
       if (oldData.friends.length !== newData.friends.length) {
-        const addedFriends = newData.friends.filter((friend) => !oldData
-            .friends.includes(friend));
+        const addedFriends = newData.friends
+            .filter((friend) => !oldData.friends.includes(friend));
 
         if (addedFriends.length > 0) {
           const userId = context.params.userId;
 
-          // Process each friend acceptance
           for (const friendId of addedFriends) {
+            // Get the user document
+            const playerDocRef = admin.firestore().collection("users")
+                .doc(friendId);
+            const playerDoc = await playerDocRef.get();
+            const playerToken = playerDoc.data().token || null;
+
+            // Send a notification to the player receiving the invite
+            const message = {
+              "notification": {
+                "title": "Friend request accepted",
+                "body": "Your friend request has been accepted",
+              },
+              "data": {
+                "notificationType": "friendRequestAccepted",
+              },
+              "token": playerToken,
+            };
+
+            await admin.messaging().send(message);
+
             try {
-              // Add the friend who accepted the request to the user's friends
-              // and delete the friend request
-              await admin.firestore().collection("users").doc(friendId).update({
-                friends: admin.firestore.FieldValue.arrayUnion(userId),
-                ["friendRequests." + userId]: admin.firestore.FieldValue
-                    .delete(),
-              });
+            // Add the friend who accepted the request to the user's friends
+            // and delete the friend request
+              await admin.firestore().collection("users")
+                  .doc(friendId).update({
+                    friends: admin.firestore.FieldValue.arrayUnion(userId),
+                    [`friendRequests.${userId}`]: admin.firestore
+                        .FieldValue.delete(),
+                  });
             } catch (err) {
               console.log("Error updating document", err);
             }
           }
         }
       }
+
       return null;
     });
 
 // Triggered when a friend request is rejected
 exports.rejectFriendRequest = functions.firestore
     .document("users/{userId}")
-    .onUpdate((change, context) => {
+    .onUpdate(async (change, context) => {
       const oldData = change.before.data();
       const newData = change.after.data();
 
-      if (Object.keys(oldData.friendRequests).length !== Object
-          .keys(newData.friendRequests).length) {
-        const removedFriendRequests = Object.keys(oldData.friendRequests)
-            .filter((friend) => !(friend in newData.friendRequests));
+      if (Object.keys(oldData.friendRequests)
+          .length !== Object.keys(newData.friendRequests).length) {
+        const removedFriendRequests = Object.keys(oldData
+            .friendRequests).filter((friend) => !(friend in newData
+            .friendRequests));
 
         if (removedFriendRequests.length > 0) {
           const userId = context.params.userId;
 
-          removedFriendRequests.forEach((friendId) => {
-            admin.firestore().collection("users").doc(friendId)
-                .update({
-                  [`friendRequests.${userId}`]: admin.firestore
-                      .FieldValue.delete(),
-                });
-          });
+          for (const friendId of removedFriendRequests) {
+            // Get the user document
+            const playerDocRef = admin.firestore().collection("users")
+                .doc(friendId);
+            const playerDoc = await playerDocRef.get();
+            const playerToken = playerDoc.data().token || null;
+
+            // Send a notification to the player receiving the invite
+            const message = {
+              "notification": {
+                "title": "Friend request rejected",
+                "body": "Your friend request has been rejected",
+              },
+              "data": {
+                "notificationType": "friendRequestRejected",
+              },
+              "token": playerToken,
+            };
+
+            await admin.messaging().send(message);
+
+            await admin.firestore().collection("users").doc(friendId).update({
+              [`friendRequests.${userId}`]: admin.firestore.FieldValue.delete(),
+            });
+          }
         }
       }
+
       return null;
     });
 
 // Triggered when a friend is removed
 exports.removeFriend = functions.firestore
     .document("users/{userId}")
-    .onUpdate((change, context) => {
+    .onUpdate(async (change, context) => {
       const oldData = change.before.data();
       const newData = change.after.data();
 
@@ -176,13 +254,34 @@ exports.removeFriend = functions.firestore
         if (removedFriends.length > 0) {
           const userId = context.params.userId;
 
-          removedFriends.forEach((friendId) => {
-            admin.firestore().collection("users").doc(friendId).update({
-              [`friends`]: admin.firestore.FieldValue.arrayRemove(userId),
+          for (const friendId of removedFriends) {
+          // Get the user document
+            const playerDocRef = admin.firestore().collection("users")
+                .doc(friendId);
+            const playerDoc = await playerDocRef.get();
+            const playerToken = playerDoc.data().token || null;
+
+            await admin.firestore().collection("users").doc(friendId).update({
+              friends: admin.firestore.FieldValue.arrayRemove(userId),
             });
-          });
+
+            // Send a notification to the player receiving the invite
+            const message = {
+              "notification": {
+                "title": "Friend deleted",
+                "body": "A friend has been removed",
+              },
+              "data": {
+                "notificationType": "friendRemoved",
+              },
+              "token": playerToken,
+            };
+
+            await admin.messaging().send(message);
+          }
         }
       }
+
       return null;
     });
 
