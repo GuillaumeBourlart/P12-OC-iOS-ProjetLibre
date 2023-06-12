@@ -17,6 +17,7 @@ class InvitesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,6 +27,13 @@ class InvitesVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         listener = nil
+    }
+    
+    @objc func refreshTable() {
+        DispatchQueue.main.async {
+            self.loadInvites()
+            print("reloaded")
+        }
     }
     
     func loadInvites(){

@@ -205,6 +205,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
                     switch result {
                     case .failure(let error): print(error)
                     case .success(): print("success")
+                        NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
                     }
 
                 }
@@ -214,8 +215,36 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
                     switch result {
                     case .failure(let error): print(error)
                     case .success(): print("success")
+                        NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
                     }
                 }
+            case "friendRequestAccepted":
+                // Actualisez les demandes d'amis
+            FirebaseUser.shared.getUserInfo { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(): print("success")
+                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
+                }
+            }
+            case "friendRequestRejected":
+                // Actualisez les demandes d'amis
+            FirebaseUser.shared.getUserInfo { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(): print("success")
+                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
+                }
+            }
+            case "friendRemoved":
+                // Actualisez les demandes d'amis
+            FirebaseUser.shared.getUserInfo { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(): print("success")
+                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
+                }
+            }
                 default:
                     break
                 }

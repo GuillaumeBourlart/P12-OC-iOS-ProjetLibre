@@ -60,7 +60,7 @@ class QuizzVC: UIViewController {
         
         let question = questions[currentQuestionIndex]
         
-        questionLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        questionLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         UIView.animate(withDuration: 0.5, animations: {
             self.questionLabel.transform = CGAffineTransform.identity
         })
@@ -183,7 +183,7 @@ class QuizzVC: UIViewController {
         }
         
         UIView.animate(withDuration: 0.5, animations: {
-            self.questionLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            self.questionLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         }) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.currentQuestionIndex += 1

@@ -26,6 +26,15 @@ class FriendsVC: UIViewController{
         loadArrays()
         setupUserListener()
         onSwitch(switchControl)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
+    }
+    
+    @objc func refreshTable() {
+        DispatchQueue.main.async {
+            self.loadArrays()
+            print("reloaded")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
