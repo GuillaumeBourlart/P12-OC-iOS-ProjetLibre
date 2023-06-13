@@ -142,46 +142,46 @@ class FirebaseUser {
     
     // Function to get user's quizzes
     func getUserQuizzes(completion: @escaping (Result<Void, Error>) -> Void) {
-            guard let currentUserId = firebaseService.currentUserID else {
-                completion(.failure(MyError.noUserConnected))
-                return
-            }
-            
-            let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.creator, currentUserId)]
-            firebaseService.getDocuments(in: FirestoreFields.quizzesCollection, whereFields: conditions) { quizzesData, error in
-                if let error = error {
-                    completion(.failure(error))
-                } else if let quizzesData = quizzesData {
-                    do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: quizzesData, options: [])
-                        let decoder = JSONDecoder()
-                        let quizzes = try decoder.decode([Quiz].self, from: jsonData)
-                        self.userQuizzes = quizzes
-                        completion(.success(()))
-                    } catch let DecodingError.dataCorrupted(context) {
-                        print("Data corrupted: ", context)
-                        completion(.failure(error!))
-                    } catch let DecodingError.keyNotFound(key, context) {
-                        print("Key '\(key)' not found: ", context.debugDescription)
-                        print("codingPath: ", context.codingPath)
-                        completion(.failure(error!))
-                    } catch let DecodingError.valueNotFound(value, context) {
-                        print("Value '\(value)' not found: ", context.debugDescription)
-                        print("codingPath: ", context.codingPath)
-                        completion(.failure(error!))
-                    } catch let DecodingError.typeMismatch(type, context) {
-                        print("Type '\(type)' mismatch: ", context.debugDescription)
-                        print("codingPath: ", context.codingPath)
-                        completion(.failure(error!))
-                    } catch {
-                        print("error: ", error)
-                        completion(.failure(error))
-                    }
-                } else {
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(MyError.noUserConnected))
+            return
+        }
+        
+        let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.creator, currentUserId)]
+        firebaseService.getDocuments(in: FirestoreFields.quizzesCollection, whereFields: conditions) { quizzesData, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let quizzesData = quizzesData {
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: quizzesData, options: [])
+                    let decoder = JSONDecoder()
+                    let quizzes = try decoder.decode([Quiz].self, from: jsonData)
+                    self.userQuizzes = quizzes
                     completion(.success(()))
+                } catch let DecodingError.dataCorrupted(context) {
+                    print("Data corrupted: ", context)
+                    completion(.failure(error!))
+                } catch let DecodingError.keyNotFound(key, context) {
+                    print("Key '\(key)' not found: ", context.debugDescription)
+                    print("codingPath: ", context.codingPath)
+                    completion(.failure(error!))
+                } catch let DecodingError.valueNotFound(value, context) {
+                    print("Value '\(value)' not found: ", context.debugDescription)
+                    print("codingPath: ", context.codingPath)
+                    completion(.failure(error!))
+                } catch let DecodingError.typeMismatch(type, context) {
+                    print("Type '\(type)' mismatch: ", context.debugDescription)
+                    print("codingPath: ", context.codingPath)
+                    completion(.failure(error!))
+                } catch {
+                    print("error: ", error)
+                    completion(.failure(error))
                 }
+            } else {
+                completion(.success(()))
             }
         }
+    }
     
     // Function to get user's groups
     func getUserGroups(completion: @escaping (Result<Void, Error>) -> Void) {
@@ -293,29 +293,29 @@ class FirebaseUser {
     
     // Function to display freinds for UID's
     func fetchFriends(completion: @escaping ([String: String]?, Error?) -> Void) {
-        guard let frinedUIDs = self.userInfo?.friends else {
-                completion(nil, MyError.userNotFound)
-                return
-            }
+        guard let frinedUIDs = self.userInfo?.friends, !frinedUIDs.isEmpty else {
+            completion([:], MyError.noFriendsInFriendList)
+            return
+        }
         var players = [String: String]()
-
+        
         getUsernames(with: frinedUIDs) { result in
             switch result {
             case .failure(let error): completion(nil, error)
             case .success(let  friends): players = friends
                 completion(players, nil)
             }
-
+            
         }
     }
     
     // Function to display invites form ID
     func fetchInvites(completion: @escaping ([String: String]?, Error?) -> Void) {
-        guard let invites = self.userInfo?.invites else {
-            completion(nil, MyError.userNotFound)
+        guard let invites = self.userInfo?.invites, !invites.isEmpty else {
+            completion([:], MyError.noInvitesInInvitesList)
             return
         }
-
+        
         let uids = Array(invites.keys)
         getUsernames(with: uids) { result in
             switch result {
@@ -354,7 +354,7 @@ class FirebaseUser {
         
         dispatchGroup.notify(queue: .main) {
             if usernames.isEmpty {
-                completion(.failure(MyError.userNotFound))
+                completion(.failure(MyError.noUsernammesFound))
             } else {
                 completion(.success(usernames))
             }
@@ -382,22 +382,28 @@ class FirebaseUser {
                     completion(.failure(MyError.cantAddYourself))
                     return
                 }
-                
+                let requestTimestamp = Timestamp(date: Date())
                 // Create friend request data
                 let friendRequestData: [String: Any] = [
                     FirestoreFields.User.friendRequests: [
                         friendID: [
                             FirestoreFields.status: "sent",
-                            FirestoreFields.date: Timestamp(date: Date())
+                            FirestoreFields.date: requestTimestamp
                         ] as [String : Any]
                     ]
                 ]
+                
                 
                 // Send friend request
                 self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: friendRequestData) { error in
                     if let error = error {
                         completion(.failure(error))
                     } else {
+                        // Create new FriendRequest
+                        let newFriendRequest = aUser.FriendRequest(status: "sent", date: requestTimestamp.dateValue())
+                        
+                        // Add new FriendRequest to current userInfo
+                        FirebaseUser.shared.userInfo?.friendRequests[friendID] = newFriendRequest
                         completion(.success(()))
                     }
                 }
@@ -409,10 +415,10 @@ class FirebaseUser {
     
     // Function to display friend requests
     func fetchFriendRequests(completion: @escaping ([String: String]?, Error?) -> Void){
-        guard let friendRequests = self.userInfo?.friendRequests else {
-                completion(nil, MyError.userNotFound)
-                return
-            }
+        guard let friendRequests = self.userInfo?.friendRequests, !friendRequests.isEmpty else {
+            completion([:], MyError.noFriendRequestYet)
+            return
+        }
         
         var players = [String: String]()
         
@@ -441,6 +447,9 @@ class FirebaseUser {
             if let error = error {
                 completion(.failure(error))
             } else {
+                // Remove friend request and add friend ID to friends
+                FirebaseUser.shared.userInfo?.friendRequests.removeValue(forKey: friendID)
+                FirebaseUser.shared.userInfo?.friends.append(friendID)
                 completion(.success(()))
             }
         }
@@ -458,6 +467,8 @@ class FirebaseUser {
             if let error = error {
                 completion(.failure(error))
             } else {
+                // Remove friend request
+                FirebaseUser.shared.userInfo?.friendRequests.removeValue(forKey: friendID)
                 completion(.success(()))
             }
         }
@@ -466,15 +477,20 @@ class FirebaseUser {
     // Function to remove a friend from friends list
     func removeFriend(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
-
+        
         let data: [String: Any] = [
             "\(FirestoreFields.User.friends)": FieldValue.arrayRemove([friendID])
         ]
-
+        
         firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: data) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
+                
+                // Remove friend from friend list
+                if let index = FirebaseUser.shared.userInfo?.friends.firstIndex(of: friendID) {
+                    FirebaseUser.shared.userInfo?.friends.remove(at: index)
+                }
                 completion(.success(()))
             }
         }
@@ -772,9 +788,9 @@ class FirebaseUser {
             completion(.failure(MyError.failedToRemoveMembersFromGroup))
             return
         }
-
+        
         let updatedMembers = self.friendGroups?[groupIndex].members.filter { $0 != memberId }
-
+        
         let data = [FirestoreFields.Group.members: updatedMembers ?? []]
         
         firebaseService.setDataWithMerge(in: FirestoreFields.groupsCollection, documentId: group.id, data: data, merge: true) { error in

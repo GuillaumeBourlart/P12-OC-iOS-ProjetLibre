@@ -21,6 +21,10 @@ class QuizzGroupsVC: UIViewController{
         
         tableView.separatorColor = UIColor(white: 1.0, alpha: 0.3)
         
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         if isQuizList != nil, isQuizList == true  {
             FirebaseUser.shared.getUserQuizzes { result in
                 switch result {

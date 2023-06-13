@@ -41,6 +41,7 @@ class CompetitiveVC: UIViewController{
             case .success(): self.updateRank()
             }
         }
+        self.startButton.isEnabled = true
     }
     
  
@@ -93,7 +94,7 @@ class CompetitiveVC: UIViewController{
     }
     
     @IBAction func findOpponentButtonPressed(_ sender: Any) {
-        
+        self.startButton.isEnabled = false
         
         CustomAnimations.buttonPressAnimation(for: self.startButton) {
             DispatchQueue.main.async {

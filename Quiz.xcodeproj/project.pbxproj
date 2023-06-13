@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B992A38BAB20025AC80 /* incorrect.mp3 */; };
+		7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9A2A38BAB20025AC80 /* correct.mp3 */; };
+		7E727B9F2A38BDD20025AC80 /* lose.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9D2A38BDD20025AC80 /* lose.mp3 */; };
+		7E727BA02A38BDD20025AC80 /* button.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9E2A38BDD20025AC80 /* button.mp3 */; };
+		7E727BA22A38BDF80025AC80 /* win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727BA12A38BDF80025AC80 /* win.mp3 */; };
+		7E727BA42A38CB850025AC80 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727BA32A38CB850025AC80 /* beep.mp3 */; };
+		7E727BA62A38CC810025AC80 /* slide.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727BA52A38CC810025AC80 /* slide.mp3 */; };
 		7ED6FEF42A3772F6001AC0DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6FEF32A3772F6001AC0DE /* GoogleService-Info.plist */; };
 		D00BD4422A2BCC530021230E /* AddQuestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00BD4412A2BCC530021230E /* AddQuestionVC.swift */; };
 		D00BD4442A2BCC670021230E /* AddMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00BD4432A2BCC670021230E /* AddMemberVC.swift */; };
@@ -85,6 +92,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E727B992A38BAB20025AC80 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
+		7E727B9A2A38BAB20025AC80 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
+		7E727B9D2A38BDD20025AC80 /* lose.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lose.mp3; sourceTree = "<group>"; };
+		7E727B9E2A38BDD20025AC80 /* button.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = button.mp3; sourceTree = "<group>"; };
+		7E727BA12A38BDF80025AC80 /* win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = win.mp3; sourceTree = "<group>"; };
+		7E727BA32A38CB850025AC80 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
+		7E727BA52A38CC810025AC80 /* slide.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slide.mp3; sourceTree = "<group>"; };
 		7ED6FEF32A3772F6001AC0DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D00BD4412A2BCC530021230E /* AddQuestionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuestionVC.swift; sourceTree = "<group>"; };
 		D00BD4432A2BCC670021230E /* AddMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberVC.swift; sourceTree = "<group>"; };
@@ -267,6 +281,13 @@
 		D084EC722A0F7FD700544AA3 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				7E727B992A38BAB20025AC80 /* incorrect.mp3 */,
+				7E727BA52A38CC810025AC80 /* slide.mp3 */,
+				7E727BA32A38CB850025AC80 /* beep.mp3 */,
+				7E727B9E2A38BDD20025AC80 /* button.mp3 */,
+				7E727BA12A38BDF80025AC80 /* win.mp3 */,
+				7E727B9D2A38BDD20025AC80 /* lose.mp3 */,
+				7E727B9A2A38BAB20025AC80 /* correct.mp3 */,
 				D04A5B912A321B950049F02A /* appMusic.mp3 */,
 				D084EC452A0F7EF700544AA3 /* Assets.xcassets */,
 				D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */,
@@ -459,11 +480,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E727BA02A38BDD20025AC80 /* button.mp3 in Resources */,
+				7E727BA62A38CC810025AC80 /* slide.mp3 in Resources */,
 				D084EC492A0F7EF700544AA3 /* LaunchScreen.storyboard in Resources */,
+				7E727BA22A38BDF80025AC80 /* win.mp3 in Resources */,
+				7E727BA42A38CB850025AC80 /* beep.mp3 in Resources */,
 				D03084052A0F8AB100A8FBB7 /* Main.storyboard in Resources */,
 				7ED6FEF42A3772F6001AC0DE /* GoogleService-Info.plist in Resources */,
+				7E727B9F2A38BDD20025AC80 /* lose.mp3 in Resources */,
+				7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */,
 				D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */,
 				D04A5B922A321B950049F02A /* appMusic.mp3 in Resources */,
+				7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

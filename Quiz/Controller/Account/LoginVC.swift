@@ -67,6 +67,15 @@ class LoginVC: UIViewController{
         userPassword.resignFirstResponder()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToMenu" {
+                let tabBarController = segue.destination as! UITabBarController
+                // Maintenant, vous avez l'instance du UITabBarController qui va être présenté
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.mainTabBarController = tabBarController
+            }
+    }
+    
     @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
         // Vous pouvez utiliser cette méthode pour nettoyer toute donnée si nécessaire
     }

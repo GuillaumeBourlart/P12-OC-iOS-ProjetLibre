@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -162,7 +162,7 @@
         <!--HomeVC-->
         <scene sceneID="hZh-VQ-kb5">
             <objects>
-                <viewController id="nLG-xv-KmG" customClass="HomeVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" id="nLG-xv-KmG" customClass="HomeVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FgK-h7-DBG">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -403,9 +403,9 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLd-xk-IDy">
-                                <rect key="frame" x="175.66666666666666" y="467.66666666666669" width="42" height="20.333333333333314"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QLd-xk-IDy">
+                                <rect key="frame" x="156.66666666666666" y="447.33333333333331" width="80" height="40.666666666666686"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -486,14 +486,15 @@
                             <constraint firstItem="ucV-ge-bsl" firstAttribute="centerX" secondItem="k5k-c9-qSK" secondAttribute="centerX" id="IUZ-8V-r4k"/>
                             <constraint firstItem="5bM-De-r7t" firstAttribute="centerX" secondItem="k5k-c9-qSK" secondAttribute="centerX" id="J4w-iD-lNV"/>
                             <constraint firstItem="5bM-De-r7t" firstAttribute="leading" secondItem="8uX-Iq-VZ9" secondAttribute="leading" constant="40" id="MiG-e4-Sag"/>
-                            <constraint firstItem="Uem-di-lTH" firstAttribute="top" secondItem="QLd-xk-IDy" secondAttribute="bottom" constant="40" id="N4i-OU-DwL"/>
                             <constraint firstItem="8uX-Iq-VZ9" firstAttribute="trailing" secondItem="5bM-De-r7t" secondAttribute="trailing" constant="40" id="NLz-Au-H9P"/>
                             <constraint firstItem="5bM-De-r7t" firstAttribute="top" secondItem="5gm-hJ-CWH" secondAttribute="bottom" constant="20" id="Qsq-ls-9dG"/>
+                            <constraint firstItem="Uem-di-lTH" firstAttribute="top" secondItem="QLd-xk-IDy" secondAttribute="bottom" constant="40" id="RBX-If-phF"/>
                             <constraint firstItem="ucV-ge-bsl" firstAttribute="leading" secondItem="8uX-Iq-VZ9" secondAttribute="leading" constant="40" id="UL3-si-UM6"/>
                             <constraint firstItem="Uem-di-lTH" firstAttribute="centerX" secondItem="k5k-c9-qSK" secondAttribute="centerX" id="Uh0-9h-WY5"/>
                             <constraint firstItem="QLd-xk-IDy" firstAttribute="centerX" secondItem="k5k-c9-qSK" secondAttribute="centerX" id="XbZ-5o-uRt"/>
                             <constraint firstItem="Bis-mJ-vER" firstAttribute="centerX" secondItem="k5k-c9-qSK" secondAttribute="centerX" id="cD8-EQ-XIF"/>
                             <constraint firstItem="Bis-mJ-vER" firstAttribute="top" secondItem="oB7-XM-CDC" secondAttribute="bottom" constant="10" id="fdB-PN-nQb"/>
+                            <constraint firstItem="QLd-xk-IDy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5bM-De-r7t" secondAttribute="bottom" constant="40" id="g3j-jb-7Tm"/>
                             <constraint firstItem="5gm-hJ-CWH" firstAttribute="top" secondItem="8uX-Iq-VZ9" secondAttribute="top" constant="20" id="gxy-YN-2hP"/>
                             <constraint firstItem="ucV-ge-bsl" firstAttribute="top" secondItem="Uem-di-lTH" secondAttribute="bottom" constant="10" id="lSD-Lh-U39"/>
                             <constraint firstItem="Bis-mJ-vER" firstAttribute="leading" secondItem="8uX-Iq-VZ9" secondAttribute="leading" constant="40" id="lme-Uu-Ost"/>
@@ -768,7 +769,7 @@
         <!--Amis-->
         <scene sceneID="SeY-UT-xyk">
             <objects>
-                <viewController id="9Tj-o3-Jts" customClass="FriendsVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FriendsVC" id="9Tj-o3-Jts" customClass="FriendsVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lww-ag-w9D">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1015,14 +1016,14 @@
                                 <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xtz-Zc-n5j" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="333" height="43"/>
+                                        <rect key="frame" x="0.0" y="50" width="333" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xtz-Zc-n5j" id="6cY-t0-Wh1">
-                                            <rect key="frame" x="0.0" y="0.0" width="333" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="333" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ5-5x-9jZ">
-                                                    <rect key="frame" x="20" y="11" width="293" height="21"/>
+                                                    <rect key="frame" x="20" y="11.000000000000002" width="293" height="21.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -1603,7 +1604,7 @@
         <!--Item-->
         <scene sceneID="0La-Zg-Yix">
             <objects>
-                <viewController id="Cm0-PF-mow" customClass="ProfilVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfilVC" id="Cm0-PF-mow" customClass="ProfilVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="poE-7a-nWR">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1899,7 +1900,7 @@
         <!--Private room-->
         <scene sceneID="4kR-zV-9nF">
             <objects>
-                <viewController id="TCV-aZ-6oU" customClass="PrivateLobbyVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PrivateLobbyVC" id="TCV-aZ-6oU" customClass="PrivateLobbyVC" customModule="Quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rhn-FC-hzp">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2305,7 +2306,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="2mD-dg-9fD"/>
         <segue reference="gqc-Rr-G6f"/>
-        <segue reference="VMf-YG-tkp"/>
+        <segue reference="d2N-Xu-Vri"/>
         <segue reference="qAE-Zc-maS"/>
         <segue reference="mgT-Y3-Laq"/>
     </inferredMetricsTieBreakers>

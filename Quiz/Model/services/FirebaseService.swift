@@ -18,6 +18,10 @@ enum FirestoreCondition {
 
 // Enum to handle errors
 enum MyError: Error, Equatable {
+    case noFriendRequestYet
+    case noUsernammesFound
+    case noInvitesInInvitesList
+    case noFriendsInFriendList
     case noUserConnected
     case usernameAlreadyUsed
     case documentDoesntExist

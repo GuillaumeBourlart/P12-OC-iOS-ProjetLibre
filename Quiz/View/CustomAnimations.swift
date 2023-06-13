@@ -9,7 +9,10 @@ import Foundation
 import UIKit
 
 class CustomAnimations {
+    
     static func buttonPressAnimation(for button: UIButton, completion: @escaping () -> Void) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.playSoundEffect(soundName: "button", fileType: "mp3")
         UIView.animate(withDuration: 0.1,
                        delay: 0,
                        usingSpringWithDamping: 0.5,
@@ -32,6 +35,8 @@ class CustomAnimations {
     }
     
     static func imagePressAnimation(for image: UIImageView, completion: @escaping () -> Void) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.playSoundEffect(soundName: "button", fileType: "mp3")
         UIView.animate(withDuration: 0.1,
                        delay: 0,
                        usingSpringWithDamping: 0.5,

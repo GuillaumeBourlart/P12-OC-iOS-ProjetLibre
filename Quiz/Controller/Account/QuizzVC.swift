@@ -24,6 +24,7 @@ class QuizzVC: UIViewController {
     var timeRemaining = 10
     var isAnswering = false // Ajoutez cette variable
     var finalScore = 0
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,7 @@ class QuizzVC: UIViewController {
         questionLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         UIView.animate(withDuration: 0.5, animations: {
             self.questionLabel.transform = CGAffineTransform.identity
+            self.appDelegate.playSoundEffect(soundName: "slide", fileType: "mp3")
         })
         
         questionLabel.text = question.question
@@ -131,21 +133,39 @@ class QuizzVC: UIViewController {
         
     }
     
-        func resetTimer() {
-            timeRemaining = 10
-            timerLabel.text = "\(timeRemaining)"
+    func resetTimer() {
+        self.timerLabel.textColor = UIColor.white
+        timeRemaining = 10
+        timerLabel.text = "\(timeRemaining)"
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            self.timeRemaining -= 1
+            self.timerLabel.text = "\(self.timeRemaining)"
             
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-                self.timeRemaining -= 1
-                self.timerLabel.text = "\(self.timeRemaining)"
+            // Modifier l'aspect du label ici
+            if self.timeRemaining <= 3 {
+                self.timerLabel.textColor = UIColor.red
                 
-                if self.timeRemaining == 0 {
-                    timer.invalidate()
-                    self.showCorrectAnswerAndProceed()
-                }
+                // Animation pour grossir et rétrécir le texte
+                UIView.animate(withDuration: 0.2,
+                               animations: {
+                                   self.timerLabel.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                               },
+                               completion: { _ in
+                                   UIView.animate(withDuration: 0.2) {
+                                       self.timerLabel.transform = CGAffineTransform.identity
+                                   }
+                    self.appDelegate.playSoundEffect(soundName: "beep", fileType: "mp3")
+                               })
+            }
+            
+            if self.timeRemaining == 0 {
+                timer.invalidate()
+                self.showCorrectAnswerAndProceed()
             }
         }
+    }
     
     @IBAction func answerButtonTapped(_ sender: UIButton) {
         guard !isAnswering else { return } // Ignorez l'appui sur le bouton si l'utilisateur répond déjà à une question
@@ -158,6 +178,11 @@ class QuizzVC: UIViewController {
 
         let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1 : 0)
         finalScore += selectedAnswer == correctAnswer ? 1 : 0
+        if selectedAnswer == correctAnswer {
+            appDelegate.playSoundEffect(soundName: "correct", fileType: "mp3")
+        }else{
+            appDelegate.playSoundEffect(soundName: "incorrect", fileType: "mp3")
+        }
         userAnswers[questionId] = userAnswer
                 
         

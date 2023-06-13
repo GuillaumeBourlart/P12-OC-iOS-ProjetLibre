@@ -22,34 +22,19 @@ class JoinWithCodeVC: UIViewController {
     }
     
     @IBAction func joinButtonPressed(sender: UIButton){
-        UIView.animate(withDuration: 0.1,
-                       delay: 0,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 6.0,
-                       options: [.allowUserInteraction],
-                       animations: {
-           sender.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
-                       }) { _ in
-            UIView.animate(withDuration: 0.2,
-                           delay: 0,
-                           usingSpringWithDamping: 0.2,
-                           initialSpringVelocity: 6.0,
-                           options: [.allowUserInteraction],
-                           animations: {
-                sender.transform = CGAffineTransform.identity
-            }) { _ in
-                self.joinButton.isEnabled = false
-                guard let code: String = self.codeField.text, !code.isEmpty else { print("error"); self.joinButton.isEnabled = true; return }
-                Game.shared.joinWithCode(code: code) { result in
-                    switch result {
-                    case .failure(let error): print(error)
-                        self.joinButton.isEnabled = true
-                    case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
-                        
-                    }
+        CustomAnimations.buttonPressAnimation(for: sender) {
+            self.joinButton.isEnabled = false
+            guard let code: String = self.codeField.text, !code.isEmpty else { print("error"); self.joinButton.isEnabled = true; return }
+            Game.shared.joinWithCode(code: code) { result in
+                switch result {
+                case .failure(let error): print(error)
+                    self.joinButton.isEnabled = true
+                case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
+                    
                 }
             }
         }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

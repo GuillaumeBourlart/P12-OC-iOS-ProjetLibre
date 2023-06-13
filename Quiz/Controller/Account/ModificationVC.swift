@@ -71,9 +71,10 @@ class ModificationVC: UIViewController{
     }
         
         @IBAction func modifyButtonWasTapped(_ sender: UIButton) {
+            self.addQuestionButton.isEnabled = false
+            self.launchQuizButton.isEnabled = false
             CustomAnimations.buttonPressAnimation(for: sender) {
-                self.addQuestionButton.isEnabled = false
-                self.launchQuizButton.isEnabled = false
+                
                 if self.quiz != nil {
                     if self.isModifying {
                         self.isModifying = false
@@ -177,6 +178,8 @@ class ModificationVC: UIViewController{
         }
         
         @IBAction func addButtonTapped(_ sender: UIButton) {
+            self.addQuestionButton.isEnabled = false
+            self.launchQuizButton.isEnabled = false
             CustomAnimations.buttonPressAnimation(for: sender) {
                 self.addQuestionButton.isEnabled = false
                 self.modifyButton.isEnabled = false
@@ -185,6 +188,9 @@ class ModificationVC: UIViewController{
                     self.performSegue(withIdentifier: "goToAddQuestion", sender: self)
                 } else if self.group != nil {
                     self.performSegue(withIdentifier: "goToAddMember", sender: self)
+                } else {
+                    self.addQuestionButton.isEnabled = true
+                    self.launchQuizButton.isEnabled = true
                 }
             }
         }
@@ -217,14 +223,15 @@ class ModificationVC: UIViewController{
         
         
         @IBAction func lauchQuizButtonPressed(_ sender: UIButton) {
+            self.addQuestionButton.isEnabled = false
+            self.launchQuizButton.isEnabled = false
             CustomAnimations.buttonPressAnimation(for: sender) {
-                self.addQuestionButton.isEnabled = false
-                self.launchQuizButton.isEnabled = false
                 self.modifyButton.isEnabled = false
                 if let quizID = self.quizID {
                     Game.shared.createRoom(quizID: quizID) { result in
                         switch result {
                         case .failure(let error): print(error)
+                            self.addQuestionButton.isEnabled = true
                             self.launchQuizButton.isEnabled = true
                         case .success(let lobbyId): self.performSegue(withIdentifier: "goToOpponentChoice", sender: lobbyId)
                         }

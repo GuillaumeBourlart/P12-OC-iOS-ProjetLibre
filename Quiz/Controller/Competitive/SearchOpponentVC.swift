@@ -19,6 +19,7 @@ class SearchOpponentVC: UIViewController{
         findOpponent()
     }
     
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -32,6 +33,7 @@ class SearchOpponentVC: UIViewController{
                 switch result {
                 case .success():
                     print("annulation réussie")
+                    self.lobbyId = nil
                 case .failure(let error):
                     print(error.localizedDescription.description)
                 }

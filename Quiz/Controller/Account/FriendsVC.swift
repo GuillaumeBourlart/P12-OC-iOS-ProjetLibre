@@ -23,24 +23,21 @@ class FriendsVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadArrays()
-        setupUserListener()
-        onSwitch(switchControl)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
     }
     
-    @objc func refreshTable() {
-        DispatchQueue.main.async {
-            self.loadArrays()
-            print("reloaded")
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        loadArrays()
+        onSwitch(switchControl)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        userListener?.remove()
-        userListener = nil
+    @objc func refreshTable() {
+            self.loadArrays()
+            print("reloaded")
+        
     }
+    
     
     // Load friends array and friend requests array for displaying
     func loadArrays(){
@@ -49,8 +46,11 @@ class FriendsVC: UIViewController{
                 print(error)
             }
             if let data = data {
-                self.friends = data
-                self.tableView.reloadData()
+                DispatchQueue.main.async {
+                    self.friends = data
+                    self.tableView.reloadData()
+                }
+                
             }
         }
         FirebaseUser.shared.fetchFriendRequests() { data, error in
@@ -58,8 +58,11 @@ class FriendsVC: UIViewController{
                 print(error)
             }
             if let data = data {
-                self.friendRequests = data
-                self.tableView.reloadData()
+                DispatchQueue.main.async {
+                    self.friendRequests = data
+                    self.tableView.reloadData()
+                }
+                
             }
         }
     }
@@ -112,37 +115,7 @@ class FriendsVC: UIViewController{
     }
     
     
-    // Set up a listener to get any changes in document
-    func setupUserListener() {
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            print("Aucun utilisateur connecté")
-            return
-        }
-        
-        let db = Firestore.firestore()
-        let userRef = db.collection("users").document(currentUserID)
-        
-        // add listener
-        userListener = userRef.addSnapshotListener { (documentSnapshot, error) in
-            if let error = error {
-                print("Erreur lors de l'écoute des modifications de l'utilisateur: \(error.localizedDescription)")
-                return
-            }
-            
-            if documentSnapshot != nil {
-                // update local data
-                FirebaseUser.shared.getUserInfo() { result in
-                    switch result {
-                    case .success(): self.loadArrays()
-                        print("fait")
-                    case .failure(let error): print(error)
-                    }
-                    
-                    
-                }
-            }
-        }
-    }
+    
     
     
 }
@@ -244,7 +217,7 @@ extension FriendsVC: CustomCellDelegate {
                 switch result {
                 case .success():
                     print("Demande d'ami acceptée avec succès")
-                    self.onSwitch(self.switchControl)
+                    self.loadArrays()
                 case .failure(let error):
                     print("Erreur : \(error.localizedDescription)")
                 }
@@ -268,7 +241,7 @@ extension FriendsVC: CustomCellDelegate {
                 FirebaseUser.shared.rejectFriendRequest(friendID: friendUID) { result in
                     switch result {
                     case .success:
-                        self.onSwitch(self.switchControl)
+                        self.loadArrays()
                     case .failure(let error):
                         print("Erreur lors du rejet de la demande d'ami : \(error.localizedDescription)")
                     }
@@ -280,7 +253,7 @@ extension FriendsVC: CustomCellDelegate {
                 FirebaseUser.shared.removeFriend(friendID: friendUID) { result in
                     switch result {
                     case .success:
-                        self.onSwitch(self.switchControl)
+                        self.loadArrays()
                     case .failure(let error):
                         print("Erreur lors de la suppression de l'ami : \(error.localizedDescription)")
                     }

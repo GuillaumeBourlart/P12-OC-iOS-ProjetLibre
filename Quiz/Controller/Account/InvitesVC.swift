@@ -21,7 +21,6 @@ class InvitesVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        startListening()
         loadInvites()
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -48,28 +47,7 @@ class InvitesVC: UIViewController {
         }
     }
     
-    func startListening() {
-        guard let currentUserId = Game.shared.currentUserId else {
-            return
-        }
-        listener = Game.shared.ListenForChangeInDocument(in: "users", documentId: currentUserId) { result in
-            switch result {
-            case .success(let data):
-                print("cece")
-                if let invites = data["invites"] as? [String: String] {
-                    if FirebaseUser.shared.userInfo != nil {
-                        FirebaseUser.shared.userInfo?.invites = invites
-                        self.loadInvites()
-                    }
-                }
-                
-                // Handle the updated data...
-            case .failure(let error):
-                print(error)
-                // Handle the error...
-            }
-        }
-    }
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

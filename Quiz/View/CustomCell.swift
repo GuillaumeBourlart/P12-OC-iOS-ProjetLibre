@@ -12,7 +12,6 @@ protocol CustomCellDelegate: AnyObject {
     func didTapRemoveButton(in cell: CustomCell)
     
     func didChangeSwitchValue(in cell: CustomCell, isOn: Bool)
-    func didChangeSliderValue(in cell: CustomCell, value: Float)
 }
 // Custom cell for TableView
 class CustomCell: UITableViewCell {
@@ -22,8 +21,7 @@ class CustomCell: UITableViewCell {
     @IBOutlet var label: UILabel!
     
     var customImage: UIImageView?
-    var customSwitch: UISwitch? // ajout du switch
-    var customSlider: UISlider?
+    var customSwitch: UISwitch?
     var cellType: CellControlType? {
         didSet {
             setNeedsLayout() // cela déclenchera un appel à `layoutSubviews()`
@@ -47,9 +45,6 @@ class CustomCell: UITableViewCell {
         
     }
     
-    @objc func sliderValueChanged(_ sender: UISlider) {
-        delegate?.didChangeSliderValue(in: self, value: sender.value)
-    }
     
     func configure(isFriendCell: Bool, cellType: CellControlType) {
         // Si c'est une cellule d'ami, on montre les boutons
@@ -83,25 +78,6 @@ class CustomCell: UITableViewCell {
                     let isOn = UserDefaults.standard.bool(forKey: "sound")
                     customSwitch?.isOn = isOn
                 }
-            case .slider:
-                if customSlider == nil {
-                    let sliderWidth: CGFloat = 100.0
-                    let sliderHeight: CGFloat = 20.0
-                    let xPosition = self.contentView.frame.width - sliderWidth - 15.0
-                    let yPosition = (self.contentView.frame.height - sliderHeight) / 2.0
-                    customSlider = UISlider(frame: CGRect(x: xPosition, y: yPosition, width: sliderWidth, height: sliderHeight))
-                    customSlider?.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
-                    if let slider = customSlider {
-                        self.contentView.addSubview(slider)
-                    }
-                    customSlider?.tintColor = UIColor(named: "button2")
-                }
-                customSlider?.isHidden = false
-                if let volume = UserDefaults.standard.object(forKey: "volume") {
-                    let sliderVolume = UserDefaults.standard.float(forKey: "volume")
-                    customSlider?.value = sliderVolume
-                }
-                
             case .none:
                 if customImage == nil {
                     let imageWidth: CGFloat = 30.0
@@ -118,7 +94,6 @@ class CustomCell: UITableViewCell {
                 }
                 customImage?.isHidden = false
                 customSwitch?.isHidden = true
-                customSlider?.isHidden = true
             }
         }
     }

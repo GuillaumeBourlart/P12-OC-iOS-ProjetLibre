@@ -29,6 +29,7 @@ exports.sendInviteNotification = functions.firestore
     .document("lobby/{lobbyId}")
     // This function triggers on update of any lobby document
     .onUpdate(async (change, context) => {
+      const newData = change.after.data();
       // Obtain the list of invited players before and after the update
       const oldInvitedPlayers = change.before.data().invited_users || [];
       const newInvitedPlayers = change.after.data().invited_users || [];
@@ -37,6 +38,24 @@ exports.sendInviteNotification = functions.firestore
       const addedPlayers = newInvitedPlayers.filter(
           (playerId) => !oldInvitedPlayers.includes(playerId),
       );
+
+      // Check if the function has been triggered by our own update
+      if (newData.triggeredByFunction) {
+        // Reset the trigger flag in the document
+        await admin.firestore().collection("users")
+            .doc(context.params.userId).update({
+              triggeredByFunction: admin.firestore.FieldValue.delete(),
+            });
+        // Skip this function execution
+        return null;
+      }
+
+      // Check if the action performer is the user himself
+      if (newInvitedPlayers.actionPerformer && newInvitedPlayers
+          .actionPerformer === context.params.userId) {
+        return null; // The user performed the action himself,
+        // so skip this execution
+      }
 
       // If there are no new players, stop the function here
       if (addedPlayers.length === 0) return null;
@@ -61,6 +80,7 @@ exports.sendInviteNotification = functions.firestore
           // Update the invites object in the user document
           await playerDocRef.update({
             invites: playerInvites,
+            triggeredByFunction: true, // Set the trigger flag
           });
         } catch (error) {
           console.error("Error updating user invites:", error);
@@ -92,6 +112,24 @@ exports.sendFriendRequest = functions.firestore
       const oldData = change.before.data();
       const newData = change.after.data();
 
+      // Check if the function has been triggered by our own update
+      if (newData.triggeredByFunction) {
+        // Reset the trigger flag in the document
+        await admin.firestore().collection("users")
+            .doc(context.params.userId).update({
+              triggeredByFunction: admin.firestore.FieldValue.delete(),
+            });
+        // Skip this function execution
+        return null;
+      }
+
+      // Check if the action performer is the user himself
+      if (newData.actionPerformer && newData
+          .actionPerformer === context.params.userId) {
+        return null; // The user performed the action himself,
+        // so skip this execution
+      }
+
       if (Object.keys(oldData.friendRequests).length !== Object
           .keys(newData.friendRequests).length) {
         const addedFriendRequests = Object.keys(newData.friendRequests)
@@ -116,6 +154,7 @@ exports.sendFriendRequest = functions.firestore
               await admin.firestore().collection("users").doc(friendId)
                   .update({
                     [`friendRequests.${userId}`]: friendRequest,
+                    triggeredByFunction: true, // Set the trigger flag
                   });
             }
 
@@ -145,6 +184,24 @@ exports.acceptFriendRequest = functions.firestore
     .onUpdate(async (change, context) => {
       const oldData = change.before.data();
       const newData = change.after.data();
+
+      // Check if the function has been triggered by our own update
+      if (newData.triggeredByFunction) {
+        // Reset the trigger flag in the document
+        await admin.firestore().collection("users")
+            .doc(context.params.userId).update({
+              triggeredByFunction: admin.firestore.FieldValue.delete(),
+            });
+        // Skip this function execution
+        return null;
+      }
+
+      // Check if the action performer is the user himself
+      if (newData.actionPerformer && newData
+          .actionPerformer === context.params.userId) {
+        return null; // The user performed the action himself,
+        // so skip this execution
+      }
 
       if (oldData.friends.length !== newData.friends.length) {
         const addedFriends = newData.friends
@@ -182,6 +239,7 @@ exports.acceptFriendRequest = functions.firestore
                     friends: admin.firestore.FieldValue.arrayUnion(userId),
                     [`friendRequests.${userId}`]: admin.firestore
                         .FieldValue.delete(),
+                    triggeredByFunction: true, // Set the trigger flag
                   });
             } catch (err) {
               console.log("Error updating document", err);
@@ -200,6 +258,24 @@ exports.rejectFriendRequest = functions.firestore
       const oldData = change.before.data();
       const newData = change.after.data();
 
+      // Check if the function has been triggered by our own update
+      if (newData.triggeredByFunction) {
+        // Reset the trigger flag in the document
+        await admin.firestore().collection("users")
+            .doc(context.params.userId).update({
+              triggeredByFunction: admin.firestore.FieldValue.delete(),
+            });
+        // Skip this function execution
+        return null;
+      }
+
+      // Check if the action performer is the user himself
+      if (newData.actionPerformer && newData
+          .actionPerformer === context.params.userId) {
+        return null; // The user performed the action himself,
+        // so skip this execution
+      }
+
       if (Object.keys(oldData.friendRequests)
           .length !== Object.keys(newData.friendRequests).length) {
         const removedFriendRequests = Object.keys(oldData
@@ -210,13 +286,19 @@ exports.rejectFriendRequest = functions.firestore
           const userId = context.params.userId;
 
           for (const friendId of removedFriendRequests) {
+            // Check if the friend request was accepted or rejected
+            if (newData.friends.includes(friendId)) {
+              // The request was accepted, not rejected
+              continue;
+            }
+
             // Get the user document
             const playerDocRef = admin.firestore().collection("users")
                 .doc(friendId);
             const playerDoc = await playerDocRef.get();
             const playerToken = playerDoc.data().token || null;
 
-            // Send a notification to the player receiving the invite
+            // Send a notification to the player
             const message = {
               "notification": {
                 "title": "Friend request rejected",
@@ -232,6 +314,7 @@ exports.rejectFriendRequest = functions.firestore
 
             await admin.firestore().collection("users").doc(friendId).update({
               [`friendRequests.${userId}`]: admin.firestore.FieldValue.delete(),
+              triggeredByFunction: true, // Set the trigger flag
             });
           }
         }
@@ -247,6 +330,23 @@ exports.removeFriend = functions.firestore
       const oldData = change.before.data();
       const newData = change.after.data();
 
+      // Check if the function has been triggered by our own update
+      if (newData.triggeredByFunction) {
+        // Reset the trigger flag in the document
+        await admin.firestore().collection("users")
+            .doc(context.params.userId).update({
+              triggeredByFunction: admin.firestore.FieldValue.delete(),
+            });
+        // Skip this function execution
+        return null;
+      }
+
+      // Check if the action performer is the user himself
+      if (newData.actionPerformer && newData
+          .actionPerformer === context.params.userId) {
+        return null; // The user performed the action himself,
+        // so skip this execution
+      }
       if (oldData.friends.length !== newData.friends.length) {
         const removedFriends = oldData.friends
             .filter((friend) => !newData.friends.includes(friend));
@@ -263,6 +363,7 @@ exports.removeFriend = functions.firestore
 
             await admin.firestore().collection("users").doc(friendId).update({
               friends: admin.firestore.FieldValue.arrayRemove(userId),
+              triggeredByFunction: true, // Set the trigger flag
             });
 
             // Send a notification to the player receiving the invite

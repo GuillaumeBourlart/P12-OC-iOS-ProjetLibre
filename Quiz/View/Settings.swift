@@ -10,7 +10,6 @@ import Foundation
 enum CellControlType {
     case none
     case `switch`
-    case slider
 }
 
 
@@ -70,14 +69,11 @@ enum SettingsSection: Int, CaseIterable {
     // Section 2
     enum Security: Int, CaseIterable {
         case sounds
-        case sounds_volume
         // titles
         var title: String {
             switch self {
             case .sounds:
                 return "Sounds"
-            case .sounds_volume:
-                return "Sounds volume"
             }
         }
         // segue's IDS
@@ -85,15 +81,12 @@ enum SettingsSection: Int, CaseIterable {
             switch self {
             case .sounds:
                 return nil // pas de segue pour 'sounds'
-            case .sounds_volume:
-                return nil // pas de segue pour 'sounds_volume'
             }
         }
         
         var controlType: CellControlType {
             switch self {
             case .sounds: return .switch
-            case .sounds_volume: return .slider
             }
         }
     }

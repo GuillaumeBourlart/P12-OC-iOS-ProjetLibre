@@ -162,7 +162,6 @@ extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     private func configureControl(for cell: CustomCell, with controlType: CellControlType) {
         // Hide all controls initially
         cell.customSwitch?.isHidden = true
-        cell.customSlider?.isHidden = true
 
         // Unhide and configure the required control
         switch controlType {
@@ -170,10 +169,6 @@ extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
             break
         case .switch:
             cell.customSwitch?.isHidden = false
-            // Further configuration for the switch, if necessary
-        case .slider:
-            cell.customSlider?.isHidden = false
-            // Further configuration for the slider, if necessary
         }
     }
 }
@@ -289,10 +284,4 @@ extension ProfilVC: CustomCellDelegate{
         UserDefaults.standard.synchronize()
     }
     
-    func didChangeSliderValue(in cell: CustomCell, value: Float) {
-        print("2")
-        appDelegate.setVolume(volume: value)
-        UserDefaults.standard.setValue(value, forKey: "volume")
-        UserDefaults.standard.synchronize()
-    }
 }

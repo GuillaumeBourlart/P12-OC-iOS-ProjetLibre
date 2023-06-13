@@ -20,12 +20,19 @@ class OpponentChoice: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        for button in self.buttons {
+            button.isEnabled = true
+        }
+    }
+    
     @IBAction func onTap(_ sender: UIButton) {
+        for button in self.buttons {
+            button.isEnabled = false
+        }
+
         // Début de l'animation
         CustomAnimations.buttonPressAnimation(for: sender) {
-            for button in self.buttons {
-                button.isEnabled = false
-            }
             guard let currentUserId = Game.shared.currentUserId else {
                 return
             }
@@ -37,9 +44,7 @@ class OpponentChoice: UIViewController {
                         button.isEnabled = true
                     }
                 case .success(let gameID): self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
-                    for button in self.buttons {
-                        button.isEnabled = true
-                    }
+                    
                 }
             }
             case 1:
@@ -50,9 +55,7 @@ class OpponentChoice: UIViewController {
                             button.isEnabled = true
                         }
                     case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
-                        for button in self.buttons {
-                            button.isEnabled = true
-                        }
+                        
                     }
                 }
             default:

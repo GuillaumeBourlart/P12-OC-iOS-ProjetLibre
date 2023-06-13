@@ -16,10 +16,11 @@ import AVFoundation
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var audioPlayer: AVAudioPlayer?
+    var musicPlayer: AVAudioPlayer?
+    var soundEffectPlayer: AVAudioPlayer?
     
     let gcmMessageIDKey = "gcm.message_id"
-    
+    var mainTabBarController: UITabBarController?
     
     
     
@@ -199,7 +200,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
 
             switch notificationType {
                 case "gameInvitation":
-                    guard let lobbyID = userInfo["lobbyID"] as? String else { return }
+                guard userInfo["lobbyID"] is String else { return }
                     // Utilisez lobbyID pour actualiser les invitations
                 FirebaseUser.shared.getUserInfo { result in
                     switch result {
@@ -250,12 +251,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
                 }
         }
     
+    
     func navigateToFriendsPage() {
         // Obtenez le contrôleur de vue actuel
-        guard let tabBarController = window?.rootViewController as? UITabBarController else {
-            print("Unable to find the tab bar controller.")
-            return
-        }
+            guard let tabBarController = mainTabBarController else {
+                print("Unable to find the tab bar controller.")
+                return
+            }
+        
         
         // Sélectionnez le navigationController contenant la page Profil
         // Ici, on suppose que le navigationController est le deuxième onglet. Modifiez l'index en fonction de votre configuration.
@@ -269,51 +272,63 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
         
         // Retour à la vue de base
         navigationController.popToRootViewController(animated: false)
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil) // Remplacez "Main" par le nom de votre storyboard
         // Naviguez vers la page Profil, si ce n'est pas déjà la vue de base
         if !(navigationController.topViewController is ProfilVC) {
-            let profileViewController = ProfilVC() // Initialisez votre contrôleur de vue Profil ici
-            navigationController.pushViewController(profileViewController, animated: false)
+            
+            if let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfilVC") as? ProfilVC {
+                // Utilisez friendsViewController ici
+                navigationController.pushViewController(profileViewController, animated: false)
+            }
         }
         
-        // Naviguez vers la page Amis
-        let friendsViewController = FriendsVC() // Initialisez votre contrôleur de vue Amis ici
-        navigationController.pushViewController(friendsViewController, animated: true)
+        
+        if let friendsViewController = storyboard.instantiateViewController(withIdentifier: "FriendsVC") as? FriendsVC {
+            // Utilisez friendsViewController ici
+            navigationController.pushViewController(friendsViewController, animated: true)
+        }
+        
     }
     
     func joinGameFromInvitation(lobbyID: String) {
-        // Obtenez le contrôleur de vue actuel
-        guard let tabBarController = window?.rootViewController as? UITabBarController else {
-            print("Unable to find the tab bar controller.")
-            return
-        }
-        
-        // Sélectionnez le navigationController contenant la page Profil
-        // Ici, on suppose que le navigationController est le deuxième onglet. Modifiez l'index en fonction de votre configuration.
-        tabBarController.selectedIndex = 1
-        
-        // Assurez-vous que le navigationController est bien le contrôleur de vue sélectionné
-        guard let navigationController = tabBarController.selectedViewController as? UINavigationController else {
-            print("Expected a navigation controller.")
-            return
-        }
-        
-        // Retour à la vue de base
-        navigationController.popToRootViewController(animated: false)
-        
         Game.shared.joinRoom(lobbyId: lobbyID) { result in
             switch result {
             case .failure(let error): print(error)
             case .success():
-                // Naviguez vers la page Profil, si ce n'est pas déjà la vue de base
-                if !(navigationController.topViewController is ProfilVC) {
-                    let profileViewController = ProfilVC() // Initialisez votre contrôleur de vue Profil ici
-                    navigationController.pushViewController(profileViewController, animated: false)
+                // Obtenez le contrôleur de vue actuel
+                guard let tabBarController = self.mainTabBarController else {
+                        print("Unable to find the tab bar controller.")
+                        return
+                    }
+                
+                tabBarController.selectedIndex = 0
+                
+                // Assurez-vous que le navigationController est bien le contrôleur de vue sélectionné
+                guard let navigationController = tabBarController.selectedViewController as? UINavigationController else {
+                    print("Expected a navigation controller.")
+                    return
                 }
                 
-                // Naviguez vers la page Amis
-                let friendsViewController = PrivateLobbyVC() // Initialisez votre contrôleur de vue Amis ici
-                navigationController.pushViewController(friendsViewController, animated: true)
+                // Retour à la vue de base
+                navigationController.popToRootViewController(animated: false)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil) // Remplacez "Main" par le nom de votre storyboard
+                // Naviguez vers la page Profil, si ce n'est pas déjà la vue de base
+                if !(navigationController.topViewController is HomeVC) {
+                    
+                    if let profileViewController = storyboard.instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
+                        // Utilisez friendsViewController ici
+                        navigationController.pushViewController(profileViewController, animated: false)
+                    }
+                }
+                
+                
+                if let roomViewController = storyboard.instantiateViewController(withIdentifier: "PrivateLobbyVC") as? PrivateLobbyVC {
+                    // Ici, vous pouvez définir les propriétés nécessaires sur `roomViewController`
+                        roomViewController.lobbyId = lobbyID
+                        roomViewController.isCreator = false
+                    // Utilisez friendsViewController ici
+                    navigationController.pushViewController(roomViewController, animated: true)
+                }
             }
         }
         
@@ -338,24 +353,17 @@ extension AppDelegate {
             sound = true
         }
 
-        let volume: Float
-        if let _ = defaults.object(forKey: "volume") {
-            // L'utilisateur a déjà défini une valeur pour "volume", utilisez cette valeur.
-            volume = defaults.float(forKey: "volume")
-        } else {
-            // L'utilisateur n'a jamais défini une valeur pour "volume", utilisez une valeur par défaut.
-            defaults.setValue(0.5, forKey: "volume")
-            volume = 0.5
-        }
+        let volume: Float = 0.1
         UserDefaults.standard.synchronize()
 
         if let path = Bundle.main.path(forResource: soundName, ofType: fileType) {
             do {
-                audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                musicPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                musicPlayer?.numberOfLoops = -1 
                 setVolume(volume: volume)
                 // Si le son est désactivé, ne jouez pas le son et retournez de la fonction
                 if sound {
-                    audioPlayer?.play()
+                    musicPlayer?.play()
                 }
             } catch {
                 print("Could not find and play the sound file.")
@@ -363,14 +371,25 @@ extension AppDelegate {
         }
     }
     
+    func playSoundEffect(soundName: String, fileType: String) {
+            if let path = Bundle.main.path(forResource: soundName, ofType: fileType) {
+                do {
+                    soundEffectPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                    soundEffectPlayer?.play()
+                } catch {
+                    print("Could not find and play the sound file.")
+                }
+            }
+        }
+    
     func stopSound() {
-        audioPlayer?.stop()
+        musicPlayer?.stop()
         
     }
     func resumeSound() {
-        audioPlayer?.play()
+        musicPlayer?.play()
     }
     func setVolume(volume: Float) {
-        audioPlayer?.volume = volume
+        musicPlayer?.volume = volume
     }
 }
