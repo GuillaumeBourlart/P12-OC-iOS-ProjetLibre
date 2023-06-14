@@ -11,8 +11,6 @@ import FirebaseFirestore
 
 class CreateAccountVC: UIViewController {
     
-    @IBOutlet private weak var userFirstname: UITextField!
-    @IBOutlet private weak var userLastname: UITextField!
     @IBOutlet private weak var userPseudo: UITextField!
     @IBOutlet  weak var userDateOfBirth: UIDatePicker!
     @IBOutlet private weak var userPassword: UITextField!
@@ -54,16 +52,12 @@ class CreateAccountVC: UIViewController {
                   let password = self.userPassword.text,
                   password != "",
                   let pseudo = self.userPseudo.text,
-                  pseudo != "",
-                  let firstname = self.userFirstname.text,
-                  firstname != "",
-                  let lastname = self.userLastname.text,
-                  lastname != "" else {
+                  pseudo != "" else {
                 self.signinButton.isEnabled = true
                 return
             }
             
-            FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo, firstName: firstname, lastName: lastname, birthDate: self.userDateOfBirth.date) { _, error in
+            FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo, birthDate: self.userDateOfBirth.date) { _, error in
                 if let error = error {
                     print("Error creating user: \(error.localizedDescription)")
                     self.signinButton.isEnabled = true
@@ -81,8 +75,6 @@ class CreateAccountVC: UIViewController {
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         userEmail.resignFirstResponder()
         userPseudo.resignFirstResponder()
-        userLastname.resignFirstResponder()
-        userFirstname.resignFirstResponder()
         userPassword.resignFirstResponder()
         userDateOfBirth.resignFirstResponder()
     }
@@ -98,8 +90,6 @@ extension CreateAccountVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         userEmail.resignFirstResponder()
         userPseudo.resignFirstResponder()
-        userLastname.resignFirstResponder()
-        userFirstname.resignFirstResponder()
         userPassword.resignFirstResponder()
         userDateOfBirth.resignFirstResponder()
         return true

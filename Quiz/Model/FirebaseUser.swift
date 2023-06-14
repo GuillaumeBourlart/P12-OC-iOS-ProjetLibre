@@ -55,7 +55,7 @@ class FirebaseUser {
     }
     
     // Function to create user
-    func createUser(email: String, password: String, pseudo: String, firstName: String, lastName: String, birthDate: Date, completion: @escaping (String?, Error?) -> Void) {
+    func createUser(email: String, password: String, pseudo: String, birthDate: Date, completion: @escaping (String?, Error?) -> Void) {
         
         // Check if username already exist
         let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.User.username, pseudo)]
@@ -85,8 +85,6 @@ class FirebaseUser {
                         FirestoreFields.id: uid,
                         FirestoreFields.User.username: pseudo,
                         FirestoreFields.User.email: email,
-                        FirestoreFields.User.firstName: firstName,
-                        FirestoreFields.User.lastName: lastName,
                         FirestoreFields.User.birthDate: birthDateTimestamp,
                         FirestoreFields.User.inscriptionDate: inscriptionDate,
                         FirestoreFields.User.rank: 1.0,

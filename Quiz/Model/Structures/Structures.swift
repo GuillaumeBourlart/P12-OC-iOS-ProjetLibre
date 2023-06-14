@@ -58,8 +58,6 @@ struct aUser: Decodable {
     let id: String
     let username: String
     let email: String
-    let first_name: String
-    let last_name: String
     let birth_date: Date
     let inscription_date: Date
     let rank: Double
@@ -87,7 +85,7 @@ struct GameData: Decodable {
     let creator: String
     let competitive: Bool
     let status: String
-    let players: [String]
+    var players: [String]
     let date: Date
     let quiz_id: String?
     var questions: [String: UniversalQuestion]

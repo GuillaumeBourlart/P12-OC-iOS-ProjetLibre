@@ -63,16 +63,15 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
 
         cell.label.text = memberUsername
 
-        // Update the cell's background color to indicate selection
+        // Update the cell's accessoryType to indicate selection
         if selectedFriends.contains(memberId) {
-            cell.backgroundColor = .lightGray // Replace this with the desired color for selected cells
+            cell.accessoryType = .checkmark
         } else {
-            cell.backgroundColor = .white // Replace this with the desired color for non-selected cells
+            cell.accessoryType = .none
         }
         
         return cell
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return friends.count
     }
@@ -86,16 +85,18 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
         let memberId = Array(self.friends.keys)[indexPath.row]
         
         // Check if member is already selected
-        if selectedFriends.contains(memberId) {
+        if let index = selectedFriends.firstIndex(of: memberId) {
             // Member is already selected, so remove them from selectedFriends
-            selectedFriends = selectedFriends.filter { $0 != memberId }
+            selectedFriends.remove(at: index)
         } else {
             // Member is not selected, so add them to selectedFriends
             selectedFriends.append(memberId)
         }
         
         // Update the selection state of the cell
-        tableView.reloadData()
+        tableView.reloadRows(at: [indexPath], with: .none)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }

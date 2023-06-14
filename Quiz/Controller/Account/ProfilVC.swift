@@ -247,14 +247,14 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
         switch settingsSection {
         case .account:
             if let accountOption = SettingsSection.Account(rawValue: indexPath.row) {
-                print("L'utilisateur a sélectionné l'option \(accountOption.title) dans la section Compte")
+                print("user chose option \(accountOption.title) in account section")
                 if let identifier = accountOption.segueIdentifier {
                     performSegue(withIdentifier: identifier, sender: accountOption.title)
                 }
             }
         case .security:
             if let securityOption = SettingsSection.Security(rawValue: indexPath.row) {
-                print("L'utilisateur a sélectionné l'option \(securityOption.title) dans la section Sécurité")
+                print("user chose option \(securityOption.title) in security section")
                 if let identifier = securityOption.segueIdentifier {
                     performSegue(withIdentifier: identifier, sender: securityOption.title)
                 }

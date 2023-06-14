@@ -18,90 +18,91 @@ class CompetitiveVC: UIViewController{
     @IBOutlet weak var nextRank: UIImageView!
     @IBOutlet weak var startButton: CustomButton2!
     
-    let colorBronze = UIColor(red: 205/255, green: 127/255, blue: 50/255, alpha: 1.0) // Bronze
-    let colorSilver = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0) // Argent
-    let colorGold = UIColor(red: 255/255, green: 215/255, blue: 0/255, alpha: 1.0) // Or
-    let colorPlatinum = UIColor(red: 0/255, green: 150/255, blue: 200/255, alpha: 1.0) // Platine
-    let colorDiamond = UIColor(red: 0/255, green: 200/255, blue: 255/255, alpha: 1.0) // Diamant
-    let colorMaster = UIColor(red: 255/255, green: 0/255, blue: 255/255, alpha: 1.0) // Maître
-    
     override func viewDidLoad() {
-        
-        // Masquer le bouton "back"
-        //            self.navigationItem.hidesBackButton = true
-        updateRank()
-    }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        FirebaseUser.shared.getUserInfo { result in
-            switch result {
-            case .failure(let error): print(error)
-            case .success(): self.updateRank()
-            }
+           super.viewDidLoad()
+           updateUI()
+       }
+       
+       override func viewWillAppear(_ animated: Bool) {
+           FirebaseUser.shared.getUserInfo { result in
+               switch result {
+               case .failure(let error):
+                   // Vous pouvez ajouter une gestion des erreurs plus robuste ici.
+                   print(error)
+               case .success():
+                   self.updateUI()
+               }
+           }
+           self.startButton.isEnabled = true
+       }
+       
+    func updateUI() {
+        guard let rankValue = FirebaseUser.shared.userInfo?.rank else {
+            return
         }
-        self.startButton.isEnabled = true
-    }
-    
- 
-    
-    
-    func updateRank() {
-        let rank = Double((FirebaseUser.shared.userInfo?.rank ?? 0))
-        let level = Int(rank)
-        let progress = rank.truncatingRemainder(dividingBy: 1) * 100
-        DispatchQueue.main.async { [self] in
         
-            self.rankBar.progress = Float(progress) / 100
-            switch level {
-            case 0: self.previousRank.tintColor = UIColor.clear
-                self.nextRank.tintColor = self.colorSilver
-                self.currentRank.tintColor = self.colorBronze
-                
-            case 1: self.previousRank.tintColor = self.colorBronze
-                self.nextRank.tintColor = self.colorGold
-                self.currentRank.tintColor = self.colorSilver
-                
-            case 2: self.previousRank.tintColor = self.colorSilver
-                self.nextRank.tintColor = self.colorPlatinum
-                self.currentRank.tintColor = self.colorGold
-                
-            case 3: self.previousRank.tintColor = self.colorGold
-                self.nextRank.tintColor = self.colorDiamond
-                self.currentRank.tintColor = self.colorPlatinum
-                
-            case 4: self.previousRank.tintColor = colorPlatinum
-                self.nextRank.tintColor = self.colorMaster
-                self.currentRank.tintColor = self.colorDiamond
-                
-            case 5: self.previousRank.tintColor = self.colorDiamond
-                self.nextRank.tintColor = UIColor.clear
-                self.currentRank.tintColor = self.colorMaster
-                
-            default:
-                self.previousRank.tintColor = self.colorDiamond
-                self.nextRank.tintColor = UIColor.clear
-                self.currentRank.tintColor = self.colorMaster
-            }
+        let level = Int(rankValue)
+        let progress = rankValue.truncatingRemainder(dividingBy: 1)
+        
+        guard let rank = Rank(rawValue: level) else {
+            return
         }
-        points.text = "\(Int(progress))/100"
-    }
-    
-    @IBAction func unwindToCompetitive(segue: UIStoryboardSegue) {
-        // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
         
-    }
-    
-    @IBAction func findOpponentButtonPressed(_ sender: Any) {
-        self.startButton.isEnabled = false
+        rankBar.progress = Float(progress)
+        points.text = "\(Int(progress * 100))/100"
         
-        CustomAnimations.buttonPressAnimation(for: self.startButton) {
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "goToFindOpponent", sender: self)
-            }
+        previousRank.tintColor = rank.previous?.color ?? UIColor.clear
+        currentRank.tintColor = rank.color
+        nextRank.tintColor = rank.next?.color ?? UIColor.clear
+        if rank == .bests {
+            nextRank.isHidden = true
+            previousRank.isHidden = true
+            rankBar.isHidden = true
+            points.isHidden = true
         }
-                               
-                           
+    }
+       
+       @IBAction func unwindToCompetitive(segue: UIStoryboardSegue) {
+           // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
+       }
+       
+       @IBAction func findOpponentButtonPressed(_ sender: Any) {
+           self.startButton.isEnabled = false
+           CustomAnimations.buttonPressAnimation(for: self.startButton) {
+               DispatchQueue.main.async {
+                   self.performSegue(withIdentifier: "goToFindOpponent", sender: self)
+               }
+           }
+       }
+   }
+
+
+enum Rank: Int {
+    case bronze = 0
+    case silver
+    case gold
+    case platinum
+    case diamond
+    case master
+    case bests
+    
+    var color: UIColor {
+        switch self {
+        case .bronze: return UIColor(red: 205/255, green: 127/255, blue: 50/255, alpha: 1.0)
+        case .silver: return UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0)
+        case .gold: return UIColor(red: 255/255, green: 215/255, blue: 0/255, alpha: 1.0)
+        case .platinum: return UIColor(red: 0/255, green: 150/255, blue: 200/255, alpha: 1.0)
+        case .diamond: return UIColor(red: 0/255, green: 200/255, blue: 255/255, alpha: 1.0)
+        case .master: return UIColor(red: 255/255, green: 0/255, blue: 255/255, alpha: 1.0)
+        case .bests: return UIColor.orange
+        }
+    }
+    
+    var next: Rank? {
+        return Rank(rawValue: rawValue + 1)
+    }
+    
+    var previous: Rank? {
+        return Rank(rawValue: rawValue - 1)
     }
 }

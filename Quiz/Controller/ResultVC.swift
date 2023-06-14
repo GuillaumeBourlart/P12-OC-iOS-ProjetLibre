@@ -35,7 +35,9 @@ class ResultVC: UIViewController {
                     self.questions = gameData.questions
                     print(gameData.questions)
                     DispatchQueue.main.async {
+                        self.displayResults()
                         self.tableView.reloadData()
+                        self.startListening()
                     }
                 case .failure(let error):
                     print("Failed to fetch game data: \(error)")
@@ -88,6 +90,8 @@ class ResultVC: UIViewController {
             return
         }
         
+        
+        
         var finalScores = gameData.final_scores ?? [:]
         let UIDS = Array(finalScores.keys)
         FirebaseUser.shared.getUsernames(with: UIDS) { result in
@@ -109,8 +113,11 @@ class ResultVC: UIViewController {
                         let sortedScores = finalScores.sorted { $0.value > $1.value }
                         let winner = sortedScores.first?.key ?? "Unknown"
                         let loser = sortedScores.last?.key ?? "Unknown"
-                        
-                        self.label.text = "Le gagnant est \(winner), et le perdant est \(loser)."
+                        if let scores = gameData.final_scores, gameData.players.count == scores.count {
+                            self.label.text = "Le gagnant est \(winner), et le perdant est \(loser)."
+                        }else{
+                            self.label.text = "Your opponent didn't finish the quiz yet"
+                        }
                     } else {
                         // Non-competitive game, display ranking
                         let sortedScores = finalScores.sorted { $0.value > $1.value }
@@ -118,10 +125,37 @@ class ResultVC: UIViewController {
                         for (index, element) in sortedScores.enumerated() {
                             rankingText += "\(index + 1). \(element.key) avec \(element.value) points\n"
                         }
+                        if let scores = gameData.final_scores, gameData.players.count != scores.count {
+                            rankingText += "\n\nSome players didn't finish the quiz yet"
+                        }
                         
                         self.label.text = rankingText
                     }
                 }
+            }
+        }
+    }
+    
+    func startListening(){
+        guard let gameID = gameID else { return }
+        Game.shared.ListenForChangeInDocument(in: "games", documentId: gameID) { result in
+            switch result {
+            case .failure(let error): print(error)
+            case .success:
+                Game.shared.getGameData(gameId: gameID) { result in
+                switch result {
+                case .success(let gameData):
+                    self.gameData = gameData
+                    self.questions = gameData.questions
+                    print(gameData.questions)
+                    DispatchQueue.main.async {
+                        self.displayResults()
+                        self.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print("Failed to fetch game data: \(error)")
+                }
+            }
             }
         }
     }

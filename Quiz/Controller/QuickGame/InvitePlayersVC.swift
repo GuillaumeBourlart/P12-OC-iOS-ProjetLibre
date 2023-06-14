@@ -90,69 +90,43 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
 
-        if isShowingFriends {
-            let friendKey = Array(friends.keys)[indexPath.row]
-            let friendName = friends[friendKey] ?? ""
-            cell.label.text = friendName
+            if isShowingFriends {
+                // Configure friend cell
+                let friendKey = Array(friends.keys)[indexPath.row]
+                cell.label.text = friends[friendKey]
+                cell.accessoryType = selectedFriends.contains(friendKey) ? .checkmark : .none
+            } else {
+                // Configure group cell
+                let group = groups[indexPath.row]
+                cell.label.text = group.name
+                cell.accessoryType = selectedGroups.contains(where: { $0.id == group.id }) ? .checkmark : .none
+            }
 
-            // Vérifiez si l'ami est dans la liste des amis sélectionnés et mettez en évidence la cellule en conséquence
-            cell.accessoryType = selectedFriends.contains(friendKey) ? .checkmark : .none
-        } else {
-            let group = groups[indexPath.row]
-            if let label = cell.label {
-                           label.text = group.name
-                       } else {
-                           // Gérez l'erreur ici
-                           fatalError("Label is nil.")
-                       }
-
-            // Vérifiez si le groupe est dans la liste des groupes sélectionnés et mettez en évidence la cellule en conséquence
-            cell.accessoryType = selectedGroups.contains(where: { $0.name == group.name }) ? .checkmark : .none
+            return cell
         }
 
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isShowingFriends {
-            let friendKey = Array(friends.keys)[indexPath.row]
-            let friendName = friends[friendKey] ?? ""
-
-            if let index = selectedFriends.firstIndex(of: friendKey) {
-                // Si oui, on le supprime de la liste
-                selectedFriends.remove(at: index)
-            } else {
-                // Sinon, on l'ajoute à la liste
-                selectedFriends.append(friendKey)
-            }
-        } else {
-            let group = groups[indexPath.row]
-
-            if let index = selectedGroups.firstIndex(where: { $0.name == group.name }) {
-                // Si le groupe est déjà dans la liste des groupes sélectionnés, on le supprime
-                selectedGroups.remove(at: index)
-
-                // Supprimer les membres du groupe de la liste des amis sélectionnés
-                let groupMemberIds = group.members
-                for memberId in groupMemberIds {
-                    if let index = selectedFriends.firstIndex(of: memberId) {
-                        selectedFriends.remove(at: index)
-                    }
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            if isShowingFriends {
+                // Handle friend selection/deselection
+                let friendKey = Array(friends.keys)[indexPath.row]
+                if let index = selectedFriends.firstIndex(of: friendKey) {
+                    selectedFriends.remove(at: index)
+                } else {
+                    selectedFriends.append(friendKey)
                 }
             } else {
-                // Si le groupe n'est pas dans la liste des groupes sélectionnés, on l'ajoute
-                selectedGroups.append(group)
-
-                // Ajouter les membres du groupe à la liste des amis sélectionnés
-                let groupMembers = group.members
-                for memberId in groupMembers {
-                    selectedFriends.append(memberId)
+                // Handle group selection/deselection
+                let group = groups[indexPath.row]
+                if let index = selectedGroups.firstIndex(where: { $0.id == group.id }) {
+                    selectedGroups.remove(at: index)
+                } else {
+                    selectedGroups.append(group)
                 }
             }
-
+            tableView.deselectRow(at: indexPath, animated: true)
+            
             tableView.reloadData()
         }
-    }
 }

@@ -63,14 +63,17 @@ class QuizzGroupsVC: UIViewController{
         
         alert.addTextField { (textField) in
             textField.placeholder = "Nom"
+            textField.autocorrectionType = .no
         }
         
         alert.addTextField { (textField) in
             textField.placeholder = "Catégorie"
+            textField.autocorrectionType = .no
         }
         
         alert.addTextField { (textField) in
             textField.placeholder = "Difficulté"
+            textField.autocorrectionType = .no
         }
         
         let addAction = UIAlertAction(title: "Ajouter", style: .default) { (_) in
@@ -102,6 +105,7 @@ class QuizzGroupsVC: UIViewController{
         
         alert.addTextField { (textField) in
             textField.placeholder = "Nom"
+            textField.autocorrectionType = .no 
         }
         
         let addAction = UIAlertAction(title: "Ajouter", style: .default) { (_) in
