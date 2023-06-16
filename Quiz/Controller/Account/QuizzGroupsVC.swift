@@ -32,7 +32,7 @@ class QuizzGroupsVC: UIViewController{
                     self.navigationItem.title = "Quizz"
                     self.tableView.reloadData()
                 case .failure(let error):
-                    print("Erreur lors de la récupération des quizz : \(error.localizedDescription)")
+                    print("Error getting quizzes : \(error.localizedDescription)")
                     // Afficher une alerte à l'utilisateur ou gérer l'erreur de manière appropriée
                 }
             }
@@ -43,7 +43,7 @@ class QuizzGroupsVC: UIViewController{
                     self.navigationItem.title = "Groupes"
                     self.tableView.reloadData()
                 case .failure(let error):
-                    print("Erreur lors de la récupération des groupes : \(error.localizedDescription)")
+                    print("Error getting groups: \(error.localizedDescription)")
                     // Afficher une alerte à l'utilisateur ou gérer l'erreur de manière appropriée
                 }
             }
@@ -59,24 +59,24 @@ class QuizzGroupsVC: UIViewController{
     }
     
     func displayAddQuizAlert() {
-        let alert = UIAlertController(title: "Ajouter un quizz", message: "Entrez le nom, la catégorie et la difficulté du quizz", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add a quiz", message: "Enter name, category and difficulty", preferredStyle: .alert)
         
         alert.addTextField { (textField) in
-            textField.placeholder = "Nom"
+            textField.placeholder = "Name"
             textField.autocorrectionType = .no
         }
         
         alert.addTextField { (textField) in
-            textField.placeholder = "Catégorie"
+            textField.placeholder = "Category"
             textField.autocorrectionType = .no
         }
         
         alert.addTextField { (textField) in
-            textField.placeholder = "Difficulté"
+            textField.placeholder = "Difficulty"
             textField.autocorrectionType = .no
         }
         
-        let addAction = UIAlertAction(title: "Ajouter", style: .default) { (_) in
+        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
             guard let name = alert.textFields?[0].text, !name.isEmpty,
                   let category = alert.textFields?[1].text, !category.isEmpty,
                   let difficulty = alert.textFields?[2].text, !difficulty.isEmpty else { return }
@@ -84,15 +84,15 @@ class QuizzGroupsVC: UIViewController{
             FirebaseUser.shared.addQuiz(name: name, category_id: category, difficulty: difficulty) { result in
                 switch result {
                 case .success():
-                    print("Quiz ajouté avec succès.")
+                    print("Quiz successfully added ")
                     self.tableView.reloadData()
                 case .failure(let error):
-                    print("Erreur lors de l'ajout du quiz : \(error.localizedDescription)")
+                    print("Error adding quiz : \(error.localizedDescription)")
                 }
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Annuler", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addAction(addAction)
         alert.addAction(cancelAction)
@@ -101,28 +101,28 @@ class QuizzGroupsVC: UIViewController{
     }
     
     func displayAddGroupAlert() {
-        let alert = UIAlertController(title: "Ajouter un groupe", message: "Entrez le nom du groupe", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add a group", message: "Enter group name", preferredStyle: .alert)
         
         alert.addTextField { (textField) in
-            textField.placeholder = "Nom"
+            textField.placeholder = "Name"
             textField.autocorrectionType = .no 
         }
         
-        let addAction = UIAlertAction(title: "Ajouter", style: .default) { (_) in
+        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
             guard let name = alert.textFields?[0].text, !name.isEmpty else { return }
             
             FirebaseUser.shared.addGroup(name: name) { result in
                 switch result {
                 case .success():
-                    print("Groupe ajouté avec succès.")
+                    print("Group successfully added")
                     self.tableView.reloadData()
                 case .failure(let error):
-                    print("Erreur lors de l'ajout du groupe : \(error.localizedDescription)")
+                    print("Error adding group : \(error.localizedDescription)")
                 }
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Annuler", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addAction(addAction)
         alert.addAction(cancelAction)
@@ -152,10 +152,10 @@ extension QuizzGroupsVC: UITableViewDelegate {
                 FirebaseUser.shared.deleteQuiz(quiz: quizToDelete) { result in
                     switch result {
                     case .success:
-                        print("Quiz supprimé avec succès.")
+                        print("Quiz successfully removed")
                         tableView.reloadData()
                     case .failure(let error):
-                        print("Erreur lors de la suppression du quiz : \(error.localizedDescription)")
+                        print("Error removing quiz : \(error.localizedDescription)")
                     }
                 }
             } else {
@@ -163,10 +163,10 @@ extension QuizzGroupsVC: UITableViewDelegate {
                 FirebaseUser.shared.deleteGroup(group: groupToDelete) { result in
                     switch result {
                     case .success:
-                        print("Groupe d'amis supprimé avec succès.")
+                        print("Group successfully removed")
                         tableView.reloadData()
                     case .failure(let error):
-                        print("Erreur lors de la suppression du groupe d'amis : \(error.localizedDescription)")
+                        print("Error removing group : \(error.localizedDescription)")
                     }
                 }
             }
@@ -182,12 +182,12 @@ extension QuizzGroupsVC: UITableViewDelegate {
         
         if isQuizList != nil, isQuizList == true  {
             let selectedQuiz = quizzes[indexPath.row]
-            print("Informations du quiz sélectionné : \(selectedQuiz)")
+            print("Selected quiz : \(selectedQuiz)")
             performSegue(withIdentifier: "goToModification", sender: selectedQuiz)
             
         } else {
             let selectedGroup = groups[indexPath.row]
-            print("Informations du groupe sélectionné : \(selectedGroup)")
+            print("Selected group : \(selectedGroup)")
             performSegue(withIdentifier: "goToModification", sender: selectedGroup)
         }
     }
@@ -210,7 +210,10 @@ extension QuizzGroupsVC: UITableViewDataSource {
         }else{
             cell.label.text = groups[indexPath.row].name
         }
-        cell.configure(isFriendCell: false, cellType: .none)
+//        cell.accessoryType = .disclosureIndicator
+        let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        cell.accessoryView = whiteDisclosureIndicator
         
         return cell
     }

@@ -113,6 +113,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+protocol LeavePageProtocol {
+    func leavePage(completion: @escaping () -> Void)
+}
+
 extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
  
     // This function is called when the app successfully registers for push notifications.
@@ -151,38 +155,134 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
             handleNotification(userInfo: userInfo)
 
             // Display notification alert and play a sound
-            completionHandler([.alert, .sound])
+            completionHandler([.banner, .sound])
         }
 
         // This function handles push notifications when the user taps on them.
-        func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                    didReceive response: UNNotificationResponse,
-                                    withCompletionHandler completionHandler: @escaping () -> Void) {
-            let userInfo = response.notification.request.content.userInfo
-            handleNotification(userInfo: userInfo)
-            
-                guard let notificationType = userInfo["notificationType"] as? String else {
-                    completionHandler()
-                    return
-                }
+//        func userNotificationCenter(_ center: UNUserNotificationCenter,
+//                                    didReceive response: UNNotificationResponse,
+//                                    withCompletionHandler completionHandler: @escaping () -> Void) {
+//            let userInfo = response.notification.request.content.userInfo
+//            handleNotification(userInfo: userInfo)
+//
+//                guard let notificationType = userInfo["notificationType"] as? String else {
+//                    completionHandler()
+//                    return
+//                }
+//
+//            switch notificationType {
+//                case "gameInvitation":
+//                    guard let lobbyID = userInfo["lobbyID"] as? String else {
+//                        completionHandler()
+//                        return
+//                    }
+//                    // Utilisez lobbyID pour rejoindre le jeu
+//                    joinGameFromInvitation(lobbyID: lobbyID)
+//                case "friendRequest":
+//                    // Allez à la page d'amis
+//                    navigateToFriendsPage()
+//                default:
+//                    break
+//                }
+//
+//            completionHandler()
+//        }
+    
+    func getTopViewController(_ base: UIViewController? = UIApplication.shared.connectedScenes
+        .filter({$0.activationState == .foregroundActive})
+        .map({$0 as? UIWindowScene})
+        .compactMap({$0})
+        .first?.windows
+        .filter({$0.isKeyWindow}).first?.rootViewController) -> UIViewController? {
+        
+        if let nav = base as? UINavigationController {
+            return getTopViewController(nav.visibleViewController)
+        }
 
-            switch notificationType {
+        if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getTopViewController(selected)
+        }
+
+        if let presented = base?.presentedViewController {
+            return getTopViewController(presented)
+        }
+
+        return base
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        handleNotification(userInfo: userInfo)
+        
+        guard let notificationType = userInfo["notificationType"] as? String else {
+            completionHandler()
+            return
+        }
+
+        // Get the current view controller
+        if let currentViewController = getTopViewController()  {
+            
+            var shouldDisplayAlert = false
+            var viewControllerToLeave: LeavePageProtocol? // Assume this protocol defines leavePage(completion:)
+            
+            if let quizzVC = currentViewController as? QuizzVC {
+                shouldDisplayAlert = true
+                viewControllerToLeave = quizzVC
+            } else if let privateRoomVC = currentViewController as? PrivateLobbyVC {
+                shouldDisplayAlert = true
+                viewControllerToLeave = privateRoomVC
+            } else if let searchOpponentVC = currentViewController as? SearchOpponentVC {
+                shouldDisplayAlert = true
+                viewControllerToLeave = searchOpponentVC
+            }
+            
+            if shouldDisplayAlert {
+                let alert = UIAlertController(title: "Are you sure you want to leave?", message: "", preferredStyle: .alert)
+                let confirmAction = UIAlertAction(title: "Yes", style: .default) { _ in
+                    viewControllerToLeave?.leavePage() {
+                        switch notificationType {
+                        case "gameInvitation":
+                            guard let lobbyID = userInfo["lobbyID"] as? String else {
+                                completionHandler()
+                                return
+                            }
+                            self.joinGameFromInvitation(lobbyID: lobbyID)
+                        case "friendRequest":
+                            self.navigateToFriendsPage()
+                        default:
+                            break
+                        }
+                    }
+                    completionHandler()
+                }
+                let cancelAction = UIAlertAction(title: "No", style: .cancel) { _ in
+                    completionHandler()
+                }
+                alert.addAction(confirmAction)
+                alert.addAction(cancelAction)
+                DispatchQueue.main.async {
+                    currentViewController.present(alert, animated: true)
+                }
+            } else {
+                switch notificationType {
                 case "gameInvitation":
                     guard let lobbyID = userInfo["lobbyID"] as? String else {
                         completionHandler()
                         return
                     }
-                    // Utilisez lobbyID pour rejoindre le jeu
-                    joinGameFromInvitation(lobbyID: lobbyID)
+                    self.joinGameFromInvitation(lobbyID: lobbyID)
                 case "friendRequest":
-                    // Allez à la page d'amis
-                    navigateToFriendsPage()
+                    self.navigateToFriendsPage()
                 default:
                     break
                 }
-
+            }
+        } else {
             completionHandler()
         }
+    }
     
     // This function handles silent push notifications (also known as data notifications).
         func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any],

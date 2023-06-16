@@ -8,11 +8,12 @@
 import Foundation
 import FirebaseFirestore
 
-class SearchOpponentVC: UIViewController{
+class SearchOpponentVC: UIViewController, LeavePageProtocol{
     
     var lobbyId: String?
     var listener: ListenerRegistration? = nil
     var isGameFound = false
+    var isCancelSearchCalled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,31 +22,56 @@ class SearchOpponentVC: UIViewController{
     
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if let listener = listener {
-            listener.remove()
+            super.viewWillDisappear(animated)
+            if let listener = listener {
+                listener.remove()
+            }
+            if !isCancelSearchCalled {
+                cancelSearch { error in
+                    if let error = error {
+                        print(error)
+                    }
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         }
-        
+    
+    // Fonction called by appdelegate when user click on a notification
+    func leavePage(completion: @escaping () -> Void) {
+        cancelSearch { error in
+            if let error = error {
+                print(error)
+                
+            }
+            self.dismiss(animated: true) {
+                // Call the completion closure after the page has been dismissed
+                completion()
+            }
+        }
+    }
+    
+    // fonction to cancel the search
+    func cancelSearch(completion: @escaping (Error?) -> Void){
         if !isGameFound {
             guard let lobbyId = lobbyId else { return }
             Game.shared.deleteCurrentRoom(lobbyId: lobbyId){ result in
                 switch result {
                 case .success():
-                    print("annulation réussie")
+                    completion(nil)
                     self.lobbyId = nil
+                    self.isCancelSearchCalled = true
                 case .failure(let error):
-                    print(error.localizedDescription.description)
+                    completion(error)
                 }
             }
         }
     }
     
+    // Fonction to begin opponent's search
     func findOpponent() {
         Game.shared.searchCompetitiveRoom(){ result in
             switch result {
             case .success(let lobbyId): self.lobbyId = lobbyId
-                print("recherche réussie ")
                 self.startListening()
             case .failure(let error):
                 print(error.localizedDescription.description)
@@ -54,6 +80,7 @@ class SearchOpponentVC: UIViewController{
         
     }
     
+    // Fonction to listen for new opponent found
     func startListening() {
         guard let lobbyId = lobbyId else { return }
         listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: lobbyId) { result in

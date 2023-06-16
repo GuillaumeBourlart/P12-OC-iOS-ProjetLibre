@@ -28,8 +28,8 @@ class ProfilVC: UIViewController{
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2")]
-
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2") ?? UIColor.magenta]
+        
         configureProfileViews()
         imagePickerController.delegate = self
         
@@ -74,16 +74,12 @@ class ProfilVC: UIViewController{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuizzGroupsVC {
-            print("1")
             guard let text = sender as? String else { return }
-            if text == "Groupe" {
+            if text == "Groups" {
                 destination.isQuizList = false
-                print("2")
             }else{
                 destination.isQuizList = true
-                print("3")
             }
-            
         }
     }
     
@@ -92,16 +88,16 @@ class ProfilVC: UIViewController{
         // Effet de ressort
         CustomAnimations.imagePressAnimation(for: self.profileImageView) {
             
-            let alert = UIAlertController(title: "Choisissez l'image", message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Caméra", style: .default, handler: { _ in
+            let alert = UIAlertController(title: "Chose an image", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
                 self.openCamera()
             }))
             
-            alert.addAction(UIAlertAction(title: "Galerie", style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "Galery", style: .default, handler: { _ in
                 self.openGallery()
             }))
             
-            alert.addAction(UIAlertAction.init(title: "Annuler", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
             
             self.present(alert, animated: true, completion: nil)
         }
@@ -159,34 +155,23 @@ extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         picker.dismiss(animated: true, completion: nil)
     }
     
-    private func configureControl(for cell: CustomCell, with controlType: CellControlType) {
-        // Hide all controls initially
-        cell.customSwitch?.isHidden = true
-
-        // Unhide and configure the required control
-        switch controlType {
-        case .none:
-            break
-        case .switch:
-            cell.customSwitch?.isHidden = false
-        }
-    }
+    
 }
 
 extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         
-            let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
-                tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
-            headerLabel.font = UIFont(name: "Helvetica", size: 18)
-            headerLabel.textColor = UIColor.white  // couleur du texte
-            headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
-            headerLabel.sizeToFit()
+        let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
+                                                    tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
+        headerLabel.font = UIFont(name: "Helvetica", size: 18)
+        headerLabel.textColor = UIColor.white  // couleur du texte
+        headerLabel.text = SettingsSections(rawValue: section)?.description
+        headerLabel.sizeToFit()
         headerView.backgroundColor = UIColor(named: "background")
-            headerView.addSubview(headerLabel)
-
-            return headerView
+        headerView.addSubview(headerLabel)
+        
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -194,69 +179,72 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return SettingsSection.allCases.count
+        return SettingsSections.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let settingsSection = SettingsSection(rawValue: section) else { return 0 }
+        guard let settingsSection = SettingsSections(rawValue: section) else { return 0 }
         
         switch settingsSection {
-        case .account:
-            return SettingsSection.Account.allCases.count
-        case .security:
-            return SettingsSection.Security.allCases.count
+        case .account: return SettingsSections.AccountOptions.allCases.count
+        case .preferences: return SettingsSections.SecurityOptions.allCases.count
         }
     }
     
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? SettingsCell else {
             return UITableViewCell()
         }
-        
-        guard let settingsSection = SettingsSection(rawValue: indexPath.section) else { return cell }
+        guard let settingsSection = SettingsSections(rawValue: indexPath.section) else { return cell }
         
         switch settingsSection {
         case .account:
-            if let accountOption = SettingsSection.Account(rawValue: indexPath.row) {
-                cell.textLabel?.text = accountOption.title
-                cell.configure(isFriendCell: false, cellType: .none)
-            }
-        case .security:
-            if let securityOption = SettingsSection.Security(rawValue: indexPath.row) {
-                cell.textLabel?.text = securityOption.title
-                cell.configure(isFriendCell: false, cellType: securityOption.controlType)
-            }
+            guard let accountOption = SettingsSections.AccountOptions(rawValue: indexPath.row) else { return UITableViewCell() }
+            cell.sectionType = accountOption
+            
+        case .preferences:
+            guard let securityOption = SettingsSections.SecurityOptions(rawValue: indexPath.row) else { return UITableViewCell() }
+            cell.sectionType = securityOption
+            
         }
-        // Assign the delegate
+        if !(cell.sectionType?.containsSwitch ?? false) {
+//            cell.accessoryType = .disclosureIndicator
+            let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+            whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
+            cell.accessoryView = whiteDisclosureIndicator
+        }
+        
         cell.delegate = self
+        
+        
         return cell
     }
-
+    
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return SettingsSection(rawValue: section)?.title
+        return SettingsSections(rawValue: section)?.description
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let settingsSection = SettingsSection(rawValue: indexPath.section) else { return }
+        guard let settingsSection = SettingsSections(rawValue: indexPath.section) else { return }
         
         switch settingsSection {
         case .account:
-            if let accountOption = SettingsSection.Account(rawValue: indexPath.row) {
-                print("user chose option \(accountOption.title) in account section")
+            if let accountOption = SettingsSections.AccountOptions(rawValue: indexPath.row) {
+                print("user chose option \(accountOption.description) in account section")
                 if let identifier = accountOption.segueIdentifier {
-                    performSegue(withIdentifier: identifier, sender: accountOption.title)
+                    performSegue(withIdentifier: identifier, sender: accountOption.description)
                 }
             }
-        case .security:
-            if let securityOption = SettingsSection.Security(rawValue: indexPath.row) {
-                print("user chose option \(securityOption.title) in security section")
+        case .preferences:
+            if let securityOption = SettingsSections.SecurityOptions(rawValue: indexPath.row) {
+                print("user chose option \(securityOption.description) in security section")
                 if let identifier = securityOption.segueIdentifier {
-                    performSegue(withIdentifier: identifier, sender: securityOption.title)
+                    performSegue(withIdentifier: identifier, sender: securityOption.description)
                 }
             }
         }
@@ -264,17 +252,8 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension ProfilVC: CustomCellDelegate{
-    
-    func didTapAddButton(in cell: CustomCell) {
-        
-    }
-    
-    func didTapRemoveButton(in cell: CustomCell) {
-        
-    }
-    
-    func didChangeSwitchValue(in cell: CustomCell, isOn: Bool) {
+extension ProfilVC: SettingsCellDelegate{
+    func didChangeSwitchValue(in cell: SettingsCell, isOn: Bool) {
         print("1")
         switch isOn {
         case true : appDelegate.resumeSound()

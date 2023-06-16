@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F99A52A39FCF800476A4D /* SettingsCell.swift */; };
+		7E5F99AA2A3A149C00476A4D /* blackCustomDisclosureIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E5F99A92A3A149C00476A4D /* blackCustomDisclosureIndicator.png */; };
+		7E5F99AC2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */; };
 		7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B992A38BAB20025AC80 /* incorrect.mp3 */; };
 		7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9A2A38BAB20025AC80 /* correct.mp3 */; };
 		7E727B9F2A38BDD20025AC80 /* lose.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9D2A38BDD20025AC80 /* lose.mp3 */; };
@@ -92,6 +95,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E5F99A52A39FCF800476A4D /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		7E5F99A92A3A149C00476A4D /* blackCustomDisclosureIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackCustomDisclosureIndicator.png; sourceTree = "<group>"; };
+		7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteCustomDisclosureIndicator.png; sourceTree = "<group>"; };
 		7E727B992A38BAB20025AC80 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
 		7E727B9A2A38BAB20025AC80 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
 		7E727B9D2A38BDD20025AC80 /* lose.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lose.mp3; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 				D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */,
 				D03083FD2A0F8AB000A8FBB7 /* Settings.swift */,
 				D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */,
+				7E5F99A52A39FCF800476A4D /* SettingsCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -284,6 +291,8 @@
 				7E727B992A38BAB20025AC80 /* incorrect.mp3 */,
 				7E727BA52A38CC810025AC80 /* slide.mp3 */,
 				7E727BA32A38CB850025AC80 /* beep.mp3 */,
+				7E5F99A92A3A149C00476A4D /* blackCustomDisclosureIndicator.png */,
+				7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */,
 				7E727B9E2A38BDD20025AC80 /* button.mp3 */,
 				7E727BA12A38BDF80025AC80 /* win.mp3 */,
 				7E727B9D2A38BDD20025AC80 /* lose.mp3 */,
@@ -486,9 +495,11 @@
 				7E727BA22A38BDF80025AC80 /* win.mp3 in Resources */,
 				7E727BA42A38CB850025AC80 /* beep.mp3 in Resources */,
 				D03084052A0F8AB100A8FBB7 /* Main.storyboard in Resources */,
+				7E5F99AA2A3A149C00476A4D /* blackCustomDisclosureIndicator.png in Resources */,
 				7ED6FEF42A3772F6001AC0DE /* GoogleService-Info.plist in Resources */,
 				7E727B9F2A38BDD20025AC80 /* lose.mp3 in Resources */,
 				7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */,
+				7E5F99AC2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png in Resources */,
 				D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */,
 				D04A5B922A321B950049F02A /* appMusic.mp3 in Resources */,
 				7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */,
@@ -513,6 +524,7 @@
 				D03083E72A0F8A5100A8FBB7 /* QuizzVC.swift in Sources */,
 				D03083E82A0F8A5100A8FBB7 /* ResultVC.swift in Sources */,
 				D03083EE2A0F8A5200A8FBB7 /* LoginVC.swift in Sources */,
+				7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */,
 				D03083E42A0F8A5100A8FBB7 /* CompetitiveVC.swift in Sources */,
 				D030840F2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */,
 				D03084092A0F8CE500A8FBB7 /* CustomButton2.swift in Sources */,

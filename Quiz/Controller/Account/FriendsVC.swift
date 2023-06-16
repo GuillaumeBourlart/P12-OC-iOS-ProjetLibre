@@ -135,54 +135,31 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! CustomCell
         
         if isShowingFriendRequests {
-            // Configurez votre cellule avec les données de la demande d'ami
             if indexPath.row < friendRequests.count {
-                let friendUID = Array(friendRequests.keys)[indexPath.row]
                 let friendUsername = Array(friendRequests.values)[indexPath.row]
                 
                 if let label = cell.label {
                     label.text = friendUsername
                 } else {
-                    // Gérez l'erreur ici
                     fatalError("Label is nil.")
                 }
-                // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
-                cell.configure(isFriendCell: true, cellType: .none)
-                // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
                 cell.addButton?.isHidden = !isShowingFriendRequests
-                //            cell.removeButton.isHidden = !isShowingFriendRequests
-                
-                // Configurer les boutons et la délégation
                 cell.delegate = self
-                
-                
             } else {
-                // Gérez l'erreur ici
                 fatalError("IndexPath is out of bounds.")
             }
             
         }else{
-            // Configurez votre cellule avec les données de la demande d'ami
             if indexPath.row < friends.count {
-                let friendUID = Array(friends.keys)[indexPath.row]
                 let friendUsername = Array(friends.values)[indexPath.row]
                 if let label = cell.label {
                     label.text = friendUsername
                 } else {
-                    // Gérez l'erreur ici
                     fatalError("Label is nil.")
                 }
                 
-                // Appelez la méthode configure pour déterminer si les boutons doivent être affichés ou non
-                cell.configure(isFriendCell: true, cellType: .none)
-                // Afficher ou masquer les boutons en fonction de isShowingFriendRequests
                 cell.addButton?.isHidden = !isShowingFriendRequests
-                //            cell.removeButton.isHidden = !isShowingFriendRequests
-                
-                // Configurer les boutons et la délégation
                 cell.delegate = self
-                
-                
             } else {
                 // Gérez l'erreur ici
                 fatalError("IndexPath is out of bounds.")
@@ -199,13 +176,6 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
 
 
 extension FriendsVC: CustomCellDelegate {
-    func didChangeSwitchValue(in cell: CustomCell, isOn: Bool) {
-        
-    }
-    
-    func didChangeSliderValue(in cell: CustomCell, value: Float) {
-        
-    }
     
     
     func didTapAddButton(in cell: CustomCell) {
@@ -216,7 +186,7 @@ extension FriendsVC: CustomCellDelegate {
             FirebaseUser.shared.acceptFriendRequest(friendID: friendUID, friendUsername: friendUsername) { result in
                 switch result {
                 case .success():
-                    print("Demande d'ami acceptée avec succès")
+                    print("Friend request accepted")
                     self.loadArrays()
                 case .failure(let error):
                     print("Erreur : \(error.localizedDescription)")
@@ -235,7 +205,6 @@ extension FriendsVC: CustomCellDelegate {
         
         
         if isShowingFriendRequests {
-            
             friendUID = Array(friendRequests.keys)[indexPath.row]
             if let friendUID = friendUID {
                 FirebaseUser.shared.rejectFriendRequest(friendID: friendUID) { result in
@@ -243,7 +212,7 @@ extension FriendsVC: CustomCellDelegate {
                     case .success:
                         self.loadArrays()
                     case .failure(let error):
-                        print("Erreur lors du rejet de la demande d'ami : \(error.localizedDescription)")
+                        print("Error rejecting friend request : \(error.localizedDescription)")
                     }
                 }
             }
@@ -255,7 +224,7 @@ extension FriendsVC: CustomCellDelegate {
                     case .success:
                         self.loadArrays()
                     case .failure(let error):
-                        print("Erreur lors de la suppression de l'ami : \(error.localizedDescription)")
+                        print("Error removing friend : \(error.localizedDescription)")
                     }
                 }
             }

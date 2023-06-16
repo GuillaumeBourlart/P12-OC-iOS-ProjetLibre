@@ -22,7 +22,7 @@ class AddMemberVC: UIViewController {
     }
     
     func loadFriends(){
-        let friends = FirebaseUser.shared.fetchFriends(){data, error in
+        FirebaseUser.shared.fetchFriends(){data, error in
             if let error = error {
                 print(error)
             }

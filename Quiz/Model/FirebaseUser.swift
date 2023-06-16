@@ -55,7 +55,7 @@ class FirebaseUser {
     }
     
     // Function to create user
-    func createUser(email: String, password: String, pseudo: String, birthDate: Date, completion: @escaping (String?, Error?) -> Void) {
+    func createUser(email: String, password: String, pseudo: String, completion: @escaping (String?, Error?) -> Void) {
         
         // Check if username already exist
         let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.User.username, pseudo)]
@@ -75,7 +75,6 @@ class FirebaseUser {
                 switch result {
                 case .failure(let error): completion(nil, error)
                 case .success(let uid):
-                    let birthDateTimestamp = Timestamp(date: birthDate)
                     let formatter = DateFormatter()
                     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     
@@ -85,7 +84,6 @@ class FirebaseUser {
                         FirestoreFields.id: uid,
                         FirestoreFields.User.username: pseudo,
                         FirestoreFields.User.email: email,
-                        FirestoreFields.User.birthDate: birthDateTimestamp,
                         FirestoreFields.User.inscriptionDate: inscriptionDate,
                         FirestoreFields.User.rank: 1.0,
                         FirestoreFields.User.points: 0,
@@ -752,7 +750,7 @@ class FirebaseUser {
     
     // Function to add new members to a group
     func addNewMembersToGroup(group: FriendGroup, newMembers: [String], completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let currentUserID = firebaseService.currentUserID else {
+        guard (firebaseService.currentUserID) != nil else {
             completion(.failure(MyError.noUserConnected))
             return
         }

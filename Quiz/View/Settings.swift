@@ -7,40 +7,37 @@
 
 import Foundation
 // Structure to set section et rows in parameters
-enum CellControlType {
-    case none
-    case `switch`
+
+protocol SectionType: CustomStringConvertible{
+    var containsSwitch: Bool{ get }
 }
 
-
-enum SettingsSection: Int, CaseIterable {
-    case account = 0
-    case security
+enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
+    case account
+    case preferences
     // title
-    var title: String {
+    var description: String {
         switch self {
-        case .account:
-            return "Compte"
-        case .security:
-            return "Sécurité"
+        case .account: return "Account"
+        case .preferences: return "Preferences"
         }
     }
     // Section 1
-    enum Account: Int, CaseIterable {
+    enum AccountOptions: Int, CaseIterable, SectionType {
         case friends
         case group
         case history
         case quizzes
         case invites
         // titles
-        var title: String {
+        var description: String {
             switch self {
             case .friends:
-                return "Amis"
+                return "Friends"
             case .group:
-                return "Groupe"
+                return "Groups"
             case .history:
-                return "Historique"
+                return "History"
             case .quizzes:
                 return "Quizzes"
             case .invites:
@@ -64,13 +61,17 @@ enum SettingsSection: Int, CaseIterable {
             }
         }
         
+        var containsSwitch: Bool {
+            return false
+        }
+        
     }
     
     // Section 2
-    enum Security: Int, CaseIterable {
+    enum SecurityOptions: Int, CaseIterable, SectionType {
         case sounds
         // titles
-        var title: String {
+        var description: String {
             switch self {
             case .sounds:
                 return "Sounds"
@@ -84,11 +85,12 @@ enum SettingsSection: Int, CaseIterable {
             }
         }
         
-        var controlType: CellControlType {
+        var containsSwitch: Bool {
             switch self {
-            case .sounds: return .switch
+            case .sounds: return true
             }
         }
+        
     }
     
 }

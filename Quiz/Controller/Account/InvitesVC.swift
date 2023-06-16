@@ -8,75 +8,67 @@
 import Foundation
 import UIKit
 import Firebase
+
 class InvitesVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var listener : ListenerRegistration? = nil
     var invites: [String: String] = [:]
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        loadInvites()
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        listener = nil
-    }
-    
-    @objc func refreshTable() {
-        DispatchQueue.main.async {
-            self.loadInvites()
-            print("reloaded")
+            super.viewDidLoad()
+            NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
         }
-    }
-    
-    func loadInvites(){
-        FirebaseUser.shared.fetchInvites { data, error in
-            if let error = error {
-                print(error)
-            }
-            if let data = data {
-                self.invites = data
-                self.tableView.reloadData()
+        
+        override func viewWillAppear(_ animated: Bool) {
+            loadInvites()
+        }
+        
+        @objc func refreshTable() {
+            DispatchQueue.main.async {
+                self.loadInvites()
+                print("reloaded")
             }
         }
-    }
-    
-    
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? PrivateLobbyVC{
-            destination.lobbyId = sender as? String
-            destination.isCreator = false
-        }
-    }
-    
-    func joinLobby(lobbyId: String){
-        Game.shared.joinRoom(lobbyId: lobbyId){ result in
-            switch result {
-            case .failure(let error): print(error)
-                Game.shared.deleteInvite(inviteId: lobbyId) { result in
+        
+        func loadInvites() {
+            FirebaseUser.shared.getUserInfo { result in
                 switch result {
-                    case .failure(let error): print(error)
-                case .success: self.loadInvites()
-                    }
-                }
-            case .success():
-                Game.shared.deleteInvite(inviteId: lobbyId) { result in
-                switch result {
-                    case .failure(let error): print(error)
-                    case .success(let inviteID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: inviteID)
-                    }
+                case .failure(let error): print(error)
+                case .success():
+                    self.fetchInvites()
                 }
             }
         }
-    }
+
+        func fetchInvites() {
+            FirebaseUser.shared.fetchInvites { data, error in
+                if let error = error {
+                    print(error)
+                }
+                if let data = data {
+                    self.invites = data
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if let destination = segue.destination as? PrivateLobbyVC {
+                destination.lobbyId = sender as? String
+                destination.isCreator = false
+            }
+        }
+        
+        func joinLobby(lobbyId: String) {
+            Game.shared.joinRoom(lobbyId: lobbyId){ result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success():
+                    self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyId)
+                }
+            }
+        }
     
     @IBAction func unwindToInvites(segue: UIStoryboardSegue) {
         // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
@@ -107,7 +99,10 @@ extension InvitesVC: UITableViewDataSource {
         
         let invite = Array(invites)[indexPath.row]
         cell.label.text = "User: \(invite.key) - Lobby: \(invite.value)"
-        cell.configure(isFriendCell: false, cellType: .none)
+        
+        let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        cell.accessoryView = whiteDisclosureIndicator
         
         return cell
     }

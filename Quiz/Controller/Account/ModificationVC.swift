@@ -251,7 +251,7 @@ class ModificationVC: UIViewController{
             if let quiz = quiz {
                 return quiz.questions.count
             }
-            else if let group = group {
+            else if group != nil {
                 return usernames.count
             }else{
                 return 0
@@ -265,11 +265,15 @@ class ModificationVC: UIViewController{
                 let question = Array(quiz.questions.values)[indexPath.row]
                 cell.label.text = question.question // Change question.text to question.question
             }
-            else if let group = group {
+            else if group != nil {
                 let userId = Array(usernames.keys)[indexPath.row] // Récupérer l'id d'utilisateur à partir des clés du dictionnaire usernames
                 let userName = usernames[userId] // Récupérer le nom d'utilisateur correspondant
                 cell.label.text = userName
             }
+            
+            let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+            whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
+            cell.accessoryView = whiteDisclosureIndicator
             
             return cell
         }
@@ -291,7 +295,7 @@ class ModificationVC: UIViewController{
                                 // Supprimer la question de la table view
                                 tableView.reloadData()
                             case .failure(let error):
-                                print("Erreur lors de la suppression de la question : \(error.localizedDescription)")
+                                print("Error removing question : \(error.localizedDescription)")
                             }
                         }
                     }

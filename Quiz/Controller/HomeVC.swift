@@ -20,26 +20,28 @@ class HomeVC: UIViewController{
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2")]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2") ?? UIColor.magenta]
         
-        
+        // handle music
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.playSound(soundName: "appMusic", fileType: "mp3")
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Reactivate buttons
         for button in buttons {
-               button.isEnabled = true
-               button.transform = .identity
-               button.alpha = 1
-           }
+            button.isEnabled = true
+            button.transform = .identity
+            button.alpha = 1
+        }
         
     }
     
     @IBAction func unwindToHomeVC(segue: UIStoryboardSegue) {
         
     }
-   
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuizzGroupsVC {
@@ -47,8 +49,8 @@ class HomeVC: UIViewController{
         }
         
         if let button = sender as? UIButton {
-                button.isEnabled = false
-                
+            button.isEnabled = false
+            
             CustomAnimations.buttonPressAnimation(for: sender as! UIButton) {
                 for button in self.buttons {
                     button.isEnabled = false
@@ -60,10 +62,7 @@ class HomeVC: UIViewController{
                     })
                     
                 }
-                
-                
             }
         }
     }
-    
 }

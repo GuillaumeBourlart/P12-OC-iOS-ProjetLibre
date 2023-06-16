@@ -28,6 +28,8 @@ class AddQuestionVC: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear(_:)), name: UIViewController.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear(_:)), name: UIViewController.keyboardWillHideNotification, object: nil)
+        
+        setUI()
     }
     
    
@@ -57,34 +59,33 @@ class AddQuestionVC: UIViewController {
                   let explanation = self.explanationField.text, !explanation.isEmpty
             else {
                 // vous pouvez afficher un message d'erreur ici
-                print("Tous les champs doivent être remplis.")
+                print("At least on field is empty")
                 self.validateButton.isEnabled = true
                 return
             }
             
-            if let existingQuestion = self.existingQuestion, let existingQuestionId = self.existingQuestionId, let quiz = self.quiz {
+            if self.existingQuestion != nil , let existingQuestionId = self.existingQuestionId, let quiz = self.quiz {
                 FirebaseUser.shared.updateQuestionInQuiz(quiz: quiz, oldQuestionId: existingQuestionId, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                     switch result {
-                    case .success():print("question ajouté")
+                    case .success():print("Question successfully added")
                         self.navigationController?.popViewController(animated: true)
                     case .failure(let error):
-                        print("Erreur lors de la mise à jour de la question : \(error)")
+                        print("Error updating question : \(error)")
                         self.validateButton.isEnabled = true
                     }
                 }
             } else if let quiz = self.quiz {
                 FirebaseUser.shared.addQuestionToQuiz(quiz: quiz, questionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                     switch result {
-                    case .success():print("question ajoutées")
+                    case .success():print("Question successfully added")
                         self.navigationController?.popViewController(animated: true)
                     case .failure(let error):
-                        print("Erreur lors de l'ajout de la question : \(error)")
+                        print("Error adding question : \(error)")
                         self.validateButton.isEnabled = true
                     }
                 }
             } else {
-                print("erreur")
-                print(self.quiz)
+                print("error")
                 self.validateButton.isEnabled = true
             }
         }
@@ -98,6 +99,122 @@ class AddQuestionVC: UIViewController {
         incorrectAnswersFields[1].resignFirstResponder()
         incorrectAnswersFields[2].resignFirstResponder()
         explanationField.resignFirstResponder()
+    }
+    
+    func setUI(){
+        // Question
+        var imageView = UIImageView(image: UIImage(systemName: "questionmark"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+        
+       
+        
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder = NSAttributedString(string: "Question", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        questionField.attributedPlaceholder = attributedPlaceholder
+        
+        var view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        
+        questionField.leftViewMode = .always
+        questionField.leftView = view
+        
+        // CORRECT ANSWER
+        
+        imageView = UIImageView(image: UIImage(systemName: "checkmark"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+        
+      
+        
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder2 = NSAttributedString(string: "Correct answer", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        correctAnswerField.attributedPlaceholder = attributedPlaceholder2
+        
+        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        correctAnswerField.leftViewMode = .always
+        correctAnswerField.leftView = view
+        
+        // INCORRECT ANSWER 1
+        
+        imageView = UIImageView(image: UIImage(systemName: "1.circle"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+        
+        
+        
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder3 = NSAttributedString(string: "Incorrect answer 1", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        incorrectAnswersFields[0].attributedPlaceholder = attributedPlaceholder3
+        
+        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        incorrectAnswersFields[0].leftViewMode = .always
+        incorrectAnswersFields[0].leftView = view
+        
+        // INCORRECT ANSWER 2
+        
+        imageView = UIImageView(image: UIImage(systemName: "2.circle"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+        
+        
+        
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder4 = NSAttributedString(string: "Incorrect answer 2", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        incorrectAnswersFields[1].attributedPlaceholder = attributedPlaceholder4
+        
+        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        incorrectAnswersFields[1].leftViewMode = .always
+        incorrectAnswersFields[1].leftView = view
+        
+        // INCORRECT ANSWER 3
+        
+        imageView = UIImageView(image: UIImage(systemName: "3.circle"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+        
+        
+        
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder5 = NSAttributedString(string: "Incorrect answer 3", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        incorrectAnswersFields[2].attributedPlaceholder = attributedPlaceholder5
+        
+        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        incorrectAnswersFields[2].leftViewMode = .always
+        incorrectAnswersFields[2].leftView = view
+        
+        // EXPLANATION
+        
+        imageView = UIImageView(image: UIImage(systemName: "book"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+        
+        
+        
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder6 = NSAttributedString(string: "Explanation", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        explanationField.attributedPlaceholder = attributedPlaceholder6
+        
+        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        explanationField.leftViewMode = .always
+        explanationField.leftView = view
     }
     
 }

@@ -19,6 +19,7 @@ class ResultVC: UIViewController {
     var gameData: GameData?
     var questions: [String: UniversalQuestion]?
     var isResultAfterGame: Bool?
+    var listener: ListenerRegistration?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,24 +64,31 @@ class ResultVC: UIViewController {
             navigationController?.setNavigationBarHidden(false, animated: true)
                 tabBarController?.tabBar.isHidden = false
         }
+        
+        listener?.remove()
+        listener = nil
     }
     
     
     @IBAction func goBackToLobbby(_ sender: Any) {
-        if let viewControllers = self.tabBarController?.viewControllers {
-            print("Found \(viewControllers.count) view controllers in tab bar")
-            for viewController in viewControllers {
-                if let navigationController = viewController as? UINavigationController {
-                    print("Found a navigation controller with \(navigationController.viewControllers.count) view controllers")
-                    navigationController.popToRootViewController(animated: false)
-                    print("After pop, it now has \(navigationController.viewControllers.count) view controllers")
-                } else {
-                    print("Found a view controller that is not a navigation controller: \(viewController)")
-                }
-            }
-        } else {
-            print("self does not have a tabBarController")
-        }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+               print("Could not get app delegate")
+               return
+           }
+           if let viewControllers = appDelegate.mainTabBarController?.viewControllers {
+               print("Found \(viewControllers.count) view controllers in tab bar")
+               for viewController in viewControllers {
+                   if let navigationController = viewController as? UINavigationController {
+                       print("Found a navigation controller with \(navigationController.viewControllers.count) view controllers")
+                       navigationController.popToRootViewController(animated: false)
+                       print("After pop, it now has \(navigationController.viewControllers.count) view controllers")
+                   } else {
+                       print("Found a view controller that is not a navigation controller: \(viewController)")
+                   }
+               }
+           } else {
+               print("mainTabBarController does not have any viewControllers")
+           }
     }
     
     
@@ -138,7 +146,7 @@ class ResultVC: UIViewController {
     
     func startListening(){
         guard let gameID = gameID else { return }
-        Game.shared.ListenForChangeInDocument(in: "games", documentId: gameID) { result in
+        listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: gameID) { result in
             switch result {
             case .failure(let error): print(error)
             case .success:
@@ -156,9 +164,9 @@ class ResultVC: UIViewController {
                     print("Failed to fetch game data: \(error)")
                 }
             }
-            }
         }
     }
+}
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuestionResultVC,
@@ -176,8 +184,7 @@ extension ResultVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(self.questions?.count)
-        return self.questions?.count ?? 0
+                return self.questions?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -188,6 +195,10 @@ extension ResultVC: UITableViewDelegate, UITableViewDataSource {
             let question = questionsArray[indexPath.row]
             cell.label.text = question.value.question
         }
+        
+        let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        cell.accessoryView = whiteDisclosureIndicator
         
         return cell
     }

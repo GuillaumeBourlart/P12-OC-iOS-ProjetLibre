@@ -12,7 +12,6 @@ import FirebaseFirestore
 class CreateAccountVC: UIViewController {
     
     @IBOutlet private weak var userPseudo: UITextField!
-    @IBOutlet  weak var userDateOfBirth: UIDatePicker!
     @IBOutlet private weak var userPassword: UITextField!
     @IBOutlet private weak var userEmail: UITextField!
     @IBOutlet weak var signinButton: CustomButton!
@@ -26,7 +25,9 @@ class CreateAccountVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear(_:)), name: UIViewController.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUI()
         tryToGetUser()
         self.signinButton.isEnabled = true
     }
@@ -57,7 +58,7 @@ class CreateAccountVC: UIViewController {
                 return
             }
             
-            FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo, birthDate: self.userDateOfBirth.date) { _, error in
+            FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo) { _, error in
                 if let error = error {
                     print("Error creating user: \(error.localizedDescription)")
                     self.signinButton.isEnabled = true
@@ -67,7 +68,69 @@ class CreateAccountVC: UIViewController {
                 }
             }
         }
+    }
+    
+    func setUI(){
         
+        // MAIL
+        
+        userEmail.layer.cornerRadius = userEmail.frame.height / 2
+        userEmail.clipsToBounds = true
+        var imageView = UIImageView(image: UIImage(systemName: "mail"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+        
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder = NSAttributedString(string: "Mail", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        userEmail.attributedPlaceholder = attributedPlaceholder
+        
+        var view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        
+        userEmail.leftViewMode = .always
+        userEmail.leftView = view
+        
+        // PASSWORD
+        
+        userPassword.layer.cornerRadius = userPassword.frame.height / 2
+        userPassword.clipsToBounds = true
+        
+        imageView = UIImageView(image: UIImage(systemName: "lock"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+        
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder2 = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        userPassword.attributedPlaceholder = attributedPlaceholder2
+        
+        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        userPassword.leftViewMode = .always
+        userPassword.leftView = view
+        
+        // USERNAME
+        
+        userPseudo.layer.cornerRadius = userPseudo.frame.height / 2
+        userPseudo.clipsToBounds = true
+        
+        imageView = UIImageView(image: UIImage(systemName: "lock"))
+        imageView.tintColor = UIColor.white
+        imageView.contentMode = .scaleAspectFit
+       
+        // Définition du placeholder en gris clair
+        let attributedPlaceholder3 = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        userPseudo.attributedPlaceholder = attributedPlaceholder3
+        
+        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
+        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
+        
+        view.addSubview(imageView)
+        userPseudo.leftViewMode = .always
+        userPseudo.leftView = view
     }
     
     
@@ -76,22 +139,21 @@ class CreateAccountVC: UIViewController {
         userEmail.resignFirstResponder()
         userPseudo.resignFirstResponder()
         userPassword.resignFirstResponder()
-        userDateOfBirth.resignFirstResponder()
     }
-    
-    
     
     
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 }
+
+
+// Handle keyboard
 extension CreateAccountVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         userEmail.resignFirstResponder()
         userPseudo.resignFirstResponder()
         userPassword.resignFirstResponder()
-        userDateOfBirth.resignFirstResponder()
         return true
     }
     

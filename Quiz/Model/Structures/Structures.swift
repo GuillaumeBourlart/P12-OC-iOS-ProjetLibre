@@ -58,7 +58,6 @@ struct aUser: Decodable {
     let id: String
     let username: String
     let email: String
-    let birth_date: Date
     let inscription_date: Date
     let rank: Double
     let points: Int

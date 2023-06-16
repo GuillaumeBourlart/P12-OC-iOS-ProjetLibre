@@ -68,9 +68,12 @@ extension HistoryVC: UITableViewDelegate, UITableViewDataSource {
 
         let date = self.games[indexPath.row].date
         let dateString = formatter.string(from: date)
-
+//        cell.accessoryType = .disclosureIndicator
+        let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        cell.accessoryView = whiteDisclosureIndicator
+        
         cell.label.text = dateString
-        cell.configure(isFriendCell: false, cellType: .none)
         
         return cell
     }
@@ -79,7 +82,7 @@ extension HistoryVC: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
         
             let selectedGame = games[indexPath.row]
-            print("Informations du quiz sélectionné : \(selectedGame)")
+            print("selected match : \(selectedGame)")
         performSegue(withIdentifier: "goToResult", sender: selectedGame)
     }
     

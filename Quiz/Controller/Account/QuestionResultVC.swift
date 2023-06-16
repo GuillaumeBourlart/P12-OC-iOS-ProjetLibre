@@ -22,7 +22,7 @@ class QuestionResultVC: UIViewController {
 
         guard let questionData = question?.values.first else { return }
         questionLabel.text = questionData.question
-        correctAnswerLabel.text = "Bonne réponse : \(questionData.correct_answer)"
+        correctAnswerLabel.text = "Correct answer : \(questionData.correct_answer)"
         
         // Get usernames for UIDs
         if let userIDs = usersAnswer?.keys {
@@ -72,9 +72,11 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
               let userAnswer = userAnswers[questionKey] else { return cell }
         
         cell.selectionStyle = .none // Désactive la sélection visuelle
-        cell.textLabel?.text = "Réponse : \(userAnswer.selected_answer)"
+        cell.textLabel?.text = "Answer : \(userAnswer.selected_answer)"
         cell.textLabel?.textColor = userAnswer.selected_answer == question?.values.first?.correct_answer ? .green : .red
-        cell.detailTextLabel?.text = "Points gagnés : \(userAnswer.points)"
+        cell.detailTextLabel?.text = "points : \(userAnswer.points)"
+        
+        
         return cell
     }
     

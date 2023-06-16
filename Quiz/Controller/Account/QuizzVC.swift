@@ -8,8 +8,7 @@
 import Foundation
 import UIKit
 
-class QuizzVC: UIViewController {
-    
+class QuizzVC: UIViewController, LeavePageProtocol {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
@@ -28,9 +27,30 @@ class QuizzVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpUI()
         loadQuestions()
+    }
+    
+    func leavePage(completion: @escaping () -> Void) {
+        leaveGame {
+            completion()
+        }
+    }
+    
+    func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: true)
         tabBarController?.tabBar.isHidden = true
+        resetAnimations()
+    }
+    
+    func resetAnimations() {
+        timer?.invalidate()
+        questionLabel.layer.removeAllAnimations()
+        timerLabel.layer.removeAllAnimations()
+        for button in answerButtons {
+            button.layer.removeAllAnimations()
+        }
+        appDelegate.soundEffectPlayer?.stop()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -41,17 +61,17 @@ class QuizzVC: UIViewController {
     
     func loadQuestions() {
         Game.shared.getQuestions(quizId: nil, gameId: gameID!) { result in
-                switch result {
-                case .success(let questions):
-                    self.questions = questions
-                    print("après la closure : \(questions)")
-                    self.displayQuestion()
-                case .failure(let error):
-                    print(error)
-                }
+            switch result {
+            case .success(let questions):
+                self.questions = questions
+                print("après la closure : \(questions)")
+                self.displayQuestion()
+            case .failure(let error):
+                print(error)
             }
         }
-        
+    }
+    
     
     func displayQuestion() {
         if currentQuestionIndex >= questions.count {
@@ -85,52 +105,88 @@ class QuizzVC: UIViewController {
         isAnswering = false
     }
     
-        
-    @IBAction func leaveGame(_ sender: UIButton) {
+    func showAlert(title: String, message: String, actionTitle: String, actionHandler: @escaping () -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: actionTitle, style: .default) { _ in
+            actionHandler()
+        }
+        alertController.addAction(action)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func leavebuttonPressed(_ sender: Any) {
+        leaveGame {
+            print("Successfully left game")
+        }
+    }
+    
+    func leaveGame(completion: @escaping () -> Void) {
+        self.leaveButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: self.leaveButton) {
-            self.leaveButton.isEnabled = false
-            if let gameID = self.gameID {
-                Game.shared.leaveGame(gameId: gameID){ result in
-                    switch result {
-                    case .failure(let error):
-                        print(error)
-                        self.leaveButton.isEnabled = true
-                    case .success():
-                        if self.isCompetitive != nil, self.isCompetitive == true {
-                            // Dismiss the view controller
-                            self.performSegue(withIdentifier: "unwindToCompetitive", sender: self)
-                            
-                        } else {
-                            if let navController = self.navigationController {
-                                var canUnwindToOpponentChoice = false
-
-                                for controller in navController.viewControllers {
-                                    if controller is OpponentChoice {
-                                        // OpponentChoice est dans la pile de navigation
-                                        canUnwindToOpponentChoice = true
-                                        break // Sort de la boucle une fois OpponentChoice trouvé
-                                    }
-                                }
-
-                                if canUnwindToOpponentChoice {
-                                    // Si OpponentChoice est dans la pile de navigation, effectue l'unwind segue vers OpponentChoice
-                                    print("unwindToOpponentChoice")
-                                    self.performSegue(withIdentifier: "unwindToOpponentChoice", sender: self)
-                                } else {
-                                    // Si OpponentChoice n'est pas dans la pile de navigation, effectue l'unwind segue vers Invites
-                                    print("unwindToInvites")
-                                    self.performSegue(withIdentifier: "unwindToInvites", sender: self)
-                                }
-                            }else{
-                                print("error")
-                                self.leaveButton.isEnabled = true
-                            }
-                        }
-                    }
-                }
+            self.leaveCurrentGame() {
+                completion()
+            }
+            
+        }
+    }
+    
+    func leaveCurrentGame(completion: @escaping () -> Void) {
+        guard let gameID = self.gameID else { return }
+        Game.shared.leaveGame(gameId: gameID){ result in
+            switch result {
+            case .failure(let error):
+                print(error)
+                self.leaveButton.isEnabled = true
+            case .success():
+                self.navigateBackFromGame()
+                completion()
             }
         }
-        
+    }
+    
+    func navigateBackFromGame() {
+        if self.isCompetitive == true {
+            self.performSegue(withIdentifier: "unwindToCompetitive", sender: self)
+        } else {
+            navigateToOpponentChoiceOrInvites()
+        }
+    }
+    
+    func navigateToOpponentChoiceOrInvites() {
+        if let navController = self.navigationController {
+            var canUnwindToOpponentChoice = false
+            var canUnwindToInvites = false
+            
+            for controller in navController.viewControllers {
+                if controller is OpponentChoice {
+                    canUnwindToOpponentChoice = true
+                    break
+                }
+            }
+            
+            for controller in navController.viewControllers {
+                if controller is InvitesVC {
+                    canUnwindToInvites = true
+                    break
+                }
+            }
+            
+            if canUnwindToOpponentChoice {
+                print("unwindToOpponentChoice")
+                self.performSegue(withIdentifier: "unwindToOpponentChoice", sender: self)
+            } else if canUnwindToInvites {
+                print("unwindToInvites")
+                self.performSegue(withIdentifier: "unwindToInvites", sender: self)
+            } else {
+                self.performSegue(withIdentifier: "unwindToHomeVC", sender: self)
+            }
+        } else {
+            print("error")
+            self.leaveButton.isEnabled = true
+        }
     }
     
     func resetTimer() {
@@ -139,25 +195,25 @@ class QuizzVC: UIViewController {
         timerLabel.text = "\(timeRemaining)"
         
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
             self.timeRemaining -= 1
             self.timerLabel.text = "\(self.timeRemaining)"
             
-            // Modifier l'aspect du label ici
             if self.timeRemaining <= 3 {
                 self.timerLabel.textColor = UIColor.red
                 
                 // Animation pour grossir et rétrécir le texte
                 UIView.animate(withDuration: 0.2,
                                animations: {
-                                   self.timerLabel.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-                               },
+                    self.timerLabel.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                },
                                completion: { _ in
-                                   UIView.animate(withDuration: 0.2) {
-                                       self.timerLabel.transform = CGAffineTransform.identity
-                                   }
+                    UIView.animate(withDuration: 0.2) {
+                        self.timerLabel.transform = CGAffineTransform.identity
+                    }
                     self.appDelegate.playSoundEffect(soundName: "beep", fileType: "mp3")
-                               })
+                })
             }
             
             if self.timeRemaining == 0 {
@@ -169,13 +225,13 @@ class QuizzVC: UIViewController {
     
     @IBAction func answerButtonTapped(_ sender: UIButton) {
         guard !isAnswering else { return } // Ignorez l'appui sur le bouton si l'utilisateur répond déjà à une question
-                isAnswering = true // Définissez isAnswering à vrai lorsque l'utilisateur sélectionne une réponse
+        isAnswering = true // Définissez isAnswering à vrai lorsque l'utilisateur sélectionne une réponse
         guard let selectedAnswer = sender.currentTitle else { print("error"); return }
         let correctAnswer = questions[currentQuestionIndex].correct_answer
-
+        
         guard let questionId = questions[currentQuestionIndex].id else { print("error"); return }
-// Assuming your questions have an 'id' field
-
+        // Assuming your questions have an 'id' field
+        
         let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1 : 0)
         finalScore += selectedAnswer == correctAnswer ? 1 : 0
         if selectedAnswer == correctAnswer {
@@ -184,18 +240,18 @@ class QuizzVC: UIViewController {
             appDelegate.playSoundEffect(soundName: "incorrect", fileType: "mp3")
         }
         userAnswers[questionId] = userAnswer
-                
+        
         
         sender.backgroundColor = selectedAnswer == correctAnswer ? .systemGreen : .systemRed
         
         timer?.invalidate()
         
         
-            self.showCorrectAnswerAndProceed()
+        self.showCorrectAnswerAndProceed()
         
     }
     
-   
+    
     
     @objc func showCorrectAnswerAndProceed() {
         let correctAnswer = questions[currentQuestionIndex].correct_answer
@@ -218,16 +274,13 @@ class QuizzVC: UIViewController {
     }
     
     func finishQuiz() {
-        // Naviguez vers un écran de résultats ou effectuez d'autres actions pour terminer le quizz
-        print("Quizz terminé")
         guard let gameId = gameID else { print("error"); return }
         Game.shared.saveStats(finalScore: finalScore, userAnswers: userAnswers, gameID: gameId){ result in
             switch result {
             case .success():
-                print("Statistiques enregistrés avec succès")
                 self.performSegue(withIdentifier: "goToResult", sender: gameId)
             case .failure(let error):
-                print("Erreur lors de l'enregistrement des statistiques': \(error.localizedDescription)")
+                print("Error saving stats': \(error.localizedDescription)")
             }
         }
     }

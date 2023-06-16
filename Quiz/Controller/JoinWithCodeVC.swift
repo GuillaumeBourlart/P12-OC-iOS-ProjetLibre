@@ -19,6 +19,7 @@ class JoinWithCodeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.joinButton.isEnabled = true
+        
     }
     
     @IBAction func joinButtonPressed(sender: UIButton){

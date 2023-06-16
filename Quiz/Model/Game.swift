@@ -267,7 +267,13 @@ class Game {
                     if let error = error {
                         completion(.failure(error))
                     } else {
-                        completion(.success(()))
+                        Game.shared.deleteInvite(inviteId: lobbyId) { result in
+                        switch result {
+                        case .failure(let error): completion(.failure(error))
+                            case .success: completion(.success(()))
+                            }
+                        }
+                        
                     }
                 }
             }
@@ -329,6 +335,9 @@ class Game {
                         completion(.failure(error))
                     }
                     else {
+                        if let key = FirebaseUser.shared.userInfo?.invites.first(where: { $1 == inviteId })?.key {
+                                FirebaseUser.shared.userInfo?.invites.removeValue(forKey: key)
+                            }
                         completion(.success(inviteId))
                     }
                 }
@@ -363,7 +372,7 @@ class Game {
     
     // Function to create question of the game, depending of it is a custom quiz or a TriviaDB quiz
     func createQuestionsForGame(quizId: String?, category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
-        guard let currentUserId = firebaseService.currentUserID else {
+        guard (firebaseService.currentUserID) != nil else {
             completion(.failure(MyError.noUserConnected)); return
         }
         if let quizId = quizId {
@@ -411,7 +420,7 @@ class Game {
             questionsDict[question.id!] = question.dictionary
         }
         
-        var playersArray = players
+        let playersArray = players
         
         let gameData: [String: Any] = [
             FirestoreFields.creator: currentUserId,
@@ -423,12 +432,24 @@ class Game {
         ]
         
         // Perform create game and delete lobby operation
-        self.firebaseService.createGameAndDeleteLobby(gameData: gameData, gameId: gameId, lobbyId: gameId, completion: { error in
+        self.firebaseService.setData(in: FirestoreFields.gamesCollection, documentId: gameId, data: gameData, completion: { error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            completion(.success(gameId))
+            guard let documentId = documentId else { completion(.success(gameId)); return }
+            // If we pass the guard let, then the game is not in SOLO and we can update de lobby document
+            let lobbyData: [String: Any] = [
+                FirestoreFields.status: "started"
+            ]
+            self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: documentId, data: lobbyData) { error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                completion(.success(gameId))
+            }
+            
         })
 
     }
