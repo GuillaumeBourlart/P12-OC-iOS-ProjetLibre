@@ -7,8 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E53C1432A3C80210046CC5E /* DeeplTranslatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */; };
+		7E53C1452A3C8EC40046CC5E /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53C1442A3C8EC40046CC5E /* LanguageViewController.swift */; };
+		7E53C1472A3C90390046CC5E /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53C1462A3C90390046CC5E /* LanguageCell.swift */; };
+		7E53C14B2A3C921E0046CC5E /* FR.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1482A3C921E0046CC5E /* FR.png */; };
+		7E53C14C2A3C921E0046CC5E /* EN.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1492A3C921E0046CC5E /* EN.png */; };
+		7E53C14D2A3C921E0046CC5E /* ES.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C14A2A3C921E0046CC5E /* ES.png */; };
+		7E53C14F2A3C97900046CC5E /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 7E53C14E2A3C97900046CC5E /* FirebasePerformance */; };
+		7E53C1562A3C9A270046CC5E /* PT.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1502A3C9A270046CC5E /* PT.png */; };
+		7E53C1572A3C9A270046CC5E /* JA.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1512A3C9A270046CC5E /* JA.png */; };
+		7E53C1582A3C9A270046CC5E /* RU.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1522A3C9A270046CC5E /* RU.png */; };
+		7E53C1592A3C9A270046CC5E /* KO.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1532A3C9A270046CC5E /* KO.png */; };
+		7E53C15A2A3C9A270046CC5E /* IT.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1542A3C9A270046CC5E /* IT.png */; };
+		7E53C15B2A3C9A270046CC5E /* DE.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1552A3C9A270046CC5E /* DE.png */; };
+		7E53C15D2A3C9A760046CC5E /* ZH.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C15C2A3C9A760046CC5E /* ZH.png */; };
 		7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F99A52A39FCF800476A4D /* SettingsCell.swift */; };
-		7E5F99AA2A3A149C00476A4D /* blackCustomDisclosureIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E5F99A92A3A149C00476A4D /* blackCustomDisclosureIndicator.png */; };
 		7E5F99AC2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */; };
 		7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B992A38BAB20025AC80 /* incorrect.mp3 */; };
 		7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9A2A38BAB20025AC80 /* correct.mp3 */; };
@@ -95,8 +108,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplTranslatorManager.swift; sourceTree = "<group>"; };
+		7E53C1442A3C8EC40046CC5E /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
+		7E53C1462A3C90390046CC5E /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
+		7E53C1482A3C921E0046CC5E /* FR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FR.png; sourceTree = "<group>"; };
+		7E53C1492A3C921E0046CC5E /* EN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EN.png; sourceTree = "<group>"; };
+		7E53C14A2A3C921E0046CC5E /* ES.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ES.png; sourceTree = "<group>"; };
+		7E53C1502A3C9A270046CC5E /* PT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PT.png; sourceTree = "<group>"; };
+		7E53C1512A3C9A270046CC5E /* JA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JA.png; sourceTree = "<group>"; };
+		7E53C1522A3C9A270046CC5E /* RU.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RU.png; sourceTree = "<group>"; };
+		7E53C1532A3C9A270046CC5E /* KO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KO.png; sourceTree = "<group>"; };
+		7E53C1542A3C9A270046CC5E /* IT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IT.png; sourceTree = "<group>"; };
+		7E53C1552A3C9A270046CC5E /* DE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DE.png; sourceTree = "<group>"; };
+		7E53C15C2A3C9A760046CC5E /* ZH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZH.png; sourceTree = "<group>"; };
 		7E5F99A52A39FCF800476A4D /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
-		7E5F99A92A3A149C00476A4D /* blackCustomDisclosureIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackCustomDisclosureIndicator.png; sourceTree = "<group>"; };
 		7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteCustomDisclosureIndicator.png; sourceTree = "<group>"; };
 		7E727B992A38BAB20025AC80 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
 		7E727B9A2A38BAB20025AC80 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
@@ -165,6 +190,7 @@
 			files = (
 				D01EDCE42A182A3400FF3163 /* FirebaseMessaging in Frameworks */,
 				D0B852532A2528D500A7D9B7 /* Alamofire in Frameworks */,
+				7E53C14F2A3C97900046CC5E /* FirebasePerformance in Frameworks */,
 				D0E8C9E32A28E7CD009E8A09 /* SDWebImage in Frameworks */,
 				D01EDCDE2A182A3400FF3163 /* FirebaseDatabase in Frameworks */,
 				D01EDCE02A182A3400FF3163 /* FirebaseFirestore in Frameworks */,
@@ -194,6 +220,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E53C15E2A3C9AE30046CC5E /* flagsImages */ = {
+			isa = PBXGroup;
+			children = (
+				7E53C1552A3C9A270046CC5E /* DE.png */,
+				7E53C1532A3C9A270046CC5E /* KO.png */,
+				7E53C15C2A3C9A760046CC5E /* ZH.png */,
+				7E53C1542A3C9A270046CC5E /* IT.png */,
+				7E53C1512A3C9A270046CC5E /* JA.png */,
+				7E53C1502A3C9A270046CC5E /* PT.png */,
+				7E53C1522A3C9A270046CC5E /* RU.png */,
+				7E53C14A2A3C921E0046CC5E /* ES.png */,
+				7E53C1492A3C921E0046CC5E /* EN.png */,
+				7E53C1482A3C921E0046CC5E /* FR.png */,
+			);
+			path = flagsImages;
+			sourceTree = "<group>";
+		};
+		7E53C15F2A3C9AF50046CC5E /* soounds */ = {
+			isa = PBXGroup;
+			children = (
+				7E727B992A38BAB20025AC80 /* incorrect.mp3 */,
+				7E727BA52A38CC810025AC80 /* slide.mp3 */,
+				7E727BA32A38CB850025AC80 /* beep.mp3 */,
+				7E727B9E2A38BDD20025AC80 /* button.mp3 */,
+				7E727BA12A38BDF80025AC80 /* win.mp3 */,
+				7E727B9D2A38BDD20025AC80 /* lose.mp3 */,
+				7E727B9A2A38BAB20025AC80 /* correct.mp3 */,
+				D04A5B912A321B950049F02A /* appMusic.mp3 */,
+			);
+			path = soounds;
+			sourceTree = "<group>";
+		};
 		D03083D72A0F8A3800A8FBB7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +271,7 @@
 				D03083F42A0F8A7900A8FBB7 /* FirebaseUser.swift */,
 				D03083F22A0F8A7800A8FBB7 /* Game.swift */,
 				D03083F12A0F8A7800A8FBB7 /* OpenTriviaDatabaseManager.swift */,
+				7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */,
 				D0B8524E2A24AFD200A7D9B7 /* Structures */,
 				D0B35CE12A159CDE007B3431 /* services */,
 			);
@@ -230,6 +289,7 @@
 				D03083FD2A0F8AB000A8FBB7 /* Settings.swift */,
 				D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */,
 				7E5F99A52A39FCF800476A4D /* SettingsCell.swift */,
+				7E53C1462A3C90390046CC5E /* LanguageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -288,16 +348,9 @@
 		D084EC722A0F7FD700544AA3 /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				7E727B992A38BAB20025AC80 /* incorrect.mp3 */,
-				7E727BA52A38CC810025AC80 /* slide.mp3 */,
-				7E727BA32A38CB850025AC80 /* beep.mp3 */,
-				7E5F99A92A3A149C00476A4D /* blackCustomDisclosureIndicator.png */,
+				7E53C15F2A3C9AF50046CC5E /* soounds */,
+				7E53C15E2A3C9AE30046CC5E /* flagsImages */,
 				7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */,
-				7E727B9E2A38BDD20025AC80 /* button.mp3 */,
-				7E727BA12A38BDF80025AC80 /* win.mp3 */,
-				7E727B9D2A38BDD20025AC80 /* lose.mp3 */,
-				7E727B9A2A38BAB20025AC80 /* correct.mp3 */,
-				D04A5B912A321B950049F02A /* appMusic.mp3 */,
 				D084EC452A0F7EF700544AA3 /* Assets.xcassets */,
 				D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */,
 				D084EC392A0F7EF400544AA3 /* AppDelegate.swift */,
@@ -320,6 +373,7 @@
 				D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */,
 				D00BD4412A2BCC530021230E /* AddQuestionVC.swift */,
 				D00BD4432A2BCC670021230E /* AddMemberVC.swift */,
+				7E53C1442A3C8EC40046CC5E /* LanguageViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -406,6 +460,7 @@
 				D01EDCE52A182A3400FF3163 /* FirebaseStorage */,
 				D0B852522A2528D500A7D9B7 /* Alamofire */,
 				D0E8C9E22A28E7CD009E8A09 /* SDWebImage */,
+				7E53C14E2A3C97900046CC5E /* FirebasePerformance */,
 			);
 			productName = Quiz;
 			productReference = D084EC362A0F7EF400544AA3 /* Quiz.app */;
@@ -489,20 +544,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E53C1582A3C9A270046CC5E /* RU.png in Resources */,
+				7E53C14C2A3C921E0046CC5E /* EN.png in Resources */,
 				7E727BA02A38BDD20025AC80 /* button.mp3 in Resources */,
 				7E727BA62A38CC810025AC80 /* slide.mp3 in Resources */,
 				D084EC492A0F7EF700544AA3 /* LaunchScreen.storyboard in Resources */,
+				7E53C15B2A3C9A270046CC5E /* DE.png in Resources */,
+				7E53C1572A3C9A270046CC5E /* JA.png in Resources */,
 				7E727BA22A38BDF80025AC80 /* win.mp3 in Resources */,
+				7E53C1562A3C9A270046CC5E /* PT.png in Resources */,
+				7E53C1592A3C9A270046CC5E /* KO.png in Resources */,
 				7E727BA42A38CB850025AC80 /* beep.mp3 in Resources */,
 				D03084052A0F8AB100A8FBB7 /* Main.storyboard in Resources */,
-				7E5F99AA2A3A149C00476A4D /* blackCustomDisclosureIndicator.png in Resources */,
 				7ED6FEF42A3772F6001AC0DE /* GoogleService-Info.plist in Resources */,
+				7E53C15A2A3C9A270046CC5E /* IT.png in Resources */,
 				7E727B9F2A38BDD20025AC80 /* lose.mp3 in Resources */,
+				7E53C14B2A3C921E0046CC5E /* FR.png in Resources */,
 				7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */,
 				7E5F99AC2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png in Resources */,
 				D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */,
 				D04A5B922A321B950049F02A /* appMusic.mp3 in Resources */,
+				7E53C14D2A3C921E0046CC5E /* ES.png in Resources */,
 				7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */,
+				7E53C15D2A3C9A760046CC5E /* ZH.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,12 +600,14 @@
 				D03083E92A0F8A5100A8FBB7 /* SearchOpponentVC.swift in Sources */,
 				D030840B2A0F8CEB00A8FBB7 /* CategoryCell.swift in Sources */,
 				D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */,
+				7E53C1432A3C80210046CC5E /* DeeplTranslatorManager.swift in Sources */,
 				D03083F82A0F8A7900A8FBB7 /* AlamofireService.swift in Sources */,
 				D03083EC2A0F8A5200A8FBB7 /* QuickPlayVC.swift in Sources */,
 				D03083F62A0F8A7900A8FBB7 /* OpenTriviaDatabaseManager.swift in Sources */,
 				D03083E62A0F8A5100A8FBB7 /* ProfilVC.swift in Sources */,
 				D03083F72A0F8A7900A8FBB7 /* Game.swift in Sources */,
 				D00BD4442A2BCC670021230E /* AddMemberVC.swift in Sources */,
+				7E53C1452A3C8EC40046CC5E /* LanguageViewController.swift in Sources */,
 				D03083FA2A0F8A7900A8FBB7 /* Structures.swift in Sources */,
 				D084FB142A10309200721B88 /* HistoryVC.swift in Sources */,
 				D03083EB2A0F8A5200A8FBB7 /* OpponentChoice.swift in Sources */,
@@ -551,6 +617,7 @@
 				D0B582452A33622D00C0D5E2 /* CustomAnimations.swift in Sources */,
 				D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */,
 				D00BD4422A2BCC530021230E /* AddQuestionVC.swift in Sources */,
+				7E53C1472A3C90390046CC5E /* LanguageCell.swift in Sources */,
 				D074D6702A26A2A7004942C4 /* QuestionResultVC.swift in Sources */,
 				D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */,
 				D03084022A0F8AB100A8FBB7 /* Settings.swift in Sources */,
@@ -877,6 +944,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7E53C14E2A3C97900046CC5E /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D01EDCDA2A182A3400FF3163 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
+		};
 		D01EDCDB2A182A3400FF3163 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D01EDCDA2A182A3400FF3163 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

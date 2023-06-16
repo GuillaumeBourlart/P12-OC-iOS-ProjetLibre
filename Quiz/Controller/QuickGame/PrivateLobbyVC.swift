@@ -35,7 +35,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Cacher le bouton retour
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationItem.hidesBackButton = true
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -59,6 +59,8 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         if let listener = listener {
             listener.remove()
         }
+        self.navigationItem.hidesBackButton = false
+        tabBarController?.tabBar.isHidden = false
     }
     
     // Function that get usernames to display usernames rather than UIDs
@@ -180,7 +182,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
                 
             case .failure(let error):
                 print(error)
-                
+                self.navigationController?.popViewController(animated: true)
             }
         })
     }

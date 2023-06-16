@@ -70,24 +70,29 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
     // Section 2
     enum SecurityOptions: Int, CaseIterable, SectionType {
         case sounds
+        case language
         // titles
         var description: String {
             switch self {
             case .sounds:
                 return "Sounds"
+            case .language:
+                return "Language"
             }
         }
         // segue's IDS
         var segueIdentifier: String? {
             switch self {
             case .sounds:
-                return nil // pas de segue pour 'sounds'
+                return nil
+            case .language: return "goToLanguageSelection"
             }
         }
         
         var containsSwitch: Bool {
             switch self {
             case .sounds: return true
+            case .language: return false
             }
         }
         

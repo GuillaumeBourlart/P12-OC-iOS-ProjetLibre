@@ -57,15 +57,26 @@ class QuizzVC: UIViewController, LeavePageProtocol {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         tabBarController?.tabBar.isHidden = false
+        
+        
     }
     
     func loadQuestions() {
         Game.shared.getQuestions(quizId: nil, gameId: gameID!) { result in
             switch result {
             case .success(let questions):
-                self.questions = questions
                 print("après la closure : \(questions)")
-                self.displayQuestion()
+                if let selectedLanguage = UserDefaults.standard.object(forKey: "SelectedLanguage") as? String, selectedLanguage != "EN" {
+                    translateQuestions(questions: questions, to: selectedLanguage) { questions in
+                        self.questions = questions
+                        self.displayQuestion()
+                    }
+                } else {
+                    self.questions = questions
+                    self.displayQuestion()
+                }
+               
+                
             case .failure(let error):
                 print(error)
             }

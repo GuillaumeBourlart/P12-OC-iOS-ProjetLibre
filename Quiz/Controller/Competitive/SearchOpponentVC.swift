@@ -20,6 +20,12 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
         findOpponent()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if listener == nil {
+            self.navigationItem.hidesBackButton = true
+        }
+    }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)
@@ -31,7 +37,6 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
                     if let error = error {
                         print(error)
                     }
-                    self.navigationController?.popViewController(animated: true)
                 }
             }
         }

@@ -127,8 +127,7 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         alertController.addAction(moyenAction)
         alertController.addAction(difficileAction)
         
-        // Changer la couleur de fond de l'alerte
-        alertController.view.tintColor = UIColor.black
+        
         
         present(alertController, animated: true, completion: nil)
     }
