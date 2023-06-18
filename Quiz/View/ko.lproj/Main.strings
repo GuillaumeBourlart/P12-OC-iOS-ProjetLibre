@@ -1,0 +1,274 @@
+/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "0FS-gv-tPK"; */
+"0FS-gv-tPK.text" = "rgvfcdxswsxdcf";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0lb-sS-1xO"; */
+"0lb-sS-1xO.normalTitle" = "버튼";
+
+/* Class = "UIButton"; configuration.title = "Create"; ObjectID = "1cu-04-f1V"; */
+"1cu-04-f1V.configuration.title" = "생성";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "1cu-04-f1V"; */
+"1cu-04-f1V.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "1oU-Dd-LR2"; */
+"1oU-Dd-LR2.text" = "레이블";
+
+/* Class = "UITextField"; placeholder = "email"; ObjectID = "2ff-Bb-QW1"; */
+"2ff-Bb-QW1.placeholder" = "이메일";
+
+/* Class = "UILabel"; text = "username"; ObjectID = "2w2-M6-4dv"; */
+"2w2-M6-4dv.text" = "사용자 이름";
+
+/* Class = "UILabel"; text = "Players"; ObjectID = "3RA-CS-JYe"; */
+"3RA-CS-JYe.text" = "플레이어";
+
+/* Class = "UIButton"; configuration.title = "Join a room"; ObjectID = "49h-Vt-RA6"; */
+"49h-Vt-RA6.configuration.title" = "방 참가";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "49h-Vt-RA6"; */
+"49h-Vt-RA6.normalTitle" = "버튼";
+
+/* Class = "UIButton"; configuration.title = "GO!"; ObjectID = "4lN-hZ-XPS"; */
+"4lN-hZ-XPS.configuration.title" = "시작!";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "4lN-hZ-XPS"; */
+"4lN-hZ-XPS.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5bM-De-r7t"; */
+"5bM-De-r7t.text" = "레이블";
+
+/* Class = "UIButton"; configuration.title = "Leave"; ObjectID = "5gm-hJ-CWH"; */
+"5gm-hJ-CWH.configuration.title" = "나가기";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "5gm-hJ-CWH"; */
+"5gm-hJ-CWH.normalTitle" = "버튼";
+
+/* Class = "UIButton"; configuration.title = "Log in"; ObjectID = "676-G7-ZuZ"; */
+"676-G7-ZuZ.configuration.title" = "로그인";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "676-G7-ZuZ"; */
+"676-G7-ZuZ.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Questions : "; ObjectID = "6UV-Lc-xW9"; */
+"6UV-Lc-xW9.text" = "질문 : ";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "6n4-qw-W9F"; */
+"6n4-qw-W9F.placeholder" = "이메일";
+
+/* Class = "UILabel"; text = "Correct Answer"; ObjectID = "7AN-aB-uru"; */
+"7AN-aB-uru.text" = "정답";
+
+/* Class = "UILabel"; text = "name : "; ObjectID = "7bU-Me-f3y"; */
+"7bU-Me-f3y.text" = "이름 : ";
+
+/* Class = "UIButton"; configuration.title = "sign in"; ObjectID = "7uh-XO-SLr"; */
+"7uh-XO-SLr.configuration.title" = "로그인";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7uh-XO-SLr"; */
+"7uh-XO-SLr.normalTitle" = "버튼";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "Bis-mJ-vER"; */
+"Bis-mJ-vER.configuration.title" = "버튼";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Bis-mJ-vER"; */
+"Bis-mJ-vER.normalTitle" = "버튼";
+
+/* Class = "UIButton"; configuration.title = "My quizzes"; ObjectID = "Boy-4v-VRM"; */
+"Boy-4v-VRM.configuration.title" = "내 퀴즈";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Boy-4v-VRM"; */
+"Boy-4v-VRM.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Community quizzes"; ObjectID = "C8F-hI-J7H"; */
+"C8F-hI-J7H.text" = "커뮤니티 퀴즈";
+
+/* Class = "UIButton"; configuration.title = "Friends / Groups"; ObjectID = "CiQ-uc-p7v"; */
+"CiQ-uc-p7v.configuration.title" = "친구 / 그룹";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "CiQ-uc-p7v"; */
+"CiQ-uc-p7v.normalTitle" = "버튼";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "EA1-Dw-ehh"; */
+"EA1-Dw-ehh.normalTitle" = "버튼";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Ezy-GI-XFI"; */
+"Ezy-GI-XFI.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "F2r-Df-ChQ"; */
+"F2r-Df-ChQ.text" = "레이블";
+
+/* Class = "UITextField"; placeholder = "Code"; ObjectID = "FF4-NQ-Ldx"; */
+"FF4-NQ-Ldx.placeholder" = "코드";
+
+/* Class = "UIButton"; configuration.title = "Sign in"; ObjectID = "GLh-lL-XXi"; */
+"GLh-lL-XXi.configuration.title" = "로그인";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GLh-lL-XXi"; */
+"GLh-lL-XXi.normalTitle" = "버튼";
+
+/* Class = "UINavigationItem"; title = "History"; ObjectID = "GQ9-HW-KCb"; */
+"GQ9-HW-KCb.title" = "기록";
+
+/* Class = "UINavigationItem"; title = "Private room"; ObjectID = "Gur-eL-rdV"; */
+"Gur-eL-rdV.title" = "비공개 방";
+
+/* Class = "UILabel"; text = "Looking for an opponent"; ObjectID = "HNo-0d-sc7"; */
+"HNo-0d-sc7.text" = "상대 찾는 중";
+
+/* Class = "UIButton"; configuration.title = "Quick play"; ObjectID = "Hnv-sF-ItT"; */
+"Hnv-sF-ItT.configuration.title" = "빠른 플레이";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Hnv-sF-ItT"; */
+"Hnv-sF-ItT.normalTitle" = "버튼";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "Hte-ge-dVW"; */
+"Hte-ge-dVW.placeholder" = "비밀번호";
+
+/* Class = "UINavigationItem"; title = "Language"; ObjectID = "Ixq-2z-EMm"; */
+"Ixq-2z-EMm.title" = "언어";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "LEF-lm-mTa"; */
+"LEF-lm-mTa.text" = "레이블";
+
+/* Class = "UIButton"; configuration.title = "Log in"; ObjectID = "LRV-Qh-49t"; */
+"LRV-Qh-49t.configuration.title" = "로그인";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "LRV-Qh-49t"; */
+"LRV-Qh-49t.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "LbA-QI-m0r"; */
+"LbA-QI-m0r.text" = "레이블";
+
+/* Class = "UILabel"; text = "Official quizzes"; ObjectID = "MAv-zJ-l7h"; */
+"MAv-zJ-l7h.text" = "공식 퀴즈";
+
+/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "Competitive"; ObjectID = "Mhu-Mq-UrT"; */
+"Mhu-Mq-UrT.segmentTitles[0]" = "경쟁";
+
+/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "Quick play"; ObjectID = "Mhu-Mq-UrT"; */
+"Mhu-Mq-UrT.segmentTitles[1]" = "빠른 플레이";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Nas-EO-Jgf"; */
+"Nas-EO-Jgf.text" = "레이블";
+
+/* Class = "UIButton"; configuration.title = "Join"; ObjectID = "Nw6-2g-Kne"; */
+"Nw6-2g-Kne.configuration.title" = "참가";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Nw6-2g-Kne"; */
+"Nw6-2g-Kne.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Ody-Bm-Bqd"; */
+"Ody-Bm-Bqd.text" = "제목";
+
+/* Class = "UINavigationItem"; title = "Ranked"; ObjectID = "PMP-4e-WAw"; */
+"PMP-4e-WAw.title" = "순위";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "PZ5-5x-9jZ"; */
+"PZ5-5x-9jZ.text" = "레이블";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "QLd-xk-IDy"; */
+"QLd-xk-IDy.text" = "레이블";
+
+/* Class = "UIButton"; configuration.title = "Find an opponent"; ObjectID = "UJS-pN-0nw"; */
+"UJS-pN-0nw.configuration.title" = "상대 찾기";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "UJS-pN-0nw"; */
+"UJS-pN-0nw.normalTitle" = "버튼";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "Hte-ge-dVW"; */
+"Hte-ge-dVW.placeholder" = "비밀번호";
+
+/* Class = "UILabel"; text = "Difficulty : "; ObjectID = "giF-Ps-7d8"; */
+"giF-Ps-7d8.text" = "난이도 : ";
+
+/* Class = "UINavigationItem"; title = "Amis"; ObjectID = "jbE-dc-dLO"; */
+"jbE-dc-dLO.title" = "친구";
+
+/* Class = "UILabel"; text = "niveau"; ObjectID = "k0H-MS-rUT"; */
+"k0H-MS-rUT.text" = "수준";
+
+/* Class = "UILabel"; text = "code"; ObjectID = "kGd-JE-LIh"; */
+"kGd-JE-LIh.text" = "코드";
+
+/* Class = "UINavigationItem"; title = "Invites"; ObjectID = "kQB-f5-x0x"; */
+"kQB-f5-x0x.title" = "초대";
+
+/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[0] = "Friends"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[0]" = "친구";
+
+/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "Requests"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[1]" = "요청";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "l9p-fw-PKS"; */
+"l9p-fw-PKS.text" = "레이블";
+
+/* Class = "UIButton"; configuration.title = "Add"; ObjectID = "mFL-ab-1Jp"; */
+"mFL-ab-1Jp.configuration.title" = "추가";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "mFL-ab-1Jp"; */
+"mFL-ab-1Jp.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Quetion"; ObjectID = "nWS-Y6-efk"; */
+"nWS-Y6-efk.text" = "질문";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "oB7-XM-CDC"; */
+"oB7-XM-CDC.configuration.title" = "버튼";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "oB7-XM-CDC"; */
+"oB7-XM-CDC.normalTitle" = "버튼";
+
+/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "oBf-Pg-Xh6"; */
+"oBf-Pg-Xh6.text" = "rgvfcdxswsxdcf";
+
+/* Class = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[0] = "Friends"; ObjectID = "q0a-Cy-c21"; */
+"q0a-Cy-c21.segmentTitles[0]" = "친구";
+
+/* Class = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[1] = "Groups"; ObjectID = "q0a-Cy-c21"; */
+"q0a-Cy-c21.segmentTitles[1]" = "그룹";
+
+/* Class = "UITabBarItem"; title = "Play"; ObjectID = "qZ9-Bu-vAN"; */
+"qZ9-Bu-vAN.title" = "플레이";
+
+/* Class = "UINavigationItem"; title = "Invite players"; ObjectID = "qwe-NI-WFm"; */
+"qwe-NI-WFm.title" = "플레이어 초대";
+
+/* Class = "UIButton"; configuration.title = "Validate"; ObjectID = "tb8-yO-A2H"; */
+"tb8-yO-A2H.configuration.title" = "확인";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "tb8-yO-A2H"; */
+"tb8-yO-A2H.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "tri-T4-5y5"; */
+"tri-T4-5y5.text" = "레이블";
+
+/* Class = "UILabel"; text = "Explanation"; ObjectID = "uJZ-UU-FDj"; */
+"uJZ-UU-FDj.text" = "설명";
+
+/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "ucV-ge-bsl"; */
+"ucV-ge-bsl.configuration.title" = "버튼";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ucV-ge-bsl"; */
+"ucV-ge-bsl.normalTitle" = "버튼";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vH0-8Z-WMS"; */
+"vH0-8Z-WMS.text" = "레이블";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "vOP-j1-sOt"; */
+"vOP-j1-sOt.placeholder" = "비밀번호";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "w4h-1i-m7k"; */
+"w4h-1i-m7k.text" = "레이블";
+
+/* Class = "UILabel"; text = "Theme : "; ObjectID = "wQd-D8-m12"; */
+"wQd-D8-m12.text" = "테마 : ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "xzd-nu-mjD"; */
+"xzd-nu-mjD.text" = "레이블";
+
+/* Class = "UITextField"; placeholder = "pseudo"; ObjectID = "zNz-hZ-TWk"; */
+"zNz-hZ-TWk.placeholder" = "유저 이름";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "zRj-Kk-caM"; */
+"zRj-Kk-caM.text" = "레이블";
+
+

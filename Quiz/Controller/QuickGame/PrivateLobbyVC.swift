@@ -12,9 +12,6 @@ import Firebase
 
 class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     
-    
-    
-    
     @IBOutlet weak var joinCodeLabel: UILabel!
     @IBOutlet weak var leave: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -81,22 +78,40 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         
     }
     
+    func showLeaveConfirmation(completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: "Confirmation", message: "Êtes-vous sûr de vouloir quitter le quiz ?", preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Oui", style: .destructive) { _ in
+            completion()
+        }
+        let cancelAction = UIAlertAction(title: "Non", style: .cancel)
+        
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+    }
+    
     // Function called when user click on "leave" button
     @IBAction func leaveLobbyWasPressed(_ sender: Any) {
-        leaveLobby() {error in
-            if let error = error {
-                print(error)
+        showLeaveConfirmation {
+            self.leaveLobby() {error in
+                if let error = error {
+                    print(error)
+                }
             }
         }
     }
     
     // Function called by appdelegate when user click on notification
     func leavePage(completion: @escaping () -> Void) {
-        leaveLobby() { error in
-            if let error = error {
-                print(error)
+        showLeaveConfirmation {
+            self.leaveLobby() { error in
+                if let error = error {
+                    print(error)
+                }
+                completion()
             }
-            completion()
         }
     }
     

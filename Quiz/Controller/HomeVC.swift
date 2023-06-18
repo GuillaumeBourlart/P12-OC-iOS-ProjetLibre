@@ -25,6 +25,13 @@ class HomeVC: UIViewController{
         // handle music
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.playSound(soundName: "appMusic", fileType: "mp3")
+        
+        if let preferredLanguage = Bundle.main.preferredLocalizations.first {
+            print("Langue utilisée : \(preferredLanguage)")
+        }
+        
+        let test = NSLocalizedString("TestKey", comment: "")
+        print(test)
     }
     
     override func viewWillAppear(_ animated: Bool) {

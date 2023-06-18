@@ -41,6 +41,11 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
 
         // Set the layout to the collectionView
         collectionView.collectionViewLayout = layout
+        
+        let placeholderText = "Search a quiz here"
+
+        searchQuizField.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
     }
     
     func loadCategories() {

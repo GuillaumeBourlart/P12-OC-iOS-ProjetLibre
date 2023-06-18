@@ -32,9 +32,14 @@ class QuizzVC: UIViewController, LeavePageProtocol {
     }
     
     func leavePage(completion: @escaping () -> Void) {
-        leaveGame {
-            completion()
-        }
+        
+            showLeaveConfirmation {
+                self.leaveGame {
+                    print("Successfully left game")
+                    completion()
+                }
+            }
+        
     }
     
     func setUpUI() {
@@ -66,8 +71,9 @@ class QuizzVC: UIViewController, LeavePageProtocol {
             switch result {
             case .success(let questions):
                 print("après la closure : \(questions)")
-                if let selectedLanguage = UserDefaults.standard.object(forKey: "SelectedLanguage") as? String, selectedLanguage != "EN" {
-                    translateQuestions(questions: questions, to: selectedLanguage) { questions in
+                
+                if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
+                    translateQuestions(questions: questions, to: languageCode) { questions in
                         self.questions = questions
                         self.displayQuestion()
                     }
@@ -81,6 +87,20 @@ class QuizzVC: UIViewController, LeavePageProtocol {
                 print(error)
             }
         }
+    }
+    
+    func showLeaveConfirmation(completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: "Confirmation", message: "Êtes-vous sûr de vouloir quitter le quiz ?", preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Oui", style: .destructive) { _ in
+            completion()
+        }
+        let cancelAction = UIAlertAction(title: "Non", style: .cancel)
+        
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
     }
     
     
@@ -129,9 +149,11 @@ class QuizzVC: UIViewController, LeavePageProtocol {
     
     
     @IBAction func leavebuttonPressed(_ sender: Any) {
-        leaveGame {
-            print("Successfully left game")
-        }
+        showLeaveConfirmation {
+               self.leaveGame {
+                   print("Successfully left game")
+               }
+           }
     }
     
     func leaveGame(completion: @escaping () -> Void) {

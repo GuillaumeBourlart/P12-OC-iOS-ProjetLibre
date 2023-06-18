@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  Quiz
+
+  Created by Guillaume Bourlart on 18/06/2023.
+  
+*/
+
+
+"Account" = "Cuenta";
+"Preferences" = "Preferencias";
+"Friends" = "Amigos";
+"Groups" = "Grupos";
+"History" = "Historial";
+"Quizzes" = "Cuestionarios";
+"Invites" = "Invitaciones";
+"Sounds" = "Sounds";
+"Language" = "Language";
+"Account" = "Account";
+"Preferences" = "Preferences";
+"TestKey" = "TestValue";

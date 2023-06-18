@@ -220,52 +220,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
             completionHandler()
             return
         }
-
-        // Get the current view controller
-        if let currentViewController = getTopViewController()  {
-            
-            var shouldDisplayAlert = false
-            var viewControllerToLeave: LeavePageProtocol? // Assume this protocol defines leavePage(completion:)
-            
-            if let quizzVC = currentViewController as? QuizzVC {
-                shouldDisplayAlert = true
-                viewControllerToLeave = quizzVC
-            } else if let privateRoomVC = currentViewController as? PrivateLobbyVC {
-                shouldDisplayAlert = true
-                viewControllerToLeave = privateRoomVC
-            } else if let searchOpponentVC = currentViewController as? SearchOpponentVC {
-                shouldDisplayAlert = true
-                viewControllerToLeave = searchOpponentVC
-            }
-            
-            if shouldDisplayAlert {
-                let alert = UIAlertController(title: "Are you sure you want to leave?", message: "", preferredStyle: .alert)
-                let confirmAction = UIAlertAction(title: "Yes", style: .default) { _ in
-                    viewControllerToLeave?.leavePage() {
-                        switch notificationType {
-                        case "gameInvitation":
-                            guard let lobbyID = userInfo["lobbyID"] as? String else {
-                                completionHandler()
-                                return
-                            }
-                            self.joinGameFromInvitation(lobbyID: lobbyID)
-                        case "friendRequest":
-                            self.navigateToFriendsPage()
-                        default:
-                            break
-                        }
-                    }
-                    completionHandler()
-                }
-                let cancelAction = UIAlertAction(title: "No", style: .cancel) { _ in
-                    completionHandler()
-                }
-                alert.addAction(confirmAction)
-                alert.addAction(cancelAction)
-                DispatchQueue.main.async {
-                    currentViewController.present(alert, animated: true)
-                }
-            } else {
+        print(1)
+        if let currentViewController = getTopViewController(), let viewControllerToLeave = currentViewController as? LeavePageProtocol {
+            viewControllerToLeave.leavePage {
+                print(2)
                 switch notificationType {
                 case "gameInvitation":
                     guard let lobbyID = userInfo["lobbyID"] as? String else {
@@ -278,8 +236,21 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
                 default:
                     break
                 }
+                completionHandler()
             }
         } else {
+            switch notificationType {
+            case "gameInvitation":
+                guard let lobbyID = userInfo["lobbyID"] as? String else {
+                    completionHandler()
+                    return
+                }
+                self.joinGameFromInvitation(lobbyID: lobbyID)
+            case "friendRequest":
+                self.navigateToFriendsPage()
+            default:
+                break
+            }
             completionHandler()
         }
     }
@@ -493,3 +464,5 @@ extension AppDelegate {
         musicPlayer?.volume = volume
     }
 }
+
+
