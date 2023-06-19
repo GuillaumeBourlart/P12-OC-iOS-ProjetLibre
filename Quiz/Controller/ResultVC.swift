@@ -33,19 +33,47 @@ class ResultVC: UIViewController {
                 switch result {
                 case .success(let gameData):
                     self.gameData = gameData
-                    self.questions = gameData.questions
-                    print(gameData.questions)
+                    if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
+                        translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                            self.questions = questions
+                            DispatchQueue.main.async {
+                                self.displayResults()
+                                self.tableView.reloadData()
+                                self.startListening()
+                            }
+                        }
+                    } else {
+                        self.questions = gameData.questions
+                        DispatchQueue.main.async {
+                            self.displayResults()
+                            self.tableView.reloadData()
+                            self.startListening()
+                        }
+                    }
+                        
+                    case .failure(let error):
+                        print("Failed to fetch game data: \(error)")
+                    }
+                }
+            
+        } else if let gameData = gameData {
+            
+            self.questions = gameData.questions
+            if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
+                translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                    self.questions = questions
                     DispatchQueue.main.async {
                         self.displayResults()
                         self.tableView.reloadData()
-                        self.startListening()
                     }
-                case .failure(let error):
-                    print("Failed to fetch game data: \(error)")
+                }
+            } else {
+                self.questions = gameData.questions
+                DispatchQueue.main.async {
+                    self.displayResults()
+                    self.tableView.reloadData()
                 }
             }
-        } else if let gameData = gameData {
-            self.questions = gameData.questions
         }
         
         
@@ -97,8 +125,6 @@ class ResultVC: UIViewController {
             print("No game data available.")
             return
         }
-        
-        
         
         var finalScores = gameData.final_scores ?? [:]
         let UIDS = Array(finalScores.keys)
@@ -154,11 +180,21 @@ class ResultVC: UIViewController {
                 switch result {
                 case .success(let gameData):
                     self.gameData = gameData
-                    self.questions = gameData.questions
-                    print(gameData.questions)
-                    DispatchQueue.main.async {
-                        self.displayResults()
-                        self.tableView.reloadData()
+                    if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
+                        translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                            self.questions = questions
+                            DispatchQueue.main.async {
+                                self.displayResults()
+                                self.tableView.reloadData()
+                            }
+                        }
+                        
+                    } else {
+                        self.questions = gameData.questions
+                        DispatchQueue.main.async {
+                            self.displayResults()
+                            self.tableView.reloadData()
+                        }
                     }
                 case .failure(let error):
                     print("Failed to fetch game data: \(error)")

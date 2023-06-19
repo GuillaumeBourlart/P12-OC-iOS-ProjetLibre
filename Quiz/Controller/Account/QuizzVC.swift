@@ -123,17 +123,22 @@ class QuizzVC: UIViewController, LeavePageProtocol {
         var choices = question.incorrect_answers + [question.correct_answer]
         choices.shuffle()
         
+        isAnswering = true // Bloquer les taps pendant les animations
+
         for (index, button) in answerButtons.enumerated() {
             button.transform = index % 2 == 0 ? CGAffineTransform(translationX: -self.view.bounds.width, y: 0) : CGAffineTransform(translationX: self.view.bounds.width, y: 0)
+            button.backgroundColor = .systemBlue
             UIView.animate(withDuration: 0.5, delay: Double(index) * 0.2, options: [], animations: {
                 button.transform = .identity
-            }, completion: nil)
-            button.setTitle(choices[index], for: .normal)
-            button.backgroundColor = .systemBlue
+            }, completion: { _ in
+                button.setTitle(choices[index], for: .normal)
+                
+                if index == self.answerButtons.count - 1 {
+                    self.resetTimer()
+                    self.isAnswering = false // Débloquer les taps après la dernière animation
+                }
+            })
         }
-        
-        resetTimer()
-        isAnswering = false
     }
     
     func showAlert(title: String, message: String, actionTitle: String, actionHandler: @escaping () -> Void) {
@@ -265,8 +270,8 @@ class QuizzVC: UIViewController, LeavePageProtocol {
         guard let questionId = questions[currentQuestionIndex].id else { print("error"); return }
         // Assuming your questions have an 'id' field
         
-        let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1 : 0)
-        finalScore += selectedAnswer == correctAnswer ? 1 : 0
+        let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1*timeRemaining : 0)
+        finalScore += selectedAnswer == correctAnswer ? 1*timeRemaining : 0
         if selectedAnswer == correctAnswer {
             appDelegate.playSoundEffect(soundName: "correct", fileType: "mp3")
         }else{

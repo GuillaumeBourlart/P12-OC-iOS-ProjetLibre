@@ -154,18 +154,6 @@ class FirebaseService: FirebaseServiceProtocol{
             return listener
     }
     
-    // Function to create a game and remove the linked lobby ID (which has same ID)
-//    func createGameAndDeleteLobby(gameData: [String: Any], gameId: String, lobbyId: String, completion: @escaping (Error?) -> Void) {
-//            let batch = db.batch()
-//
-//            let gameRef = db.collection(FirestoreFields.gamesCollection).document(gameId)
-//            batch.setData(gameData, forDocument: gameRef)
-//
-//            let lobbyRef = db.collection(FirestoreFields.lobbyCollection).document(lobbyId)
-//            batch.deleteDocument(lobbyRef)
-//
-//            batch.commit(completion: completion)
-//        }
     
     // Function set Data in a document
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {

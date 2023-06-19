@@ -12,6 +12,7 @@ import FirebaseAuth
 class OpenTriviaDatabaseManager {
     
     var service = Service(networkRequest: AlamofireNetworkRequest()) // service that allows to stub alamofire
+    let translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
     // The initializer for the RecipeService class
     init(service: Service) {
         self.service = service
@@ -23,18 +24,18 @@ class OpenTriviaDatabaseManager {
     func fetchCategories(completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
         guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return}
         let urlString = "https://opentdb.com/api_category.php"
-        
+
         guard let url = URL(string: urlString) else {
             completion(.failure(MyError.failedToMakeURL))
             return
         }
-        
+
         service.load(url: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
+
             if let data = data {
                 do {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -43,8 +44,26 @@ class OpenTriviaDatabaseManager {
                         completion(.failure(MyError.invalidJsonFormat))
                         return
                     }
-                    OpenTriviaDatabaseManager.categories = categoriesJSON
-                    completion(.success(categoriesJSON))
+                    
+                    // Begin the translation process
+                    var translatedCategories = categoriesJSON
+                    var translatedCategoriesCount = 0
+                    for index in 0..<translatedCategories.count {
+                        self.translator.translate(translatedCategories[index]["name"] as! String, targetLanguage: "FR") { result in
+                            switch result {
+                            case .failure(let error):
+                                print("Failed to translate category: \(error)")
+                            case .success(let translatedName):
+                                translatedCategories[index]["name"] = translatedName
+                            }
+                            translatedCategoriesCount += 1
+                            if translatedCategoriesCount == translatedCategories.count {
+                                OpenTriviaDatabaseManager.categories = translatedCategories
+                                completion(.success(translatedCategories))
+                            }
+                        }
+                    }
+
                 } catch {
                     completion(.failure(error))
                 }
