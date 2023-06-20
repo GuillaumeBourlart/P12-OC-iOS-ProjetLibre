@@ -63,7 +63,7 @@
 "7bU-Me-f3y.text" = "nombre: ";
 
 /* Class = "UIButton"; configuration.title = "iniciar sesión"; ObjectID = "7uh-XO-SLr"; */
-"7uh-XO-SLr.configuration.title" = "iniciar sesión";
+"7uh-XO-SLr.configuration.title" = "inscribirse";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "Button";
@@ -102,7 +102,7 @@
 "FF4-NQ-Ldx.placeholder" = "Código";
 
 /* Class = "UIButton"; configuration.title = "Iniciar sesión"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.configuration.title" = "Iniciar sesión";
+"GLh-lL-XXi.configuration.title" = "Inscribirse";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "Button";

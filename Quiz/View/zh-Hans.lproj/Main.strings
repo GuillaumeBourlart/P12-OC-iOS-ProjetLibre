@@ -62,7 +62,7 @@
 "7bU-Me-f3y.text" = "名称：";
 
 /* Class = "UIButton"; configuration.title = "sign in"; ObjectID = "7uh-XO-SLr"; */
-"7uh-XO-SLr.configuration.title" = "登录";
+"7uh-XO-SLr.configuration.title" = "报名";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "按钮";
@@ -101,7 +101,7 @@
 "FF4-NQ-Ldx.placeholder" = "代码";
 
 /* Class = "UIButton"; configuration.title = "Sign in"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.configuration.title" = "登录";
+"GLh-lL-XXi.configuration.title" = "报名";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "按钮";

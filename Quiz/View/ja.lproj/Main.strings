@@ -62,7 +62,7 @@
 "7bU-Me-f3y.text" = "名前：";
 
 /* Class = "UIButton"; configuration.title = "sign in"; ObjectID = "7uh-XO-SLr"; */
-"7uh-XO-SLr.configuration.title" = "ログイン";
+"7uh-XO-SLr.configuration.title" = "サインアップ";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "ボタン";
@@ -101,7 +101,7 @@
 "FF4-NQ-Ldx.placeholder" = "コード";
 
 /* Class = "UIButton"; configuration.title = "Sign in"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.configuration.title" = "サインイン";
+"GLh-lL-XXi.configuration.title" = "サインアップ";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "ボタン";

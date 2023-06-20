@@ -62,7 +62,7 @@
 "7bU-Me-f3y.text" = "имя: ";
 
 /* Class = "UIButton"; configuration.title = "войти"; ObjectID = "7uh-XO-SLr"; */
-"7uh-XO-SLr.configuration.title" = "войти";
+"7uh-XO-SLr.configuration.title" = "Зарегистрироваться";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "Кнопка";
@@ -95,7 +95,7 @@
 "FF4-NQ-Ldx.placeholder" = "Код";
 
 /* Class = "UIButton"; configuration.title = "Войти"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.configuration.title" = "Войти";
+"GLh-lL-XXi.configuration.title" = "Зарегистрироваться";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "Кнопка";

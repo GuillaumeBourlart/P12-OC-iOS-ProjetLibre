@@ -14,16 +14,16 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
     var listener: ListenerRegistration? = nil
     var isGameFound = false
     var isCancelSearchCalled = false
+    var gameFound = false
     
     override func viewDidLoad() {
+        tabBarController?.tabBar.isHidden = true
         super.viewDidLoad()
         findOpponent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if listener == nil {
-            self.navigationItem.hidesBackButton = true
-        }
+        
     }
     
     
@@ -32,7 +32,7 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
             if let listener = listener {
                 listener.remove()
             }
-            if !isCancelSearchCalled {
+            if !isCancelSearchCalled, !gameFound {
                 cancelSearch { error in
                     if let error = error {
                         print(error)
@@ -92,6 +92,7 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
             switch result {
             case .success(let gamedata):
                 if let gameID = gamedata["id"] {
+                    self.gameFound = true
                     self.performSegue(withIdentifier: "goToQuizz", sender: gameID)
                 }
             case .failure(let error):

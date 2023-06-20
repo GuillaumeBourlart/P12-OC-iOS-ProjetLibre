@@ -62,7 +62,7 @@
 "7bU-Me-f3y.text" = "이름 : ";
 
 /* Class = "UIButton"; configuration.title = "sign in"; ObjectID = "7uh-XO-SLr"; */
-"7uh-XO-SLr.configuration.title" = "로그인";
+"7uh-XO-SLr.configuration.title" = "가입하기";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "버튼";
@@ -101,7 +101,7 @@
 "FF4-NQ-Ldx.placeholder" = "코드";
 
 /* Class = "UIButton"; configuration.title = "Sign in"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.configuration.title" = "로그인";
+"GLh-lL-XXi.configuration.title" = "가입하기";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "버튼";

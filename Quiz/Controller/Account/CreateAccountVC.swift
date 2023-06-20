@@ -81,7 +81,7 @@ class CreateAccountVC: UIViewController {
         imageView.contentMode = .scaleAspectFit
         
         // Définition du placeholder en gris clair
-        let attributedPlaceholder = NSAttributedString(string: "Mail", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        let attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         userEmail.attributedPlaceholder = attributedPlaceholder
         
         var view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
@@ -117,12 +117,12 @@ class CreateAccountVC: UIViewController {
         userPseudo.layer.cornerRadius = userPseudo.frame.height / 2
         userPseudo.clipsToBounds = true
         
-        imageView = UIImageView(image: UIImage(systemName: "lock"))
+        imageView = UIImageView(image: UIImage(systemName: "person.fill"))
         imageView.tintColor = UIColor.white
         imageView.contentMode = .scaleAspectFit
        
         // Définition du placeholder en gris clair
-        let attributedPlaceholder3 = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        let attributedPlaceholder3 = NSAttributedString(string: "Pseudo", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         userPseudo.attributedPlaceholder = attributedPlaceholder3
         
         view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
