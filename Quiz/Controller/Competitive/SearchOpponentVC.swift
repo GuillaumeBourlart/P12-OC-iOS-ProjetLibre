@@ -39,6 +39,8 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
                     }
                 }
             }
+        
+        tabBarController?.tabBar.isHidden = false
         }
     
     // Fonction called by appdelegate when user click on a notification
@@ -102,7 +104,7 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? QuizzVC {
+        if let destination = segue.destination as? GameVC {
             destination.gameID = sender as? String
             destination.isCompetitive = true
         }

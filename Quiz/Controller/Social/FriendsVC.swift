@@ -34,7 +34,6 @@ class FriendsVC: UIViewController{
     
     @objc func refreshTable() {
             self.loadArrays()
-            print("reloaded")
         
     }
     
@@ -186,10 +185,9 @@ extension FriendsVC: CustomCellDelegate {
             FirebaseUser.shared.acceptFriendRequest(friendID: friendUID, friendUsername: friendUsername) { result in
                 switch result {
                 case .success():
-                    print("Friend request accepted")
                     self.loadArrays()
                 case .failure(let error):
-                    print("Erreur : \(error.localizedDescription)")
+                    print(error.localizedDescription)
                 }
             }
         }
@@ -212,7 +210,7 @@ extension FriendsVC: CustomCellDelegate {
                     case .success:
                         self.loadArrays()
                     case .failure(let error):
-                        print("Error rejecting friend request : \(error.localizedDescription)")
+                        print(error.localizedDescription)
                     }
                 }
             }
@@ -224,7 +222,7 @@ extension FriendsVC: CustomCellDelegate {
                     case .success:
                         self.loadArrays()
                     case .failure(let error):
-                        print("Error removing friend : \(error.localizedDescription)")
+                        print(error.localizedDescription)
                     }
                 }
             }

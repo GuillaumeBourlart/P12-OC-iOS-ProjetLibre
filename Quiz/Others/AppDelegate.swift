@@ -333,7 +333,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
         
         // Sélectionnez le navigationController contenant la page Profil
         // Ici, on suppose que le navigationController est le deuxième onglet. Modifiez l'index en fonction de votre configuration.
-        tabBarController.selectedIndex = 1
+        tabBarController.selectedIndex = 2
         
         // Assurez-vous que le navigationController est bien le contrôleur de vue sélectionné
         guard let navigationController = tabBarController.selectedViewController as? UINavigationController else {
@@ -345,9 +345,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
         navigationController.popToRootViewController(animated: false)
         let storyboard = UIStoryboard(name: "Main", bundle: nil) // Remplacez "Main" par le nom de votre storyboard
         // Naviguez vers la page Profil, si ce n'est pas déjà la vue de base
-        if !(navigationController.topViewController is ProfilVC) {
+        if !(navigationController.topViewController is SocialVC) {
             
-            if let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfilVC") as? ProfilVC {
+            if let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfilVC") as? SocialVC {
                 // Utilisez friendsViewController ici
                 navigationController.pushViewController(profileViewController, animated: false)
             }
@@ -384,9 +384,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
                 navigationController.popToRootViewController(animated: false)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil) // Remplacez "Main" par le nom de votre storyboard
                 // Naviguez vers la page Profil, si ce n'est pas déjà la vue de base
-                if !(navigationController.topViewController is HomeVC) {
+                if !(navigationController.topViewController is QuickPlayVC) {
                     
-                    if let profileViewController = storyboard.instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
+                    if let profileViewController = storyboard.instantiateViewController(withIdentifier: "HomeVC") as? QuickPlayVC {
                         // Utilisez friendsViewController ici
                         navigationController.pushViewController(profileViewController, animated: false)
                     }

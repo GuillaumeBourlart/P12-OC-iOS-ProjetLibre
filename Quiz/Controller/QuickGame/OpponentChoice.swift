@@ -59,7 +59,6 @@ class OpponentChoice: UIViewController {
                     }
                 }
             default:
-                print("error")
                 for button in self.buttons {
                     button.isEnabled = true
                 }
@@ -69,7 +68,7 @@ class OpponentChoice: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? QuizzVC {
+        if let destination = segue.destination as? GameVC {
             destination.gameID = sender as? String
             destination.isCompetitive = false
             

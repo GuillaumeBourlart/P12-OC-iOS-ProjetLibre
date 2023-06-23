@@ -8,7 +8,7 @@ import FirebaseFirestore
 import Foundation
 import UIKit
 
-class ModificationVC: UIViewController{
+class ModifyQuizVC: UIViewController{
     
     @IBOutlet weak var modifyButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
@@ -151,10 +151,9 @@ class ModificationVC: UIViewController{
                 FirebaseUser.shared.updateQuiz(quizID: quiz.id, newName: name, newCategoryID: theme, newDifficulty: difficulty) { result in
                     switch result {
                     case .success():
-                        print("Quiz modifié avec succès.")
                         self.tableView.reloadData()
                     case .failure(let error):
-                        print("Erreur lors de la modification des infos du quiz : \(error.localizedDescription)")
+                        print(error.localizedDescription)
                     }
                     self.addQuestionButton.isEnabled = true
                     self.launchQuizButton.isEnabled = true
@@ -165,10 +164,9 @@ class ModificationVC: UIViewController{
                 FirebaseUser.shared.updateGroupName(groupID: group.id, newName: name) { result in
                     switch result {
                     case .success():
-                        print("Groupe modifié avec succès.")
                         self.tableView.reloadData()
                     case .failure(let error):
-                        print("Erreur lors de la modification du nom du groupe d'amis : \(error.localizedDescription)")
+                        print(error.localizedDescription)
                     }
                     self.addQuestionButton.isEnabled = true
                     self.launchQuizButton.isEnabled = true
@@ -241,7 +239,7 @@ class ModificationVC: UIViewController{
         }
     }
     
-    extension ModificationVC: UITableViewDelegate, UITableViewDataSource {
+    extension ModifyQuizVC: UITableViewDelegate, UITableViewDataSource {
         
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             return 70.0 // Remplacer par la hauteur désirée
@@ -271,7 +269,9 @@ class ModificationVC: UIViewController{
                 cell.label.text = userName
             }
             
-            let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+            let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
+            whiteDisclosureIndicator.tintColor = .white // Remplacez "customDisclosureIndicator" par le nom de votre image.
+            whiteDisclosureIndicator.backgroundColor = UIColor.clear
             whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
             cell.accessoryView = whiteDisclosureIndicator
             
@@ -280,12 +280,9 @@ class ModificationVC: UIViewController{
         
         func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             if editingStyle == .delete {
-                print(1)
                 if let quiz = quiz {
-                    print(2)
-                    print("IndexPath: \(indexPath)")
                     if tableView.cellForRow(at: indexPath) is CustomCell {
-                        print(3)
+                        
                         let questionIdToDelete = Array(quiz.questions.keys)[indexPath.row]
                         
                         // Supprimer la question de la base de données
@@ -325,7 +322,7 @@ class ModificationVC: UIViewController{
             }
         }
     }
-    extension ModificationVC: UITextFieldDelegate {
+    extension ModifyQuizVC: UITextFieldDelegate {
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             nameField.resignFirstResponder()
             themeField.resignFirstResponder()

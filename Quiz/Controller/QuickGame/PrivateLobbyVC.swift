@@ -220,7 +220,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? InvitePlayersVC {
             destination.lobbyID = lobbyId
-        }else if let destination = segue.destination as? QuizzVC {
+        }else if let destination = segue.destination as? GameVC {
             destination.gameID = sender as? String
             destination.isCompetitive = false
         }

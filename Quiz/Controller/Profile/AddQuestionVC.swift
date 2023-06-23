@@ -58,7 +58,6 @@ class AddQuestionVC: UIViewController {
                   let incorrectAnswer3 = self.incorrectAnswersFields[2].text, !incorrectAnswer3.isEmpty,
                   let explanation = self.explanationField.text, !explanation.isEmpty
             else {
-                // vous pouvez afficher un message d'erreur ici
                 print("At least on field is empty")
                 self.validateButton.isEnabled = true
                 return
@@ -67,25 +66,24 @@ class AddQuestionVC: UIViewController {
             if self.existingQuestion != nil , let existingQuestionId = self.existingQuestionId, let quiz = self.quiz {
                 FirebaseUser.shared.updateQuestionInQuiz(quiz: quiz, oldQuestionId: existingQuestionId, newQuestionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                     switch result {
-                    case .success():print("Question successfully added")
+                    case .success():
                         self.navigationController?.popViewController(animated: true)
                     case .failure(let error):
-                        print("Error updating question : \(error)")
+                        print(error)
                         self.validateButton.isEnabled = true
                     }
                 }
             } else if let quiz = self.quiz {
                 FirebaseUser.shared.addQuestionToQuiz(quiz: quiz, questionText: question, correctAnswer: correctAnswer, incorrectAnswers: [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3], explanation: explanation) { result in
                     switch result {
-                    case .success():print("Question successfully added")
+                    case .success():
                         self.navigationController?.popViewController(animated: true)
                     case .failure(let error):
-                        print("Error adding question : \(error)")
+                        print(error)
                         self.validateButton.isEnabled = true
                     }
                 }
             } else {
-                print("error")
                 self.validateButton.isEnabled = true
             }
         }

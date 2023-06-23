@@ -7,21 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E33A70D2A44C258008947BF /* GroupsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A70C2A44C258008947BF /* GroupsVC.swift */; };
+		7E33A70F2A44C616008947BF /* ModifyGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A70E2A44C616008947BF /* ModifyGroupVC.swift */; };
+		7E33A7112A44E3A0008947BF /* SocialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A7102A44E3A0008947BF /* SocialVC.swift */; };
 		7E53C1432A3C80210046CC5E /* DeeplTranslatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */; };
-		7E53C1472A3C90390046CC5E /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53C1462A3C90390046CC5E /* LanguageCell.swift */; };
-		7E53C14B2A3C921E0046CC5E /* fr.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1482A3C921E0046CC5E /* fr.png */; };
-		7E53C14C2A3C921E0046CC5E /* en.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1492A3C921E0046CC5E /* en.png */; };
-		7E53C14D2A3C921E0046CC5E /* es.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C14A2A3C921E0046CC5E /* es.png */; };
 		7E53C14F2A3C97900046CC5E /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 7E53C14E2A3C97900046CC5E /* FirebasePerformance */; };
-		7E53C1562A3C9A270046CC5E /* pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1502A3C9A270046CC5E /* pt.png */; };
-		7E53C1572A3C9A270046CC5E /* ja.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1512A3C9A270046CC5E /* ja.png */; };
-		7E53C1582A3C9A270046CC5E /* ru.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1522A3C9A270046CC5E /* ru.png */; };
-		7E53C1592A3C9A270046CC5E /* ko.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1532A3C9A270046CC5E /* ko.png */; };
-		7E53C15A2A3C9A270046CC5E /* it.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1542A3C9A270046CC5E /* it.png */; };
-		7E53C15B2A3C9A270046CC5E /* de.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C1552A3C9A270046CC5E /* de.png */; };
-		7E53C15D2A3C9A760046CC5E /* zh.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E53C15C2A3C9A760046CC5E /* zh.png */; };
 		7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F99A52A39FCF800476A4D /* SettingsCell.swift */; };
-		7E5F99AC2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */; };
 		7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B992A38BAB20025AC80 /* incorrect.mp3 */; };
 		7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9A2A38BAB20025AC80 /* correct.mp3 */; };
 		7E727B9F2A38BDD20025AC80 /* lose.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9D2A38BDD20025AC80 /* lose.mp3 */; };
@@ -41,15 +32,15 @@
 		D01EDCE42A182A3400FF3163 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCE32A182A3400FF3163 /* FirebaseMessaging */; };
 		D01EDCE62A182A3400FF3163 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D01EDCE52A182A3400FF3163 /* FirebaseStorage */; };
 		D03083E42A0F8A5100A8FBB7 /* CompetitiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083D82A0F8A4F00A8FBB7 /* CompetitiveVC.swift */; };
-		D03083E52A0F8A5100A8FBB7 /* ModificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */; };
-		D03083E62A0F8A5100A8FBB7 /* ProfilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DA2A0F8A4F00A8FBB7 /* ProfilVC.swift */; };
-		D03083E72A0F8A5100A8FBB7 /* QuizzVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DB2A0F8A4F00A8FBB7 /* QuizzVC.swift */; };
+		D03083E52A0F8A5100A8FBB7 /* ModifyQuizVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083D92A0F8A4F00A8FBB7 /* ModifyQuizVC.swift */; };
+		D03083E62A0F8A5100A8FBB7 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DA2A0F8A4F00A8FBB7 /* ProfileVC.swift */; };
+		D03083E72A0F8A5100A8FBB7 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DB2A0F8A4F00A8FBB7 /* GameVC.swift */; };
 		D03083E82A0F8A5100A8FBB7 /* ResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DC2A0F8A5000A8FBB7 /* ResultVC.swift */; };
 		D03083E92A0F8A5100A8FBB7 /* SearchOpponentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DD2A0F8A5000A8FBB7 /* SearchOpponentVC.swift */; };
 		D03083EA2A0F8A5200A8FBB7 /* FriendsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DE2A0F8A5000A8FBB7 /* FriendsVC.swift */; };
 		D03083EB2A0F8A5200A8FBB7 /* OpponentChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083DF2A0F8A5000A8FBB7 /* OpponentChoice.swift */; };
 		D03083EC2A0F8A5200A8FBB7 /* QuickPlayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083E02A0F8A5100A8FBB7 /* QuickPlayVC.swift */; };
-		D03083ED2A0F8A5200A8FBB7 /* QuizzGroupsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083E12A0F8A5100A8FBB7 /* QuizzGroupsVC.swift */; };
+		D03083ED2A0F8A5200A8FBB7 /* QuizzesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083E12A0F8A5100A8FBB7 /* QuizzesVC.swift */; };
 		D03083EE2A0F8A5200A8FBB7 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083E22A0F8A5100A8FBB7 /* LoginVC.swift */; };
 		D03083EF2A0F8A5200A8FBB7 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083E32A0F8A5100A8FBB7 /* CreateAccountVC.swift */; };
 		D03083F62A0F8A7900A8FBB7 /* OpenTriviaDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03083F12A0F8A7800A8FBB7 /* OpenTriviaDatabaseManager.swift */; };
@@ -108,20 +99,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E33A70C2A44C258008947BF /* GroupsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsVC.swift; sourceTree = "<group>"; };
+		7E33A70E2A44C616008947BF /* ModifyGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGroupVC.swift; sourceTree = "<group>"; };
+		7E33A7102A44E3A0008947BF /* SocialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialVC.swift; sourceTree = "<group>"; };
+		7E4D5FB72A45C02100C264A9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplTranslatorManager.swift; sourceTree = "<group>"; };
-		7E53C1462A3C90390046CC5E /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
-		7E53C1482A3C921E0046CC5E /* fr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fr.png; sourceTree = "<group>"; };
-		7E53C1492A3C921E0046CC5E /* en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = en.png; sourceTree = "<group>"; };
-		7E53C14A2A3C921E0046CC5E /* es.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = es.png; sourceTree = "<group>"; };
-		7E53C1502A3C9A270046CC5E /* pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pt.png; sourceTree = "<group>"; };
-		7E53C1512A3C9A270046CC5E /* ja.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ja.png; sourceTree = "<group>"; };
-		7E53C1522A3C9A270046CC5E /* ru.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ru.png; sourceTree = "<group>"; };
-		7E53C1532A3C9A270046CC5E /* ko.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ko.png; sourceTree = "<group>"; };
-		7E53C1542A3C9A270046CC5E /* it.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = it.png; sourceTree = "<group>"; };
-		7E53C1552A3C9A270046CC5E /* de.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = de.png; sourceTree = "<group>"; };
-		7E53C15C2A3C9A760046CC5E /* zh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zh.png; sourceTree = "<group>"; };
 		7E5F99A52A39FCF800476A4D /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
-		7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteCustomDisclosureIndicator.png; sourceTree = "<group>"; };
 		7E727B992A38BAB20025AC80 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
 		7E727B9A2A38BAB20025AC80 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
 		7E727B9D2A38BDD20025AC80 /* lose.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lose.mp3; sourceTree = "<group>"; };
@@ -131,7 +114,6 @@
 		7E727BA52A38CC810025AC80 /* slide.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slide.mp3; sourceTree = "<group>"; };
 		7E98147B2A3DF61A008F3A4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7E98147D2A3DF632008F3A4B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
-		7E98147E2A3DF63F008F3A4B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		7E9814802A3DF65D008F3A4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		7E9814812A3DF66B008F3A4B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		7E9814822A3DF692008F3A4B /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
@@ -154,15 +136,15 @@
 		D00BD4412A2BCC530021230E /* AddQuestionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuestionVC.swift; sourceTree = "<group>"; };
 		D00BD4432A2BCC670021230E /* AddMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberVC.swift; sourceTree = "<group>"; };
 		D03083D82A0F8A4F00A8FBB7 /* CompetitiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompetitiveVC.swift; sourceTree = "<group>"; };
-		D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModificationVC.swift; sourceTree = "<group>"; };
-		D03083DA2A0F8A4F00A8FBB7 /* ProfilVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilVC.swift; sourceTree = "<group>"; };
-		D03083DB2A0F8A4F00A8FBB7 /* QuizzVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzVC.swift; sourceTree = "<group>"; };
+		D03083D92A0F8A4F00A8FBB7 /* ModifyQuizVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyQuizVC.swift; sourceTree = "<group>"; };
+		D03083DA2A0F8A4F00A8FBB7 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		D03083DB2A0F8A4F00A8FBB7 /* GameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 		D03083DC2A0F8A5000A8FBB7 /* ResultVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultVC.swift; sourceTree = "<group>"; };
 		D03083DD2A0F8A5000A8FBB7 /* SearchOpponentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOpponentVC.swift; sourceTree = "<group>"; };
 		D03083DE2A0F8A5000A8FBB7 /* FriendsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsVC.swift; sourceTree = "<group>"; };
 		D03083DF2A0F8A5000A8FBB7 /* OpponentChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentChoice.swift; sourceTree = "<group>"; };
 		D03083E02A0F8A5100A8FBB7 /* QuickPlayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickPlayVC.swift; sourceTree = "<group>"; };
-		D03083E12A0F8A5100A8FBB7 /* QuizzGroupsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzGroupsVC.swift; sourceTree = "<group>"; };
+		D03083E12A0F8A5100A8FBB7 /* QuizzesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzesVC.swift; sourceTree = "<group>"; };
 		D03083E22A0F8A5100A8FBB7 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D03083E32A0F8A5100A8FBB7 /* CreateAccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountVC.swift; sourceTree = "<group>"; };
 		D03083F12A0F8A7800A8FBB7 /* OpenTriviaDatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTriviaDatabaseManager.swift; sourceTree = "<group>"; };
@@ -239,21 +221,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7E53C15E2A3C9AE30046CC5E /* flagsImages */ = {
+		7E0840092A45375200B82CFD /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				7E53C1552A3C9A270046CC5E /* de.png */,
-				7E53C1532A3C9A270046CC5E /* ko.png */,
-				7E53C15C2A3C9A760046CC5E /* zh.png */,
-				7E53C1542A3C9A270046CC5E /* it.png */,
-				7E53C1512A3C9A270046CC5E /* ja.png */,
-				7E53C1502A3C9A270046CC5E /* pt.png */,
-				7E53C1522A3C9A270046CC5E /* ru.png */,
-				7E53C14A2A3C921E0046CC5E /* es.png */,
-				7E53C1492A3C921E0046CC5E /* en.png */,
-				7E53C1482A3C921E0046CC5E /* fr.png */,
+				D03083E22A0F8A5100A8FBB7 /* LoginVC.swift */,
+				D03083E32A0F8A5100A8FBB7 /* CreateAccountVC.swift */,
 			);
-			path = flagsImages;
+			path = Register;
+			sourceTree = "<group>";
+		};
+		7E33A7122A45342F008947BF /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				7E33A7102A44E3A0008947BF /* SocialVC.swift */,
+				D05B8F452A1E2B3B0064795D /* InvitesVC.swift */,
+				D03083DE2A0F8A5000A8FBB7 /* FriendsVC.swift */,
+				7E33A70C2A44C258008947BF /* GroupsVC.swift */,
+				7E33A70E2A44C616008947BF /* ModifyGroupVC.swift */,
+				D00BD4432A2BCC670021230E /* AddMemberVC.swift */,
+			);
+			path = Social;
 			sourceTree = "<group>";
 		};
 		7E53C15F2A3C9AF50046CC5E /* soounds */ = {
@@ -283,11 +270,14 @@
 			isa = PBXGroup;
 			children = (
 				D0B8D42B2A1BA5560033467D /* HomeVC.swift */,
-				D0B06A682A1C0AAC00D70E47 /* Account */,
+				7E0840092A45375200B82CFD /* Register */,
+				7E33A7122A45342F008947BF /* Social */,
+				D0B06A682A1C0AAC00D70E47 /* Profile */,
 				D0B06A692A1C0ABE00D70E47 /* Competitive */,
 				D0B06A6A2A1C0AF800D70E47 /* QuickGame */,
+				D03083DB2A0F8A4F00A8FBB7 /* GameVC.swift */,
 				D03083DC2A0F8A5000A8FBB7 /* ResultVC.swift */,
-				D08CAE712A23DE0800C835E9 /* JoinWithCodeVC.swift */,
+				D074D66F2A26A2A7004942C4 /* QuestionResultVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -317,7 +307,6 @@
 				D03083FD2A0F8AB000A8FBB7 /* Settings.swift */,
 				D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */,
 				7E5F99A52A39FCF800476A4D /* SettingsCell.swift */,
-				7E53C1462A3C90390046CC5E /* LanguageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -377,8 +366,6 @@
 			isa = PBXGroup;
 			children = (
 				7E53C15F2A3C9AF50046CC5E /* soounds */,
-				7E53C15E2A3C9AE30046CC5E /* flagsImages */,
-				7E5F99AB2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png */,
 				D084EC452A0F7EF700544AA3 /* Assets.xcassets */,
 				D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */,
 				D084EC392A0F7EF400544AA3 /* AppDelegate.swift */,
@@ -386,23 +373,16 @@
 			path = Others;
 			sourceTree = "<group>";
 		};
-		D0B06A682A1C0AAC00D70E47 /* Account */ = {
+		D0B06A682A1C0AAC00D70E47 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				D03083E22A0F8A5100A8FBB7 /* LoginVC.swift */,
-				D03083E32A0F8A5100A8FBB7 /* CreateAccountVC.swift */,
-				D03083DA2A0F8A4F00A8FBB7 /* ProfilVC.swift */,
-				D03083DE2A0F8A5000A8FBB7 /* FriendsVC.swift */,
-				D03083E12A0F8A5100A8FBB7 /* QuizzGroupsVC.swift */,
+				D03083DA2A0F8A4F00A8FBB7 /* ProfileVC.swift */,
 				D084FB132A10309200721B88 /* HistoryVC.swift */,
-				D03083DB2A0F8A4F00A8FBB7 /* QuizzVC.swift */,
-				D05B8F452A1E2B3B0064795D /* InvitesVC.swift */,
-				D074D66F2A26A2A7004942C4 /* QuestionResultVC.swift */,
-				D03083D92A0F8A4F00A8FBB7 /* ModificationVC.swift */,
+				D03083E12A0F8A5100A8FBB7 /* QuizzesVC.swift */,
+				D03083D92A0F8A4F00A8FBB7 /* ModifyQuizVC.swift */,
 				D00BD4412A2BCC530021230E /* AddQuestionVC.swift */,
-				D00BD4432A2BCC670021230E /* AddMemberVC.swift */,
 			);
-			path = Account;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		D0B06A692A1C0ABE00D70E47 /* Competitive */ = {
@@ -419,8 +399,9 @@
 			children = (
 				D03083E02A0F8A5100A8FBB7 /* QuickPlayVC.swift */,
 				D03083DF2A0F8A5000A8FBB7 /* OpponentChoice.swift */,
-				D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */,
 				D05B8F422A1DF0420064795D /* PrivateLobbyVC.swift */,
+				D05B8F402A1DF0360064795D /* InvitePlayersVC.swift */,
+				D08CAE712A23DE0800C835E9 /* JoinWithCodeVC.swift */,
 			);
 			path = QuickGame;
 			sourceTree = "<group>";
@@ -580,30 +561,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E53C1582A3C9A270046CC5E /* ru.png in Resources */,
-				7E53C14C2A3C921E0046CC5E /* en.png in Resources */,
 				7E727BA02A38BDD20025AC80 /* button.mp3 in Resources */,
 				7E727BA62A38CC810025AC80 /* slide.mp3 in Resources */,
 				D084EC492A0F7EF700544AA3 /* LaunchScreen.storyboard in Resources */,
-				7E53C15B2A3C9A270046CC5E /* de.png in Resources */,
-				7E53C1572A3C9A270046CC5E /* ja.png in Resources */,
 				7E727BA22A38BDF80025AC80 /* win.mp3 in Resources */,
-				7E53C1562A3C9A270046CC5E /* pt.png in Resources */,
-				7E53C1592A3C9A270046CC5E /* ko.png in Resources */,
 				7E727BA42A38CB850025AC80 /* beep.mp3 in Resources */,
 				7E98147A2A3DF61A008F3A4B /* Main.storyboard in Resources */,
 				7ED6FEF42A3772F6001AC0DE /* GoogleService-Info.plist in Resources */,
 				7E98148D2A3E8975008F3A4B /* Localizable.strings in Resources */,
-				7E53C15A2A3C9A270046CC5E /* it.png in Resources */,
 				7E727B9F2A38BDD20025AC80 /* lose.mp3 in Resources */,
-				7E53C14B2A3C921E0046CC5E /* fr.png in Resources */,
 				7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */,
-				7E5F99AC2A3A158C00476A4D /* whiteCustomDisclosureIndicator.png in Resources */,
 				D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */,
 				D04A5B922A321B950049F02A /* appMusic.mp3 in Resources */,
-				7E53C14D2A3C921E0046CC5E /* es.png in Resources */,
 				7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */,
-				7E53C15D2A3C9A760046CC5E /* zh.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,7 +592,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D05B8F432A1DF0420064795D /* PrivateLobbyVC.swift in Sources */,
-				D03083E72A0F8A5100A8FBB7 /* QuizzVC.swift in Sources */,
+				7E33A7112A44E3A0008947BF /* SocialVC.swift in Sources */,
+				D03083E72A0F8A5100A8FBB7 /* GameVC.swift in Sources */,
 				D03083E82A0F8A5100A8FBB7 /* ResultVC.swift in Sources */,
 				D03083EE2A0F8A5200A8FBB7 /* LoginVC.swift in Sources */,
 				7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */,
@@ -633,15 +604,16 @@
 				D03083EA2A0F8A5200A8FBB7 /* FriendsVC.swift in Sources */,
 				D03083EF2A0F8A5200A8FBB7 /* CreateAccountVC.swift in Sources */,
 				D0B8D42C2A1BA5560033467D /* HomeVC.swift in Sources */,
-				D03083E52A0F8A5100A8FBB7 /* ModificationVC.swift in Sources */,
+				D03083E52A0F8A5100A8FBB7 /* ModifyQuizVC.swift in Sources */,
 				D03083E92A0F8A5100A8FBB7 /* SearchOpponentVC.swift in Sources */,
+				7E33A70D2A44C258008947BF /* GroupsVC.swift in Sources */,
 				D030840B2A0F8CEB00A8FBB7 /* CategoryCell.swift in Sources */,
 				D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */,
 				7E53C1432A3C80210046CC5E /* DeeplTranslatorManager.swift in Sources */,
 				D03083F82A0F8A7900A8FBB7 /* AlamofireService.swift in Sources */,
 				D03083EC2A0F8A5200A8FBB7 /* QuickPlayVC.swift in Sources */,
 				D03083F62A0F8A7900A8FBB7 /* OpenTriviaDatabaseManager.swift in Sources */,
-				D03083E62A0F8A5100A8FBB7 /* ProfilVC.swift in Sources */,
+				D03083E62A0F8A5100A8FBB7 /* ProfileVC.swift in Sources */,
 				D03083F72A0F8A7900A8FBB7 /* Game.swift in Sources */,
 				D00BD4442A2BCC670021230E /* AddMemberVC.swift in Sources */,
 				D03083FA2A0F8A7900A8FBB7 /* Structures.swift in Sources */,
@@ -653,13 +625,13 @@
 				D0B582452A33622D00C0D5E2 /* CustomAnimations.swift in Sources */,
 				D05B8F412A1DF0360064795D /* InvitePlayersVC.swift in Sources */,
 				D00BD4422A2BCC530021230E /* AddQuestionVC.swift in Sources */,
-				7E53C1472A3C90390046CC5E /* LanguageCell.swift in Sources */,
 				D074D6702A26A2A7004942C4 /* QuestionResultVC.swift in Sources */,
 				D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */,
 				D03084022A0F8AB100A8FBB7 /* Settings.swift in Sources */,
 				D08CAE722A23DE0800C835E9 /* JoinWithCodeVC.swift in Sources */,
+				7E33A70F2A44C616008947BF /* ModifyGroupVC.swift in Sources */,
 				D084EC3C2A0F7EF400544AA3 /* SceneDelegate.swift in Sources */,
-				D03083ED2A0F8A5200A8FBB7 /* QuizzGroupsVC.swift in Sources */,
+				D03083ED2A0F8A5200A8FBB7 /* QuizzesVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,7 +664,6 @@
 			children = (
 				7E98147B2A3DF61A008F3A4B /* Base */,
 				7E98147D2A3DF632008F3A4B /* fr */,
-				7E98147E2A3DF63F008F3A4B /* es */,
 				7E9814802A3DF65D008F3A4B /* ru */,
 				7E9814812A3DF66B008F3A4B /* de */,
 				7E9814822A3DF692008F3A4B /* it */,
@@ -701,6 +672,7 @@
 				7E9814852A3DF71E008F3A4B /* zh-Hans */,
 				7E9814862A3DFABC008F3A4B /* pt */,
 				7E9814892A3DFBD0008F3A4B /* en */,
+				7E4D5FB72A45C02100C264A9 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

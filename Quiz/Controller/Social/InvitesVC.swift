@@ -27,7 +27,6 @@ class InvitesVC: UIViewController {
         @objc func refreshTable() {
             DispatchQueue.main.async {
                 self.loadInvites()
-                print("reloaded")
             }
         }
         
@@ -100,8 +99,10 @@ extension InvitesVC: UITableViewDataSource {
         let invite = Array(invites)[indexPath.row]
         cell.label.text = "User: \(invite.key) - Lobby: \(invite.value)"
         
-        let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
-        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
+        whiteDisclosureIndicator.tintColor = .white // Remplacez "customDisclosureIndicator" par le nom de votre image.
+        whiteDisclosureIndicator.backgroundColor = UIColor.clear
+        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
         cell.accessoryView = whiteDisclosureIndicator
         
         return cell

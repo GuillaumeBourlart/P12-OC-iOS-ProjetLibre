@@ -82,7 +82,6 @@ extension HistoryVC: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
         
             let selectedGame = games[indexPath.row]
-            print("selected match : \(selectedGame)")
         performSegue(withIdentifier: "goToResult", sender: selectedGame)
     }
     

@@ -25,40 +25,35 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
     }
     // Section 1
     enum AccountOptions: Int, CaseIterable, SectionType {
-        case friends
-        case group
+        case social
         case history
         case quizzes
-        case invites
+        case disconnect
         // titles
         var description: String {
             switch self {
-                        case .friends:
-                            return NSLocalizedString("Friends", comment: "")
-                        case .group:
-                            return NSLocalizedString("Groups", comment: "")
+                        case .social:
+                            return NSLocalizedString("Social", comment: "")
                         case .history:
                             return NSLocalizedString("History", comment: "")
                         case .quizzes:
                             return NSLocalizedString("Quizzes", comment: "")
-                        case .invites:
-                            return NSLocalizedString("Invites", comment: "")
-                        }
+            case .disconnect:
+                return NSLocalizedString("Disconnect", comment: "")
+            }
             
         }
         // Segue's IDS
         var segueIdentifier: String? {
             switch self {
-            case .friends:
-                return "goToFriends"
-            case .group:
-                return "goToQuizzOrGroups"
+            case .social:
+                return "goToSocial"
             case .history:
                 return "goToHistory"
             case .quizzes:
                 return "goToQuizzOrGroups"
-            case .invites:
-                return "goToInvites"
+            case .disconnect:
+                return "goToDisconnect"
             }
         }
         

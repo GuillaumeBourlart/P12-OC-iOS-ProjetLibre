@@ -34,6 +34,12 @@ class CompetitiveVC: UIViewController{
                }
            }
            self.startButton.isEnabled = true
+           
+           navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+           navigationController?.navigationBar.shadowImage = UIImage()
+           navigationController?.navigationBar.isTranslucent = true
+           navigationController?.navigationBar.tintColor = UIColor.white
+           navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2") ?? UIColor.magenta]
        }
        
     func updateUI() {

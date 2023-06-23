@@ -244,4 +244,3 @@ func translateQuestions(questions : [String: UniversalQuestion], to: String, com
 }
 
 
-

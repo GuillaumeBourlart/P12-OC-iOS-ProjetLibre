@@ -31,7 +31,6 @@ class JoinWithCodeVC: UIViewController {
                 case .failure(let error): print(error)
                     self.joinButton.isEnabled = true
                 case .success(let lobbyID): self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyID)
-                    
                 }
             }
         }

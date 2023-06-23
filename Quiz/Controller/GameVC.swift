@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class QuizzVC: UIViewController, LeavePageProtocol {
+class GameVC: UIViewController, LeavePageProtocol {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
@@ -35,7 +35,6 @@ class QuizzVC: UIViewController, LeavePageProtocol {
         
             showLeaveConfirmation {
                 self.leaveGame {
-                    print("Successfully left game")
                     completion()
                 }
             }
@@ -70,8 +69,6 @@ class QuizzVC: UIViewController, LeavePageProtocol {
         Game.shared.getQuestions(quizId: nil, gameId: gameID!) { result in
             switch result {
             case .success(let questions):
-                print("après la closure : \(questions)")
-                
                 if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
                     translateQuestions(questions: questions, to: languageCode) { questions in
                         self.questions = questions
@@ -156,7 +153,6 @@ class QuizzVC: UIViewController, LeavePageProtocol {
     @IBAction func leavebuttonPressed(_ sender: Any) {
         showLeaveConfirmation {
                self.leaveGame {
-                   print("Successfully left game")
                }
            }
     }
@@ -219,10 +215,26 @@ class QuizzVC: UIViewController, LeavePageProtocol {
                 print("unwindToInvites")
                 self.performSegue(withIdentifier: "unwindToInvites", sender: self)
             } else {
-                self.performSegue(withIdentifier: "unwindToHomeVC", sender: self)
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                       print("Could not get app delegate")
+                       return
+                   }
+                   if let viewControllers = appDelegate.mainTabBarController?.viewControllers {
+                       print("Found \(viewControllers.count) view controllers in tab bar")
+                       for viewController in viewControllers {
+                           if let navigationController = viewController as? UINavigationController {
+                               print("Found a navigation controller with \(navigationController.viewControllers.count) view controllers")
+                               navigationController.popToRootViewController(animated: false)
+                               print("After pop, it now has \(navigationController.viewControllers.count) view controllers")
+                           } else {
+                               print("Found a view controller that is not a navigation controller: \(viewController)")
+                           }
+                       }
+                   } else {
+                       print("mainTabBarController does not have any viewControllers")
+                   }
             }
         } else {
-            print("error")
             self.leaveButton.isEnabled = true
         }
     }

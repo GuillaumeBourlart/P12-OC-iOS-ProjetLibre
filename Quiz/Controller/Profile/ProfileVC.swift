@@ -8,9 +8,7 @@ import Foundation
 import UIKit
 import FirebaseStorage
 
-class ProfilVC: UIViewController{
-    
-    
+class ProfileVC: UIViewController{
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -62,7 +60,7 @@ class ProfilVC: UIViewController{
     }
     
     // Call function to log out
-    @IBAction func logout(_ sender: Any) {
+     func logout() {
         FirebaseUser.shared.signOut { result in
             switch result {
             case .failure(let error): print(error)
@@ -72,16 +70,6 @@ class ProfilVC: UIViewController{
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? QuizzGroupsVC {
-            guard let text = sender as? String else { return }
-            if text == "Groups" {
-                destination.isQuizList = false
-            }else{
-                destination.isQuizList = true
-            }
-        }
-    }
     
     // Fonction qui sera appelée lorsque l'utilisateur appuie sur profileImageView.
     @objc func profileImageTapped() {
@@ -106,7 +94,7 @@ class ProfilVC: UIViewController{
 
 
 // Extension for image picker, to change profil Image
-extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePickerController.sourceType = .camera
@@ -158,7 +146,7 @@ extension ProfilVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     
 }
 
-extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
+extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         
@@ -191,8 +179,6 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? SettingsCell else {
             return UITableViewCell()
@@ -211,10 +197,13 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
         }
         if !(cell.sectionType?.containsSwitch ?? false) {
 //            cell.accessoryType = .disclosureIndicator
-            let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+            let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
+            whiteDisclosureIndicator.tintColor = .white // Remplacez "customDisclosureIndicator" par le nom de votre image.
             whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
             cell.accessoryView = whiteDisclosureIndicator
         }
+        
+        
         
         cell.delegate = self
         
@@ -235,14 +224,15 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
         switch settingsSection {
         case .account:
             if let accountOption = SettingsSections.AccountOptions(rawValue: indexPath.row) {
-                print("user chose option \(accountOption.description) in account section")
+                guard accountOption.segueIdentifier != "goToSocial" else { appDelegate.mainTabBarController?.selectedIndex = 2; return }
+                
+                guard accountOption.segueIdentifier != "goToDisconnect" else {logout(); return }
                 if let identifier = accountOption.segueIdentifier {
                     performSegue(withIdentifier: identifier, sender: accountOption.description)
                 }
             }
         case .preferences:
             if let securityOption = SettingsSections.SecurityOptions(rawValue: indexPath.row) {
-                print("user chose option \(securityOption.description) in security section")
                 if let identifier = securityOption.segueIdentifier {
                     performSegue(withIdentifier: identifier, sender: securityOption.description)
                 }
@@ -252,7 +242,7 @@ extension ProfilVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension ProfilVC: SettingsCellDelegate{
+extension ProfileVC: SettingsCellDelegate{
     func didChangeSwitchValue(in cell: SettingsCell, isOn: Bool) {
         print("1")
         switch isOn {

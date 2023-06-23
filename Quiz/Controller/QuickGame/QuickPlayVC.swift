@@ -13,7 +13,6 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var searchQuizField: UITextField!
     
     var categories: [[String: Any]] = []
     let apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()))
@@ -22,13 +21,20 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2") ?? UIColor.magenta]
+        
         loadCategories()
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         // margins total = 40 (left) + 40 (right)
-        let margins: CGFloat = 40 + 40
+        let margins: CGFloat = 20 + 20
         // spacing between cells
-        let spacing: CGFloat = 25
+        let spacing: CGFloat = 20
         // Get the screen's width
         let screenWidth = UIScreen.main.bounds.width
         // Calculate the width for each item
@@ -44,7 +50,6 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         
         let placeholderText = "Search a quiz here"
 
-        searchQuizField.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
     }
     
