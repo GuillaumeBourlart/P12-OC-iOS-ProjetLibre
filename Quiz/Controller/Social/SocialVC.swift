@@ -30,7 +30,6 @@ class SocialVC: UIViewController {
         }
 
         let test = NSLocalizedString("TestKey", comment: "")
-        print(test)
     }
 
     override func viewWillAppear(_ animated: Bool) {
