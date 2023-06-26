@@ -32,12 +32,12 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
         // titles
         var description: String {
             switch self {
-                        case .social:
-                            return NSLocalizedString("Social", comment: "")
-                        case .history:
-                            return NSLocalizedString("History", comment: "")
-                        case .quizzes:
-                            return NSLocalizedString("Quizzes", comment: "")
+            case .social:
+                return NSLocalizedString("Social", comment: "")
+            case .history:
+                return NSLocalizedString("History", comment: "")
+            case .quizzes:
+                return NSLocalizedString("Quizzes", comment: "")
             case .disconnect:
                 return NSLocalizedString("Disconnect", comment: "")
             }

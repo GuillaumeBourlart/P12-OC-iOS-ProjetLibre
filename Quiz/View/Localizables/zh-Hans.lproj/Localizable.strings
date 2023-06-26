@@ -6,15 +6,13 @@
   
 */
 
-"Account" = "账户";
-"Preferences" = "首选项";
-"Friends" = "好友";
+"Friends" = "朋友";
 "Groups" = "群组";
 "History" = "历史";
 "Quizzes" = "测验";
 "Invites" = "邀请";
-"Sounds" = "Sounds";
-"Language" = "Language";
-"Account" = "Account";
-"Preferences" = "Preferences";
-"TestKey" = "TestValue";
+"Sounds" = "声音";
+"Account" = "账号";
+"Preferences" = "偏好";
+"Social" = "社交";
+"Disconnect" = "断开连接";

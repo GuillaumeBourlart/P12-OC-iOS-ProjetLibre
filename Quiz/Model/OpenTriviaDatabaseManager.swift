@@ -54,7 +54,11 @@ class OpenTriviaDatabaseManager {
                             case .failure(let error):
                                 print("Failed to translate category: \(error)")
                             case .success(let translatedName):
-                                translatedCategories[index]["name"] = translatedName
+                                var nameWithoutColon = translatedName
+                                if let range = translatedName.range(of: ":") {
+                                    nameWithoutColon = String(translatedName[range.upperBound...])
+                                }
+                                translatedCategories[index]["name"] = nameWithoutColon.trimmingCharacters(in: .whitespaces)
                             }
                             translatedCategoriesCount += 1
                             if translatedCategoriesCount == translatedCategories.count {

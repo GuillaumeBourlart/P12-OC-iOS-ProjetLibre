@@ -24,11 +24,29 @@ class GameVC: UIViewController, LeavePageProtocol {
     var isAnswering = false // Ajoutez cette variable
     var finalScore = 0
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var activeAlert: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
         loadQuestions()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        questionLabel.layer.masksToBounds = true
+        questionLabel.layer.cornerRadius = 15
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        tabBarController?.tabBar.isHidden = false
+        // If an alert is being displayed, dismiss it
+               if let activeAlert = activeAlert {
+                   activeAlert.dismiss(animated: false)
+                   self.activeAlert = nil
+               }
     }
     
     func leavePage(completion: @escaping () -> Void) {
@@ -44,6 +62,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: true)
         tabBarController?.tabBar.isHidden = true
+        
         resetAnimations()
     }
     
@@ -57,14 +76,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         appDelegate.soundEffectPlayer?.stop()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        tabBarController?.tabBar.isHidden = false
-        
-        
-    }
-    
+  
     func loadQuestions() {
         Game.shared.getQuestions(quizId: nil, gameId: gameID!) { result in
             switch result {
@@ -97,6 +109,8 @@ class GameVC: UIViewController, LeavePageProtocol {
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
         
+        self.activeAlert = alert
+        
         self.present(alert, animated: true)
     }
     
@@ -124,11 +138,12 @@ class GameVC: UIViewController, LeavePageProtocol {
 
         for (index, button) in answerButtons.enumerated() {
             button.transform = index % 2 == 0 ? CGAffineTransform(translationX: -self.view.bounds.width, y: 0) : CGAffineTransform(translationX: self.view.bounds.width, y: 0)
-            button.backgroundColor = .systemBlue
+            button.setTitle(choices[index], for: .normal)
+            button.backgroundColor = UIColor(named: "color3")
             UIView.animate(withDuration: 0.5, delay: Double(index) * 0.2, options: [], animations: {
                 button.transform = .identity
             }, completion: { _ in
-                button.setTitle(choices[index], for: .normal)
+                
                 
                 if index == self.answerButtons.count - 1 {
                     self.resetTimer()
@@ -316,7 +331,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         UIView.animate(withDuration: 0.5, animations: {
             self.questionLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         }) { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.currentQuestionIndex += 1
                 self.displayQuestion()
             }

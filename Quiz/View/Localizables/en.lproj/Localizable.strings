@@ -6,15 +6,13 @@
   
 */
 
-"Account" = "Account";
-"Preferences" = "Preferences";
 "Friends" = "Friends";
 "Groups" = "Groups";
 "History" = "History";
 "Quizzes" = "Quizzes";
 "Invites" = "Invites";
 "Sounds" = "Sounds";
-"Language" = "Language";
 "Account" = "Account";
 "Preferences" = "Preferences";
-"TestKey" = "TestValue";
+"Social" = "Social";
+"Disconnect" = "Disconnect";

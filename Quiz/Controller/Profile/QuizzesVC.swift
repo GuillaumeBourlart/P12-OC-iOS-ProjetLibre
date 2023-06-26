@@ -13,6 +13,7 @@ class QuizzesVC: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var quizzes: [Quiz] { return FirebaseUser.shared.userQuizzes ?? [] }
+    var activeAlert: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,15 @@ class QuizzesVC: UIViewController{
                 }
             }
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // If an alert is being displayed, dismiss it
+               if let activeAlert = activeAlert {
+                   activeAlert.dismiss(animated: false)
+                   self.activeAlert = nil
+               }
     }
     
     @IBAction func plusButtonTapped(_ sender: Any) {
@@ -79,6 +89,8 @@ class QuizzesVC: UIViewController{
         
         alert.addAction(addAction)
         alert.addAction(cancelAction)
+        
+        self.activeAlert = alert
         
         present(alert, animated: true)
     }

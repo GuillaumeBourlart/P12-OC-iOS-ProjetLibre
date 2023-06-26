@@ -6,16 +6,14 @@
   
 */
 
-"Account" = "アカウント";
-"Preferences" = "設定";
 "Friends" = "友達";
 "Groups" = "グループ";
 "History" = "履歴";
 "Quizzes" = "クイズ";
 "Invites" = "招待";
-"Sounds" = "Sounds";
-"Language" = "Language";
-"Account" = "Account";
-"Preferences" = "Preferences";
-"TestKey" = "TestValue";
+"Sounds" = "音";
+"Account" = "アカウント";
+"Preferences" = "設定";
+"Social" = "ソーシャル";
+"Disconnect" = "切断";
 

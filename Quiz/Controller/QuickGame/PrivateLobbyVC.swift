@@ -28,6 +28,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     var category: Int?
     var quizId: String?
     var usernamesForUIDs = [String: String]()
+    var activeAlert: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +50,14 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         }
         
         getUsernames()
+        
+        // If an alert is being displayed, dismiss it
+               if let activeAlert = activeAlert {
+                   activeAlert.dismiss(animated: false)
+                   self.activeAlert = nil
+               }
     }
+   
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -88,6 +96,8 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
+        
+        self.activeAlert = alert
         
         self.present(alert, animated: true)
     }

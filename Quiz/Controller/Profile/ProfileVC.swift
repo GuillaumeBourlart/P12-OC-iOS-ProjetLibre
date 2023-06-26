@@ -17,6 +17,7 @@ class ProfileVC: UIViewController{
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let imagePickerController = UIImagePickerController()
+    var activeAlert: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,15 @@ class ProfileVC: UIViewController{
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGesture)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // If an alert is being displayed, dismiss it
+               if let activeAlert = activeAlert {
+                   activeAlert.dismiss(animated: false)
+                   self.activeAlert = nil
+               }
     }
     
     // display informations and set UI
@@ -86,6 +96,8 @@ class ProfileVC: UIViewController{
             }))
             
             alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.activeAlert = alert
             
             self.present(alert, animated: true, completion: nil)
         }

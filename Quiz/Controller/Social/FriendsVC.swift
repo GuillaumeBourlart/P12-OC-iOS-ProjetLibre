@@ -20,6 +20,7 @@ class FriendsVC: UIViewController{
     var friends: [String: String] = [:]
     var friendRequests: [String: String] = [:]
     var isShowingFriendRequests = true
+    var activeAlert: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,15 @@ class FriendsVC: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         loadArrays()
         onSwitch(switchControl)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // If an alert is being displayed, dismiss it
+               if let activeAlert = activeAlert {
+                   activeAlert.dismiss(animated: false)
+                   self.activeAlert = nil
+               }
     }
     
     @objc func refreshTable() {
@@ -109,6 +119,8 @@ class FriendsVC: UIViewController{
         
         alertController.addAction(addAction)
         alertController.addAction(cancelAction)
+        
+        self.activeAlert = alertController
         
         self.present(alertController, animated: true, completion: nil)
     }

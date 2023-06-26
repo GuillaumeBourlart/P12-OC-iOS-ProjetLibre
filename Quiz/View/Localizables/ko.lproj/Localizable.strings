@@ -6,15 +6,13 @@
   
 */
 
-"Account" = "계정";
-"Preferences" = "환경 설정";
 "Friends" = "친구";
 "Groups" = "그룹";
 "History" = "기록";
 "Quizzes" = "퀴즈";
 "Invites" = "초대";
-"Sounds" = "Sounds";
-"Language" = "Language";
-"Account" = "Account";
-"Preferences" = "Preferences";
-"TestKey" = "TestValue";
+"Sounds" = "소리";
+"Account" = "계정";
+"Preferences" = "설정";
+"Social" = "소셜";
+"Disconnect" = "연결 해제";

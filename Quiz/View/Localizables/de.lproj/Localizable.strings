@@ -7,16 +7,13 @@
 */
 
 
-
-"Account" = "Konto";
-"Preferences" = "Einstellungen";
 "Friends" = "Freunde";
 "Groups" = "Gruppen";
 "History" = "Verlauf";
 "Quizzes" = "Quiz";
 "Invites" = "Einladungen";
 "Sounds" = "Sounds";
-"Language" = "Language";
-"Account" = "Account";
-"Preferences" = "Preferences";
-"TestKey" = "TestValue";
+"Account" = "Konto";
+"Preferences" = "Einstellungen";
+"Social" = "Sozial";
+"Disconnect" = "Trennen";

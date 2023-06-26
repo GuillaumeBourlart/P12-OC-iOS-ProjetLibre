@@ -23,6 +23,7 @@ class InvitesVC: UIViewController {
         override func viewWillAppear(_ animated: Bool) {
             loadInvites()
         }
+   
         
         @objc func refreshTable() {
             DispatchQueue.main.async {

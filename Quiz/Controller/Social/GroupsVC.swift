@@ -13,6 +13,7 @@ class GroupsVC: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var groups: [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] }
+    var activeAlert: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,15 @@ class GroupsVC: UIViewController{
             }
     }
     
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // If an alert is being displayed, dismiss it
+               if let activeAlert = activeAlert {
+                   activeAlert.dismiss(animated: false)
+                   self.activeAlert = nil
+               }
+    }
     
     
     @IBAction func plusButtonTapped(_ sender: Any) {
@@ -64,6 +74,8 @@ class GroupsVC: UIViewController{
         
         alert.addAction(addAction)
         alert.addAction(cancelAction)
+        
+        self.activeAlert = alert
         
         present(alert, animated: true)
     }
