@@ -38,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Set the delegate for Firebase Messaging
                 Messaging.messaging().delegate = self
         
+        //checkdarMode
+        checkdarkMode()
+        
         return true
     }
     
@@ -157,36 +160,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
             // Display notification alert and play a sound
             completionHandler([.banner, .sound])
         }
-
-        // This function handles push notifications when the user taps on them.
-//        func userNotificationCenter(_ center: UNUserNotificationCenter,
-//                                    didReceive response: UNNotificationResponse,
-//                                    withCompletionHandler completionHandler: @escaping () -> Void) {
-//            let userInfo = response.notification.request.content.userInfo
-//            handleNotification(userInfo: userInfo)
-//
-//                guard let notificationType = userInfo["notificationType"] as? String else {
-//                    completionHandler()
-//                    return
-//                }
-//
-//            switch notificationType {
-//                case "gameInvitation":
-//                    guard let lobbyID = userInfo["lobbyID"] as? String else {
-//                        completionHandler()
-//                        return
-//                    }
-//                    // Utilisez lobbyID pour rejoindre le jeu
-//                    joinGameFromInvitation(lobbyID: lobbyID)
-//                case "friendRequest":
-//                    // Allez à la page d'amis
-//                    navigateToFriendsPage()
-//                default:
-//                    break
-//                }
-//
-//            completionHandler()
-//        }
     
     func getTopViewController(_ base: UIViewController? = UIApplication.shared.connectedScenes
         .filter({$0.activationState == .foregroundActive})
@@ -409,7 +382,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
 }
 
 
-// Handle de sound in the app
+// Handle sound and darkmode in the app
 extension AppDelegate {
     func playSound(soundName: String, fileType: String) {
         let defaults = UserDefaults.standard
@@ -462,6 +435,25 @@ extension AppDelegate {
     }
     func setVolume(volume: Float) {
         musicPlayer?.volume = volume
+    }
+    
+    func checkdarkMode() {
+        // Vérifiez la valeur enregistrée pour "darkmode" dans UserDefaults
+                let defaults = UserDefaults.standard
+                if let darkModeOn = defaults.object(forKey: "darkmode") as? Bool {
+                    // Si darkModeOn est true, réglez le style d'interface utilisateur sur .dark, sinon sur .light
+                    if darkModeOn {
+                        window?.overrideUserInterfaceStyle = .dark
+                        print("dark")
+                    } else {
+                        window?.overrideUserInterfaceStyle = .light
+                        print("light")
+                    }
+                } else {
+                    // Si aucune valeur n'est enregistrée pour "darkmode", réglez le style d'interface utilisateur sur le style par défaut
+                    window?.overrideUserInterfaceStyle = .unspecified
+                }
+        
     }
 }
 

@@ -26,8 +26,8 @@ class ProfileVC: UIViewController{
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2") ?? UIColor.magenta]
+        navigationController?.navigationBar.tintColor = UIColor(named: "text")
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "text") ?? UIColor.magenta]
         
         configureProfileViews()
         imagePickerController.delegate = self
@@ -165,7 +165,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
                                                     tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
         headerLabel.font = UIFont(name: "Helvetica", size: 18)
-        headerLabel.textColor = UIColor.white  // couleur du texte
+        headerLabel.textColor = UIColor(named: "text")  // couleur du texte
         headerLabel.text = SettingsSections(rawValue: section)?.description
         headerLabel.sizeToFit()
         headerView.backgroundColor = UIColor(named: "background")
@@ -207,11 +207,12 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
             cell.sectionType = securityOption
             
         }
-        if !(cell.sectionType?.containsSwitch ?? false) {
+        
+        if !(cell.sectionType?.containsSwitch ?? false), let accountOption = cell.sectionType as? SettingsSections.AccountOptions, accountOption != .disconnect {
 //            cell.accessoryType = .disclosureIndicator
             let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-            whiteDisclosureIndicator.tintColor = .white // Remplacez "customDisclosureIndicator" par le nom de votre image.
-            whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
+            whiteDisclosureIndicator.tintColor = UIColor.white // Remplacez "customDisclosureIndicator" par le nom de votre image.
+            whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
             cell.accessoryView = whiteDisclosureIndicator
         }
         
@@ -236,8 +237,6 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         switch settingsSection {
         case .account:
             if let accountOption = SettingsSections.AccountOptions(rawValue: indexPath.row) {
-                guard accountOption.segueIdentifier != "goToSocial" else { appDelegate.mainTabBarController?.selectedIndex = 2; return }
-                
                 guard accountOption.segueIdentifier != "goToDisconnect" else {logout(); return }
                 if let identifier = accountOption.segueIdentifier {
                     performSegue(withIdentifier: identifier, sender: accountOption.description)
@@ -255,8 +254,19 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
 
 
 extension ProfileVC: SettingsCellDelegate{
-    func didChangeSwitchValue(in cell: SettingsCell, isOn: Bool) {
-        print("1")
+   
+    
+    func DarkmodeSwitchChanged(in cell: SettingsCell, isOn: Bool) {
+        if isOn {
+            appDelegate.window?.overrideUserInterfaceStyle = .dark
+        } else {
+            appDelegate.window?.overrideUserInterfaceStyle = .light
+        }
+        UserDefaults.standard.setValue(isOn, forKey: "darkmode")
+        UserDefaults.standard.synchronize()
+    }
+    
+    func SoundSwitchChanged(in cell: SettingsCell, isOn: Bool) {
         switch isOn {
         case true : appDelegate.resumeSound()
         case false : appDelegate.stopSound()

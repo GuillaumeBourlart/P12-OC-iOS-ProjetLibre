@@ -88,7 +88,7 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
         let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
             tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
         headerLabel.font = UIFont(name: "Helvetica", size: 20) // À définir selon vos préférences
-        headerLabel.textColor = .white
+        headerLabel.textColor = UIColor(named: "text")
         
         let userID = Array(usersAnswer.keys)[section]
         // Use the username if available, otherwise use the UID

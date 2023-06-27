@@ -139,7 +139,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         for (index, button) in answerButtons.enumerated() {
             button.transform = index % 2 == 0 ? CGAffineTransform(translationX: -self.view.bounds.width, y: 0) : CGAffineTransform(translationX: self.view.bounds.width, y: 0)
             button.setTitle(choices[index], for: .normal)
-            button.backgroundColor = UIColor(named: "color3")
+            button.backgroundColor = UIColor(named: "button")
             UIView.animate(withDuration: 0.5, delay: Double(index) * 0.2, options: [], animations: {
                 button.transform = .identity
             }, completion: { _ in
@@ -255,7 +255,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     }
     
     func resetTimer() {
-        self.timerLabel.textColor = UIColor.white
+        self.timerLabel.textColor = UIColor(named: "text")
         timeRemaining = 10
         timerLabel.text = "\(timeRemaining)"
         

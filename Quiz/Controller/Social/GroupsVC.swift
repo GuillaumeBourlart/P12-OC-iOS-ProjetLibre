@@ -18,7 +18,7 @@ class GroupsVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.3)
+        tableView.separatorColor = UIColor(named: "text")
     }
     
     override func viewWillAppear(_ animated: Bool) {

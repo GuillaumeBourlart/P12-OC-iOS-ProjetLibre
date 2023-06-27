@@ -247,7 +247,7 @@ extension PrivateLobbyVC: UITableViewDelegate, UITableViewDataSource {
         let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
                                                     tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
         headerLabel.font = UIFont(name: "Helvetica", size: 18)
-        headerLabel.textColor = UIColor.white  // couleur du texte
+        headerLabel.textColor = UIColor(named: "text")  // couleur du texte
         headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
         headerLabel.sizeToFit()
         headerView.addSubview(headerLabel)

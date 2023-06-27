@@ -83,7 +83,6 @@
 		D0B582452A33622D00C0D5E2 /* CustomAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */; };
 		D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */; };
 		D0B852532A2528D500A7D9B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = D0B852522A2528D500A7D9B7 /* Alamofire */; };
-		D0B8D42C2A1BA5560033467D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8D42B2A1BA5560033467D /* HomeVC.swift */; };
 		D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */; };
 		D0E8C9E32A28E7CD009E8A09 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = D0E8C9E22A28E7CD009E8A09 /* SDWebImage */; };
 /* End PBXBuildFile section */
@@ -180,7 +179,6 @@
 		D0B74C742A497C77007A5DD0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		D0B74C752A497C77007A5DD0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFields.swift; sourceTree = "<group>"; };
-		D0B8D42B2A1BA5560033467D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -269,7 +267,6 @@
 		D03083D72A0F8A3800A8FBB7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D0B8D42B2A1BA5560033467D /* HomeVC.swift */,
 				7E0840092A45375200B82CFD /* Register */,
 				7E33A7122A45342F008947BF /* Social */,
 				D0B06A682A1C0AAC00D70E47 /* Profile */,
@@ -603,7 +600,6 @@
 				D084EC3A2A0F7EF400544AA3 /* AppDelegate.swift in Sources */,
 				D03083EA2A0F8A5200A8FBB7 /* FriendsVC.swift in Sources */,
 				D03083EF2A0F8A5200A8FBB7 /* CreateAccountVC.swift in Sources */,
-				D0B8D42C2A1BA5560033467D /* HomeVC.swift in Sources */,
 				D03083E52A0F8A5100A8FBB7 /* ModifyQuizVC.swift in Sources */,
 				D03083E92A0F8A5100A8FBB7 /* SearchOpponentVC.swift in Sources */,
 				7E33A70D2A44C258008947BF /* GroupsVC.swift in Sources */,

@@ -18,6 +18,9 @@ class CompetitiveVC: UIViewController{
     @IBOutlet weak var nextRank: UIImageView!
     @IBOutlet weak var startButton: CustomButton2!
     
+    @IBOutlet weak var rankView: UIView!
+    
+    
     override func viewDidLoad() {
            super.viewDidLoad()
            updateUI()
@@ -38,8 +41,8 @@ class CompetitiveVC: UIViewController{
            navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
            navigationController?.navigationBar.shadowImage = UIImage()
            navigationController?.navigationBar.isTranslucent = true
-           navigationController?.navigationBar.tintColor = UIColor.white
-           navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "button2") ?? UIColor.magenta]
+           navigationController?.navigationBar.tintColor = UIColor(named: "text")
+           navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "text") ?? UIColor.magenta]
        }
        
     func updateUI() {
@@ -53,6 +56,8 @@ class CompetitiveVC: UIViewController{
         guard let rank = Rank(rawValue: level) else {
             return
         }
+        
+        rankView.layer.cornerRadius = 15
         
         rankBar.progress = Float(progress)
         points.text = "\(Int(progress * 100))/100"

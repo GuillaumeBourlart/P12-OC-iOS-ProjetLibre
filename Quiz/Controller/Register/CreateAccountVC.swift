@@ -15,6 +15,7 @@ class CreateAccountVC: UIViewController {
     @IBOutlet private weak var userPassword: UITextField!
     @IBOutlet private weak var userEmail: UITextField!
     @IBOutlet weak var signinButton: CustomButton!
+    @IBOutlet weak var errorLabel: UILabel!
     
     var activeTextField: UITextField?
     
@@ -47,30 +48,45 @@ class CreateAccountVC: UIViewController {
     // try to sign up user
     @IBAction func signUpUser(_ sender: Any) {
         CustomAnimations.buttonPressAnimation(for: self.signinButton) {
-            self.signinButton.isEnabled = false
-            guard let email = self.userEmail.text,
-                  email != "",
-                  let password = self.userPassword.text,
-                  password != "",
-                  let pseudo = self.userPseudo.text,
-                  pseudo != "" else {
-                self.signinButton.isEnabled = true
-                return
-            }
-            
-            FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo) { _, error in
-                if let error = error {
-                    print("Error creating user: \(error.localizedDescription)")
-                    self.signinButton.isEnabled = true
-                } else {
-                    self.dismiss(animated: true)
-                    
+                self.signinButton.isEnabled = false
+                guard let email = self.userEmail.text, !email.isEmpty,
+                    let password = self.userPassword.text, !password.isEmpty,
+                    let pseudo = self.userPseudo.text, !pseudo.isEmpty else {
+                        // Update UI for empty fields error
+                        self.updateUIForError("All fields are required!", textField: nil)
+                        return
+                }
+
+                FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo) { _, error in
+                    if let error = error {
+                        print("Error creating user: \(error.localizedDescription)")
+                        // Update UI for creation error
+                        self.updateUIForError(error.localizedDescription, textField: nil)
+                    } else {
+                        self.dismiss(animated: true)
+                    }
                 }
             }
+    }
+    
+    func updateUIForError(_ error: String, textField: UITextField?) {
+        self.errorLabel.text = error
+        self.errorLabel.isHidden = false
+        self.signinButton.isEnabled = true
+
+        if let textField = textField {
+            textField.layer.borderColor = UIColor.red.cgColor
+            textField.layer.borderWidth = 1.0
         }
     }
     
     func setUI(){
+        
+        // Reset UI
+            self.errorLabel.isHidden = true
+            userEmail.layer.borderWidth = 0.0
+            userPassword.layer.borderWidth = 0.0
+            userPseudo.layer.borderWidth = 0.0
         
         // MAIL
         
@@ -81,7 +97,7 @@ class CreateAccountVC: UIViewController {
         imageView.contentMode = .scaleAspectFit
         
         // Définition du placeholder en gris clair
-        let attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        let attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "placeholder")])
         userEmail.attributedPlaceholder = attributedPlaceholder
         
         var view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
@@ -102,7 +118,7 @@ class CreateAccountVC: UIViewController {
         imageView.contentMode = .scaleAspectFit
         
         // Définition du placeholder en gris clair
-        let attributedPlaceholder2 = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        let attributedPlaceholder2 = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "placeholder")])
         userPassword.attributedPlaceholder = attributedPlaceholder2
         
         view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
@@ -156,6 +172,8 @@ extension CreateAccountVC: UITextFieldDelegate {
         userPassword.resignFirstResponder()
         return true
     }
+    
+    
     
     @objc func keyboardAppear(_ notification: Notification) {
            guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }

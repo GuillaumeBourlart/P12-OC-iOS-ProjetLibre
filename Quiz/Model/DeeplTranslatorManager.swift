@@ -17,7 +17,6 @@ class DeepLTranslator {
 
     func translate(_ text: String, targetLanguage: String, completion: @escaping (Result<String, Error>) -> Void) {
         
-print("target : \(targetLanguage)")
         let url = "https://api-free.deepl.com/v2/translate"
         var urlComponent = URLComponents(string: url)
         //  We add arguments to the urlComponent

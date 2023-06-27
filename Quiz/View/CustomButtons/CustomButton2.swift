@@ -27,6 +27,6 @@ class CustomButton2: UIButton {
             
             // Définissez le border radius (arrondissement des coins) du bouton
             
-            layer.cornerRadius = 20
+            layer.cornerRadius = 10
         }
 }
