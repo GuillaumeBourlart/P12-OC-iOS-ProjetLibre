@@ -23,7 +23,7 @@ class InvitePlayersVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
-            tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
         
         loadFriends()
     }
@@ -62,11 +62,11 @@ class InvitePlayersVC: UIViewController{
         case 0:
             isShowingFriends = true
             tableView.reloadData()
-                
+            
         case 1:
             isShowingFriends = false
             tableView.reloadData()
-                
+            
             
         default:
             break
@@ -78,8 +78,8 @@ class InvitePlayersVC: UIViewController{
 extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 70.0 // Remplacer par la hauteur désirée
-        }
+        return 70.0 // Remplacer par la hauteur désirée
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isShowingFriends {
@@ -90,43 +90,43 @@ extension InvitePlayersVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
-
-            if isShowingFriends {
-                // Configure friend cell
-                let friendKey = Array(friends.keys)[indexPath.row]
-                cell.label.text = friends[friendKey]
-                cell.accessoryType = selectedFriends.contains(friendKey) ? .checkmark : .none
-            } else {
-                // Configure group cell
-                let group = groups[indexPath.row]
-                cell.label.text = group.name
-                cell.accessoryType = selectedGroups.contains(where: { $0.id == group.id }) ? .checkmark : .none
-            }
-
-            return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
+        
+        if isShowingFriends {
+            // Configure friend cell
+            let friendKey = Array(friends.keys)[indexPath.row]
+            cell.label.text = friends[friendKey]
+            cell.accessoryType = selectedFriends.contains(friendKey) ? .checkmark : .none
+        } else {
+            // Configure group cell
+            let group = groups[indexPath.row]
+            cell.label.text = group.name
+            cell.accessoryType = selectedGroups.contains(where: { $0.id == group.id }) ? .checkmark : .none
         }
-
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            if isShowingFriends {
-                // Handle friend selection/deselection
-                let friendKey = Array(friends.keys)[indexPath.row]
-                if let index = selectedFriends.firstIndex(of: friendKey) {
-                    selectedFriends.remove(at: index)
-                } else {
-                    selectedFriends.append(friendKey)
-                }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isShowingFriends {
+            // Handle friend selection/deselection
+            let friendKey = Array(friends.keys)[indexPath.row]
+            if let index = selectedFriends.firstIndex(of: friendKey) {
+                selectedFriends.remove(at: index)
             } else {
-                // Handle group selection/deselection
-                let group = groups[indexPath.row]
-                if let index = selectedGroups.firstIndex(where: { $0.id == group.id }) {
-                    selectedGroups.remove(at: index)
-                } else {
-                    selectedGroups.append(group)
-                }
+                selectedFriends.append(friendKey)
             }
-            tableView.deselectRow(at: indexPath, animated: true)
-            
-            tableView.reloadData()
+        } else {
+            // Handle group selection/deselection
+            let group = groups[indexPath.row]
+            if let index = selectedGroups.firstIndex(where: { $0.id == group.id }) {
+                selectedGroups.remove(at: index)
+            } else {
+                selectedGroups.append(group)
+            }
         }
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        tableView.reloadData()
+    }
 }

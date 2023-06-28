@@ -19,7 +19,7 @@ class QuestionResultVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         guard let questionData = question?.values.first else { return }
         questionLabel.text = questionData.question
         correctAnswerLabel.text = "Correct answer : \(questionData.correct_answer)"
@@ -57,21 +57,21 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
             return nil // or return "" if you want to return an empty string
         }
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 // Chaque utilisateur a une seule réponse pour cette question spécifique
+        return 1
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         guard let usersAnswer = usersAnswer else { return cell }
-
+        
         let userID = Array(usersAnswer.keys)[indexPath.section]
         guard let userAnswers = usersAnswer[userID],
               let questionKey = question?.keys.first,
               let userAnswer = userAnswers[questionKey] else { return cell }
         
-        cell.selectionStyle = .none // Désactive la sélection visuelle
+        cell.selectionStyle = .none
         cell.textLabel?.text = "Answer : \(userAnswer.selected_answer)"
         cell.textLabel?.textColor = userAnswer.selected_answer == question?.values.first?.correct_answer ? .green : .red
         cell.detailTextLabel?.text = "points : \(userAnswer.points)"
@@ -83,11 +83,11 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let usersAnswer = usersAnswer else { return UIView() }
         let headerView = UIView()
-        headerView.backgroundColor = tableView.backgroundColor // À définir selon vos préférences
-
+        headerView.backgroundColor = tableView.backgroundColor
+        
         let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
-            tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
-        headerLabel.font = UIFont(name: "Helvetica", size: 20) // À définir selon vos préférences
+                                                    tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
+        headerLabel.font = UIFont(name: "Helvetica", size: 20)
         headerLabel.textColor = UIColor(named: "text")
         
         let userID = Array(usersAnswer.keys)[section]
@@ -95,9 +95,9 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
         headerLabel.text = usernamesForUIDs[userID] ?? userID
         
         headerLabel.sizeToFit()
-
+        
         headerView.addSubview(headerLabel)
-
+        
         return headerView
     }
 }

@@ -17,10 +17,6 @@ class QuizzesVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.separatorColor = UIColor(white: 1.0, alpha: 0.3)
-        
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,7 +27,6 @@ class QuizzesVC: UIViewController{
                     self.tableView.reloadData()
                 case .failure(let error):
                     print("Error getting quizzes : \(error.localizedDescription)")
-                    // Afficher une alerte à l'utilisateur ou gérer l'erreur de manière appropriée
                 }
             }
         
@@ -101,9 +96,6 @@ class QuizzesVC: UIViewController{
             if let quiz = sender as? Quiz{
                 destination.quizID = quiz.id
             }
-            if let group = sender as? FriendGroup {
-                destination.groupID = group.id
-            }
         }
     }
     
@@ -127,12 +119,11 @@ extension QuizzesVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 70.0 // Remplacer par la hauteur désirée
+            return 70.0
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
-        
+        tableView.deselectRow(at: indexPath, animated: true)
             let selectedQuiz = quizzes[indexPath.row]
             performSegue(withIdentifier: "goToModification", sender: selectedQuiz)
           
@@ -153,7 +144,7 @@ extension QuizzesVC: UITableViewDataSource {
             cell.label.text = quizzes[indexPath.row].name
         
         let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-        whiteDisclosureIndicator.tintColor = .white // Remplacez "customDisclosureIndicator" par le nom de votre image.
+        whiteDisclosureIndicator.tintColor = .white
         whiteDisclosureIndicator.backgroundColor = UIColor.clear
         whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
         cell.accessoryView = whiteDisclosureIndicator

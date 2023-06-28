@@ -92,30 +92,29 @@ class FriendsVC: UIViewController{
     
     // Function called when player wants to add a friend
     @IBAction func addFriend(sender: UIButton){
-        let alertController = UIAlertController(title: "Ajouter un ami", message: "Entrez le nom d'utilisateur de votre ami", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Add a friend", message: "Enter the username", preferredStyle: .alert)
         
         alertController.addTextField { (textField) in
-            textField.placeholder = "Nom d'utilisateur"
+            textField.placeholder = "Username"
         }
         
-        let addAction = UIAlertAction(title: "Ajouter", style: .default) { (_) in
+        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
             guard let username = alertController.textFields?.first?.text, !username.isEmpty else {
-                print("Le nom d'utilisateur est vide.")
+                print("field is empty")
                 return
             }
             
             FirebaseUser.shared.sendFriendRequest(username: username) { result in
                 switch result {
                 case .success():
-                    print("Ami demandé avec succès")
                     self.tableView.reloadData()
                 case .failure(let error):
-                    print("Erreur : \(error.localizedDescription)")
+                    print("Error : \(error.localizedDescription)")
                 }
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Annuler", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(addAction)
         alertController.addAction(cancelAction)
@@ -124,10 +123,6 @@ class FriendsVC: UIViewController{
         
         self.present(alertController, animated: true, completion: nil)
     }
-    
-    
-    
-    
     
 }
 

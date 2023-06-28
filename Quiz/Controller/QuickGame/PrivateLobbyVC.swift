@@ -32,7 +32,6 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Cacher le bouton retour
         self.navigationItem.hidesBackButton = true
         tabBarController?.tabBar.isHidden = true
     }
@@ -48,16 +47,14 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
                 launchButton.isHidden = false
             }
         }
-        
         getUsernames()
         
         // If an alert is being displayed, dismiss it
-               if let activeAlert = activeAlert {
-                   activeAlert.dismiss(animated: false)
-                   self.activeAlert = nil
-               }
+        if let activeAlert = activeAlert {
+            activeAlert.dismiss(animated: false)
+            self.activeAlert = nil
+        }
     }
-   
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -87,12 +84,12 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     }
     
     func showLeaveConfirmation(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "Confirmation", message: "Êtes-vous sûr de vouloir quitter le quiz ?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to leave the room ?", preferredStyle: .alert)
         
-        let confirmAction = UIAlertAction(title: "Oui", style: .destructive) { _ in
+        let confirmAction = UIAlertAction(title: "yes", style: .destructive) { _ in
             completion()
         }
-        let cancelAction = UIAlertAction(title: "Non", style: .cancel)
+        let cancelAction = UIAlertAction(title: "No", style: .cancel)
         
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)

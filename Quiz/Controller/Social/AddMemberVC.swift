@@ -16,6 +16,7 @@ class AddMemberVC: UIViewController {
     var group: FriendGroup?
     var friends: [String: String] = [:]
     var selectedFriends: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadFriends()

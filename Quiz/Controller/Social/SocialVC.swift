@@ -14,22 +14,9 @@ class SocialVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Make the navigation bar transparent (only needed in root page of controller)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.tintColor = UIColor(named: "text")
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "text") ?? UIColor.magenta]
-
         // handle music
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.playSound(soundName: "appMusic", fileType: "mp3")
-
-        if let preferredLanguage = Bundle.main.preferredLocalizations.first {
-            print("Langue utilisée : \(preferredLanguage)")
-        }
-
-        let test = NSLocalizedString("TestKey", comment: "")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -42,9 +29,7 @@ class SocialVC: UIViewController {
         }
 
     }
-
-
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let button = sender as? UIButton {

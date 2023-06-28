@@ -22,29 +22,23 @@ class CompetitiveVC: UIViewController{
     
     
     override func viewDidLoad() {
-           super.viewDidLoad()
-           updateUI()
-       }
-       
-       override func viewWillAppear(_ animated: Bool) {
-           FirebaseUser.shared.getUserInfo { result in
-               switch result {
-               case .failure(let error):
-                   // Vous pouvez ajouter une gestion des erreurs plus robuste ici.
-                   print(error)
-               case .success():
-                   self.updateUI()
-               }
-           }
-           self.startButton.isEnabled = true
-           
-           navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-           navigationController?.navigationBar.shadowImage = UIImage()
-           navigationController?.navigationBar.isTranslucent = true
-           navigationController?.navigationBar.tintColor = UIColor(named: "text")
-           navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "text") ?? UIColor.magenta]
-       }
-       
+        super.viewDidLoad()
+        updateUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        FirebaseUser.shared.getUserInfo { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success():
+                self.updateUI()
+            }
+        }
+        self.startButton.isEnabled = true
+        
+    }
+    
     func updateUI() {
         guard let rankValue = FirebaseUser.shared.userInfo?.rank else {
             return
@@ -72,20 +66,19 @@ class CompetitiveVC: UIViewController{
             points.isHidden = true
         }
     }
-       
-       @IBAction func unwindToCompetitive(segue: UIStoryboardSegue) {
-           // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
-       }
-       
-       @IBAction func findOpponentButtonPressed(_ sender: Any) {
-           self.startButton.isEnabled = false
-           CustomAnimations.buttonPressAnimation(for: self.startButton) {
-               DispatchQueue.main.async {
-                   self.performSegue(withIdentifier: "goToFindOpponent", sender: self)
-               }
-           }
-       }
-   }
+    
+    @IBAction func unwindToCompetitive(segue: UIStoryboardSegue) {
+    }
+    
+    @IBAction func findOpponentButtonPressed(_ sender: Any) {
+        self.startButton.isEnabled = false
+        CustomAnimations.buttonPressAnimation(for: self.startButton) {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "goToFindOpponent", sender: self)
+            }
+        }
+    }
+}
 
 
 enum Rank: Int {

@@ -12,10 +12,10 @@ class AddQuestionVC: UIViewController {
     
     
     @IBOutlet weak var validateButton: UIButton!
-    @IBOutlet weak var questionField: UITextField!
-    @IBOutlet weak var correctAnswerField: UITextField!
-    @IBOutlet var incorrectAnswersFields: [UITextField]!
-    @IBOutlet weak var explanationField: UITextField!
+    @IBOutlet weak var questionField: CustomTextField!
+    @IBOutlet weak var correctAnswerField: CustomTextField!
+    @IBOutlet var incorrectAnswersFields: [CustomTextField]!
+    @IBOutlet weak var explanationField: CustomTextField!
     
     var existingQuestion: UniversalQuestion?
     var existingQuestionId: String?
@@ -100,119 +100,24 @@ class AddQuestionVC: UIViewController {
     }
     
     func setUI(){
+        
         // Question
-        var imageView = UIImageView(image: UIImage(systemName: "questionmark"))
-        imageView.tintColor = UIColor.white
-        imageView.contentMode = .scaleAspectFit
-        
-       
-        
-        // Définition du placeholder en gris clair
-        let attributedPlaceholder = NSAttributedString(string: "Question", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        questionField.attributedPlaceholder = attributedPlaceholder
-        
-        var view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
-        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
-        
-        view.addSubview(imageView)
-        
-        questionField.leftViewMode = .always
-        questionField.leftView = view
+        questionField.setup(image: UIImage(systemName: "questionmark"), placeholder: "Question", placeholderColor: UIColor(named: "placeholder") ?? .gray)
         
         // CORRECT ANSWER
-        
-        imageView = UIImageView(image: UIImage(systemName: "checkmark"))
-        imageView.tintColor = UIColor.white
-        imageView.contentMode = .scaleAspectFit
-        
-      
-        
-        // Définition du placeholder en gris clair
-        let attributedPlaceholder2 = NSAttributedString(string: "Correct answer", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        correctAnswerField.attributedPlaceholder = attributedPlaceholder2
-        
-        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
-        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
-        
-        view.addSubview(imageView)
-        correctAnswerField.leftViewMode = .always
-        correctAnswerField.leftView = view
+        correctAnswerField.setup(image: UIImage(systemName: "checkmark"), placeholder: "Correct answer", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
         
         // INCORRECT ANSWER 1
-        
-        imageView = UIImageView(image: UIImage(systemName: "1.circle"))
-        imageView.tintColor = UIColor.white
-        imageView.contentMode = .scaleAspectFit
-        
-        
-        
-        // Définition du placeholder en gris clair
-        let attributedPlaceholder3 = NSAttributedString(string: "Incorrect answer 1", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        incorrectAnswersFields[0].attributedPlaceholder = attributedPlaceholder3
-        
-        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
-        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
-        
-        view.addSubview(imageView)
-        incorrectAnswersFields[0].leftViewMode = .always
-        incorrectAnswersFields[0].leftView = view
+        incorrectAnswersFields[0].setup(image: UIImage(systemName: "1.circle"), placeholder: "Incorrect answer 1", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
         
         // INCORRECT ANSWER 2
-        
-        imageView = UIImageView(image: UIImage(systemName: "2.circle"))
-        imageView.tintColor = UIColor.white
-        imageView.contentMode = .scaleAspectFit
-        
-        
-        
-        // Définition du placeholder en gris clair
-        let attributedPlaceholder4 = NSAttributedString(string: "Incorrect answer 2", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        incorrectAnswersFields[1].attributedPlaceholder = attributedPlaceholder4
-        
-        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
-        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
-        
-        view.addSubview(imageView)
-        incorrectAnswersFields[1].leftViewMode = .always
-        incorrectAnswersFields[1].leftView = view
+        incorrectAnswersFields[1].setup(image: UIImage(systemName: "2.circle"), placeholder: "Incorrect answer 2", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
         
         // INCORRECT ANSWER 3
+        incorrectAnswersFields[2].setup(image: UIImage(systemName: "3.circle"), placeholder: "Incorrect answer 3", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
         
-        imageView = UIImageView(image: UIImage(systemName: "3.circle"))
-        imageView.tintColor = UIColor.white
-        imageView.contentMode = .scaleAspectFit
-        
-        
-        
-        // Définition du placeholder en gris clair
-        let attributedPlaceholder5 = NSAttributedString(string: "Incorrect answer 3", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        incorrectAnswersFields[2].attributedPlaceholder = attributedPlaceholder5
-        
-        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
-        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
-        
-        view.addSubview(imageView)
-        incorrectAnswersFields[2].leftViewMode = .always
-        incorrectAnswersFields[2].leftView = view
-        
-        // EXPLANATION
-        
-        imageView = UIImageView(image: UIImage(systemName: "book"))
-        imageView.tintColor = UIColor.white
-        imageView.contentMode = .scaleAspectFit
-        
-        
-        
-        // Définition du placeholder en gris clair
-        let attributedPlaceholder6 = NSAttributedString(string: "Explanation", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        explanationField.attributedPlaceholder = attributedPlaceholder6
-        
-        view = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20)) // Augmentez la largeur de la vue
-        imageView.frame = CGRect(x: 10, y: 0, width: 20, height: 20) // Centrez l'image dans la vue
-        
-        view.addSubview(imageView)
-        explanationField.leftViewMode = .always
-        explanationField.leftView = view
+        // Explanation
+        explanationField.setup(image: UIImage(systemName: "book"), placeholder: "Explanation", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
     }
     
 }
@@ -247,5 +152,4 @@ extension AddQuestionVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
     }
-    
 }

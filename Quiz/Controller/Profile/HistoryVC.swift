@@ -53,7 +53,7 @@ class HistoryVC: UIViewController {
 
 extension HistoryVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 70.0 // Remplacer par la hauteur désirée
+            return 70.0
         }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,23 +64,21 @@ extension HistoryVC: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath) as? CustomCell else {return UITableViewCell()}
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Votre format de date ici.
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
         let date = self.games[indexPath.row].date
         let dateString = formatter.string(from: date)
-//        cell.accessoryType = .disclosureIndicator
-        let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
+        
+        let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator"))
         whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         cell.accessoryView = whiteDisclosureIndicator
-        
         cell.label.text = dateString
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
-        
+        tableView.deselectRow(at: indexPath, animated: true)
             let selectedGame = games[indexPath.row]
         performSegue(withIdentifier: "goToResult", sender: selectedGame)
     }

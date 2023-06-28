@@ -18,34 +18,33 @@ class GroupsVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.separatorColor = UIColor(named: "text")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-            FirebaseUser.shared.getUserGroups { result in
-                switch result {
-                case .success():
-                    self.tableView.reloadData()
-                case .failure(let error):
-                    print("Error getting groups: \(error.localizedDescription)")
-                    // Afficher une alerte à l'utilisateur ou gérer l'erreur de manière appropriée
-                }
+        FirebaseUser.shared.getUserGroups { result in
+            switch result {
+            case .success():
+                self.tableView.reloadData()
+            case .failure(let error):
+                print("Error getting groups: \(error.localizedDescription)")
+                // Afficher une alerte à l'utilisateur ou gérer l'erreur de manière appropriée
             }
+        }
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
-               if let activeAlert = activeAlert {
-                   activeAlert.dismiss(animated: false)
-                   self.activeAlert = nil
-               }
+        if let activeAlert = activeAlert {
+            activeAlert.dismiss(animated: false)
+            self.activeAlert = nil
+        }
     }
     
     
     @IBAction func plusButtonTapped(_ sender: Any) {
-            displayAddGroupAlert()
+        displayAddGroupAlert()
     }
     
     
@@ -93,43 +92,43 @@ class GroupsVC: UIViewController{
 extension GroupsVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-                let groupToDelete = groups[indexPath.row]
-                FirebaseUser.shared.deleteGroup(group: groupToDelete) { result in
-                    switch result {
-                    case .success:
-                        tableView.reloadData()
-                    case .failure(let error):
-                        print("Error removing group : \(error.localizedDescription)")
-                    }
-                }
-            
+        let groupToDelete = groups[indexPath.row]
+        FirebaseUser.shared.deleteGroup(group: groupToDelete) { result in
+            switch result {
+            case .success:
+                tableView.reloadData()
+            case .failure(let error):
+                print("Error removing group : \(error.localizedDescription)")
+            }
+        }
+        
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 70.0 // Remplacer par la hauteur désirée
-        }
+        return 70.0 // Remplacer par la hauteur désirée
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
         
-            let selectedGroup = groups[indexPath.row]
-            print("Selected group : \(selectedGroup)")
-            performSegue(withIdentifier: "goToModifyGroups", sender: selectedGroup)
-        }
+        let selectedGroup = groups[indexPath.row]
+        print("Selected group : \(selectedGroup)")
+        performSegue(withIdentifier: "goToModifyGroups", sender: selectedGroup)
+    }
     
 }
 
 
 extension GroupsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return groups.count
+        return groups.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCell
         
-            cell.label.text = groups[indexPath.row].name
+        cell.label.text = groups[indexPath.row].name
         
         
         let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))

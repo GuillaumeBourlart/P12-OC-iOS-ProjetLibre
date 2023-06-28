@@ -22,13 +22,6 @@ class ProfileVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Make the navigation bar transparent (only needed in root page of controller)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.tintColor = UIColor(named: "text")
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "text") ?? UIColor.magenta]
-        
         configureProfileViews()
         imagePickerController.delegate = self
         
@@ -41,10 +34,10 @@ class ProfileVC: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
-               if let activeAlert = activeAlert {
-                   activeAlert.dismiss(animated: false)
-                   self.activeAlert = nil
-               }
+        if let activeAlert = activeAlert {
+            activeAlert.dismiss(animated: false)
+            self.activeAlert = nil
+        }
     }
     
     // display informations and set UI
@@ -70,7 +63,7 @@ class ProfileVC: UIViewController{
     }
     
     // Call function to log out
-     func logout() {
+    func logout() {
         FirebaseUser.shared.signOut { result in
             switch result {
             case .failure(let error): print(error)
@@ -80,10 +73,7 @@ class ProfileVC: UIViewController{
     }
     
     
-    
-    // Fonction qui sera appelée lorsque l'utilisateur appuie sur profileImageView.
     @objc func profileImageTapped() {
-        // Effet de ressort
         CustomAnimations.imagePressAnimation(for: self.profileImageView) {
             
             let alert = UIAlertController(title: "Chose an image", message: nil, preferredStyle: .actionSheet)
@@ -209,7 +199,6 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         }
         
         if !(cell.sectionType?.containsSwitch ?? false), let accountOption = cell.sectionType as? SettingsSections.AccountOptions, accountOption != .disconnect {
-//            cell.accessoryType = .disclosureIndicator
             let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
             whiteDisclosureIndicator.tintColor = UIColor.white // Remplacez "customDisclosureIndicator" par le nom de votre image.
             whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
@@ -254,7 +243,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
 
 
 extension ProfileVC: SettingsCellDelegate{
-   
+    
     
     func DarkmodeSwitchChanged(in cell: SettingsCell, isOn: Bool) {
         if isOn {

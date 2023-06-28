@@ -77,6 +77,8 @@
 		D084FB142A10309200721B88 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084FB132A10309200721B88 /* HistoryVC.swift */; };
 		D08CAE722A23DE0800C835E9 /* JoinWithCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08CAE712A23DE0800C835E9 /* JoinWithCodeVC.swift */; };
 		D08E0ED92A163FAC00D09FAD /* FakeResponsesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08E0ED82A163FAC00D09FAD /* FakeResponsesData.swift */; };
+		D09707542A4B4CAF000001CF /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09707532A4B4CAF000001CF /* CustomTextField.swift */; };
+		D09707562A4B7F3C000001CF /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09707552A4B7F3C000001CF /* CustomNavigationBar.swift */; };
 		D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */; };
 		D0B35CDE2A159B3D007B3431 /* FirebaseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */; };
 		D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDF2A159C74007B3431 /* GameTests.swift */; };
@@ -163,6 +165,8 @@
 		D084FB132A10309200721B88 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		D08CAE712A23DE0800C835E9 /* JoinWithCodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinWithCodeVC.swift; sourceTree = "<group>"; };
 		D08E0ED82A163FAC00D09FAD /* FakeResponsesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponsesData.swift; sourceTree = "<group>"; };
+		D09707532A4B4CAF000001CF /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		D09707552A4B7F3C000001CF /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		D0B35CDB2A159B0C007B3431 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStub.swift; sourceTree = "<group>"; };
 		D0B35CDF2A159C74007B3431 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
@@ -295,15 +299,17 @@
 		D03083FB2A0F8A9000A8FBB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7E98147C2A3DF61A008F3A4B /* Main.storyboard */,
+				D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */,
 				7E98148A2A3E88F9008F3A4B /* Localizables */,
 				D0EB9A3E2A27AD01006D2A48 /* CustomButtons */,
 				D030840A2A0F8CEB00A8FBB7 /* CategoryCell.swift */,
 				D030840C2A0F8CF400A8FBB7 /* CustomCell.swift */,
-				7E98147C2A3DF61A008F3A4B /* Main.storyboard */,
-				D084EC472A0F7EF700544AA3 /* LaunchScreen.storyboard */,
 				D03083FD2A0F8AB000A8FBB7 /* Settings.swift */,
 				D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */,
 				7E5F99A52A39FCF800476A4D /* SettingsCell.swift */,
+				D09707532A4B4CAF000001CF /* CustomTextField.swift */,
+				D09707552A4B7F3C000001CF /* CustomNavigationBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -594,7 +600,9 @@
 				D03083E82A0F8A5100A8FBB7 /* ResultVC.swift in Sources */,
 				D03083EE2A0F8A5200A8FBB7 /* LoginVC.swift in Sources */,
 				7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */,
+				D09707562A4B7F3C000001CF /* CustomNavigationBar.swift in Sources */,
 				D03083E42A0F8A5100A8FBB7 /* CompetitiveVC.swift in Sources */,
+				D09707542A4B4CAF000001CF /* CustomTextField.swift in Sources */,
 				D030840F2A0F8CF500A8FBB7 /* CustomCell.swift in Sources */,
 				D03084092A0F8CE500A8FBB7 /* CustomButton2.swift in Sources */,
 				D084EC3A2A0F7EF400544AA3 /* AppDelegate.swift in Sources */,

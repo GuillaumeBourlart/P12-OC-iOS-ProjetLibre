@@ -10,7 +10,6 @@ import Alamofire
 
 class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -22,34 +21,8 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.tintColor = UIColor(named: "text")
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "text") ?? UIColor.magenta]
-        
         loadCategories()
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        // margins total = 40 (left) + 40 (right)
-        let margins: CGFloat = 20 + 20
-        // spacing between cells
-        let spacing: CGFloat = 20
-        // Get the screen's width
-        let screenWidth = UIScreen.main.bounds.width
-        // Calculate the width for each item
-        let itemWidth = (screenWidth - margins - spacing) / 2
-        
-        // Set the item size
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth/3*2)
-        layout.minimumInteritemSpacing = spacing
-        layout.minimumLineSpacing = spacing
-        
-        // Set the layout to the collectionView
-        collectionView.collectionViewLayout = layout
-        
-        let placeholderText = "Search a quiz here"
+        setCategoriesSize()
         
         //handle music
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -59,10 +32,10 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
-               if let activeAlert = activeAlert {
-                   activeAlert.dismiss(animated: false)
-                   self.activeAlert = nil
-               }
+        if let activeAlert = activeAlert {
+            activeAlert.dismiss(animated: false)
+            self.activeAlert = nil
+        }
     }
     
     func loadCategories() {
@@ -89,14 +62,32 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         }
     }
     
+    func setCategoriesSize(){
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        // margins total = 40 (left) + 40 (right)
+        let margins: CGFloat = 20 + 20
+        // spacing between cells
+        let spacing: CGFloat = 20
+        // Get the screen's width
+        let screenWidth = UIScreen.main.bounds.width
+        // Calculate the width for each item
+        let itemWidth = (screenWidth - margins - spacing) / 2
+        
+        // Set the item size
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth/3*2)
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
+        
+        // Set the layout to the collectionView
+        collectionView.collectionViewLayout = layout
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? OpponentChoice {
             destination.category = self.category
             destination.difficulty = self.difficulty
         }
     }
-    
-    
     
     // MARK: - UICollectionViewDataSource
     
@@ -110,7 +101,9 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         let category = categories[indexPath.row]
         cell.categoryLabel.text = category["name"] as? String
         cell.tag = category["id"] as? Int ?? 0
-        cell.layer.cornerRadius = 10
+        cell.layer.cornerRadius = 20
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = UIColor(named: "button")?.cgColor ?? UIColor.black.cgColor
         
         
         return cell
@@ -118,14 +111,8 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Code à exécuter lorsque l'utilisateur touche une cellule de la collection view
-        // indexPath.row contient l'index de la cellule sélectionnée
-        // Récupérer la cellule à partir de l'indexPath
         let cell = collectionView.cellForItem(at: indexPath)
         
-        
-        
-        // Accéder au tag de la cellule
         let cellTag = cell?.tag
         self.category = cellTag
         

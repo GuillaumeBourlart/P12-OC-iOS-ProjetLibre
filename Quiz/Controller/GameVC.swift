@@ -21,7 +21,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     var currentQuestionIndex = 0
     var timer: Timer?
     var timeRemaining = 10
-    var isAnswering = false // Ajoutez cette variable
+    var isAnswering = false 
     var finalScore = 0
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var activeAlert: UIAlertController?
@@ -43,19 +43,19 @@ class GameVC: UIViewController, LeavePageProtocol {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         tabBarController?.tabBar.isHidden = false
         // If an alert is being displayed, dismiss it
-               if let activeAlert = activeAlert {
-                   activeAlert.dismiss(animated: false)
-                   self.activeAlert = nil
-               }
+        if let activeAlert = activeAlert {
+            activeAlert.dismiss(animated: false)
+            self.activeAlert = nil
+        }
     }
     
     func leavePage(completion: @escaping () -> Void) {
         
-            showLeaveConfirmation {
-                self.leaveGame {
-                    completion()
-                }
+        showLeaveConfirmation {
+            self.leaveGame {
+                completion()
             }
+        }
         
     }
     
@@ -76,7 +76,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         appDelegate.soundEffectPlayer?.stop()
     }
     
-  
+    
     func loadQuestions() {
         Game.shared.getQuestions(quizId: nil, gameId: gameID!) { result in
             switch result {
@@ -90,7 +90,7 @@ class GameVC: UIViewController, LeavePageProtocol {
                     self.questions = questions
                     self.displayQuestion()
                 }
-               
+                
                 
             case .failure(let error):
                 print(error)
@@ -99,12 +99,12 @@ class GameVC: UIViewController, LeavePageProtocol {
     }
     
     func showLeaveConfirmation(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "Confirmation", message: "Êtes-vous sûr de vouloir quitter le quiz ?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to leave the game ?", preferredStyle: .alert)
         
-        let confirmAction = UIAlertAction(title: "Oui", style: .destructive) { _ in
+        let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
             completion()
         }
-        let cancelAction = UIAlertAction(title: "Non", style: .cancel)
+        let cancelAction = UIAlertAction(title: "No", style: .cancel)
         
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
@@ -134,8 +134,8 @@ class GameVC: UIViewController, LeavePageProtocol {
         var choices = question.incorrect_answers + [question.correct_answer]
         choices.shuffle()
         
-        isAnswering = true // Bloquer les taps pendant les animations
-
+        isAnswering = true
+        
         for (index, button) in answerButtons.enumerated() {
             button.transform = index % 2 == 0 ? CGAffineTransform(translationX: -self.view.bounds.width, y: 0) : CGAffineTransform(translationX: self.view.bounds.width, y: 0)
             button.setTitle(choices[index], for: .normal)
@@ -147,7 +147,7 @@ class GameVC: UIViewController, LeavePageProtocol {
                 
                 if index == self.answerButtons.count - 1 {
                     self.resetTimer()
-                    self.isAnswering = false // Débloquer les taps après la dernière animation
+                    self.isAnswering = false
                 }
             })
         }
@@ -167,9 +167,9 @@ class GameVC: UIViewController, LeavePageProtocol {
     
     @IBAction func leavebuttonPressed(_ sender: Any) {
         showLeaveConfirmation {
-               self.leaveGame {
-               }
-           }
+            self.leaveGame {
+            }
+        }
     }
     
     func leaveGame(completion: @escaping () -> Void) {
@@ -231,23 +231,23 @@ class GameVC: UIViewController, LeavePageProtocol {
                 self.performSegue(withIdentifier: "unwindToInvites", sender: self)
             } else {
                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                       print("Could not get app delegate")
-                       return
-                   }
-                   if let viewControllers = appDelegate.mainTabBarController?.viewControllers {
-                       print("Found \(viewControllers.count) view controllers in tab bar")
-                       for viewController in viewControllers {
-                           if let navigationController = viewController as? UINavigationController {
-                               print("Found a navigation controller with \(navigationController.viewControllers.count) view controllers")
-                               navigationController.popToRootViewController(animated: false)
-                               print("After pop, it now has \(navigationController.viewControllers.count) view controllers")
-                           } else {
-                               print("Found a view controller that is not a navigation controller: \(viewController)")
-                           }
-                       }
-                   } else {
-                       print("mainTabBarController does not have any viewControllers")
-                   }
+                    print("Could not get app delegate")
+                    return
+                }
+                if let viewControllers = appDelegate.mainTabBarController?.viewControllers {
+                    print("Found \(viewControllers.count) view controllers in tab bar")
+                    for viewController in viewControllers {
+                        if let navigationController = viewController as? UINavigationController {
+                            print("Found a navigation controller with \(navigationController.viewControllers.count) view controllers")
+                            navigationController.popToRootViewController(animated: false)
+                            print("After pop, it now has \(navigationController.viewControllers.count) view controllers")
+                        } else {
+                            print("Found a view controller that is not a navigation controller: \(viewController)")
+                        }
+                    }
+                } else {
+                    print("mainTabBarController does not have any viewControllers")
+                }
             }
         } else {
             self.leaveButton.isEnabled = true
@@ -289,13 +289,13 @@ class GameVC: UIViewController, LeavePageProtocol {
     }
     
     @IBAction func answerButtonTapped(_ sender: UIButton) {
-        guard !isAnswering else { return } // Ignorez l'appui sur le bouton si l'utilisateur répond déjà à une question
-        isAnswering = true // Définissez isAnswering à vrai lorsque l'utilisateur sélectionne une réponse
+        guard !isAnswering else { return }
+        isAnswering = true
         guard let selectedAnswer = sender.currentTitle else { print("error"); return }
         let correctAnswer = questions[currentQuestionIndex].correct_answer
         
         guard let questionId = questions[currentQuestionIndex].id else { print("error"); return }
-        // Assuming your questions have an 'id' field
+        
         
         let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1*timeRemaining : 0)
         finalScore += selectedAnswer == correctAnswer ? 1*timeRemaining : 0
@@ -359,6 +359,5 @@ class GameVC: UIViewController, LeavePageProtocol {
             }
         }
     }
-    
 }
 

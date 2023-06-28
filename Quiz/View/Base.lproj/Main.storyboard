@@ -53,6 +53,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yz7-bK-XMc">
                                 <rect key="frame" x="20" y="104" width="280" height="415"/>
                                 <color key="backgroundColor" name="background"/>
+                                <color key="separatorColor" name="text"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="bzp-Z5-0lB" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="280" height="35.5"/>
@@ -201,7 +202,7 @@
             <objects>
                 <navigationController id="CRq-OC-7oq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Social" image="person.3" catalog="system" selectedImage="person.3.fill" id="wGJ-Zi-rZH"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WRh-do-8M7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WRh-do-8M7" customClass="CustomNavigationBar" customModule="Quiz" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -220,7 +221,7 @@
                     <tabBarItem key="tabBarItem" title="Profile" selectedImage="person.fill" catalog="system" id="VM3-VU-Z7k">
                         <imageReference key="image" image="person" catalog="system" variableValue="0.0"/>
                     </tabBarItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="83J-ey-xZm">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="83J-ey-xZm" customClass="CustomNavigationBar" customModule="Quiz" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -238,7 +239,7 @@
                 <navigationController id="lno-nu-c4e" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Ranked" image="flag" catalog="system" selectedImage="flag.checkered" springLoaded="YES" id="qZ9-Bu-vAN"/>
                     <navigationItem key="navigationItem" id="tKn-fo-Wik"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="chj-W2-VB0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="chj-W2-VB0" customClass="CustomNavigationBar" customModule="Quiz" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -255,7 +256,7 @@
             <objects>
                 <navigationController id="8rY-fH-PoI" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Quick play" image="flag.2.crossed" catalog="system" selectedImage="flag.2.crossed.fill" id="v2D-Lg-faA"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wpw-vf-zC6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wpw-vf-zC6" customClass="CustomNavigationBar" customModule="Quiz" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -341,7 +342,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DiH-mr-xFh">
+                            <view alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DiH-mr-xFh">
                                 <rect key="frame" x="20" y="69" width="280" height="122.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c3c-z7-JnY">
@@ -887,6 +888,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1Xw-JI-m2E">
                                 <rect key="frame" x="20" y="155" width="280" height="344"/>
                                 <color key="backgroundColor" name="background"/>
+                                <color key="separatorColor" name="text"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="70" id="ifV-cz-CCP" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="280" height="70"/>
@@ -1017,6 +1019,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6aD-3a-ytO">
                                 <rect key="frame" x="20" y="104" width="280" height="395"/>
                                 <color key="backgroundColor" name="background"/>
+                                <color key="separatorColor" name="text"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="70" id="hxl-a9-78R" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="280" height="70"/>
@@ -1063,7 +1066,7 @@
                     <navigationItem key="navigationItem" title="Quizzes" id="Ptl-sW-I4r">
                         <barButtonItem key="rightBarButtonItem" style="done" id="xCS-iL-rRk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="QPV-ki-bRo">
-                                <rect key="frame" x="217" y="8" width="87" height="34"/>
+                                <rect key="frame" x="217" y="5" width="87" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
@@ -1124,7 +1127,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vco-bj-5Wm">
                                 <rect key="frame" x="30" y="220" width="260" height="224"/>
                                 <color key="backgroundColor" name="background"/>
-                                <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" name="text"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xtz-Zc-n5j" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
@@ -1161,7 +1164,7 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqz-gr-ieR" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
                                 <rect key="frame" x="20" y="465" width="59" height="34"/>
-                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <color key="backgroundColor" red="0.27884016049348442" green="0.640625" blue="0.30901179489090208" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="play.fill" catalog="system" title=""/>
@@ -1420,7 +1423,7 @@
                                     <action selector="validateButtonPressed:" destination="A90-DV-z4D" eventType="touchUpInside" id="HVx-7G-jfa"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jw1-SY-Of9">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jw1-SY-Of9" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                 <rect key="frame" x="20" y="92" width="280" height="38.5"/>
                                 <color key="backgroundColor" name="button"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1430,7 +1433,7 @@
                                     <outlet property="delegate" destination="A90-DV-z4D" id="SbN-Ga-IXb"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nzo-DW-rhy">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nzo-DW-rhy" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                 <rect key="frame" x="20" y="166.5" width="280" height="38"/>
                                 <color key="backgroundColor" name="button"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1458,7 +1461,7 @@
                                 <color key="textColor" name="text"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UVf-fS-zb4">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UVf-fS-zb4" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                 <rect key="frame" x="20" y="235.5" width="280" height="38.5"/>
                                 <color key="backgroundColor" name="button"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1468,7 +1471,7 @@
                                     <outlet property="delegate" destination="A90-DV-z4D" id="Oea-cX-EId"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a8T-GI-zEL">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a8T-GI-zEL" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                 <rect key="frame" x="20" y="279" width="280" height="38.5"/>
                                 <color key="backgroundColor" name="button"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1478,7 +1481,7 @@
                                     <outlet property="delegate" destination="A90-DV-z4D" id="fng-gq-VZc"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yLj-vl-6QF">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yLj-vl-6QF" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                 <rect key="frame" x="20" y="322.5" width="280" height="38"/>
                                 <color key="backgroundColor" name="button"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1494,7 +1497,7 @@
                                 <color key="textColor" name="text"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BC0-SB-Htk">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BC0-SB-Htk" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                 <rect key="frame" x="20" y="390.5" width="280" height="38.5"/>
                                 <color key="backgroundColor" name="button"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1671,6 +1674,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="v06-9V-SNc">
                                 <rect key="frame" x="20" y="104" width="280" height="415"/>
                                 <color key="backgroundColor" name="background"/>
+                                <color key="separatorColor" name="text"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="70" id="gq9-8J-esi" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="280" height="70"/>
@@ -1854,13 +1858,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Official quizzes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MAv-zJ-l7h">
-                                <rect key="frame" x="20" y="160" width="117" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="20" y="160" width="141.5" height="22"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="19"/>
                                 <color key="textColor" name="text"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CPa-KK-sDG">
-                                <rect key="frame" x="20" y="201" width="280" height="318"/>
+                                <rect key="frame" x="20" y="202" width="280" height="317"/>
                                 <color key="backgroundColor" name="background"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7wi-ua-iY0">
                                     <size key="itemSize" width="128" height="128"/>
@@ -1876,7 +1880,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="categoriesBG" translatesAutoresizingMaskIntoConstraints="NO" id="Ldr-Iz-sWT">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="categoriesBG" translatesAutoresizingMaskIntoConstraints="NO" id="Ldr-Iz-sWT">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="F2r-Df-ChQ">
@@ -1910,7 +1914,7 @@
                                 </connections>
                             </collectionView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="S1o-gj-ezQ">
-                                <rect key="frame" x="140" y="340" width="40" height="40"/>
+                                <rect key="frame" x="140" y="340.5" width="40" height="40"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="APP-1c-P91"/>
@@ -1919,10 +1923,15 @@
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0f1-ID-V1v" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="185.5" y="79" width="99.5" height="50"/>
+                                <rect key="frame" x="194" y="79" width="106" height="50"/>
                                 <color key="backgroundColor" name="button"/>
-                                <state key="normal" title="Button"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="17"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Join room">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <buttonConfiguration key="configuration" style="plain" title="Join room">
+                                    <fontDescription key="titleFontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="17"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -1930,13 +1939,14 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIo-kr-Tsf" customClass="CustomButton2" customModule="Quiz" customModuleProvider="target">
-                                <rect key="frame" x="35" y="79" width="110" height="50"/>
+                                <rect key="frame" x="20" y="79" width="117" height="50"/>
                                 <color key="backgroundColor" name="button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="gwu-oT-QIB"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="My quizzes">
+                                    <fontDescription key="titleFontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="15"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -1960,10 +1970,10 @@
                             <constraint firstItem="cpC-eJ-XSg" firstAttribute="centerX" secondItem="LkO-Pt-EZN" secondAttribute="centerX" id="2v3-cF-nDN"/>
                             <constraint firstItem="CPa-KK-sDG" firstAttribute="top" secondItem="MAv-zJ-l7h" secondAttribute="bottom" constant="20" id="37C-Se-Kmp"/>
                             <constraint firstItem="CPa-KK-sDG" firstAttribute="centerX" secondItem="LkO-Pt-EZN" secondAttribute="centerX" id="6OB-Mo-4ss"/>
-                            <constraint firstItem="RSb-Ey-Y1P" firstAttribute="trailing" secondItem="0f1-ID-V1v" secondAttribute="trailing" constant="35" id="7rB-JL-CSv"/>
+                            <constraint firstItem="RSb-Ey-Y1P" firstAttribute="trailing" secondItem="0f1-ID-V1v" secondAttribute="trailing" constant="20" id="7rB-JL-CSv"/>
                             <constraint firstItem="S1o-gj-ezQ" firstAttribute="centerX" secondItem="CPa-KK-sDG" secondAttribute="centerX" id="Cde-F1-oMr"/>
                             <constraint firstItem="MAv-zJ-l7h" firstAttribute="leading" secondItem="RSb-Ey-Y1P" secondAttribute="leading" constant="20" id="EYu-Re-26u"/>
-                            <constraint firstItem="BIo-kr-Tsf" firstAttribute="leading" secondItem="RSb-Ey-Y1P" secondAttribute="leading" constant="35" id="EZN-t2-hzu"/>
+                            <constraint firstItem="BIo-kr-Tsf" firstAttribute="leading" secondItem="RSb-Ey-Y1P" secondAttribute="leading" constant="20" id="EZN-t2-hzu"/>
                             <constraint firstItem="BIo-kr-Tsf" firstAttribute="top" secondItem="RSb-Ey-Y1P" secondAttribute="top" constant="15" id="Exr-Mk-INi"/>
                             <constraint firstItem="cpC-eJ-XSg" firstAttribute="leading" secondItem="RSb-Ey-Y1P" secondAttribute="leading" constant="30" id="HI8-k6-tVI"/>
                             <constraint firstItem="0f1-ID-V1v" firstAttribute="centerY" secondItem="BIo-kr-Tsf" secondAttribute="centerY" id="Ojt-Rf-DEz"/>
@@ -2173,7 +2183,7 @@
                     <navigationItem key="navigationItem" title="Private room" id="Gur-eL-rdV">
                         <barButtonItem key="rightBarButtonItem" style="done" id="VE7-Z8-Wgl">
                             <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="DwI-Hh-qKU">
-                                <rect key="frame" x="217" y="8" width="87" height="34"/>
+                                <rect key="frame" x="217" y="5" width="87" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
@@ -2218,7 +2228,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gR9-6E-ehw">
                                 <rect key="frame" x="40" y="200" width="240" height="150"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="6n4-qw-W9F">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="6n4-qw-W9F" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="65"/>
                                         <color key="backgroundColor" name="button"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2228,7 +2238,7 @@
                                             <outlet property="delegate" destination="r3L-kA-fpT" id="8Bu-u6-5Pa"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="vOP-j1-sOt">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="vOP-j1-sOt" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="85" width="240" height="65"/>
                                         <color key="backgroundColor" name="button"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2360,7 +2370,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3SH-w5-k2S">
                                 <rect key="frame" x="40" y="180" width="240" height="200"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="pseudo" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="zNz-hZ-TWk">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="pseudo" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="zNz-hZ-TWk" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="53.5"/>
                                         <color key="backgroundColor" name="button"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2370,7 +2380,7 @@
                                             <outlet property="delegate" destination="CHq-st-MhL" id="pkv-va-7dS"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="2ff-Bb-QW1">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="2ff-Bb-QW1" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="73.5" width="240" height="53"/>
                                         <color key="backgroundColor" name="button"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2380,7 +2390,7 @@
                                             <outlet property="delegate" destination="CHq-st-MhL" id="8gJ-5F-wZF"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Hte-ge-dVW">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Hte-ge-dVW" customClass="CustomTextField" customModule="Quiz" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="146.5" width="240" height="53.5"/>
                                         <color key="backgroundColor" name="button"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2604,8 +2614,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="Rc1-u9-BNj"/>
         <segue reference="gqc-Rr-G6f"/>
-        <segue reference="VMf-YG-tkp"/>
-        <segue reference="qAE-Zc-maS"/>
+        <segue reference="axf-xm-Zem"/>
+        <segue reference="2XY-Hl-6pL"/>
         <segue reference="mgT-Y3-Laq"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -2626,10 +2636,10 @@
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <namedColor name="background">
-            <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.99607843137254903" green="0.99607843137254903" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="button">
-            <color red="0.0" green="0.48235297203063965" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.21568629145622253" green="0.35294118523597717" blue="0.49803921580314636" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="color2">
             <color red="0.039136238396167755" green="0.010203234851360321" blue="0.0129415113478899" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

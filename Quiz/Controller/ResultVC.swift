@@ -50,11 +50,11 @@ class ResultVC: UIViewController {
                             self.startListening()
                         }
                     }
-                        
-                    case .failure(let error):
-                        print("Failed to fetch game data: \(error)")
-                    }
+                    
+                case .failure(let error):
+                    print("Failed to fetch game data: \(error)")
                 }
+            }
             
         } else if let gameData = gameData {
             
@@ -82,7 +82,7 @@ class ResultVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         if isResultAfterGame != nil, isResultAfterGame == true{
             navigationController?.setNavigationBarHidden(true, animated: true)
-                tabBarController?.tabBar.isHidden = true
+            tabBarController?.tabBar.isHidden = true
         }
         displayResults()
     }
@@ -90,7 +90,7 @@ class ResultVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         if isResultAfterGame != nil, isResultAfterGame == true{
             navigationController?.setNavigationBarHidden(false, animated: true)
-                tabBarController?.tabBar.isHidden = false
+            tabBarController?.tabBar.isHidden = false
         }
         
         listener?.remove()
@@ -100,23 +100,23 @@ class ResultVC: UIViewController {
     
     @IBAction func goBackToLobbby(_ sender: Any) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-               print("Could not get app delegate")
-               return
-           }
-           if let viewControllers = appDelegate.mainTabBarController?.viewControllers {
-               print("Found \(viewControllers.count) view controllers in tab bar")
-               for viewController in viewControllers {
-                   if let navigationController = viewController as? UINavigationController {
-                       print("Found a navigation controller with \(navigationController.viewControllers.count) view controllers")
-                       navigationController.popToRootViewController(animated: false)
-                       print("After pop, it now has \(navigationController.viewControllers.count) view controllers")
-                   } else {
-                       print("Found a view controller that is not a navigation controller: \(viewController)")
-                   }
-               }
-           } else {
-               print("mainTabBarController does not have any viewControllers")
-           }
+            print("Could not get app delegate")
+            return
+        }
+        if let viewControllers = appDelegate.mainTabBarController?.viewControllers {
+            print("Found \(viewControllers.count) view controllers in tab bar")
+            for viewController in viewControllers {
+                if let navigationController = viewController as? UINavigationController {
+                    print("Found a navigation controller with \(navigationController.viewControllers.count) view controllers")
+                    navigationController.popToRootViewController(animated: false)
+                    print("After pop, it now has \(navigationController.viewControllers.count) view controllers")
+                } else {
+                    print("Found a view controller that is not a navigation controller: \(viewController)")
+                }
+            }
+        } else {
+            print("mainTabBarController does not have any viewControllers")
+        }
     }
     
     
@@ -177,32 +177,32 @@ class ResultVC: UIViewController {
             case .failure(let error): print(error)
             case .success:
                 Game.shared.getGameData(gameId: gameID) { result in
-                switch result {
-                case .success(let gameData):
-                    self.gameData = gameData
-                    if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
-                        translateQuestions(questions: gameData.questions, to: languageCode) { questions in
-                            self.questions = questions
+                    switch result {
+                    case .success(let gameData):
+                        self.gameData = gameData
+                        if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
+                            translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                                self.questions = questions
+                                DispatchQueue.main.async {
+                                    self.displayResults()
+                                    self.tableView.reloadData()
+                                }
+                            }
+                            
+                        } else {
+                            self.questions = gameData.questions
                             DispatchQueue.main.async {
                                 self.displayResults()
                                 self.tableView.reloadData()
                             }
                         }
-                        
-                    } else {
-                        self.questions = gameData.questions
-                        DispatchQueue.main.async {
-                            self.displayResults()
-                            self.tableView.reloadData()
-                        }
+                    case .failure(let error):
+                        print("Failed to fetch game data: \(error)")
                     }
-                case .failure(let error):
-                    print("Failed to fetch game data: \(error)")
                 }
             }
         }
     }
-}
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuestionResultVC,
@@ -215,12 +215,12 @@ class ResultVC: UIViewController {
 extension ResultVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 70.0 // Remplacer par la hauteur désirée
-        }
+        return 70.0 // Remplacer par la hauteur désirée
+    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-                return self.questions?.count ?? 0
+        return self.questions?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

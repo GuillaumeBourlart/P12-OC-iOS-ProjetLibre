@@ -10,9 +10,6 @@ import Firebase
 
 class FirebaseServiceStub: FirebaseServiceProtocol {
    
-    
-    
-    
     var stubbedQuerySnapshotData: [[String: Any]]?
     var stubbedDocumentSnapshot: [String: Any]?
     var stubbedDocumentError: Error?

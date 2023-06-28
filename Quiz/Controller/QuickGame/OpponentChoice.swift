@@ -30,8 +30,7 @@ class OpponentChoice: UIViewController {
         for button in self.buttons {
             button.isEnabled = false
         }
-
-        // Début de l'animation
+        
         CustomAnimations.buttonPressAnimation(for: sender) {
             guard let currentUserId = Game.shared.currentUserId else {
                 return
@@ -83,7 +82,6 @@ class OpponentChoice: UIViewController {
     }
     
     @IBAction func unwindToOpponentChoice(segue: UIStoryboardSegue) {
-        // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
     }
     
     
