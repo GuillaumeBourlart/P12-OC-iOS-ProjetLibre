@@ -102,9 +102,12 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     // Function called when user click on "leave" button
     @IBAction func leaveLobbyWasPressed(_ sender: Any) {
         showLeaveConfirmation {
-            self.leaveLobby() {error in
-                if let error = error {
+            self.leaveLobby() {result in
+                switch result {
+                case .failure(let error):
                     print(error)
+                case .success():
+                    print("success")
                 }
             }
         }
@@ -113,49 +116,49 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     // Function called by appdelegate when user click on notification
     func leavePage(completion: @escaping () -> Void) {
         showLeaveConfirmation {
-            self.leaveLobby() { error in
-                if let error = error {
+            self.leaveLobby() {result in
+                switch result {
+                case .failure(let error):
                     print(error)
+                case .success():
+                    print("success")
                 }
-                completion()
-            }
-        }
+            }        }
     }
     
-    // Function to leave the lobby
-    func leaveLobby(completion: @escaping (Error?) -> Void) {
+    
+    
+    func leaveLobby(completion: @escaping (Result<Void, Error>) -> Void) {
         self.leave.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: self.leave) {
             guard let lobbyId = self.lobbyId else { return }
-            Game.shared.leaveLobby(lobbyId: lobbyId) { error in
-                if let error = error {
-                    completion(error)
+            Game.shared.leaveLobby(lobbyId: lobbyId) { result in
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
                     self.leave.isEnabled = true
                     self.navigationController?.popViewController(animated: true)
-                    return
-                }
-                // If user is the creator of the lobby, destroy it
-                else if self.isCreator != nil, self.isCreator == true {
-                    Game.shared.deleteCurrentRoom(lobbyId: lobbyId) { result in
-                        switch result {
-                        case .failure(let error):
-                            self.leave.isEnabled = true
-                            completion(error)
-                        case .success():
-                            self.leave.isEnabled = true
-                            self.navigationController?.popViewController(animated: true)
-                            completion(nil)
-                            
+                case .success():
+                    // If user is the creator of the lobby, destroy it
+                    if self.isCreator != nil, self.isCreator == true {
+                        Game.shared.deleteCurrentRoom(lobbyId: lobbyId) { result in
+                            switch result {
+                            case .failure(let error):
+                                self.leave.isEnabled = true
+                                completion(.failure(error))
+                            case .success():
+                                self.leave.isEnabled = true
+                                self.navigationController?.popViewController(animated: true)
+                                completion(.success(()))
+                            }
                         }
+                    } else {
+                        self.navigationController?.popViewController(animated: true)
+                        completion(.success(()))
                     }
-                }else{
-                    self.navigationController?.popViewController(animated: true)
-                    completion(nil)
                 }
-                
             }
         }
-        
     }
     
     // Function to go on inviting page

@@ -10,6 +10,7 @@
 		7E33A70D2A44C258008947BF /* GroupsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A70C2A44C258008947BF /* GroupsVC.swift */; };
 		7E33A70F2A44C616008947BF /* ModifyGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A70E2A44C616008947BF /* ModifyGroupVC.swift */; };
 		7E33A7112A44E3A0008947BF /* SocialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A7102A44E3A0008947BF /* SocialVC.swift */; };
+		7E47A9192A4F406F0032D836 /* DeeplManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47A9182A4F406F0032D836 /* DeeplManagerTests.swift */; };
 		7E53C1432A3C80210046CC5E /* DeeplTranslatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */; };
 		7E53C14F2A3C97900046CC5E /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 7E53C14E2A3C97900046CC5E /* FirebasePerformance */; };
 		7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F99A52A39FCF800476A4D /* SettingsCell.swift */; };
@@ -103,6 +104,7 @@
 		7E33A70C2A44C258008947BF /* GroupsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsVC.swift; sourceTree = "<group>"; };
 		7E33A70E2A44C616008947BF /* ModifyGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGroupVC.swift; sourceTree = "<group>"; };
 		7E33A7102A44E3A0008947BF /* SocialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialVC.swift; sourceTree = "<group>"; };
+		7E47A9182A4F406F0032D836 /* DeeplManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplManagerTests.swift; sourceTree = "<group>"; };
 		7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplTranslatorManager.swift; sourceTree = "<group>"; };
 		7E5F99A52A39FCF800476A4D /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		7E727B992A38BAB20025AC80 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 		D084EC522A0F7EF700544AA3 /* QuizTests */ = {
 			isa = PBXGroup;
 			children = (
+				7E47A9182A4F406F0032D836 /* DeeplManagerTests.swift */,
 				D03084132A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift */,
 				D0B35CDF2A159C74007B3431 /* GameTests.swift */,
 				D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */,
@@ -522,6 +525,7 @@
 					};
 					D084EC4E2A0F7EF700544AA3 = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1430;
 						TestTargetID = D084EC352A0F7EF400544AA3;
 					};
 				};
@@ -646,6 +650,7 @@
 				D08E0ED92A163FAC00D09FAD /* FakeResponsesData.swift in Sources */,
 				D03084152A0F8D8200A8FBB7 /* OpenTriviaDatabaseManagerTests.swift in Sources */,
 				D03084142A0F8D8200A8FBB7 /* AlamofireStub.swift in Sources */,
+				7E47A9192A4F406F0032D836 /* DeeplManagerTests.swift in Sources */,
 				D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */,
 				D0B35CDE2A159B3D007B3431 /* FirebaseStub.swift in Sources */,
 				D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */,
@@ -896,6 +901,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -906,6 +912,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.guillaume.QuizTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quiz.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quiz";
@@ -917,6 +924,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

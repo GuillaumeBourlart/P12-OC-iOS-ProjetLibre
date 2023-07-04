@@ -54,37 +54,48 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
         """
         let jsonData = jsonString.data(using: .utf8)
         networkRequestStub.data = jsonData
+        var fetchedQuestions: [UniversalQuestion]?
+        var fetchedError: Error?
         
         // When
         var fetchedCategories: [[String: Any]]?
         sut.fetchCategories { result in
             switch result {
-            case .failure(_):XCTFail("Expected to succes")
-            case .success(let categories):fetchedCategories = categories
+            case .failure(let error):
+                fetchedError = error
+            case .success(let categories):
+                fetchedCategories = categories
+                // Then
+                XCTAssertNil(fetchedError)
+                XCTAssertNotNil(fetchedQuestions)
             }
             
         }
         
-        // Then
-        XCTAssertNotNil(fetchedCategories)
+        
     }
     
     func testFetchCategories_failure() {
         // Given
         networkRequestStub.error = NSError(domain: "", code: -1, userInfo: nil)
-        
+        var fetchedQuestions: [UniversalQuestion]?
+        var fetchedError: Error?
         // When
         var fetchedCategories: [[String: Any]]?
         sut.fetchCategories { result in
             switch result {
-            case .failure(_):
-                XCTFail("Expected to succes")
+            case .failure(let error):
+                    fetchedError = error
             case .success(let categories):
                 fetchedCategories = categories
+                // Then
+                XCTAssertNil(fetchedCategories)
             }
-            
             // Then
-            XCTAssertNil(fetchedCategories)
+            XCTAssertNotNil(fetchedError)
+            XCTAssertNil(fetchedQuestions)
+            
+            
         }
     }
         
@@ -103,11 +114,12 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                 case .failure(let error):
                     fetchedError = error
                 }
+                // Then
+                XCTAssertNil(fetchedError)
+                XCTAssertNotNil(fetchedQuestions)
             }
             
-            // Then
-            XCTAssertNil(fetchedError)
-            XCTAssertNotNil(fetchedQuestions)
+            
         }
         
         func testFetchQuestions_failure() {
@@ -124,11 +136,12 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                 case .failure(let error):
                     fetchedError = error
                 }
+                // Then
+                XCTAssertNotNil(fetchedError)
+                XCTAssertNil(fetchedQuestions)
             }
             
-            // Then
-            XCTAssertNotNil(fetchedError)
-            XCTAssertNil(fetchedQuestions)
+            
         }
     }
 

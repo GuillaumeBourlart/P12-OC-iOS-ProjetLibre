@@ -15,6 +15,7 @@ class ResultVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var goToAppLobby: UIButton!
     
+    var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
     var gameID: String?
     var gameData: GameData?
     var questions: [String: UniversalQuestion]?
@@ -34,7 +35,7 @@ class ResultVC: UIViewController {
                 case .success(let gameData):
                     self.gameData = gameData
                     if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
-                        translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                        self.translator.translateQuestions(questions: gameData.questions, to: languageCode) { questions in
                             self.questions = questions
                             DispatchQueue.main.async {
                                 self.displayResults()
@@ -60,7 +61,7 @@ class ResultVC: UIViewController {
             
             self.questions = gameData.questions
             if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
-                translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                self.translator.translateQuestions(questions: gameData.questions, to: languageCode) { questions in
                     self.questions = questions
                     DispatchQueue.main.async {
                         self.displayResults()
@@ -181,7 +182,7 @@ class ResultVC: UIViewController {
                     case .success(let gameData):
                         self.gameData = gameData
                         if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
-                            translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                            self.translator.translateQuestions(questions: gameData.questions, to: languageCode) { questions in
                                 self.questions = questions
                                 DispatchQueue.main.async {
                                     self.displayResults()

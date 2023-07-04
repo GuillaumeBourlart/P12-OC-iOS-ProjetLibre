@@ -41,6 +41,17 @@ class InvitesVC: UIViewController {
         }
     }
     
+    
+    @IBAction func reloadButtonPressed(_ sender: UIButton) {
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+            rotationAnimation.toValue = NSNumber(value: Double.pi * 2)
+        rotationAnimation.duration = 0.2
+            rotationAnimation.isCumulative = true
+            rotationAnimation.repeatCount = 1
+            sender.layer.add(rotationAnimation, forKey: "rotationAnimation")
+        loadInvites()
+    }
+    
     func fetchInvites() {
         FirebaseUser.shared.fetchInvites { data, error in
             if let error = error {

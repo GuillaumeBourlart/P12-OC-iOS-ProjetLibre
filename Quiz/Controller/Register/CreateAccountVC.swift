@@ -57,12 +57,14 @@ class CreateAccountVC: UIViewController {
                 return
             }
             
-            FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo) { _, error in
-                if let error = error {
+            FirebaseUser.shared.createUser(email: email, password: password, pseudo: pseudo) { result in
+                switch result {
+                case .failure(let error):
                     print("Error creating user: \(error.localizedDescription)")
                     // Update UI for creation error
                     self.updateUIForError(error.localizedDescription, textField: nil)
-                } else {
+                case .success():
+                    
                     self.dismiss(animated: true)
                 }
             }

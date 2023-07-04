@@ -14,6 +14,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     @IBOutlet var answerButtons: [UIButton]!
     @IBOutlet weak var leaveButton: CustomButton!
     
+    var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
     var gameID: String?
     var userAnswers: [String: UserAnswer] = [:]
     var isCompetitive: Bool = false
@@ -82,7 +83,7 @@ class GameVC: UIViewController, LeavePageProtocol {
             switch result {
             case .success(let questions):
                 if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
-                    translateQuestions(questions: questions, to: languageCode) { questions in
+                    self.translator.translateQuestions(questions: questions, to: languageCode) { questions in
                         self.questions = questions
                         self.displayQuestion()
                     }

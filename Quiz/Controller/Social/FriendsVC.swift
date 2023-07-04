@@ -15,11 +15,16 @@ class FriendsVC: UIViewController{
     @IBOutlet weak var switchControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var reloadButton: UIButton!
     // variables
     var userListener: ListenerRegistration?
+    
     var friends: [String: String] = [:]
-    var friendRequests: [String: String] = [:]
-    var isShowingFriendRequests = true
+    var receivedFriendRequests: [String: String] = [:]
+    var sentFriendRequests: [String: String] = [:]
+    
+    var isShowingReceivedFriendRequests = false
+    var isShowingSentFriendRequests = false
     var activeAlert: UIAlertController?
     
     override func viewDidLoad() {
@@ -31,20 +36,47 @@ class FriendsVC: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         loadArrays()
         onSwitch(switchControl)
+        let attributesNormal = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let attributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.black]
+
+        switchControl.setTitleTextAttributes(attributesNormal, for: .normal)
+        switchControl.setTitleTextAttributes(attributesSelected, for: .selected)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
-               if let activeAlert = activeAlert {
-                   activeAlert.dismiss(animated: false)
-                   self.activeAlert = nil
-               }
+        if let activeAlert = activeAlert {
+            activeAlert.dismiss(animated: false)
+            self.activeAlert = nil
+        }
     }
     
     @objc func refreshTable() {
-            self.loadArrays()
+        self.loadArrays()
         
+    }
+    
+    @IBAction func reloadButtonTapped(_ sender: UIButton) {
+        UIView.animate(withDuration: 1.0) {
+                sender.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
+            }
+        reloadData()
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+            rotationAnimation.toValue = NSNumber(value: Double.pi * 2)
+        rotationAnimation.duration = 0.2
+            rotationAnimation.isCumulative = true
+            rotationAnimation.repeatCount = 1
+            sender.layer.add(rotationAnimation, forKey: "rotationAnimation")
+    }
+    
+    func reloadData(){
+        FirebaseUser.shared.getUserInfo { result in
+            switch result {
+            case .failure(let error): print(error)
+            case .success(): self.loadArrays()
+            }
+        }
     }
     
     
@@ -62,13 +94,25 @@ class FriendsVC: UIViewController{
                 
             }
         }
-        FirebaseUser.shared.fetchFriendRequests() { data, error in
+        FirebaseUser.shared.fetchFriendRequests(status: .received) { data, error in
             if let error = error {
                 print(error)
             }
             if let data = data {
                 DispatchQueue.main.async {
-                    self.friendRequests = data
+                    self.receivedFriendRequests = data
+                    self.tableView.reloadData()
+                }
+                
+            }
+        }
+        FirebaseUser.shared.fetchFriendRequests(status: .sent) { data, error in
+            if let error = error {
+                print(error)
+            }
+            if let data = data {
+                DispatchQueue.main.async {
+                    self.sentFriendRequests = data
                     self.tableView.reloadData()
                 }
                 
@@ -79,10 +123,16 @@ class FriendsVC: UIViewController{
     // Function called when switching UIsegmentedCotroll index
     @IBAction func onSwitch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
-        case 0: isShowingFriendRequests = false
+        case 0: isShowingReceivedFriendRequests = false
+            isShowingSentFriendRequests = false
             self.tableView.reloadData()
             
-        case 1: isShowingFriendRequests = true
+        case 1: isShowingReceivedFriendRequests = true
+            isShowingSentFriendRequests = false
+            self.tableView.reloadData()
+            
+        case 2: isShowingReceivedFriendRequests = false
+            isShowingSentFriendRequests = true
             self.tableView.reloadData()
             
         default:
@@ -130,8 +180,10 @@ class FriendsVC: UIViewController{
 
 extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isShowingFriendRequests {
-            return friendRequests.count
+        if isShowingReceivedFriendRequests {
+            return receivedFriendRequests.count
+        }else if isShowingSentFriendRequests {
+            return sentFriendRequests.count
         }else{
             return friends.count
         }
@@ -140,21 +192,35 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! CustomCell
         
-        if isShowingFriendRequests {
-            if indexPath.row < friendRequests.count {
-                let friendUsername = Array(friendRequests.values)[indexPath.row]
+        if isShowingReceivedFriendRequests {
+            if indexPath.row < receivedFriendRequests.count {
+                let friendUsername = Array(receivedFriendRequests.values)[indexPath.row]
                 
                 if let label = cell.label {
                     label.text = friendUsername
                 } else {
                     fatalError("Label is nil.")
                 }
-                cell.addButton?.isHidden = !isShowingFriendRequests
+                cell.addButton?.isHidden = !isShowingReceivedFriendRequests
                 cell.delegate = self
             } else {
                 fatalError("IndexPath is out of bounds.")
             }
-            
+        }else if isShowingSentFriendRequests {
+            if indexPath.row < sentFriendRequests.count {
+                let friendUsername = Array(sentFriendRequests.values)[indexPath.row]
+                if let label = cell.label {
+                    label.text = friendUsername
+                } else {
+                    fatalError("Label is nil.")
+                }
+                
+                cell.addButton?.isHidden = !isShowingReceivedFriendRequests
+                cell.delegate = self
+            } else {
+                // Gérez l'erreur ici
+                fatalError("IndexPath is out of bounds.")
+            }
         }else{
             if indexPath.row < friends.count {
                 let friendUsername = Array(friends.values)[indexPath.row]
@@ -164,7 +230,7 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
                     fatalError("Label is nil.")
                 }
                 
-                cell.addButton?.isHidden = !isShowingFriendRequests
+                cell.addButton?.isHidden = !isShowingReceivedFriendRequests
                 cell.delegate = self
             } else {
                 // Gérez l'erreur ici
@@ -176,8 +242,8 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 50.0 // Remplacer par la hauteur désirée
-        }
+        return 50.0 // Remplacer par la hauteur désirée
+    }
 }
 
 
@@ -186,8 +252,8 @@ extension FriendsVC: CustomCellDelegate {
     
     func didTapAddButton(in cell: CustomCell) {
         if let indexPath = tableView.indexPath(for: cell) {
-            let friendUID = Array(friendRequests.keys)[indexPath.row]
-            let friendUsername = Array(friendRequests.values)[indexPath.row]
+            let friendUID = Array(receivedFriendRequests.keys)[indexPath.row]
+            let friendUsername = Array(receivedFriendRequests.values)[indexPath.row]
             // Ajouter l'ami à la liste d'amis ou effectuer d'autres actions avec l'UID de l'ami
             FirebaseUser.shared.acceptFriendRequest(friendID: friendUID, friendUsername: friendUsername) { result in
                 switch result {
@@ -209,8 +275,8 @@ extension FriendsVC: CustomCellDelegate {
         let friendUID : String?
         
         
-        if isShowingFriendRequests {
-            friendUID = Array(friendRequests.keys)[indexPath.row]
+        if isShowingReceivedFriendRequests {
+            friendUID = Array(receivedFriendRequests.keys)[indexPath.row]
             if let friendUID = friendUID {
                 FirebaseUser.shared.rejectFriendRequest(friendID: friendUID) { result in
                     switch result {
@@ -221,7 +287,7 @@ extension FriendsVC: CustomCellDelegate {
                     }
                 }
             }
-        } else {
+        }else if !isShowingSentFriendRequests, !isShowingReceivedFriendRequests {
             friendUID = Array(friends.keys)[indexPath.row]
             if let friendUID = friendUID {
                 FirebaseUser.shared.removeFriend(friendID: friendUID) { result in

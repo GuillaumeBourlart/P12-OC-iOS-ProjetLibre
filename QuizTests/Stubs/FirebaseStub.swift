@@ -9,11 +9,14 @@ import XCTest
 import Firebase
 
 class FirebaseServiceStub: FirebaseServiceProtocol {
-   
-    var stubbedQuerySnapshotData: [[String: Any]]?
-    var stubbedDocumentSnapshot: [String: Any]?
-    var stubbedDocumentError: Error?
     
+    //    var stubbedQuerySnapshotData: [[String: Any]]?
+    //    var stubbedDocumentSnapshot: [String: Any]?
+    var stubbedDocumentError: Error?
+    var stubbedListenerData: [String: Any]?
+    
+    var stubbedQuerySnapshotDatas: [[[String: Any]]]?
+    var stubbedDocumentSnapshots: [[String: Any]]?
     
     var userID: String? = "userId"
     var currentUserID: String? {
@@ -26,25 +29,47 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
         }
     }
     
-    func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String : Any]]?, Error?) -> Void) {
-        completion(stubbedQuerySnapshotData, stubbedDocumentError)
+    func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String : Any]], Error>) -> Void) {
+        if let error = stubbedDocumentError {
+            completion(.failure(error))
+        } else if let data = stubbedQuerySnapshotDatas?.first {
+            stubbedQuerySnapshotDatas?.removeFirst()
+            completion(.success(data))
+        }
     }
     
-    func getDocument(in collection: String, documentId: String, completion: @escaping ([String : Any]?, Error?) -> Void) {
-        completion(stubbedDocumentSnapshot, stubbedDocumentError)
+    func getDocument(in collection: String, documentId: String, completion: @escaping (Result<[String : Any], Error>) -> Void) {
+        if let error = stubbedDocumentError {
+            completion(.failure(error))
+        } else if let data = stubbedDocumentSnapshots?.first {
+            stubbedDocumentSnapshots?.removeFirst()
+            completion(.success(data))
+        }
     }
     
     func setDataWithMerge(in collection: String, documentId: String, data: [String : Any], merge: Bool, completion: @escaping (Error?) -> Void) {
-        
+        completion(stubbedDocumentError)
     }
     
+    
+    
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String : Any], Error>) -> Void) -> ListenerRegistration {
-        
-       
+        if let error = stubbedDocumentError {
+            completion(.failure(error))
+        } else if let data = stubbedListenerData {
+            completion(.success(data))
+        }
+        return ListenerRegistrationStub()
     }
     
     func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String : Any]], Error>) -> Void) -> ListenerRegistration {
-        
+        if let error = stubbedDocumentError {
+            completion(.failure(error))
+        } else if let data = stubbedQuerySnapshotDatas?.first {
+            stubbedQuerySnapshotDatas?.removeFirst()
+            completion(.success(data))
+        }
+        return ListenerRegistrationStub()
     }
     
     func createGameAndDeleteLobby(gameData: [String : Any], gameId: String, lobbyId: String, completion: @escaping (Error?) -> Void) {
@@ -54,7 +79,7 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {
         
     }
-
+    
     
     func setData(in collection: String, documentId: String, data: [String : Any], completion: @escaping (Error?) -> Void) {
         completion(stubbedDocumentError)
@@ -88,3 +113,9 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     }
 }
 
+
+class ListenerRegistrationStub: NSObject, ListenerRegistration {
+    func remove() {
+        // Vous pouvez ajouter du code ici si nécessaire pour simuler le retrait de l'écouteur.
+    }
+}

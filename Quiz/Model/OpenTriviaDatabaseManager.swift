@@ -22,11 +22,11 @@ class OpenTriviaDatabaseManager {
     
     // Function to display TriviaDB categories
     func fetchCategories(completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
-        guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return}
+        guard self.currentUserId != nil else { completion(.failure(FirebaseError.noUserConnected)) ; return}
         let urlString = "https://opentdb.com/api_category.php"
 
         guard let url = URL(string: urlString) else {
-            completion(.failure(MyError.failedToMakeURL))
+            completion(.failure(FirebaseError.failedToMakeURL))
             return
         }
 
@@ -41,7 +41,7 @@ class OpenTriviaDatabaseManager {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                     guard let json = jsonObject as? [String: Any],
                           let categoriesJSON = json["trivia_categories"] as? [[String: Any]] else {
-                        completion(.failure(MyError.invalidJsonFormat))
+                        completion(.failure(FirebaseError.invalidJsonFormat))
                         return
                     }
                     
@@ -72,14 +72,14 @@ class OpenTriviaDatabaseManager {
                     completion(.failure(error))
                 }
             } else {
-                completion(.failure(error ?? MyError.noDataInResponse))
+                completion(.failure(error ?? FirebaseError.noDataInResponse))
             }
         }
     }
     
     // Function to get questions from TrviaDB
     func fetchQuestions(inCategory categoryId: Int?, amount: Int = 10, difficulty: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
-        guard self.currentUserId != nil else { completion(.failure(MyError.noUserConnected)) ; return }
+        guard self.currentUserId != nil else { completion(.failure(FirebaseError.noUserConnected)) ; return }
         
         var urlString = "https://opentdb.com/api.php?amount=\(amount)&type=multiple"
         if let categoryId = categoryId { urlString += "&category=\(categoryId)"}
@@ -100,7 +100,7 @@ class OpenTriviaDatabaseManager {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                     guard var json = jsonObject as? [String: Any],
                           var questionsData = json["results"] as? [[String: Any]] else {
-                        completion(.failure(MyError.invalidJsonFormat))
+                        completion(.failure(FirebaseError.invalidJsonFormat))
                         return
                     }
 
@@ -130,7 +130,7 @@ class OpenTriviaDatabaseManager {
                     completion(.failure(error))
                 }
             } else {
-                completion(.failure(error ?? MyError.noDataInResponse))
+                completion(.failure(error ?? FirebaseError.noDataInResponse))
             }
         }
     }

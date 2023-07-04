@@ -6,7 +6,13 @@
 //
 
 import Foundation
+enum Status: String  {
+    case received = "received"
+    case sent = "sent"
+}
+
 struct FirestoreFields {
+    
     // Collection names
     static let usersCollection = "users"
     static let quizzesCollection = "quizzes"

@@ -17,7 +17,7 @@ enum FirestoreCondition {
 }
 
 // Enum to handle errors
-enum MyError: Error, Equatable {
+enum FirebaseError: Error, Equatable {
     case noFriendRequestYet
     case noUsernammesFound
     case noInvitesInInvitesList
@@ -47,15 +47,14 @@ enum MyError: Error, Equatable {
 
 
 protocol FirebaseServiceProtocol {
-    func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String: Any]]?, Error?) -> Void)
-    func getDocument(in collection: String, documentId: String, completion: @escaping ([String: Any]?, Error?) -> Void)
+    func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String: Any]], Error>) -> Void)
+    func getDocument(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void)
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func setDataWithMerge(in collection: String, documentId: String, data: [String: Any], merge: Bool, completion: @escaping (Error?) -> Void)
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void)
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration
-    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration 
-//    func createGameAndDeleteLobby(gameData: [String: Any], gameId: String, lobbyId: String, completion: @escaping (Error?) -> Void)
+    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration
     
     var currentUserID: String? { get }
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -72,7 +71,7 @@ class FirebaseService: FirebaseServiceProtocol{
     }
     
     // Function to get documents data
-    func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping ([[String: Any]]?, Error?) -> Void) {
+    func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
         var collectionReference: Query = db.collection(collection)
         
         for field in fields {
@@ -88,33 +87,33 @@ class FirebaseService: FirebaseServiceProtocol{
         
         collectionReference.getDocuments { (querySnapshot, error) in
             if let error = error {
-                completion(nil, error)
-            } else if querySnapshot != nil {
-                let documentsData = querySnapshot?.documents.map {
+                completion(.failure(error))
+            } else if let querySnapshot = querySnapshot {
+                let documentsData = querySnapshot.documents.map {
                     var data = $0.data()
                     data["id"] = $0.documentID
                     return data
                 }
-                completion(documentsData, nil)
+                completion(.success(documentsData))
             } else {
-                completion(nil, MyError.noDataFound)
+                completion(.success([]))
             }
         }
     }
 
     // Function to get document data
-    func getDocument(in collection: String, documentId: String, completion: @escaping ([String: Any]?, Error?) -> Void) {
+    func getDocument(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
         db.collection(collection).document(documentId).getDocument { (documentSnapshot, error) in
-               if let error = error {
-                   completion(nil, error)
-               } else if let documentData = documentSnapshot?.data(), !documentData.isEmpty {
-                   var data = documentData
-                   data["id"] = documentSnapshot?.documentID
-                   completion(data, nil)
-               } else {
-                   completion(nil, MyError.noDataFound)
-               }
-           }
+            if let error = error {
+                completion(.failure(error))
+            } else if let documentData = documentSnapshot?.data(), !documentData.isEmpty {
+                var data = documentData
+                data["id"] = documentSnapshot?.documentID
+                completion(.success(data))
+            } else {
+                completion(.success([:]))
+            }
+        }
     }
 
     // Function add snapshot listener to a document
@@ -128,7 +127,7 @@ class FirebaseService: FirebaseServiceProtocol{
                     data["id"] = documentSnapshot?.documentID
                     completion(.success(data))
                 } else {
-                    completion(.failure(MyError.noDataFound))
+                    completion(.failure(FirebaseError.noDataFound))
                 }
             }
             return listener
@@ -148,7 +147,7 @@ class FirebaseService: FirebaseServiceProtocol{
                     }
                     completion(.success(documentsData))
                 } else {
-                    completion(.failure(MyError.noDataFound))
+                    completion(.failure(FirebaseError.noDataFound))
                 }
             }
             return listener

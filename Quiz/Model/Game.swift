@@ -27,78 +27,86 @@ class Game {
     // Function to search a competitive room
     func searchCompetitiveRoom(completion: @escaping (Result<String, Error>) -> Void ) {
         guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(MyError.noUserConnected)); return
+            completion(.failure(FirebaseError.noUserConnected))
+            return
         }
         
         let conditions: [FirestoreCondition] = [
             .isEqualTo(FirestoreFields.status, "waiting"),
             .isEqualTo(FirestoreFields.Lobby.competitive, true)
         ]
-        
-    
-        firebaseService.getDocuments(in: FirestoreFields.lobbyCollection, whereFields: conditions) { lobbyData, error in
-            if let error = error {
+
+        firebaseService.getDocuments(in: FirestoreFields.lobbyCollection, whereFields: conditions) { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-            } else if let lobbyData = lobbyData, !lobbyData.isEmpty {
-                guard let lobbyId = lobbyData.first?[FirestoreFields.id] as? String else { completion(.failure(MyError.unableToDecodeLobbyId)) ;return }
-                self.joinCompetitiveRoom(lobbyId: lobbyId) { success in
-                    switch success {
-                    case .success():
-                        completion(.success(lobbyId))
-                    case .failure(let error):
-                        completion(.failure(error))
+            case .success(let lobbyData):
+                if !lobbyData.isEmpty {
+                    guard let lobbyId = lobbyData.first?[FirestoreFields.id] as? String else {
+                        completion(.failure(FirebaseError.unableToDecodeLobbyId))
+                        return
                     }
-                }
-            } else {
-                self.createCompetitiveRoom() { success in
-                    switch success {
-                    case .success(let lobbyId):
-                        completion(.success(lobbyId))
-                    case .failure(let error):
-                        completion(.failure(error))
+                    self.joinCompetitiveRoom(lobbyId: lobbyId) { result in
+                        switch result {
+                        case .failure(let error):
+                            completion(.failure(error))
+                        case .success():
+                            completion(.success(lobbyId))
+                        }
                     }
-                }
-            }
-        }
-    }
-    
-    // Function to join a competitive room from it's lobby ID
-    func joinCompetitiveRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(MyError.noUserConnected)); return
-        }
-        
-        firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.status: "matched"]) { error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            self.firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { lobbyData, error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                
-                guard let lobbyData = lobbyData else { return }
-                var players = lobbyData[FirestoreFields.Lobby.players] as! [String]
-                players.append(currentUserId)
-                
-                self.createQuestionsForGame(quizId: nil, category: nil, difficulty: nil, with: lobbyId, competitive: true, players: players) { result in
-                    switch result {
-                    case .failure(let error):
-                        completion(.failure(error))
-                    case .success(_):completion(.success(()))
+                } else {
+                    self.createCompetitiveRoom() { result in
+                        switch result {
+                        case .failure(let error):
+                            completion(.failure(error))
+                        case .success(let lobbyId):
+                            completion(.success(lobbyId))
+                        }
                     }
                 }
             }
         }
     }
 
+    // Function to join a competitive room from it's lobby ID
+    func joinCompetitiveRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(FirebaseError.noUserConnected))
+            return
+        }
+        
+        firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.status: "matched"]) { error in
+            
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+                self.firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { result in
+                    switch result {
+                    case .failure(let error):
+                        completion(.failure(error))
+                    case .success(let lobbyData):
+                        guard !lobbyData.isEmpty else { return }
+                        var players = lobbyData[FirestoreFields.Lobby.players] as! [String]
+                        players.append(currentUserId)
+                        
+                        self.createQuestionsForGame(quizId: nil, category: nil, difficulty: nil, with: lobbyId, competitive: true, players: players) { result in
+                            switch result {
+                            case .failure(let error):
+                                completion(.failure(error))
+                            case .success(_):
+                                completion(.success(()))
+                            }
+                        }
+                    }
+                
+            }
+        }
+    }
     // Function to create competitive room
     func createCompetitiveRoom(completion: @escaping (Result<String, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(MyError.noUserConnected)); return
+            completion(.failure(FirebaseError.noUserConnected)); return
         }
 
         let newLobbyId = UUID().uuidString
@@ -114,53 +122,55 @@ class Game {
 
     // Function to get questions from a quiz ID (when launching a custom quiz) or from gameID when game starts
     func getQuestions(quizId: String? ,gameId: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
-        guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
+        guard firebaseService.currentUserID != nil else {
+            completion(.failure(FirebaseError.noUserConnected))
+            return
+        }
         
         var collection = ""
         var id = ""
         if let quizId = quizId {
             collection = FirestoreFields.quizzesCollection
             id = quizId
-        }else if let gameId = gameId {
+        } else if let gameId = gameId {
             collection = FirestoreFields.gamesCollection
             id = gameId
         }
         
-        firebaseService.getDocument(in: collection, documentId: id) { gameData, error in
-            if let error = error {
+        firebaseService.getDocument(in: collection, documentId: id) { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-                return
-            }
-            
-            guard let gameData = gameData else {
-                completion(.failure(MyError.documentDoesntExist))
-                return
-            }
-            
-            guard let questionsData = gameData[FirestoreFields.Game.questions] as? [String: [String: Any]] else {
-                completion(.failure(MyError.failedToGetData))
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                var questions = [UniversalQuestion]()
+            case .success(let gameData):
+                guard  !gameData.isEmpty else {
+                    completion(.failure(FirebaseError.documentDoesntExist))
+                    return
+                }
                 
-                for (questionID, questionData) in questionsData {
-                    let jsonData = try JSONSerialization.data(withJSONObject: questionData, options: [])
-                    var question = try decoder.decode(UniversalQuestion.self, from: jsonData)
-                    question.id = questionID
-                    questions.append(question)
+                guard let questionsData = gameData[FirestoreFields.Game.questions] as? [String: [String: Any]] else {
+                    completion(.failure(FirebaseError.failedToGetData))
+                    return
                 }
 
-                completion(.success(questions))
-                
-            } catch let error {
-                completion(.failure(error))
+                do {
+                    let decoder = JSONDecoder()
+                    var questions = [UniversalQuestion]()
+                    
+                    for (questionID, questionData) in questionsData {
+                        let jsonData = try JSONSerialization.data(withJSONObject: questionData, options: [])
+                        var question = try decoder.decode(UniversalQuestion.self, from: jsonData)
+                        question.id = questionID
+                        questions.append(question)
+                    }
+
+                    completion(.success(questions))
+                    
+                } catch let error {
+                    completion(.failure(error))
+                }
             }
         }
     }
-    
     //-----------------------------------------------------------------------------------
     //                                 Quick play
     //-----------------------------------------------------------------------------------
@@ -168,14 +178,15 @@ class Game {
     // Function to create a private room
     func createRoom(quizID: String?, completion: @escaping (Result<String, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(MyError.noUserConnected)); return
+            completion(.failure(FirebaseError.noUserConnected))
+            return
         }
         let newLobbyId = UUID().uuidString
-        FirebaseUser.shared.generateUniqueCode { code, error in
-            if let error = error {
+        FirebaseUser.shared.generateUniqueCode { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-            }
-            else if let code = code {
+            case .success(let code):
                 var data = [
                     FirestoreFields.creator: currentUserId,
                     FirestoreFields.Lobby.competitive: false,
@@ -204,7 +215,7 @@ class Game {
     // Funcrtion to invite a pplayer in a private room
     func invitePlayerInRoom(lobbyId: String,invited_players: [String], invited_groups: [String], completion: @escaping (Result<Void, Error>) -> Void ){
         guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(MyError.noUserConnected)); return
+            completion(.failure(FirebaseError.noUserConnected)); return
         }
         let data = [
             FirestoreFields.Lobby.invitedUsers: invited_players,
@@ -214,15 +225,16 @@ class Game {
         firebaseService.setDataWithMerge(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: data, merge: true) { error in
             if let error = error {
                 completion(.failure(error))
+            }else{
+                completion(.success(()))
             }
-            completion(.success(()))
         }
     }
     
     // Function to delete current room
     func deleteCurrentRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void ) {
         guard firebaseService.currentUserID != nil else {
-            completion(.failure(MyError.noUserConnected)); return
+            completion(.failure(FirebaseError.noUserConnected)); return
         }
         
         firebaseService.deleteDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { error in
@@ -238,91 +250,97 @@ class Game {
     // Function to join a private room
     func joinRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(MyError.noUserConnected))
+            completion(.failure(FirebaseError.noUserConnected))
             return
         }
-        firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { data, error in
-            if let error = error {
+        firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-                return
-            }
-            
-            var players = (data?[FirestoreFields.Lobby.players] as? [String]) ?? []
-            players.append(currentUserId)
-            
-            guard var invitedPlayers = data?[FirestoreFields.Lobby.invitedUsers] as? [String] else {
-                completion(.failure(MyError.failedToGetPlayers))
-                return
-            }
-            if let index = invitedPlayers.firstIndex(of: currentUserId) {
-                invitedPlayers.remove(at: index)
-            }
-            
-            self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.players: players]) { error in
-                if let error = error {
-                    completion(.failure(error))
+            case .success(let data):
+                var players = (data[FirestoreFields.Lobby.players] as? [String]) ?? []
+                players.append(currentUserId)
+                
+                guard var invitedPlayers = data[FirestoreFields.Lobby.invitedUsers] as? [String] else {
+                    completion(.failure(FirebaseError.failedToGetPlayers))
                     return
                 }
-                self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.invitedUsers: invitedPlayers]) { error in
+                if let index = invitedPlayers.firstIndex(of: currentUserId) {
+                    invitedPlayers.remove(at: index)
+                }
+                
+                self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.players: players]) { error in
                     if let error = error {
                         completion(.failure(error))
-                    } else {
-                        Game.shared.deleteInvite(inviteId: lobbyId) { result in
-                        switch result {
-                        case .failure(let error): completion(.failure(error))
-                            case .success: completion(.success(()))
+                        return
+                    }
+                    self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.invitedUsers: invitedPlayers]) { error in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            Game.shared.deleteInvite(inviteId: lobbyId) { result in
+                            switch result {
+                            case .failure(let error): completion(.failure(error))
+                                case .success: completion(.success(()))
+                                }
                             }
+                            
                         }
-                        
                     }
                 }
             }
         }
     }
     
-    // Function to join a room with it's code
+    
+    // Function to join a room with its code
     func joinWithCode(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(MyError.noUserConnected))
+            completion(.failure(FirebaseError.noUserConnected))
             return
         }
 
         let condition: [FirestoreCondition] = [.isEqualTo(FirestoreFields.Lobby.joinCode, code)]
         
-        firebaseService.getDocuments(in: FirestoreFields.lobbyCollection, whereFields: condition) { data, error in
-            if let error = error {
+        firebaseService.getDocuments(in: FirestoreFields.lobbyCollection, whereFields: condition) { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-                return
-            }
+            case .success(let data):
+                guard !data.isEmpty, let lobbyData = data.first, let lobbyId = lobbyData["id"] as? String else {
+                    completion(.failure(FirebaseError.noDataInResponse))
+                    return
+                }
 
-            guard let data = data, !data.isEmpty, let lobbyData = data.first, let lobbyId = lobbyData["id"] as? String else {
-                completion(.failure(MyError.noDataInResponse))
-                return
-            }
-
-            // Now join the lobby
-            self.joinRoom(lobbyId: lobbyId) { result in
+                // Now join the lobby
+                self.joinRoom(lobbyId: lobbyId, completion: { result in
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))
-                    case .success():
+                    case .success:
                         completion(.success(lobbyId))
                     }
-                }
+                })
+            }
         }
     }
-
+    
     // Function to delete invite from invites
     func deleteInvite(inviteId: String,  completion: @escaping (Result<String, Error>) -> Void){
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(MyError.noUserConnected)); return
+            completion(.failure(FirebaseError.noUserConnected))
+            return
         }
         
-        firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: currentUserId) { data, error in
-            if let error = error {
+        firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: currentUserId) { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-            }
-            else if let invites = data![FirestoreFields.User.invites] as? [String: String] {
+            case .success(let data):
+                guard let invites = data[FirestoreFields.User.invites] as? [String: String] else {
+                    completion(.failure(FirebaseError.failedToGetData))
+                    return
+                }
                 var newInvites = invites
                 for (key, value) in newInvites {
                     if value == inviteId {
@@ -345,23 +363,28 @@ class Game {
         }
     }
 
+    
+    
     // Function to leave a private room
-    func leaveLobby(lobbyId: String, completion: @escaping (Error?) -> Void) {
-        firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { data, error in
-            if let error = error {
-                completion(error)
-            }
-            guard var players = data?[FirestoreFields.Lobby.players] as? [String], let currentUserId = self.firebaseService.currentUserID else {
-                print("arreureee")
-                completion(MyError.failedToGetPlayers)
-                return
-            }
-            if let index = players.firstIndex(of: currentUserId) {
-                players.remove(at: index)
-            }
-            
-            self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.players: players]) { error in
-                completion(error)
+    func leaveLobby(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let data):
+                guard var players = data[FirestoreFields.Lobby.players] as? [String], let currentUserId = self.firebaseService.currentUserID else {
+                    completion(.failure(FirebaseError.failedToGetPlayers))
+                    return
+                }
+                if let index = players.firstIndex(of: currentUserId) {
+                    players.remove(at: index)
+                }
+                
+                self.firebaseService.updateDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId, data: [FirestoreFields.Lobby.players: players]) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+                }
             }
         }
     }
@@ -373,7 +396,7 @@ class Game {
     // Function to create question of the game, depending of it is a custom quiz or a TriviaDB quiz
     func createQuestionsForGame(quizId: String?, category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(MyError.noUserConnected)); return
+            completion(.failure(FirebaseError.noUserConnected)); return
         }
         if let quizId = quizId {
             self.getQuestions(quizId: quizId, gameId: nil) { result in
@@ -409,7 +432,7 @@ class Game {
     // Function to create a game, with it's questions
     func createGame(questions: [UniversalQuestion], with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(MyError.noUserConnected)); return
+            completion(.failure(FirebaseError.noUserConnected)); return
         }
         
         let gameId = documentId ?? UUID().uuidString
@@ -454,29 +477,31 @@ class Game {
 
     }
     
+        
     // Function to leave a game
     func leaveGame(gameId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(MyError.noUserConnected)); return
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(FirebaseError.noUserConnected)); return
         }
         
-        firebaseService.getDocument(in: FirestoreFields.gamesCollection, documentId: gameId) { data, error in
-            if let error = error {
+        firebaseService.getDocument(in: FirestoreFields.gamesCollection, documentId: gameId) { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-            }
-            
-            guard var players = data?[FirestoreFields.Game.players] as? [String], let currentUserId = self.firebaseService.currentUserID else {
-                completion(.failure(MyError.failedToGetPlayers))
-                return
-            }
-            if let index = players.firstIndex(of: currentUserId) {
-                players.remove(at: index)
-            }
-            self.firebaseService.updateDocument(in: FirestoreFields.gamesCollection, documentId: gameId, data: [FirestoreFields.Game.players: players]) { error in
-                if let error = error {
-                    completion(.failure(error))
-                }else{
-                    completion(.success(()))
+            case .success(let data):
+                guard var players = data[FirestoreFields.Game.players] as? [String] else {
+                    completion(.failure(FirebaseError.failedToGetPlayers))
+                    return
+                }
+                if let index = players.firstIndex(of: currentUserId) {
+                    players.remove(at: index)
+                }
+                self.firebaseService.updateDocument(in: FirestoreFields.gamesCollection, documentId: gameId, data: [FirestoreFields.Game.players: players]) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    }else{
+                        completion(.success(()))
+                    }
                 }
             }
         }
@@ -492,78 +517,82 @@ class Game {
     
     // Function to check if a game exist
     func checkIfGameExist(gameID: String, completion: @escaping (Result<String, Error>) -> Void){
-        guard (firebaseService.currentUserID) != nil else { completion(.failure(MyError.noUserConnected)); return }
+        guard firebaseService.currentUserID != nil else {
+            completion(.failure(FirebaseError.noUserConnected)); return
+        }
         
-        firebaseService.getDocument(in: "games", documentId: gameID) { Data, error in
-            if let error = error {
+        firebaseService.getDocument(in: "games", documentId: gameID) { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-            } else if let data = Data, !data.isEmpty {
-                guard let gameId = data["id"] as? String, let status = data["status"] as? String, status == "waiting" else { completion(.failure(MyError.documentDoesntExist));return }
-                    completion(.success(gameId))
-                
-            } else {
-                completion(.failure(MyError.documentDoesntExist))
+            case .success(let data):
+                guard let gameId = data["id"] as? String, let status = data["status"] as? String, status == "waiting" else {
+                    completion(.failure(FirebaseError.documentDoesntExist)); return
+                }
+                completion(.success(gameId))
             }
         }
     }
     
     // Function to get user's completed games
     func getCompletedGames(completion: @escaping (Result<Void, Error>) -> Void) {
-           guard let currentUserId = firebaseService.currentUserID else { completion(.failure(MyError.noUserConnected)); return }
-           
-           let conditions: [FirestoreCondition] = [
-               .isEqualTo(FirestoreFields.status, "waiting"),
-               .arrayContains(FirestoreFields.Game.players, currentUserId)
-           ]
-           
-           firebaseService.getDocuments(in: FirestoreFields.gamesCollection, whereFields: conditions) { gameData, error in
-               if let error = error {
-                   completion(.failure(error))
-               } else if let gamesData = gameData, !gamesData.isEmpty {
-                   
-                   do {
-                       let convertedGameDataWithDate = gamesData.map { self.convertTimestampsToDate(in: $0) }
-                       let jsonData = try JSONSerialization.data(withJSONObject: convertedGameDataWithDate, options: [])
-                       let decoder = JSONDecoder()
-                       decoder.dateDecodingStrategy = .iso8601
-                       let completedGames = try decoder.decode([GameData].self, from: jsonData)
-                       
-                       FirebaseUser.shared.History = completedGames
-                       completion(.success(()))
-                   }  catch {
-                       completion(.failure(error))
-                   }
-               } else {
-                   completion(.success(()))
-               }
-           }
-       }
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(FirebaseError.noUserConnected)); return
+        }
+        
+        let conditions: [FirestoreCondition] = [
+            .isEqualTo(FirestoreFields.status, "waiting"),
+            .arrayContains(FirestoreFields.Game.players, currentUserId)
+        ]
+        
+        firebaseService.getDocuments(in: FirestoreFields.gamesCollection, whereFields: conditions) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let gamesData):
+                guard !gamesData.isEmpty else {
+                    completion(.success(())); return
+                }
+                
+                do {
+                    let convertedGameDataWithDate = gamesData.map { self.convertTimestampsToDate(in: $0) }
+                    let jsonData = try JSONSerialization.data(withJSONObject: convertedGameDataWithDate, options: [])
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    let completedGames = try decoder.decode([GameData].self, from: jsonData)
+                    
+                    FirebaseUser.shared.History = completedGames
+                    completion(.success(()))
+                }  catch {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
     
     // Function to get a game data from it's gameID
     func getGameData(gameId: String, completion: @escaping (Result<GameData, Error>) -> Void) {
-        guard firebaseService.currentUserID != nil else { completion(.failure(MyError.noUserConnected)); return }
+        guard firebaseService.currentUserID != nil else {
+            completion(.failure(FirebaseError.noUserConnected)); return
+        }
         
-        firebaseService.getDocument(in: FirestoreFields.gamesCollection, documentId: gameId) { gameData, error in
-            if let error = error {
+        firebaseService.getDocument(in: FirestoreFields.gamesCollection, documentId: gameId) { result in
+            switch result {
+            case .failure(let error):
                 completion(.failure(error))
-                return
-            }
-            
-            guard let gameData = gameData else {
-                completion(.failure(MyError.documentDoesntExist))
-                return
-            }
-            
-            do {
-                let convertedDataWithDate = self.convertTimestampsToDate(in: gameData)
-                let jsonData = try JSONSerialization.data(withJSONObject: convertedDataWithDate, options: [])
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-                let gameData = try decoder.decode(GameData.self, from: jsonData)
-                FirebaseUser.shared.History?.append(gameData)
-                completion(.success(gameData))
-            } catch {
-                completion(.failure(error))
+            case .success(let gameData):
+                do {
+                    let convertedDataWithDate = self.convertTimestampsToDate(in: gameData)
+                    let jsonData = try JSONSerialization.data(withJSONObject: convertedDataWithDate, options: [])
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    let gameData = try decoder.decode(GameData.self, from: jsonData)
+                    
+                    FirebaseUser.shared.History?.append(gameData)
+                    completion(.success(gameData))
+                } catch {
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -571,7 +600,7 @@ class Game {
     // Function to save player stats of the game
     func saveStats(finalScore: Int, userAnswers: [String: UserAnswer], gameID: String, completion: @escaping (Result<Void, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(MyError.noUserConnected))
+            completion(.failure(FirebaseError.noUserConnected))
             return
         }
         

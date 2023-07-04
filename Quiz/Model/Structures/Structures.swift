@@ -19,7 +19,6 @@ struct UniversalQuestion: Decodable, Equatable {
     
     var dictionary: [String: Any] {
         return [
-            
             FirestoreFields.Question.category: category as Any,
             FirestoreFields.Question.type: type as Any,
             FirestoreFields.Question.difficulty: difficulty as Any,

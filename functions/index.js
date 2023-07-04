@@ -178,6 +178,72 @@ exports.sendFriendRequest = functions.firestore
       return null;
     });
 
+// Triggered when a sent friend request is cancelled
+exports.cancelFriendRequest = functions.firestore
+    .document("users/{userId}")
+    .onUpdate(async (change, context) => {
+      const oldData = change.before.data();
+      const newData = change.after.data();
+
+      // Check if the function has been triggered by our own update
+      if (newData.triggeredByFunction) {
+        // Reset the trigger flag in the document
+        await admin.firestore().collection("users")
+            .doc(context.params.userId).update({
+              triggeredByFunction: admin.firestore.FieldValue.delete(),
+            });
+        // Skip this function execution
+        return null;
+      }
+
+      // Check if the action performer is the user himself
+      if (newData.actionPerformer && newData
+          .actionPerformer === context.params.userId) {
+        return null; // The user performed the action himself,
+        // so skip this execution
+      }
+
+      if (Object.keys(oldData.friendRequests)
+          .length !== Object.keys(newData.friendRequests).length) {
+        const cancelledFriendRequests = Object.keys(oldData
+            .friendRequests).filter((friend) => !(friend in newData
+            .friendRequests));
+
+        if (cancelledFriendRequests.length > 0) {
+          const userId = context.params.userId;
+
+          for (const friendId of cancelledFriendRequests) {
+            // Get the user document
+            const playerDocRef = admin.firestore().collection("users")
+                .doc(friendId);
+            const playerDoc = await playerDocRef.get();
+            const playerToken = playerDoc.data().token || null;
+
+            // Send a notification to the player
+            const message = {
+              "notification": {
+                "title": "Friend request cancelled",
+                "body": "A friend request has been cancelled",
+              },
+              "data": {
+                "notificationType": "friendRequestCancelled",
+              },
+              "token": playerToken,
+            };
+
+            await admin.messaging().send(message);
+
+            await admin.firestore().collection("users").doc(friendId).update({
+              [`friendRequests.${userId}`]: admin.firestore.FieldValue.delete(),
+              triggeredByFunction: true, // Set the trigger flag
+            });
+          }
+        }
+      }
+
+      return null;
+    });
+
 // Triggered when a friend request is accepted
 exports.acceptFriendRequest = functions.firestore
     .document("users/{userId}")

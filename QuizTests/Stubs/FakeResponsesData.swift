@@ -14,11 +14,13 @@ class fakeResponsesData {
     //                                 GAMES
     //-----------------------------------------------------------------------------------
     
+    
+    
     static let mockGameData: [String: Any] = [
-        "name": "Quizz entre amis",
+        "id": "quizid",
         "creator": "user1",
         "competitive": true,
-        "status": "completed",
+        "status": "waiting",
         "players": ["user_id_1", "user_id_2"],
         "quiz_id": "quiz_id_1",
         "date": "2023-05-22T14:53:27Z",
@@ -82,6 +84,7 @@ class fakeResponsesData {
         "points": 0,
         "profile_picture": "https://example.com/user1/profile_picture.jpg",
         "friends": ["userID_2", "userID_3"],
+        "invites": ["userid1": "lobbyid1", "userid2": "lobbyid2"],
         "friendRequests": ["user_id_2": ["status": "sent", "date": "2023-05-22T14:53:27Z"]]
     ]
     static let mockUsersData: [[String: Any]] = [mockUserData, mockUserData, mockUserData]
@@ -96,14 +99,16 @@ class fakeResponsesData {
         "creator": "user_id_1",
         "difficulty": "Facile",
         "average_score": 0,
-        "users_completed": 0,
         "code": "68HVN",
         "questions": [
             "question_id_1": [
                 "question": "Quelle année marque le début de la Seconde Guerre mondiale?",
-                "wrong_answers": ["1939","1940","1938"],
+                "incorrect_answers": ["1939","1940","1938"],
                 "correct_answer": "1937",
-                "explanation": "La Seconde Guerre mondiale a débuté en 1939 avec l'invasion de la Pologne par l'Allemagne."
+                "explanation": "La Seconde Guerre mondiale a débuté en 1939 avec l'invasion de la Pologne par l'Allemagne.",
+                "category": "rfvcer",
+                "difficulty": "gvfc",
+                "type": "gh",
             ]
         ]
     ]
@@ -118,7 +123,10 @@ class fakeResponsesData {
         "creator": "user_id_1",
         "id": "testLobbyID",
         "status": "waiting",
-        "competitive": true
+        "competitive": true,
+        "players": ["user2", "user3"],
+        "invited_users": [],
+        "invited_groups": ["group1", "group2"],
     ]
     
     static let testLobbiesData: [[String: Any]] = [testLobbyData, testLobbyData, testLobbyData]
