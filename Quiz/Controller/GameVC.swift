@@ -13,6 +13,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
     @IBOutlet weak var leaveButton: CustomButton!
+    @IBOutlet weak var goodAnswerLabel: UILabel!
     
     var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
     var gameID: String?
@@ -26,12 +27,67 @@ class GameVC: UIViewController, LeavePageProtocol {
     var finalScore = 0
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var activeAlert: UIAlertController?
+    var confettiLayer: CAEmitterLayer!
+    
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        setUpUI()
-        loadQuestions()
+           super.viewDidLoad()
+           setUpUI()
+           loadQuestions()
+           
+           confettiLayer = createConfettiLayer()
+           confettiLayer.birthRate = 0 // On désactive le confettiLayer par défaut.
+           view.layer.addSublayer(confettiLayer)
+       }
+    
+    func displayGoodAnswerLabel(){
+        
+        goodAnswerLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        goodAnswerLabel.isHidden = false
+        UIView.animate(withDuration: 0.5, animations: {
+            self.goodAnswerLabel.transform = CGAffineTransform.identity
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.goodAnswerLabel.isHidden = true // On désactive le confettiLayer après 1 seconde.
+            }
+        })
     }
+
+       func createConfettiLayer() -> CAEmitterLayer {
+           let confettiLayer = CAEmitterLayer()
+
+           confettiLayer.emitterPosition = CGPoint(x: view.frame.midX, y: -50)
+           confettiLayer.emitterShape = .line
+           confettiLayer.emitterSize = CGSize(width: view.frame.size.width, height: 2)
+
+           let cell = CAEmitterCell()
+           cell.birthRate = 15
+           cell.lifetime = 14.0
+           cell.velocity = CGFloat(350)
+           cell.velocityRange = CGFloat(80)
+           cell.emissionLongitude = CGFloat(Double.pi)
+           cell.emissionRange = CGFloat(Double.pi/4)
+           cell.spin = CGFloat(3.5)
+           cell.spinRange = CGFloat(4.0)
+           cell.scaleRange = CGFloat(0.05)
+           cell.scale = 0.3
+           cell.scaleSpeed = CGFloat(-0.1)
+           cell.color = UIColor.green.cgColor
+
+           // Mettez ici le nom de l'image que vous voulez utiliser pour les confettis.
+           cell.contents = UIImage(systemName: "square.fill")?.cgImage
+           
+
+           confettiLayer.emitterCells = [cell]
+           return confettiLayer
+       }
+
+       func showConfetti() {
+           confettiLayer.birthRate = 15 // On active le confettiLayer.
+
+           DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+               self.confettiLayer.birthRate = 0 // On désactive le confettiLayer après 1 seconde.
+           }
+       }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -48,6 +104,7 @@ class GameVC: UIViewController, LeavePageProtocol {
             activeAlert.dismiss(animated: false)
             self.activeAlert = nil
         }
+        
     }
     
     func leavePage(completion: @escaping () -> Void) {
@@ -125,12 +182,14 @@ class GameVC: UIViewController, LeavePageProtocol {
         let question = questions[currentQuestionIndex]
         
         questionLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        questionLabel.isHidden = false
+        questionLabel.text = question.question
         UIView.animate(withDuration: 0.5, animations: {
             self.questionLabel.transform = CGAffineTransform.identity
             self.appDelegate.playSoundEffect(soundName: "slide", fileType: "mp3")
         })
         
-        questionLabel.text = question.question
+        
         
         var choices = question.incorrect_answers + [question.correct_answer]
         choices.shuffle()
@@ -138,6 +197,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         isAnswering = true
         
         for (index, button) in answerButtons.enumerated() {
+            button.isHidden = false
             button.transform = index % 2 == 0 ? CGAffineTransform(translationX: -self.view.bounds.width, y: 0) : CGAffineTransform(translationX: self.view.bounds.width, y: 0)
             button.setTitle(choices[index], for: .normal)
             button.backgroundColor = UIColor(named: "button")
@@ -256,9 +316,10 @@ class GameVC: UIViewController, LeavePageProtocol {
     }
     
     func resetTimer() {
-        self.timerLabel.textColor = UIColor(named: "text")
         timeRemaining = 10
         timerLabel.text = "\(timeRemaining)"
+        timerLabel.textColor = .white
+        timerLabel.isHidden = false
         
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
@@ -266,23 +327,30 @@ class GameVC: UIViewController, LeavePageProtocol {
             self.timeRemaining -= 1
             self.timerLabel.text = "\(self.timeRemaining)"
             
-            if self.timeRemaining <= 3 {
-                self.timerLabel.textColor = UIColor.red
-                
-                // Animation pour grossir et rétrécir le texte
-                UIView.animate(withDuration: 0.2,
-                               animations: {
-                    self.timerLabel.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-                },
-                               completion: { _ in
-                    UIView.animate(withDuration: 0.2) {
-                        self.timerLabel.transform = CGAffineTransform.identity
-                    }
+            // Changer la couleur du label en fonction du temps restant
+            let colorValue = CGFloat(self.timeRemaining) / 10.0 // This will give us a value between 0 and 1
+            self.timerLabel.textColor = UIColor(red: 1.0, green: colorValue, blue: colorValue, alpha: 1.0)
+            
+            // Changer la taille du label en fonction du temps restant
+            let scale = 1.0 + (2.0 - colorValue) * 0.5 // This will give us a scale between 1.0 and 1.5
+            
+            // Animation pour grossir le texte
+            UIView.animate(withDuration: 0.2,
+                           animations: {
+                self.timerLabel.transform = CGAffineTransform(scaleX: scale, y: scale)
+            },
+                           completion: { _ in
+                UIView.animate(withDuration: 0.2) {
+                    self.timerLabel.transform = CGAffineTransform.identity
+                }
+                // Jouer le son seulement lors des trois dernières secondes
+                if self.timeRemaining <= 3 {
                     self.appDelegate.playSoundEffect(soundName: "beep", fileType: "mp3")
-                })
-            }
+                }
+            })
             
             if self.timeRemaining == 0 {
+                self.timerLabel.isHidden = true
                 timer.invalidate()
                 self.showCorrectAnswerAndProceed()
             }
@@ -292,6 +360,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     @IBAction func answerButtonTapped(_ sender: UIButton) {
         guard !isAnswering else { return }
         isAnswering = true
+        timerLabel.isHidden = true
         guard let selectedAnswer = sender.currentTitle else { print("error"); return }
         let correctAnswer = questions[currentQuestionIndex].correct_answer
         
@@ -309,7 +378,10 @@ class GameVC: UIViewController, LeavePageProtocol {
         
         
         sender.backgroundColor = selectedAnswer == correctAnswer ? .systemGreen : .systemRed
-        
+        if selectedAnswer == correctAnswer {
+            showConfetti()
+            displayGoodAnswerLabel()
+        }
         timer?.invalidate()
         
         

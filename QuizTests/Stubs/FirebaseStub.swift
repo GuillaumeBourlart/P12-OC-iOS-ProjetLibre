@@ -9,6 +9,14 @@ import XCTest
 import Firebase
 
 class FirebaseServiceStub: FirebaseServiceProtocol {
+    func resetPassword(for email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        if let error = stubbedDocumentError {
+            completion(.failure(error))
+            
+        }else{
+            completion(.success(()))
+        }
+    }
     
     var stubbedDocumentError: Error?
     var stubbedListenerData: [String: Any]?

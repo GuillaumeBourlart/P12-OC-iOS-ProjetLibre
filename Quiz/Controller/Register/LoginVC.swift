@@ -40,7 +40,6 @@ class LoginVC: UIViewController{
                 case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
                 }
             }
-            
         }
     }
     
