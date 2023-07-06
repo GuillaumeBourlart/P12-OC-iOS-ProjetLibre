@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1420"
+   LastUpgradeVersion = "1430"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -17,6 +17,20 @@
                BlueprintIdentifier = "D084EC352A0F7EF400544AA3"
                BuildableName = "Quiz.app"
                BlueprintName = "Quiz"
+               ReferencedContainer = "container:Quiz.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D04FCDDB2A2E9D5B000E688E"
+               BuildableName = "QuizTests2.xctest"
+               BlueprintName = "QuizTests2"
                ReferencedContainer = "container:Quiz.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,17 +61,6 @@
                   Identifier = "FirebaseUserTests/testGetUserQuizzes_success()">
                </Test>
             </SkippedTests>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D04FCDDB2A2E9D5B000E688E"
-               BuildableName = "QuizTests2.xctest"
-               BlueprintName = "QuizTests2"
-               ReferencedContainer = "container:Quiz.xcodeproj">
-            </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>

@@ -18,6 +18,18 @@ class InvitesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
+        
+        // setup pull to refresh
+        // Initialiser le UIRefreshControl
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+            // Ajouter le UIRefreshControl à votre UITableView
+            tableView.refreshControl = refreshControl
+    }
+    
+    @objc func refreshData(_ sender: Any) {
+        // Chargez vos nouvelles données ici
+        loadInvites()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,19 +50,10 @@ class InvitesVC: UIViewController {
             case .success():
                 self.fetchInvites()
             }
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
-    
-    @IBAction func reloadButtonPressed(_ sender: UIButton) {
-        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-            rotationAnimation.toValue = NSNumber(value: Double.pi * 2)
-        rotationAnimation.duration = 0.2
-            rotationAnimation.isCumulative = true
-            rotationAnimation.repeatCount = 1
-            sender.layer.add(rotationAnimation, forKey: "rotationAnimation")
-        loadInvites()
-    }
     
     func fetchInvites() {
         FirebaseUser.shared.fetchInvites { data, error in
@@ -89,7 +92,7 @@ class InvitesVC: UIViewController {
 
 extension InvitesVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0 // Remplacer par la hauteur désirée
+        return invites.isEmpty ? tableView.bounds.size.height : 70.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -102,21 +105,28 @@ extension InvitesVC: UITableViewDelegate {
 
 extension InvitesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return invites.count
+        return invites.isEmpty ? 1 : invites.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
-        
-        let invite = Array(invites)[indexPath.row]
-        cell.label.text = "User: \(invite.key) - Lobby: \(invite.value)"
-        
-        let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-        whiteDisclosureIndicator.tintColor = .white // Remplacez "customDisclosureIndicator" par le nom de votre image.
-        whiteDisclosureIndicator.backgroundColor = UIColor.clear
-        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
-        cell.accessoryView = whiteDisclosureIndicator
-        
-        return cell
+        if invites.isEmpty {
+            let emptyCell = tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath) as! EmptyCell
+            emptyCell.label.text = "Pull to refresh"
+            self.tableView.separatorStyle = .none
+            emptyCell.isUserInteractionEnabled = false
+            return emptyCell
+        } else {
+            self.tableView.separatorStyle = .singleLine
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
+            let invite = Array(invites)[indexPath.row]
+            cell.label.text = "User: \(invite.key) - Lobby: \(invite.value)"
+
+            let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
+            whiteDisclosureIndicator.tintColor = .white
+            whiteDisclosureIndicator.backgroundColor = UIColor.clear
+            whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
+            cell.accessoryView = whiteDisclosureIndicator
+            return cell
+        }
     }
 }

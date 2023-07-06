@@ -14,66 +14,104 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
     var service: Service!
     var sut: OpenTriviaDatabaseManager!
     var networkRequestStub: NetworkRequestStub!
-    var currentUserStub: String!
+    var translatorNetworkRequestStub: NetworkRequestStub!
     
     override func setUp() {
-        super.setUp()
-        networkRequestStub = NetworkRequestStub()
-        service = Service(networkRequest: networkRequestStub)
-        sut = OpenTriviaDatabaseManager(service: service)
-        currentUserStub = "testUser"
+           super.setUp()
+           networkRequestStub = NetworkRequestStub()
+           translatorNetworkRequestStub = NetworkRequestStub()
+           let service = Service(networkRequest: networkRequestStub)
+           let translatorService = Service(networkRequest: translatorNetworkRequestStub)
+           sut = OpenTriviaDatabaseManager(service: service, translatorService: translatorService)
     }
     
     override func tearDown() {
         sut = nil
         service = nil
         networkRequestStub = nil
-        currentUserStub = nil
         super.tearDown()
     }
     
     func testFetchCategories_success() {
         // Given
-        let jsonString = """
-        {
-            "trivia_categories": [
-                {
-                    "id": 9,
-                    "name": "General Knowledge"
-                },
-                {
-                    "id": 10,
-                    "name": "Entertainment: Books"
-                },
-                {
-                    "id": 11,
-                    "name": "Entertainment: Film"
-                }
-            ]
-        }
-        """
-        let jsonData = jsonString.data(using: .utf8)
-        networkRequestStub.data = jsonData
-        var fetchedQuestions: [UniversalQuestion]?
-        var fetchedError: Error?
-        
-        // When
-        var fetchedCategories: [[String: Any]]?
-        sut.fetchCategories { result in
-            switch result {
-            case .failure(let error):
-                fetchedError = error
-            case .success(let categories):
-                fetchedCategories = categories
-                // Then
-                XCTAssertNil(fetchedError)
-                XCTAssertNotNil(fetchedQuestions)
-            }
-            
-        }
-        
-        
-    }
+           let jsonStringCategories = """
+           {
+               "trivia_categories": [
+                   {
+                       "id": 9,
+                       "name": "General Knowledge"
+                   },
+                   {
+                       "id": 10,
+                       "name": "Entertainment: Books"
+                   },
+                   {
+                       "id": 11,
+                       "name": "Entertainment: Film"
+                   }
+               ]
+           }
+           """
+           guard let jsonDataCategories = jsonStringCategories.data(using: .utf8) else {return}
+
+           // Add the translation responses to the translatorNetworkRequestStub.
+           let jsonStringtranslateGeneralKnowledge = """
+           {
+               "translations": [
+                   {
+                       "detected_source_language": "EN",
+                       "text": "Connaissance Générale"
+                   }
+               ]
+           }
+           """
+           let jsonStringtranslateEntertainmentBooks = """
+           {
+               "translations": [
+                   {
+                       "detected_source_language": "EN",
+                       "text": "Divertissement: Livres"
+                   }
+               ]
+           }
+           """
+           let jsonStringtranslateEntertainmentFilm = """
+           {
+               "translations": [
+                   {
+                       "detected_source_language": "EN",
+                       "text": "Divertissement: Film"
+                   }
+               ]
+           }
+           """
+           guard let jsonDataTranslateGeneralKnowledge = jsonStringtranslateGeneralKnowledge.data(using: .utf8) else {return}
+           guard let jsonDataTranslateEntertainmentBooks = jsonStringtranslateEntertainmentBooks.data(using: .utf8) else {return}
+           guard let jsonDataTranslateEntertainmentFilm = jsonStringtranslateEntertainmentFilm.data(using: .utf8) else {return}
+
+           translatorNetworkRequestStub.dataQueue = [jsonDataTranslateGeneralKnowledge, jsonDataTranslateEntertainmentBooks, jsonDataTranslateEntertainmentFilm]
+
+           networkRequestStub.dataQueue = [jsonDataCategories]
+           var fetchedError: Error?
+
+           // When
+           var fetchedCategories: [[String: Any]]?
+           sut.fetchCategories { result in
+               switch result {
+               case .failure(let error):
+                   fetchedError = error
+               case .success(let categories):
+                   fetchedCategories = categories
+                   // Then
+                   XCTAssertNil(fetchedError)
+                   XCTAssertNotNil(fetchedCategories)
+                   // Add checks for translated categories
+                   XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Connaissance Générale" }))
+                   XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Livres" }))
+                   XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Film" }))
+               }
+           }
+       }
     
     func testFetchCategories_failure() {
         // Given
@@ -101,8 +139,8 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
         
         func testFetchQuestions_success() {
             // Given
-            let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8)
-            networkRequestStub.data = jsonData
+            guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
+            networkRequestStub.dataQueue = [jsonData]
             
             // When
             var fetchedQuestions: [UniversalQuestion]?

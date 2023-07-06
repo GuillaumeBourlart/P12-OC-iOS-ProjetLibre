@@ -20,7 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var soundEffectPlayer: AVAudioPlayer?
     
     let gcmMessageIDKey = "gcm.message_id"
-    var mainTabBarController: UITabBarController?
+    var mainTabBarController: UITabBarController? {
+        didSet {
+            mainTabBarController?.tabBar.isTranslucent = false
+            mainTabBarController?.tabBar.barTintColor = .systemBackground
+        }
+    }
     
     
     

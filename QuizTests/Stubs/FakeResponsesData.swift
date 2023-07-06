@@ -102,15 +102,15 @@ class fakeResponsesData {
         "code": "68HVN",
         "questions": [
             "question_id_1": [
-                "question": "Quelle année marque le début de la Seconde Guerre mondiale?",
-                "incorrect_answers": ["1939","1940","1938"],
-                "correct_answer": "1937",
-                "explanation": "La Seconde Guerre mondiale a débuté en 1939 avec l'invasion de la Pologne par l'Allemagne.",
-                "category": "rfvcer",
-                "difficulty": "gvfc",
-                "type": "gh",
+                "category": "History",
+                "type": "multiple",
+                "difficulty": "easy",
+                "question": "What was William Frederick Cody better known as?",
+                "correct_answer": "Buffalo Bill",
+                "incorrect_answers": ["Billy the Kid", "Wild Bill Hickok", "Pawnee Bill"],
+                "explanation": "frytguyhiujik",
             ]
-        ]
+        ],
     ]
     
     static let mockQuizzesData: [[String: Any]] = [mockQuizData, mockQuizData, mockQuizData]

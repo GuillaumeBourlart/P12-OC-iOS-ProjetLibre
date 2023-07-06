@@ -14,7 +14,7 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     @IBOutlet weak var collectionView: UICollectionView!
     
     var categories: [[String: Any]] = []
-    let apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()))
+    let apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()), translatorService: Service(networkRequest: AlamofireNetworkRequest()))
     var difficulty: String?
     var category: Int?
     var activeAlert: UIAlertController?

@@ -11,18 +11,20 @@ import FirebaseAuth
 
 class OpenTriviaDatabaseManager {
     
-    var service = Service(networkRequest: AlamofireNetworkRequest()) // service that allows to stub alamofire
-    let translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
-    // The initializer for the RecipeService class
-    init(service: Service) {
-        self.service = service
-    }
-    private var currentUserId: String? { return Auth.auth().currentUser?.uid } // get current UID
+    var service: Service // service that allows to stub alamofire
+        var translator: DeepLTranslator
+        // The initializer for the RecipeService class
+        init(service: Service, translatorService: Service) {
+            self.service = service
+            self.translator = DeepLTranslator(service: translatorService)
+        }
+    
+   
     static var categories: [[String: Any]]?
     
     // Function to display TriviaDB categories
     func fetchCategories(completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
-        guard self.currentUserId != nil else { completion(.failure(FirebaseError.noUserConnected)) ; return}
+        
         let urlString = "https://opentdb.com/api_category.php"
 
         guard let url = URL(string: urlString) else {
@@ -79,7 +81,6 @@ class OpenTriviaDatabaseManager {
     
     // Function to get questions from TrviaDB
     func fetchQuestions(inCategory categoryId: Int?, amount: Int = 10, difficulty: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
-        guard self.currentUserId != nil else { completion(.failure(FirebaseError.noUserConnected)) ; return }
         
         var urlString = "https://opentdb.com/api.php?amount=\(amount)&type=multiple"
         if let categoryId = categoryId { urlString += "&category=\(categoryId)"}
@@ -88,9 +89,11 @@ class OpenTriviaDatabaseManager {
         guard let url = URL(string: urlString) else {
             return
         }
+        print("avant load")
         
         service.load(url: url) { (data, response, error) in
             if let error = error {
+                print("aerreur 0")
                 completion(.failure(error))
                 return
             }
@@ -125,12 +128,17 @@ class OpenTriviaDatabaseManager {
                     let jsonData = try JSONSerialization.data(withJSONObject: questionsData, options: [])
                     let decoder = JSONDecoder()
                     let questions = try decoder.decode([UniversalQuestion].self, from: jsonData)
+                    print("apres load")
                     completion(.success(questions))
                 } catch {
+                    print("aerreur 1")
+                    print("Decoding error: \(error)")
                     completion(.failure(error))
                 }
             } else {
-                completion(.failure(error ?? FirebaseError.noDataInResponse))
+                print("aerreur 2")
+                print("Decoding error: \(error)")
+                completion(.failure(FirebaseError.noDataInResponse))
             }
         }
     }

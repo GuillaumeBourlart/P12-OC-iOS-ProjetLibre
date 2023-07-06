@@ -9,10 +9,20 @@ import XCTest
 
 
 class NetworkRequestStub: NetworkRequest {
-    var data: Data?
+    var dataQueue: [Data]?
     var error: Error?
 
     func request(_ request: URLRequest, completion: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
-        completion(data, nil, error)
+        print("appelé")
+        if let data = dataQueue?.first {
+            dataQueue?.removeFirst()
+            print("fait1")
+            completion(data, nil, nil)
+            
+        }else{
+            print("fait2")
+            completion(nil, nil, error)
+            
+        }
     }
 }

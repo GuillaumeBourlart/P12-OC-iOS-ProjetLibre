@@ -35,7 +35,7 @@ class ResultVC: UIViewController {
                 case .success(let gameData):
                     self.gameData = gameData
                     if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
-                        self.translator.translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                        self.translator.translateQuestionsWithString(questions: gameData.questions, to: languageCode) { questions in
                             self.questions = questions
                             DispatchQueue.main.async {
                                 self.displayResults()
@@ -61,7 +61,7 @@ class ResultVC: UIViewController {
             
             self.questions = gameData.questions
             if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
-                self.translator.translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                self.translator.translateQuestionsWithString(questions: gameData.questions, to: languageCode) { questions in
                     self.questions = questions
                     DispatchQueue.main.async {
                         self.displayResults()
@@ -182,7 +182,7 @@ class ResultVC: UIViewController {
                     case .success(let gameData):
                         self.gameData = gameData
                         if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
-                            self.translator.translateQuestions(questions: gameData.questions, to: languageCode) { questions in
+                            self.translator.translateQuestionsWithString(questions: gameData.questions, to: languageCode) { questions in
                                 self.questions = questions
                                 DispatchQueue.main.async {
                                     self.displayResults()

@@ -60,6 +60,7 @@ protocol FirebaseServiceProtocol {
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
     func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void)
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void)
+    func resetPassword(for email: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 // Class to handle Firebase services
@@ -88,7 +89,7 @@ class FirebaseService: FirebaseServiceProtocol{
         collectionReference.getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
-            } else if let querySnapshot = querySnapshot {
+            } else if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
                 let documentsData = querySnapshot.documents.map {
                     var data = $0.data()
                     data["id"] = $0.documentID
@@ -100,7 +101,7 @@ class FirebaseService: FirebaseServiceProtocol{
             }
         }
     }
-
+    
     // Function to get document data
     func getDocument(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
         db.collection(collection).document(documentId).getDocument { (documentSnapshot, error) in
@@ -115,42 +116,42 @@ class FirebaseService: FirebaseServiceProtocol{
             }
         }
     }
-
+    
     // Function add snapshot listener to a document
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration {
         let documentReference = db.collection(collection).document(documentId)
-            let listener = documentReference.addSnapshotListener { documentSnapshot, error in
-                if let error = error {
-                    completion(.failure(error))
-                } else if let documentData = documentSnapshot?.data(), !documentData.isEmpty {
-                    var data = documentData
-                    data["id"] = documentSnapshot?.documentID
-                    completion(.success(data))
-                } else {
-                    completion(.failure(FirebaseError.noDataFound))
-                }
+        let listener = documentReference.addSnapshotListener { documentSnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let documentData = documentSnapshot?.data(), !documentData.isEmpty {
+                var data = documentData
+                data["id"] = documentSnapshot?.documentID
+                completion(.success(data))
+            } else {
+                completion(.failure(FirebaseError.noDataFound))
             }
-            return listener
+        }
+        return listener
     }
-
+    
     // Function to add collection snaphot to a collection
     func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration {
         let collectionReference = db.collection(collection)
-            let listener = collectionReference.addSnapshotListener { querySnapshot, error in
-                if let error = error {
-                    completion(.failure(error))
-                } else if let documents = querySnapshot?.documents, !documents.isEmpty {
-                    let documentsData = documents.map { document in
-                        var data = document.data()
-                        data["id"] = document.documentID
-                        return data
-                    }
-                    completion(.success(documentsData))
-                } else {
-                    completion(.failure(FirebaseError.noDataFound))
+        let listener = collectionReference.addSnapshotListener { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let documents = querySnapshot?.documents, !documents.isEmpty {
+                let documentsData = documents.map { document in
+                    var data = document.data()
+                    data["id"] = document.documentID
+                    return data
                 }
+                completion(.success(documentsData))
+            } else {
+                completion(.failure(FirebaseError.noDataFound))
             }
-            return listener
+        }
+        return listener
     }
     
     
@@ -199,6 +200,28 @@ class FirebaseService: FirebaseServiceProtocol{
             completion(.failure(error))
         }
     }
+    
+    // Function to reset password
+    func resetPassword(for email: String, completion: @escaping (Result<Void, Error>) -> Void){
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+                // Send verification email
+                Auth.auth().currentUser?.sendEmailVerification { (error) in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(()))
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
 }
 
 

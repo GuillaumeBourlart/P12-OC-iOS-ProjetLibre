@@ -27,7 +27,7 @@ class SocialVC: UIViewController {
             button.transform = .identity
             button.alpha = 1
         }
-
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

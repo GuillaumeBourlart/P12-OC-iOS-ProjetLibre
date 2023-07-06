@@ -10,8 +10,6 @@ import Firebase
 
 class FirebaseServiceStub: FirebaseServiceProtocol {
     
-    //    var stubbedQuerySnapshotData: [[String: Any]]?
-    //    var stubbedDocumentSnapshot: [String: Any]?
     var stubbedDocumentError: Error?
     var stubbedListenerData: [String: Any]?
     
@@ -20,13 +18,8 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     
     var userID: String? = "userId"
     var currentUserID: String? {
-        get {
-            // Retourne un ID utilisateur factice
-            return userID
-        }
-        set {
-            userID = newValue
-        }
+        get {return userID}
+        set {userID = newValue}
     }
     
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String : Any]], Error>) -> Void) {
@@ -35,6 +28,8 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
         } else if let data = stubbedQuerySnapshotDatas?.first {
             stubbedQuerySnapshotDatas?.removeFirst()
             completion(.success(data))
+        }else {
+            completion(.success([]))
         }
     }
     
@@ -44,6 +39,8 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
         } else if let data = stubbedDocumentSnapshots?.first {
             stubbedDocumentSnapshots?.removeFirst()
             completion(.success(data))
+        }else {
+            completion(.success([:]))
         }
     }
     

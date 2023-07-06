@@ -10,6 +10,7 @@ import Foundation
 class DeepLTranslator {
     var apiKey = "d35a5eeb-9d0c-4229-65e6-50a5ac70d7be:fx"
     var service: Service
+    
 
     init(service: Service) {
         self.service = service
@@ -72,7 +73,7 @@ class DeepLTranslator {
 
     func translateQuestions(questions : [UniversalQuestion], to: String, completion: @escaping ([UniversalQuestion]) -> Void) {
         var newArray = [UniversalQuestion]()
-        let translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
+        
         let dispatchGroup = DispatchGroup()
 
         for question in questions {
@@ -82,7 +83,7 @@ class DeepLTranslator {
             var translatedExplanation: String?
 
             dispatchGroup.enter()
-            translator.translate(question.question, targetLanguage: to) { result in
+            translate(question.question, targetLanguage: to) { result in
                 switch result {
                 case .success(let translation):
                     translatedQuestion = translation
@@ -93,7 +94,7 @@ class DeepLTranslator {
             }
 
             dispatchGroup.enter()
-            translator.translate(question.correct_answer, targetLanguage: to) { result in
+            translate(question.correct_answer, targetLanguage: to) { result in
                 switch result {
                 case .success(let translation):
                     translatedCorrectAnswer = translation
@@ -106,7 +107,7 @@ class DeepLTranslator {
             // Translate each incorrect answer
             question.incorrect_answers.forEach { incorrectAnswer in
                 dispatchGroup.enter()
-                translator.translate(incorrectAnswer, targetLanguage: to) { result in
+                translate(incorrectAnswer, targetLanguage: to) { result in
                     switch result {
                     case .success(let translation):
                         if translatedIncorrectAnswers == nil {
@@ -123,7 +124,7 @@ class DeepLTranslator {
             
             if let explanation = question.explanation {
                 dispatchGroup.enter()
-                translator.translate(explanation, targetLanguage: to) { result in
+                translate(explanation, targetLanguage: to) { result in
                     switch result {
                     case .success(let translation):
                         translatedExplanation = translation
@@ -155,9 +156,9 @@ class DeepLTranslator {
         }
     }
 
-    func translateQuestions(questions : [String: UniversalQuestion], to: String, completion: @escaping ([String: UniversalQuestion]) -> Void) {
+    func translateQuestionsWithString(questions : [String: UniversalQuestion], to: String, completion: @escaping ([String: UniversalQuestion]) -> Void) {
         var translatedDict = [String: UniversalQuestion]()
-        let translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
+        
         let dispatchGroup = DispatchGroup()
         let questionPairs = Array(questions)
         
@@ -170,7 +171,7 @@ class DeepLTranslator {
             var translatedExplanation: String?
 
             dispatchGroup.enter()
-            translator.translate(question.question, targetLanguage: to) { result in
+            translate(question.question, targetLanguage: to) { result in
                 switch result {
                 case .success(let translation):
                     translatedQuestion = translation
@@ -181,7 +182,7 @@ class DeepLTranslator {
             }
 
             dispatchGroup.enter()
-            translator.translate(question.correct_answer, targetLanguage: to) { result in
+            translate(question.correct_answer, targetLanguage: to) { result in
                 switch result {
                 case .success(let translation):
                     translatedCorrectAnswer = translation
@@ -194,7 +195,7 @@ class DeepLTranslator {
             // Translate each incorrect answer
             question.incorrect_answers.forEach { incorrectAnswer in
                 dispatchGroup.enter()
-                translator.translate(incorrectAnswer, targetLanguage: to) { result in
+                translate(incorrectAnswer, targetLanguage: to) { result in
                     switch result {
                     case .success(let translation):
                         if translatedIncorrectAnswers == nil {
@@ -211,10 +212,11 @@ class DeepLTranslator {
 
             if let explanation = question.explanation {
                 dispatchGroup.enter()
-                translator.translate(explanation, targetLanguage: to) { result in
+                translate(explanation, targetLanguage: to) { result in
                     switch result {
                     case .success(let translation):
                         translatedExplanation = translation
+                        
                     case .failure(let error):
                         print("Error translating explanation: \(error)")
                     }

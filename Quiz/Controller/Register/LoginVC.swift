@@ -15,7 +15,7 @@ class LoginVC: UIViewController{
     @IBOutlet private weak var userPassword: CustomTextField!
     @IBOutlet weak var loginButton: CustomButton!
     @IBOutlet weak var errorLabel: UILabel!
-    
+    @IBOutlet weak var resetPasswordButton: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -26,6 +26,10 @@ class LoginVC: UIViewController{
         tryToGetUser()
         self.loginButton.isEnabled = true
         
+        // Add tap gesture to UIlabel reset password
+                let tap = UITapGestureRecognizer(target: self, action: #selector(resetPasswordTapped))
+                resetPasswordButton.isUserInteractionEnabled = true
+                resetPasswordButton.addGestureRecognizer(tap)
     }
     // check if user is already connected
     func tryToGetUser() {
@@ -39,6 +43,11 @@ class LoginVC: UIViewController{
             
         }
     }
+    
+    // Fonction appelée lorsque l'utilisateur appuie sur le label
+        @objc func resetPasswordTapped() {
+            performSegue(withIdentifier: "goToResetPassword", sender: self)
+        }
     
     // Func to try to log user
     @IBAction func loginUser(_ sender: UIButton) {

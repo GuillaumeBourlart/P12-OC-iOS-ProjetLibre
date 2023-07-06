@@ -15,12 +15,15 @@ import SDWebImage
 // handle action and information concerning user
 class FirebaseUser {
     
-    static let shared = FirebaseUser()
-    var currentUserId: String? { return firebaseService.currentUserID } // get current UID
-    private var firebaseService: FirebaseServiceProtocol
-    init(firebaseService: FirebaseServiceProtocol = FirebaseService()) {
+    static let shared = FirebaseUser(firebaseService: FirebaseService())
+    
+    var currentUserId: String? { return firebaseService.currentUserID }
+    
+    var firebaseService: FirebaseServiceProtocol
+    init(firebaseService: FirebaseServiceProtocol) {
         self.firebaseService = firebaseService
     }
+    
     var userInfo: aUser? // User's informations
     var friendGroups: [FriendGroup]? // User's groups
     var userQuizzes: [Quiz]? // User's quizzes
@@ -33,6 +36,19 @@ class FirebaseUser {
             switch result {
             case .failure(let error): completion(.failure(error))
             case .success(): completion(.success(()))
+            }
+        }
+    }
+    
+    // Function to reset password
+    func resetPassword(for email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard currentUserId != nil else { return }
+        firebaseService.resetPassword(for: email) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success():
+                completion(.success(()))
             }
         }
     }

@@ -9,14 +9,20 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
+
+
 class Game {
     
-    static let shared = Game()
-    var apiManager = OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest())) // API manager reference (for TriviaDB)
+    static let shared = Game(apiManager: OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()), translatorService: Service(networkRequest: AlamofireNetworkRequest())), firebaseService: FirebaseService())
+    
+    var apiManager: OpenTriviaDatabaseManager
     private var firebaseService: FirebaseServiceProtocol
-    init(firebaseService: FirebaseServiceProtocol = FirebaseService()) {
+    
+    init(apiManager: OpenTriviaDatabaseManager, firebaseService: FirebaseServiceProtocol) {
+        self.apiManager = apiManager
         self.firebaseService = firebaseService
     }
+    
     var currentUserId: String? { return firebaseService.currentUserID } // get current UID
     
     
@@ -182,7 +188,7 @@ class Game {
             return
         }
         let newLobbyId = UUID().uuidString
-        FirebaseUser.shared.generateUniqueCode { result in
+        generateUniqueCode { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -278,7 +284,7 @@ class Game {
                         if let error = error {
                             completion(.failure(error))
                         } else {
-                            Game.shared.deleteInvite(inviteId: lobbyId) { result in
+                            self.deleteInvite(inviteId: lobbyId) { result in
                             switch result {
                             case .failure(let error): completion(.failure(error))
                                 case .success: completion(.success(()))
@@ -384,6 +390,7 @@ class Game {
                     if let error = error {
                         completion(.failure(error))
                     }
+                    completion(.success(()))
                 }
             }
         }
@@ -399,7 +406,9 @@ class Game {
             completion(.failure(FirebaseError.noUserConnected)); return
         }
         if let quizId = quizId {
+            print(1)
             self.getQuestions(quizId: quizId, gameId: nil) { result in
+                print(2)
                 switch result {
                 case .failure(let error):
                     completion(.failure(error))
@@ -413,7 +422,9 @@ class Game {
                 }
             }
         } else{
+            print(3)
             self.apiManager.fetchQuestions(inCategory: category, difficulty: difficulty) { result in
+                print(4)
                 switch result {
                 case .failure(let error):
                     completion(.failure(error))
@@ -431,6 +442,7 @@ class Game {
     
     // Function to create a game, with it's questions
     func createGame(questions: [UniversalQuestion], with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
+        print("createGame atteint")
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(FirebaseError.noUserConnected)); return
         }
@@ -662,5 +674,26 @@ class Game {
             }
         }
         return convertedData
+    }
+    
+    // Function to generate a unique code
+    func generateUniqueCode(completion: @escaping (Result<String, Error>) -> Void) {
+        let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let codeLength = 6
+        let uniqueCode = String((0..<codeLength).map { _ in characters.randomElement()! })
+        
+        let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.Quiz.code, uniqueCode)]
+        firebaseService.getDocuments(in: FirestoreFields.quizzesCollection, whereFields: conditions) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let quizzesData):
+                if quizzesData.isEmpty {
+                    completion(.success(uniqueCode))
+                } else {
+                    self.generateUniqueCode(completion: completion)
+                }
+            }
+        }
     }
 }
