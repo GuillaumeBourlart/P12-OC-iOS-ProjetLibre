@@ -13,7 +13,13 @@ class GameVC: UIViewController, LeavePageProtocol {
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
     @IBOutlet weak var leaveButton: CustomButton!
-    @IBOutlet weak var goodAnswerLabel: UILabel!
+    @IBOutlet weak var answerLabel: UILabel!
+    
+    enum Answer {
+        case noAnswer
+        case correct
+        case incorrect
+    }
     
     var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
     var gameID: String?
@@ -40,14 +46,22 @@ class GameVC: UIViewController, LeavePageProtocol {
            view.layer.addSublayer(confettiLayer)
        }
     
-    func displayGoodAnswerLabel(){
-        
-        goodAnswerLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
-        goodAnswerLabel.isHidden = false
+    func displayAnswerLabel(answer: Answer){
+        switch answer {
+        case .correct:
+            answerLabel.text = "Good Job !"
+        case .incorrect:
+            answerLabel.text = "keep trying !"
+        case .noAnswer:
+            answerLabel.text = "Too late"
+            
+        }
+        answerLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        answerLabel.isHidden = false
         UIView.animate(withDuration: 0.5, animations: {
-            self.goodAnswerLabel.transform = CGAffineTransform.identity
+            self.answerLabel.transform = CGAffineTransform.identity
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                self.goodAnswerLabel.isHidden = true // On désactive le confettiLayer après 1 seconde.
+                self.answerLabel.isHidden = true // On désactive le confettiLayer après 1 seconde.
             }
         })
     }
@@ -344,7 +358,7 @@ class GameVC: UIViewController, LeavePageProtocol {
                     self.timerLabel.transform = CGAffineTransform.identity
                 }
                 // Jouer le son seulement lors des trois dernières secondes
-                if self.timeRemaining <= 3 {
+                if self.timeRemaining <= 3 && self.timeRemaining > 0 {
                     self.appDelegate.playSoundEffect(soundName: "beep", fileType: "mp3")
                 }
             })
@@ -353,6 +367,8 @@ class GameVC: UIViewController, LeavePageProtocol {
                 self.timerLabel.isHidden = true
                 timer.invalidate()
                 self.showCorrectAnswerAndProceed()
+                displayAnswerLabel(answer: .noAnswer)
+                appDelegate.playSoundEffect(soundName: "disapointed", fileType: "mp3")
             }
         }
     }
@@ -371,8 +387,10 @@ class GameVC: UIViewController, LeavePageProtocol {
         finalScore += selectedAnswer == correctAnswer ? 1*timeRemaining : 0
         if selectedAnswer == correctAnswer {
             appDelegate.playSoundEffect(soundName: "correct", fileType: "mp3")
+            appDelegate.playSoundEffect(soundName: "happy", fileType: "mp3")
         }else{
             appDelegate.playSoundEffect(soundName: "incorrect", fileType: "mp3")
+            appDelegate.playSoundEffect(soundName: "disapointed", fileType: "mp3")
         }
         userAnswers[questionId] = userAnswer
         
@@ -380,7 +398,9 @@ class GameVC: UIViewController, LeavePageProtocol {
         sender.backgroundColor = selectedAnswer == correctAnswer ? .systemGreen : .systemRed
         if selectedAnswer == correctAnswer {
             showConfetti()
-            displayGoodAnswerLabel()
+            displayAnswerLabel(answer: .correct)
+        }else{
+            displayAnswerLabel(answer: .incorrect)
         }
         timer?.invalidate()
         

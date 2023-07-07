@@ -74,6 +74,8 @@
 		D0B582452A33622D00C0D5E2 /* CustomAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */; };
 		D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */; };
 		D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */; };
+		D0CEA5C02A58605B007CDDB4 /* happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D0CEA5BE2A58605A007CDDB4 /* happy.mp3 */; };
+		D0CEA5C12A58605B007CDDB4 /* disapointed.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D0CEA5BF2A58605B007CDDB4 /* disapointed.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +181,8 @@
 		D0B74C752A497C77007A5DD0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFields.swift; sourceTree = "<group>"; };
 		D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
+		D0CEA5BE2A58605A007CDDB4 /* happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = happy.mp3; sourceTree = "<group>"; };
+		D0CEA5BF2A58605B007CDDB4 /* disapointed.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = disapointed.mp3; sourceTree = "<group>"; };
 		D423DA8B7C5301CD98656312 /* Pods-QuizTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizTests.release.xcconfig"; path = "Target Support Files/Pods-QuizTests/Pods-QuizTests.release.xcconfig"; sourceTree = "<group>"; };
 		E41B31B4CFEEDF2D81BDF0AE /* Pods_Quiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -240,6 +244,8 @@
 		7E53C15F2A3C9AF50046CC5E /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				D0CEA5BE2A58605A007CDDB4 /* happy.mp3 */,
+				D0CEA5BF2A58605B007CDDB4 /* disapointed.mp3 */,
 				7E727B992A38BAB20025AC80 /* incorrect.mp3 */,
 				7E727BA52A38CC810025AC80 /* slide.mp3 */,
 				7E727BA32A38CB850025AC80 /* beep.mp3 */,
@@ -545,8 +551,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E727BA02A38BDD20025AC80 /* button.mp3 in Resources */,
+				D0CEA5C12A58605B007CDDB4 /* disapointed.mp3 in Resources */,
 				7E727BA62A38CC810025AC80 /* slide.mp3 in Resources */,
 				D084EC492A0F7EF700544AA3 /* LaunchScreen.storyboard in Resources */,
+				D0CEA5C02A58605B007CDDB4 /* happy.mp3 in Resources */,
 				7E727BA22A38BDF80025AC80 /* win.mp3 in Resources */,
 				7E727BA42A38CB850025AC80 /* beep.mp3 in Resources */,
 				7E98147A2A3DF61A008F3A4B /* Main.storyboard in Resources */,

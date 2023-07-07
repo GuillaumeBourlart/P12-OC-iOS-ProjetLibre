@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var musicPlayer: AVAudioPlayer?
     var soundEffectPlayer: AVAudioPlayer?
+    var soundEffectPlayer2: AVAudioPlayer?
     
     let gcmMessageIDKey = "gcm.message_id"
     var mainTabBarController: UITabBarController? {
@@ -421,15 +422,20 @@ extension AppDelegate {
     }
     
     func playSoundEffect(soundName: String, fileType: String) {
-            if let path = Bundle.main.path(forResource: soundName, ofType: fileType) {
-                do {
+        if let path = Bundle.main.path(forResource: soundName, ofType: fileType) {
+            do {
+                if soundEffectPlayer == nil || !soundEffectPlayer!.isPlaying {
                     soundEffectPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                     soundEffectPlayer?.play()
-                } catch {
-                    print("Could not find and play the sound file.")
+                } else {
+                    soundEffectPlayer2 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                    soundEffectPlayer2?.play()
                 }
+            } catch {
+                print("Could not find and play the sound file.")
             }
         }
+    }
     
     func stopSound() {
         musicPlayer?.stop()

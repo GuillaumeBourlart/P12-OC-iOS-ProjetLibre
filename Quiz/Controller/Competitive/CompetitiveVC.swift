@@ -92,13 +92,13 @@ enum Rank: Int {
     
     var color: UIColor {
         switch self {
-        case .bronze: return UIColor(red: 205/255, green: 127/255, blue: 50/255, alpha: 1.0)
-        case .silver: return UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1.0)
-        case .gold: return UIColor(red: 255/255, green: 215/255, blue: 0/255, alpha: 1.0)
-        case .platinum: return UIColor(red: 0/255, green: 150/255, blue: 200/255, alpha: 1.0)
-        case .diamond: return UIColor(red: 0/255, green: 200/255, blue: 255/255, alpha: 1.0)
-        case .master: return UIColor(red: 255/255, green: 0/255, blue: 255/255, alpha: 1.0)
-        case .bests: return UIColor.orange
+                case .bronze: return UIColor(red: 230/255, green: 182/255, blue: 140/255, alpha: 1.0)
+                case .silver: return UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1.0)
+                case .gold: return UIColor(red: 255/255, green: 235/255, blue: 180/255, alpha: 1.0)
+                case .platinum: return UIColor(red: 180/255, green: 225/255, blue: 240/255, alpha: 1.0)
+                case .diamond: return UIColor(red: 180/255, green: 230/255, blue: 255/255, alpha: 1.0)
+                case .master: return UIColor(red: 255/255, green: 180/255, blue: 255/255, alpha: 1.0)
+                case .bests: return UIColor(red: 255/255, green: 215/255, blue: 180/255, alpha: 1.0)
         }
     }
     
@@ -110,3 +110,4 @@ enum Rank: Int {
         return Rank(rawValue: rawValue - 1)
     }
 }
+
