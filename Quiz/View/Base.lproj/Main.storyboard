@@ -101,7 +101,7 @@
                     <navigationItem key="navigationItem" title="Groups" id="0Ih-Hi-KQ6">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="PLk-gQ-giF">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="bT2-2H-KCc">
-                                <rect key="frame" x="233" y="8" width="71" height="34"/>
+                                <rect key="frame" x="233" y="5" width="71" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
@@ -1079,7 +1079,7 @@
                     <navigationItem key="navigationItem" title="Amis" id="jbE-dc-dLO">
                         <barButtonItem key="rightBarButtonItem" style="done" id="Eeu-ac-pzk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="NRe-S3-NlF">
-                                <rect key="frame" x="257" y="7.5" width="47" height="35"/>
+                                <rect key="frame" x="257" y="4.5" width="47" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
@@ -1156,7 +1156,7 @@
                     <navigationItem key="navigationItem" title="Quizzes" id="Ptl-sW-I4r">
                         <barButtonItem key="rightBarButtonItem" style="done" id="xCS-iL-rRk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="QPV-ki-bRo">
-                                <rect key="frame" x="217" y="5" width="87" height="34"/>
+                                <rect key="frame" x="217" y="8" width="87" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
@@ -1221,14 +1221,14 @@
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xtz-Zc-n5j" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="260" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="260" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xtz-Zc-n5j" id="6cY-t0-Wh1">
-                                            <rect key="frame" x="0.0" y="0.0" width="260" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ5-5x-9jZ">
-                                                    <rect key="frame" x="16" y="11" width="228" height="21.5"/>
+                                                    <rect key="frame" x="16" y="11" width="228" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="text"/>
                                                     <nil key="highlightedColor"/>
@@ -2816,7 +2816,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="g8t-qW-Yby"/>
         <segue reference="gh0-tC-Q8T"/>
-        <segue reference="axf-xm-Zem"/>
+        <segue reference="VMf-YG-tkp"/>
         <segue reference="qAE-Zc-maS"/>
         <segue reference="mgT-Y3-Laq"/>
     </inferredMetricsTieBreakers>

@@ -28,7 +28,9 @@ class SettingsCell: UITableViewCell {
             self.currentOption = sectionType
         
             if let accountOption = sectionType as? SettingsSections.AccountOptions, accountOption == .disconnect {
-                backgroundColor = UIColor.red
+                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.2)
+                
+                
                     } 
             
             setupSwitchControl()
@@ -78,14 +80,6 @@ class SettingsCell: UITableViewCell {
                } else {
                    self.switchControl.isOn = true
                }
-           case .darkmode:
-               // L'utilisateur a déjà défini une valeur pour "darkmode", utilisez cette valeur.
-               if let _ = defaults.object(forKey: "darkmode") {
-                   let darkmode = defaults.bool(forKey: "darkmode")
-                   self.switchControl.isOn = darkmode
-               } else {
-                   self.switchControl.isOn = false // supposons que le mode par défaut est light mode
-               }
            }
     }
     
@@ -101,9 +95,6 @@ class SettingsCell: UITableViewCell {
         case .sounds:
             // Code pour gérer le son
             delegate?.SoundSwitchChanged(in: self, isOn: sender.isOn)
-        case .darkmode:
-            // Code pour gérer le mode sombre
-            delegate?.DarkmodeSwitchChanged(in: self, isOn: sender.isOn)
         }
     }
 }

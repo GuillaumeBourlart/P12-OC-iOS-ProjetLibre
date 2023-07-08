@@ -61,14 +61,11 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
     // Section 2
     enum SecurityOptions: Int, CaseIterable, SectionType {
         case sounds
-        case darkmode
         // titles
         var description: String {
             switch self {
             case .sounds:
                 return NSLocalizedString("Sounds", comment: "")
-            case .darkmode:
-                return NSLocalizedString("Dark mode", comment: "")
             }
         }
         // segue's IDS
@@ -76,16 +73,12 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
             switch self {
             case .sounds:
                 return nil
-            case .darkmode:
-                return nil
             }
         }
         
         var containsSwitch: Bool {
             switch self {
             case .sounds: return true
-            case .darkmode:
-                return true
             }
         }
     }
