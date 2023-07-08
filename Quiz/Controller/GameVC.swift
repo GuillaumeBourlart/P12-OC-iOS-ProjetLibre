@@ -15,6 +15,9 @@ class GameVC: UIViewController, LeavePageProtocol {
     @IBOutlet weak var leaveButton: CustomButton!
     @IBOutlet weak var answerLabel: UILabel!
     
+    @IBOutlet weak var timerImage: UIImageView!
+    @IBOutlet weak var scoreImage: UIImageView!
+    
     enum Answer {
         case noAnswer
         case correct
@@ -36,6 +39,8 @@ class GameVC: UIViewController, LeavePageProtocol {
     var confettiLayer: CAEmitterLayer!
     
     
+    @IBOutlet weak var scoreLabel: UILabel!
+    
     override func viewDidLoad() {
            super.viewDidLoad()
            setUpUI()
@@ -45,6 +50,8 @@ class GameVC: UIViewController, LeavePageProtocol {
            confettiLayer.birthRate = 0 // On désactive le confettiLayer par défaut.
            view.layer.addSublayer(confettiLayer)
        }
+    
+    
     
     func displayAnswerLabel(answer: Answer){
         switch answer {
@@ -56,6 +63,7 @@ class GameVC: UIViewController, LeavePageProtocol {
             answerLabel.text = "Too late"
             
         }
+        
         answerLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         answerLabel.isHidden = false
         UIView.animate(withDuration: 0.5, animations: {
@@ -85,10 +93,14 @@ class GameVC: UIViewController, LeavePageProtocol {
            cell.scaleRange = CGFloat(0.05)
            cell.scale = 0.3
            cell.scaleSpeed = CGFloat(-0.1)
-           cell.color = UIColor.green.cgColor
+           cell.color = UIColor.white.cgColor // couleur moyenne
+           cell.redRange = 1.0 // variation totale (de -1.0 à 1.0)
+           cell.greenRange = 1.0
+           cell.blueRange = 1.0
+           cell.alphaRange = 1.0
 
            // Mettez ici le nom de l'image que vous voulez utiliser pour les confettis.
-           cell.contents = UIImage(systemName: "square.fill")?.cgImage
+           cell.contents = UIImage(named: "square.jpg")?.cgImage
            
 
            confettiLayer.emitterCells = [cell]
@@ -103,10 +115,13 @@ class GameVC: UIViewController, LeavePageProtocol {
            }
        }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         questionLabel.layer.masksToBounds = true
         questionLabel.layer.cornerRadius = 15
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -170,6 +185,52 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
+    func hideScore() {
+        if !scoreLabel.isHidden {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.scoreLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+                self.scoreImage.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+                self.scoreLabel.isHidden = true
+                self.scoreImage.isHidden = true
+            })
+        }else {
+            self.scoreLabel.isHidden = false
+            self.scoreImage.isHidden = false
+            scoreLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+            scoreImage.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+            UIView.animate(withDuration: 0.5, animations: {
+                self.scoreLabel.transform = CGAffineTransform.identity
+                self.scoreImage.transform = CGAffineTransform.identity
+            })
+            
+        }
+    }
+    
+    func hideTimer() {
+        if !timerLabel.isHidden {
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.timerLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+                self.timerImage.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+                self.timerLabel.isHidden = true
+                self.timerImage.isHidden = true
+                
+            })
+        }else {
+            self.timerLabel.isHidden = false
+            self.timerImage.isHidden = false
+            timerLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+            timerImage.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+            UIView.animate(withDuration: 0.5, animations: {
+                self.timerLabel.transform = CGAffineTransform.identity
+                self.timerImage.transform = CGAffineTransform.identity
+            })
+            
+        }
+    }
+    
+    
+    
     func showLeaveConfirmation(completion: @escaping () -> Void) {
         let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to leave the game ?", preferredStyle: .alert)
         
@@ -188,6 +249,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     
     
     func displayQuestion() {
+        
         if currentQuestionIndex >= questions.count {
             finishQuiz()
             return
@@ -332,8 +394,11 @@ class GameVC: UIViewController, LeavePageProtocol {
     func resetTimer() {
         timeRemaining = 10
         timerLabel.text = "\(timeRemaining)"
-        timerLabel.textColor = .white
-        timerLabel.isHidden = false
+        timerLabel.textColor = UIColor(named: "text")
+        
+        hideScore()
+        hideTimer()
+        
         
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
@@ -346,7 +411,7 @@ class GameVC: UIViewController, LeavePageProtocol {
             self.timerLabel.textColor = UIColor(red: 1.0, green: colorValue, blue: colorValue, alpha: 1.0)
             
             // Changer la taille du label en fonction du temps restant
-            let scale = 1.0 + (2.0 - colorValue) * 0.5 // This will give us a scale between 1.0 and 1.5
+            let scale = 1.0 + (1.0 - colorValue) * 0.5 // This will give us a scale between 1.0 and 1.5
             
             // Animation pour grossir le texte
             UIView.animate(withDuration: 0.2,
@@ -364,8 +429,10 @@ class GameVC: UIViewController, LeavePageProtocol {
             })
             
             if self.timeRemaining == 0 {
-                self.timerLabel.isHidden = true
+                
                 timer.invalidate()
+                hideScore()
+                hideTimer()
                 self.showCorrectAnswerAndProceed()
                 displayAnswerLabel(answer: .noAnswer)
                 appDelegate.playSoundEffect(soundName: "disapointed", fileType: "mp3")
@@ -376,7 +443,9 @@ class GameVC: UIViewController, LeavePageProtocol {
     @IBAction func answerButtonTapped(_ sender: UIButton) {
         guard !isAnswering else { return }
         isAnswering = true
-        timerLabel.isHidden = true
+        timer?.invalidate()
+        hideScore()
+        hideTimer()
         guard let selectedAnswer = sender.currentTitle else { print("error"); return }
         let correctAnswer = questions[currentQuestionIndex].correct_answer
         
@@ -385,6 +454,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         
         let userAnswer = UserAnswer(selected_answer: selectedAnswer, points: selectedAnswer == correctAnswer ? 1*timeRemaining : 0)
         finalScore += selectedAnswer == correctAnswer ? 1*timeRemaining : 0
+        scoreLabel.text = String(finalScore)
         if selectedAnswer == correctAnswer {
             appDelegate.playSoundEffect(soundName: "correct", fileType: "mp3")
             appDelegate.playSoundEffect(soundName: "happy", fileType: "mp3")

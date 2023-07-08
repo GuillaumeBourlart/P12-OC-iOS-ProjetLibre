@@ -72,6 +72,8 @@
 		D0B35CDE2A159B3D007B3431 /* FirebaseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */; };
 		D0B35CE02A159C74007B3431 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B35CDF2A159C74007B3431 /* GameTests.swift */; };
 		D0B582452A33622D00C0D5E2 /* CustomAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */; };
+		D0B7B3902A5883E40005C008 /* square.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0B7B38F2A5883E40005C008 /* square.jpg */; };
+		D0B7B3922A589A830005C008 /* fingerDown.gif in Resources */ = {isa = PBXBuildFile; fileRef = D0B7B3912A589A830005C008 /* fingerDown.gif */; };
 		D0B852502A24AFF700A7D9B7 /* FirestoreFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */; };
 		D0C486D02A1ADC2700F68DE5 /* FirebaseUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */; };
 		D0CEA5C02A58605B007CDDB4 /* happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D0CEA5BE2A58605A007CDDB4 /* happy.mp3 */; };
@@ -179,6 +181,8 @@
 		D0B74C732A496F81007A5DD0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		D0B74C742A497C77007A5DD0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		D0B74C752A497C77007A5DD0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D0B7B38F2A5883E40005C008 /* square.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = square.jpg; sourceTree = "<group>"; };
+		D0B7B3912A589A830005C008 /* fingerDown.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = fingerDown.gif; sourceTree = "<group>"; };
 		D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFields.swift; sourceTree = "<group>"; };
 		D0C486CF2A1ADC2700F68DE5 /* FirebaseUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserTests.swift; sourceTree = "<group>"; };
 		D0CEA5BE2A58605A007CDDB4 /* happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = happy.mp3; sourceTree = "<group>"; };
@@ -372,6 +376,8 @@
 		D084EC722A0F7FD700544AA3 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				D0B7B38F2A5883E40005C008 /* square.jpg */,
+				D0B7B3912A589A830005C008 /* fingerDown.gif */,
 				7E53C15F2A3C9AF50046CC5E /* sounds */,
 				D084EC452A0F7EF700544AA3 /* Assets.xcassets */,
 				D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */,
@@ -550,6 +556,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0B7B3922A589A830005C008 /* fingerDown.gif in Resources */,
 				7E727BA02A38BDD20025AC80 /* button.mp3 in Resources */,
 				D0CEA5C12A58605B007CDDB4 /* disapointed.mp3 in Resources */,
 				7E727BA62A38CC810025AC80 /* slide.mp3 in Resources */,
@@ -565,6 +572,7 @@
 				D084EC462A0F7EF700544AA3 /* Assets.xcassets in Resources */,
 				D04A5B922A321B950049F02A /* appMusic.mp3 in Resources */,
 				7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */,
+				D0B7B3902A5883E40005C008 /* square.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

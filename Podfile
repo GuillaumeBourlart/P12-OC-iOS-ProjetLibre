@@ -16,6 +16,7 @@ pod 'Firebase', '8.0.0'
   pod 'Firebase/Analytics', '8.0.0'
 pod 'Firebase/Performance', '8.0.0'
 pod 'Firebase/Storage', '8.0.0'
+pod 'SDWebImageFLPlugin'
 
   target 'QuizTests' do
     inherit! :search_paths

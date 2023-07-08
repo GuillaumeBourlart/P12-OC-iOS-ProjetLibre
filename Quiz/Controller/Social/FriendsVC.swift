@@ -26,20 +26,29 @@ class FriendsVC: UIViewController{
     var isShowingSentFriendRequests = false
     var activeAlert: UIAlertController?
     
+    var colorChangeAnimation: CABasicAnimation?
+    var borderLayer: CALayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        createAnimatio()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
         
         // setup pull to refresh
         // Initialiser le UIRefreshControl
             let refreshControl = UIRefreshControl()
             refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.tintColor = UIColor.clear
+        refreshControl.subviews.first?.backgroundColor = UIColor.clear
             // Ajouter le UIRefreshControl à votre UITableView
             tableView.refreshControl = refreshControl
+        
+
     }
     
     @objc func refreshData(_ sender: Any) {
+        self.tableView.refreshControl?.endRefreshing()
+        startColorChangeAnimation()
         // Chargez vos nouvelles données ici
         reloadData()
     }
@@ -52,6 +61,16 @@ class FriendsVC: UIViewController{
 
         switchControl.setTitleTextAttributes(attributesNormal, for: .normal)
         switchControl.setTitleTextAttributes(attributesSelected, for: .selected)
+    }
+    
+    func createAnimatio() {
+        // Création de l'animation de couleur
+        colorChangeAnimation = CABasicAnimation(keyPath: "backgroundColor")
+        colorChangeAnimation?.fromValue = UIColor.blue.cgColor
+        colorChangeAnimation?.toValue = UIColor.orange.cgColor
+        colorChangeAnimation?.duration = 1.0
+        colorChangeAnimation?.repeatCount = .infinity
+        colorChangeAnimation?.autoreverses = true
     }
     
     
@@ -71,11 +90,14 @@ class FriendsVC: UIViewController{
     
     func reloadData(){
         FirebaseUser.shared.getUserInfo { result in
-            switch result {
-            case .failure(let error): print(error)
-            case .success(): self.loadArrays()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                switch result {
+                case .failure(let error): print(error)
+                case .success(): self.loadArrays()
+                }
+                
+                self.stopColorChangeAnimation()
             }
-            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -118,6 +140,27 @@ class FriendsVC: UIViewController{
                 
             }
         }
+    }
+    
+    func startColorChangeAnimation() {
+        if let animation = colorChangeAnimation {
+            // Créez le layer pour la bordure en haut
+            borderLayer = CALayer()
+            guard let borderLayer = borderLayer else {return}
+            borderLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 8.0)
+            borderLayer.backgroundColor = UIColor.green.cgColor
+
+            // Ajoutez le layer à la vue
+            tableView.layer.addSublayer(borderLayer)
+            
+            borderLayer.add(animation, forKey: "colorChange")
+        }
+    }
+
+    func stopColorChangeAnimation() {
+        borderLayer?.removeAnimation(forKey: "colorChange")
+        borderLayer?.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 0.0)
+        
     }
     
     // Function called when switching UIsegmentedCotroll index
@@ -287,3 +330,12 @@ extension FriendsVC: CustomCellDelegate {
     }
 }
 
+extension FriendsVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let emptyCell = tableView.visibleCells.first(where: { $0 is EmptyCell }) as? EmptyCell {
+            let pullDistance = -tableView.contentOffset.y
+            let scale = min(max(pullDistance / 50, 1.0), 10.0) // ici on divise par 50 au lieu de 100
+            emptyCell.label.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+    }
+}
