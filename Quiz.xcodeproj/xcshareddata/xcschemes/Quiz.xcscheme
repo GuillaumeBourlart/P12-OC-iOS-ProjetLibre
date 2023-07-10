@@ -55,9 +55,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "FirebaseUserTests/testAddQuiz()">
-               </Test>
-               <Test
                   Identifier = "FirebaseUserTests/testGetUserQuizzes_success()">
                </Test>
             </SkippedTests>

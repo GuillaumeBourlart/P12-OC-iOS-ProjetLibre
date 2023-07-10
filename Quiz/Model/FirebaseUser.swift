@@ -8,8 +8,6 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
-import FirebaseStorage
-import SDWebImage
 
 
 // handle action and information concerning user
@@ -74,7 +72,8 @@ class FirebaseUser {
         let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.User.username, pseudo)]
         firebaseService.getDocuments(in: FirestoreFields.usersCollection, whereFields: conditions) { result in
             switch result {
-            case .failure(let error): completion(.failure(error))
+            case .failure(let error):
+                completion(.failure(error))
             case .success(let querySnapshot):
                 guard querySnapshot.isEmpty else {
                     completion(.failure(FirebaseError.usernameAlreadyUsed))
@@ -83,42 +82,31 @@ class FirebaseUser {
                 
                 self.firebaseService.createUser(withEmail: email, password: password) { result in
                     switch result {
-                    case .failure(let error): completion(.failure(error))
-                    case .success(let querySnapshot):
-                        guard querySnapshot.isEmpty else {
-                            completion(.failure(FirebaseError.usernameAlreadyUsed))
-                            return
-                        }
+                    case .failure(let error):
+                        completion(.failure(error))
+                    case .success(let uid):
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                         
-                        // Create user
-                        self.firebaseService.createUser(withEmail: email, password: password) { result in
-                            switch result {
-                            case .failure(let error): completion(.failure(error))
-                            case .success(let uid):
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                
-                                let inscriptionDate = Timestamp(date: Date())
-                                
-                                let userData: [String: Any] = [
-                                    FirestoreFields.id: uid,
-                                    FirestoreFields.User.username: pseudo,
-                                    FirestoreFields.User.email: email,
-                                    FirestoreFields.User.inscriptionDate: inscriptionDate,
-                                    FirestoreFields.User.rank: 1.0,
-                                    FirestoreFields.User.points: 0,
-                                    FirestoreFields.User.invites: [String: String](),
-                                    FirestoreFields.User.profilePicture: "",
-                                    FirestoreFields.User.friends: [String](),
-                                    FirestoreFields.User.friendRequests: [String:Any]()
-                                ]
-                                self.firebaseService.setData(in: FirestoreFields.usersCollection, documentId: uid, data: userData) { error in
-                                    if let error = error {
-                                        completion(.failure(error))
-                                    } else {
-                                        completion(.success(()))
-                                    }
-                                }
+                        let inscriptionDate = Timestamp(date: Date())
+                        
+                        let userData: [String: Any] = [
+                            FirestoreFields.id: uid,
+                            FirestoreFields.User.username: pseudo,
+                            FirestoreFields.User.email: email,
+                            FirestoreFields.User.inscriptionDate: inscriptionDate,
+                            FirestoreFields.User.rank: 1.0,
+                            FirestoreFields.User.points: 0,
+                            FirestoreFields.User.invites: [String: String](),
+                            FirestoreFields.User.profilePicture: "",
+                            FirestoreFields.User.friends: [String](),
+                            FirestoreFields.User.friendRequests: [String:Any]()
+                        ]
+                        self.firebaseService.setData(in: FirestoreFields.usersCollection, documentId: uid, data: userData) { error in
+                            if let error = error {
+                                completion(.failure(error))
+                            } else {
+                                completion(.success(()))
                             }
                         }
                     }
@@ -230,27 +218,16 @@ class FirebaseUser {
         }
         
         let imageFileName = "\(currentUserId).jpg"
-        let storageRef = Storage.storage().reference().child("profile_images").child(imageFileName)
-        storageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            if let error = error {
+        firebaseService.storeData(in: "profile_images", fileName: imageFileName, data: imageData) { result in
+            switch result {
+            case .success(let downloadURL):
+                completion(.success(downloadURL))
+            case .failure(let error):
                 completion(.failure(error))
-                return
-            }
-            
-            // Get URL image
-            storageRef.downloadURL { (url, error) in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                
-                if let downloadURL = url {
-                    completion(.success(downloadURL.absoluteString))
-                }
             }
         }
     }
-    
+
     // Function to save Firestore Storage URL of the profile image in Firestore user's document
     func saveProfileImage(url: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -258,7 +235,7 @@ class FirebaseUser {
             return
         }
         
-        self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.profilePicture: url]) { error in
+        firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.profilePicture: url]) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -266,40 +243,34 @@ class FirebaseUser {
             }
         }
     }
-    
+
     // Function to get Firestore storage Image from URL
     func downloadProfileImageFromURL(url: String, completion: @escaping (Data?) -> Void) {
-        guard let imageURL = URL(string: url) else {
-            print("Invalid image URL")
-            completion(nil)
-            return
-        }
-        
-        SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, data, error, _) in
-            if let error = error {
-                print("Error downloading profile image:", error)
+        firebaseService.downloadData(from: url) { result in
+            switch result {
+            case .success(let data):
+                completion(data)
+            case .failure(_):
                 completion(nil)
-                return
             }
-            completion(data)
         }
     }
     
     // Function to save user's new username
-    func updateUsername(username: String, completion: @escaping (Result<Void, Error>) -> Void){
-        guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected))
-            return
-        }
-        
-        self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.username: username]) { error in
-            if let error = error {
-                completion(.failure(error))
-            }
-            completion(.success(()))
-        }
-    }
-    
+//    func updateUsername(username: String, completion: @escaping (Result<Void, Error>) -> Void){
+//        guard let currentUserId = firebaseService.currentUserID else {
+//            completion(.failure(FirebaseError.noUserConnected))
+//            return
+//        }
+//
+//        self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.username: username]) { error in
+//            if let error = error {
+//                completion(.failure(error))
+//            }
+//            completion(.success(()))
+//        }
+//    }
+//
     //-----------------------------------------------------------------------------------
     //                                 FRIENDS
     //-----------------------------------------------------------------------------------
@@ -349,15 +320,15 @@ class FirebaseUser {
     // Function to get user's username from their UID
     func getUsernames(with uids: [String], completion: @escaping (Result<[String: String], Error>) -> Void) {
         var usernames = [String: String]()
+        var lastError: Error?
         let dispatchGroup = DispatchGroup()
-        
+
         for uid in uids {
             dispatchGroup.enter()
             firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: uid) { result in
-                defer { dispatchGroup.leave() }
                 switch result {
                 case .failure(let error):
-                    print("Failed to fetch user for uid: \(uid), error: \(error)")
+                    lastError = error
                 case .success(let documentData):
                     if let username = documentData["username"] as? String {
                         usernames[uid] = username
@@ -365,12 +336,15 @@ class FirebaseUser {
                         print("User not found for uid: \(uid)")
                     }
                 }
+                dispatchGroup.leave()
             }
         }
-        
+
         dispatchGroup.notify(queue: .main) {
-            if usernames.isEmpty {
-                completion(.failure(FirebaseError.noUsernammesFound))
+            if let error = lastError {
+                completion(.failure(error))
+            } else if usernames.isEmpty {
+                completion(.failure(FirebaseError.failedToGetData))
             } else {
                 completion(.success(usernames))
             }

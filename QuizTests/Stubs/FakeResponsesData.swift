@@ -84,7 +84,7 @@ class fakeResponsesData {
         "points": 0,
         "profile_picture": "https://example.com/user1/profile_picture.jpg",
         "friends": ["userID_2", "userID_3"],
-        "invites": ["userid1": "lobbyid1", "userid2": "lobbyid2"],
+        "invites": ["userid1": "inviteID", "userid2": "lobbyid2"],
         "friendRequests": ["user_id_2": ["status": "sent", "date": "2023-05-22T14:53:27Z"]]
     ]
     static let mockUsersData: [[String: Any]] = [mockUserData, mockUserData, mockUserData]
@@ -94,12 +94,14 @@ class fakeResponsesData {
     //-----------------------------------------------------------------------------------
     
     static let mockQuizData: [String: Any] = [
+        "id": "quizid1",
         "name": "Histoire - Seconde Guerre mondiale",
         "category_id": "category_id_1",
         "creator": "user_id_1",
         "difficulty": "Facile",
         "average_score": 0,
         "code": "68HVN",
+        "users_completed": 3,
         "questions": [
             "question_id_1": [
                 "category": "History",
@@ -137,6 +139,8 @@ class fakeResponsesData {
     //-----------------------------------------------------------------------------------
     
     static let mockGroupData: [String: Any] = [
+        "id": "groupid1",
+        "creator": "userid1",
         "name": "Groupe d'amis",
         "members": ["user_id_1", "user_id_2"]
     ]

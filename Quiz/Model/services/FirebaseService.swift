@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
+import SDWebImage
 
 // Enum to add condition in firestore requests
 enum FirestoreCondition {
@@ -55,6 +57,9 @@ protocol FirebaseServiceProtocol {
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration
     func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration
+    
+    func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void)
+        func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void)
     
     var currentUserID: String? { get }
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -171,6 +176,42 @@ class FirebaseService: FirebaseServiceProtocol{
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         db.collection(collection).document(documentId).updateData(data, completion: completion)
     }
+    func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void) {
+            let storageRef = Storage.storage().reference().child(folder).child(fileName)
+            storageRef.putData(data, metadata: nil) { (metadata, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                // Get URL image
+                storageRef.downloadURL { (url, error) in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    
+                    if let downloadURL = url {
+                        completion(.success(downloadURL.absoluteString))
+                    }
+                }
+            }
+        }
+
+        func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void) {
+            guard let imageURL = URL(string: url) else {
+                completion(.failure(FirebaseError.failedToMakeURL))
+                return
+            }
+
+            SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, data, error, _) in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(data ?? Data()))
+                }
+            }
+        }
     // Function to sign a user
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { authData, error in

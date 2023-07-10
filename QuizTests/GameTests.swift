@@ -199,6 +199,23 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
+    func testGetQuestionsInQuizfailed() {
+        firebaseServiceStub.stubbedDocumentSnapshots = []
+        
+        let expectation = self.expectation(description: "Get questions succeeds")
+        game.getQuestions(quizId: "quiz1", gameId: nil) { result in
+            switch result {
+            case .success:
+                XCTFail("Expected error, got success")
+                
+            case .failure:
+                
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
     func testGetQuestionsInGame_Success() {
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockGameData]
         
@@ -359,6 +376,38 @@ final class GameTests: XCTestCase {
             }
             waitForExpectations(timeout: 1)
         }
+    
+    func testDeleteInvite_Success() {
+        let expectation = self.expectation(description: "Delete invite succeeds")
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
+        
+        game.deleteInvite(inviteId: "inviteID") { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail("Expected success, got \(error) instead")
+            }
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testDeleteInvite_failed() {
+        let expectation = self.expectation(description: "Delete invite succeeds")
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
+        
+        game.deleteInvite(inviteId: "inviteID") { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure, got success instead")
+            case .failure(let error):
+                
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1)
+    }
     
     // Test for deleteCurrentRoom
     

@@ -51,23 +51,28 @@ class OpenTriviaDatabaseManager {
                     var translatedCategories = categoriesJSON
                     var translatedCategoriesCount = 0
                     for index in 0..<translatedCategories.count {
-                        self.translator.translate(translatedCategories[index]["name"] as! String, targetLanguage: "FR") { result in
-                            switch result {
-                            case .failure(let error):
-                                print("Failed to translate category: \(error)")
-                            case .success(let translatedName):
-                                var nameWithoutColon = translatedName
-                                if let range = translatedName.range(of: ":") {
-                                    nameWithoutColon = String(translatedName[range.upperBound...])
+                        if let languageCode = Locale.current.languageCode {
+                            self.translator.translate(translatedCategories[index]["name"] as! String, targetLanguage: languageCode) { result in
+                                switch result {
+                                case .failure(let error):
+                                    print("Failed to translate category: \(error)")
+                                case .success(let translatedName):
+                                    var nameWithoutColon = translatedName
+                                    if let range = translatedName.range(of: ":") {
+                                        nameWithoutColon = String(translatedName[range.upperBound...])
+                                    }
+                                    translatedCategories[index]["name"] = nameWithoutColon.trimmingCharacters(in: .whitespaces)
                                 }
-                                translatedCategories[index]["name"] = nameWithoutColon.trimmingCharacters(in: .whitespaces)
+                                translatedCategoriesCount += 1
+                                if translatedCategoriesCount == translatedCategories.count {
+                                    OpenTriviaDatabaseManager.categories = translatedCategories
+                                    completion(.success(translatedCategories))
+                                }
                             }
-                            translatedCategoriesCount += 1
-                            if translatedCategoriesCount == translatedCategories.count {
-                                OpenTriviaDatabaseManager.categories = translatedCategories
-                                completion(.success(translatedCategories))
-                            }
+                        }else{
+                            completion(.success(translatedCategories))
                         }
+                        
                     }
 
                 } catch {

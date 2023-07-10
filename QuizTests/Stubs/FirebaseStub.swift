@@ -24,6 +24,8 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     var stubbedQuerySnapshotDatas: [[[String: Any]]]?
     var stubbedDocumentSnapshots: [[String: Any]]?
     
+    var stubbedDownloadData: Data?
+    var stubbedStorageURL: String = "storageUrl"
     var userID: String? = "userId"
     var currentUserID: String? {
         get {return userID}
@@ -82,7 +84,12 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     }
     
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {
-        
+        if stubbedDocumentError != nil {
+            print(1)
+            completion(.failure(stubbedDocumentError!))
+        }else{
+            completion(.success(()))
+        }
     }
     
     
@@ -98,6 +105,24 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void) {
         completion(stubbedDocumentError)
     }
+    
+    func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void) {
+            if let error = stubbedDocumentError {
+                completion(.failure(error))
+            } else {
+                completion(.success(stubbedStorageURL))
+            }
+        }
+
+        func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void) {
+            if let error = stubbedDocumentError {
+                completion(.failure(error))
+            } else if let data = stubbedDownloadData {
+                completion(.success(data))
+            } else {
+                completion(.success(Data()))
+            }
+        }
     
     
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
