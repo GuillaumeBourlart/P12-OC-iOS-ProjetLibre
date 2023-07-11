@@ -35,6 +35,8 @@ class CustomTextField: UITextField {
 
         self.leftViewMode = .always
         self.leftView = view
+        
+        
     }
 
     func setup(image: UIImage?, placeholder: String, placeholderColor: UIColor) {

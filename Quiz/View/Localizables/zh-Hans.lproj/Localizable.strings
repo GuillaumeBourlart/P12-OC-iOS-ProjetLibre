@@ -6,13 +6,101 @@
   
 */
 
-"Friends" = "朋友";
+"Friends" = "好友";
 "Groups" = "群组";
 "History" = "历史";
 "Quizzes" = "测验";
 "Invites" = "邀请";
 "Sounds" = "声音";
-"Account" = "账号";
-"Preferences" = "偏好";
+"Account" = "帐户";
+"Preferences" = "偏好设置";
 "Social" = "社交";
 "Disconnect" = "断开连接";
+
+//Register
+"Please, enter an email" = "请输入电子邮件";
+"Please, enter a password" = "请输入密码";
+"The e-mail/password combination is incorrect." = "电子邮件/密码组合不正确。";
+"Mail" = "邮件";
+"Password" = "密码";
+"Username" = "用户名";
+"Please, enter a valid email address." = "请输入有效的电子邮件地址。";
+"Please wait" = "请稍等";
+"seconds" = "秒";
+"If this email address is associated with an account, we will send you a password reset email." = "如果此电子邮件地址与帐户关联，我们将向您发送重置密码的电子邮件。";
+"Reset password" = "重置密码";
+
+//Social
+"Pull to refresh" = "下拉以刷新";
+"User" = "用户";
+"Lobby" = "大厅";
+"Add a friend" = "添加好友";
+"Enter the username" = "输入用户名";
+
+//Profile
+"Choose an image" = "选择图像";
+"Camera" = "相机";
+"Gallery" = "图库";
+"Cancel" = "取消";
+"Add a quiz" = "添加测验";
+"Enter name, category, and difficulty" = "输入名称、类别和难度";
+"Name" = "名称";
+"Category" = "类别";
+"Difficulty" = "难度";
+"Add" = "添加";
+"Cancel" = "取消";
+"Question" = "问题";
+"Correct answer" = "正确答案";
+"Incorrect answer 1" = "错误答案 1";
+"Incorrect answer 2" = "错误答案 2";
+"Incorrect answer 3" = "错误答案 3";
+"Explanation" = "解释";
+"Choose difficulty" = "选择难度";
+"Easy" = "简单";
+"Medium" = "中等";
+"Hard" = "困难";
+"Cancel" = "取消";
+
+//QuickGame
+"Current Players" = "当前玩家";
+"Invited Players" = "被邀请玩家";
+"Confirmation" = "确认";
+"Are you sure you want to leave the room?" = "确定要离开房间吗？";
+"Are you sure you want to leave the game?" = "确定要离开游戏吗？";
+"Yes" = "是";
+"No" = "否";
+
+//GameVC
+"Good job!" = "干得好！";
+"Well done!" = "做得好！";
+"Excellent!" = "优秀！";
+"Nice work!" = "做得漂亮！";
+"Keep it up!" = "继续努力！";
+"Fantastic!" = "棒极了！";
+
+"Keep trying!" = "继续努力！";
+"Don't give up!" = "不要放弃！";
+"You'll get it next time!" = "下次会成功的！";
+"Almost there!" = "快要到了！";
+"Good effort!" = "努力了！";
+"Nice try!" = "不错！";
+
+"Too late!" = "太晚了！";
+"Time's up!" = "时间到了！";
+"You missed that one!" = "你错过了那个！";
+"Try to be faster!" = "尽量快点！";
+"Don't hesitate!" = "不要犹豫！";
+"Missed the buzzer!" = "错过了蜂鸣器！";
+
+"No game data available." = "没有可用的游戏数据。";
+"Unknown" = "未知";
+"The winner is %@, and the loser is %@." = "赢家是%@，输家是%@。";
+"Your opponent didn't finish the quiz yet" = "你的对手还没有完成测验。";
+"Ranking:\n" = "排名：\n";
+"%d. %@ with %d points\n" = "%d位：%@（得分：%d）\n";
+"\n\nSome players didn't finish the quiz yet" = "一些玩家还没有完成测验。";
+
+//QuestionResultVC
+"Answer: %@" = "答案：%@";
+"Points: %d" = "得分：%d";
+"Correct answer: %@" = "正确答案：%@";

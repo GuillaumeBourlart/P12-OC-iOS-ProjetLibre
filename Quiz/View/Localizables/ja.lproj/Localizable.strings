@@ -17,3 +17,90 @@
 "Social" = "ソーシャル";
 "Disconnect" = "切断";
 
+//Register
+"Please, enter an email" = "メールアドレスを入力してください";
+"Please, enter a password" = "パスワードを入力してください";
+"The e-mail/password combination is incorrect." = "メールアドレス/パスワードの組み合わせが正しくありません。";
+"Mail" = "メール";
+"Password" = "パスワード";
+"Username" = "ユーザー名";
+"Please, enter a valid email address." = "有効なメールアドレスを入力してください。";
+"Please wait" = "お待ちください";
+"seconds" = "秒";
+"If this email address is associated with an account, we will send you a password reset email." = "このメールアドレスがアカウントに関連付けられている場合、パスワードリセットのメールを送信します。";
+"Reset password" = "パスワードのリセット";
+
+//Social
+"Pull to refresh" = "引っ張って更新";
+"User" = "ユーザー";
+"Lobby" = "ロビー";
+"Add a friend" = "友達を追加";
+"Enter the username" = "ユーザー名を入力してください";
+
+//Profile
+"Choose an image" = "画像を選択";
+"Camera" = "カメラ";
+"Gallery" = "ギャラリー";
+"Cancel" = "キャンセル";
+"Add a quiz" = "クイズを追加";
+"Enter name, category, and difficulty" = "名前、カテゴリー、難易度を入力してください";
+"Name" = "名前";
+"Category" = "カテゴリー";
+"Difficulty" = "難易度";
+"Add" = "追加";
+"Cancel" = "キャンセル";
+"Question" = "質問";
+"Correct answer" = "正解";
+"Incorrect answer 1" = "不正解1";
+"Incorrect answer 2" = "不正解2";
+"Incorrect answer 3" = "不正解3";
+"Explanation" = "説明";
+"Choose difficulty" = "難易度を選択";
+"Easy" = "簡単";
+"Medium" = "中程度";
+"Hard" = "難しい";
+"Cancel" = "キャンセル";
+
+//QuickGame
+"Current Players" = "現在のプレイヤー";
+"Invited Players" = "招待されたプレイヤー";
+"Confirmation" = "確認";
+"Are you sure you want to leave the room?" = "本当にこの部屋を離れますか？";
+"Are you sure you want to leave the game?" = "本当にこのゲームを離れますか？";
+"Yes" = "はい";
+"No" = "いいえ";
+
+//GameVC
+"Good job!" = "よくやった！";
+"Well done!" = "上手にやった！";
+"Excellent!" = "素晴らしい！";
+"Nice work!" = "いい仕事！";
+"Keep it up!" = "頑張って！";
+"Fantastic!" = "素晴らしい！";
+
+"Keep trying!" = "頑張って！";
+"Don't give up!" = "諦めるな！";
+"You'll get it next time!" = "次回頑張りましょう！";
+"Almost there!" = "もう少し！";
+"Good effort!" = "いい努力！";
+"Nice try!" = "よくやった！";
+
+"Too late!" = "時間切れ！";
+"Time's up!" = "時間切れ！";
+"You missed that one!" = "それを逃しました！";
+"Try to be faster!" = "もっと早く行動してみて！";
+"Don't hesitate!" = "迷わないで！";
+"Missed the buzzer!" = "ブザーを逃しました！";
+
+"No game data available." = "利用可能なゲームデータがありません。";
+"Unknown" = "不明";
+"The winner is %@, and the loser is %@." = "勝者は%@で、敗者は%@です。";
+"Your opponent didn't finish the quiz yet" = "対戦相手はまだクイズを終了していません。";
+"Ranking:\n" = "ランキング:\n";
+"%d. %@ with %d points\n" = "%d位: %@（%dポイント）\n";
+"\n\nSome players didn't finish the quiz yet" = "\n\nまだ一部のプレイヤーがクイズを終了していません。";
+
+//QuestionResultVC
+"Answer: %@" = "回答: %@";
+"Points: %d" = "ポイント: %d";
+"Correct answer: %@" = "正解: %@";

@@ -57,7 +57,7 @@ class InvitesVC: UIViewController {
     
     func loadInvites() {
         FirebaseUser.shared.getUserInfo { result in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
             switch result {
             case .failure(let error): print(error)
             case .success():
@@ -162,15 +162,18 @@ extension InvitesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if invites.isEmpty {
             let emptyCell = tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath) as! EmptyCell
-            emptyCell.label.text = "Pull to refresh"
+            emptyCell.label.text = NSLocalizedString("Pull to refresh", comment: "")
             self.tableView.separatorStyle = .none
             emptyCell.isUserInteractionEnabled = false
             return emptyCell
         } else {
             self.tableView.separatorStyle = .singleLine
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
             let invite = Array(invites)[indexPath.row]
-            cell.label.text = "User: \(invite.key) - Lobby: \(invite.value)"
+            let userText = NSLocalizedString("User", comment: "")
+            let lobbyText = NSLocalizedString("Lobby", comment: "")
+            cell.label.text = userText + ": \(invite.key) - " + lobbyText + invite.value
 
             let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
             whiteDisclosureIndicator.tintColor = .white

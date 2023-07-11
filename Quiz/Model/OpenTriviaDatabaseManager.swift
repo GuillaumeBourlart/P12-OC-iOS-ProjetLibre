@@ -32,20 +32,19 @@ class OpenTriviaDatabaseManager {
     
     // Function to display TriviaDB categories
     func fetchCategories(completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
-        
         let urlString = "https://opentdb.com/api_category.php"
-
+        
         guard let url = URL(string: urlString) else {
             completion(.failure(OpenTriviaDBError.failedToMakeURL))
             return
         }
-
+        
         service.load(url: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-
+            
             if let data = data {
                 do {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -58,12 +57,12 @@ class OpenTriviaDatabaseManager {
                     // Begin the translation process
                     var translatedCategories = categoriesJSON
                     var translatedCategoriesCount = 0
+                    var anyTranslationFailed = false
                     for index in 0..<translatedCategories.count {
                         var categoryName = translatedCategories[index]["name"] as! String
                         // Remove ':' and everything before it
                         if let range = categoryName.range(of: ":") {
                             categoryName = String(categoryName[range.upperBound...])
-                            
                         }
                         categoryName = categoryName.trimmingCharacters(in: .whitespaces)
                         translatedCategories[index]["name"] = categoryName
@@ -71,22 +70,26 @@ class OpenTriviaDatabaseManager {
                         if let languageCode = Locale.current.languageCode {
                             self.translator.translate(categoryName, targetLanguage: languageCode) { result in
                                 switch result {
-                                case .failure(let error):
-                                    completion(.failure(error))
+                                case .failure(_):
+                                    anyTranslationFailed = true
                                 case .success(let translatedName):
                                     translatedCategories[index]["name"] = translatedName
                                 }
                                 translatedCategoriesCount += 1
                                 if translatedCategoriesCount == translatedCategories.count {
-                                    OpenTriviaDatabaseManager.categories = translatedCategories
-                                    completion(.success(translatedCategories))
+                                    if anyTranslationFailed {
+                                        // Here, return the processed categories instead of the original ones
+                                        completion(.success(translatedCategories))
+                                    } else {
+                                        OpenTriviaDatabaseManager.categories = translatedCategories
+                                        completion(.success(translatedCategories))
+                                    }
                                 }
                             }
                         } else {
                             completion(.success(translatedCategories))
                         }
                     }
-
                 } catch {
                     completion(.failure(error))
                 }

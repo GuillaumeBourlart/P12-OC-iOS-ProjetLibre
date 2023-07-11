@@ -76,23 +76,22 @@ class ProfileVC: UIViewController{
     @objc func profileImageTapped() {
         CustomAnimations.imagePressAnimation(for: self.profileImageView) {
             
-            let alert = UIAlertController(title: "Chose an image", message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+            let alert = UIAlertController(title: NSLocalizedString("Choose an image", comment: ""), message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .default, handler: { _ in
                 self.openCamera()
             }))
             
-            alert.addAction(UIAlertAction(title: "Galery", style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Gallery", comment: ""), style: .default, handler: { _ in
                 self.openGallery()
             }))
             
-            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction.init(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             
             self.activeAlert = alert
             
             self.present(alert, animated: true, completion: nil)
         }
-    }
-}
+    }}
 
 
 // Extension for image picker, to change profil Image

@@ -40,7 +40,6 @@ class FirebaseUser {
     
     // Function to reset password
     func resetPassword(for email: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard currentUserId != nil else { return }
         firebaseService.resetPassword(for: email) { result in
             switch result {
             case .failure(let error):

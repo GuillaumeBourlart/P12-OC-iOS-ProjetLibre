@@ -48,24 +48,24 @@ class QuizzesVC: UIViewController{
     }
     
     func displayAddQuizAlert() {
-        let alert = UIAlertController(title: "Add a quiz", message: "Enter name, category and difficulty", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Add a quiz", comment: ""), message: NSLocalizedString("Enter name, category and difficulty", comment: ""), preferredStyle: .alert)
         
         alert.addTextField { (textField) in
-            textField.placeholder = "Name"
+            textField.placeholder = NSLocalizedString("Name", comment: "")
             textField.autocorrectionType = .no
         }
         
         alert.addTextField { (textField) in
-            textField.placeholder = "Category"
+            textField.placeholder = NSLocalizedString("Category", comment: "")
             textField.autocorrectionType = .no
         }
         
         alert.addTextField { (textField) in
-            textField.placeholder = "Difficulty"
+            textField.placeholder = NSLocalizedString("Difficulty", comment: "")
             textField.autocorrectionType = .no
         }
         
-        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
+        let addAction = UIAlertAction(title: NSLocalizedString("Add", comment: ""), style: .default) { (_) in
             guard let name = alert.textFields?[0].text, !name.isEmpty,
                   let category = alert.textFields?[1].text, !category.isEmpty,
                   let difficulty = alert.textFields?[2].text, !difficulty.isEmpty else { return }
@@ -80,7 +80,7 @@ class QuizzesVC: UIViewController{
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
         
         alert.addAction(addAction)
         alert.addAction(cancelAction)

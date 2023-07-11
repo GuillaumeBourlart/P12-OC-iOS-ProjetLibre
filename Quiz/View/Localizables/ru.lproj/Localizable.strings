@@ -17,3 +17,91 @@
 "Preferences" = "Настройки";
 "Social" = "Социальное";
 "Disconnect" = "Отключиться";
+
+//Register
+"Please, enter an email" = "Пожалуйста, введите электронную почту";
+"Please, enter a password" = "Пожалуйста, введите пароль";
+"The e-mail/password combination is incorrect." = "Неверная комбинация электронной почты/пароля.";
+"Mail" = "Почта";
+"Password" = "Пароль";
+"Username" = "Имя пользователя";
+"Please, enter a valid email address." = "Пожалуйста, введите действительный адрес электронной почты.";
+"Please wait" = "Пожалуйста, подождите";
+"seconds" = "секунды";
+"If this email address is associated with an account, we will send you a password reset email." = "Если этот адрес электронной почты связан с учетной записью, мы отправим вам письмо с возможностью сбросить пароль.";
+"Reset password" = "Сбросить пароль";
+
+//Social
+"Pull to refresh" = "Потяните, чтобы обновить";
+"User" = "Пользователь";
+"Lobby" = "Лобби";
+"Add a friend" = "Добавить друга";
+"Enter the username" = "Введите имя пользователя";
+
+//Profile
+"Choose an image" = "Выберите изображение";
+"Camera" = "Камера";
+"Gallery" = "Галерея";
+"Cancel" = "Отмена";
+"Add a quiz" = "Добавить викторину";
+"Enter name, category, and difficulty" = "Введите имя, категорию и сложность";
+"Name" = "Имя";
+"Category" = "Категория";
+"Difficulty" = "Сложность";
+"Add" = "Добавить";
+"Cancel" = "Отмена";
+"Question" = "Вопрос";
+"Correct answer" = "Правильный ответ";
+"Incorrect answer 1" = "Неправильный ответ 1";
+"Incorrect answer 2" = "Неправильный ответ 2";
+"Incorrect answer 3" = "Неправильный ответ 3";
+"Explanation" = "Объяснение";
+"Choose difficulty" = "Выберите сложность";
+"Easy" = "Легко";
+"Medium" = "Средне";
+"Hard" = "Трудно";
+"Cancel" = "Отмена";
+
+//QuickGame
+"Current Players" = "Текущие игроки";
+"Invited Players" = "Приглашенные игроки";
+"Confirmation" = "Подтверждение";
+"Are you sure you want to leave the room?" = "Вы уверены, что хотите покинуть комнату?";
+"Are you sure you want to leave the game?" = "Вы уверены, что хотите покинуть игру?";
+"Yes" = "Да";
+"No" = "Нет";
+
+//GameVC
+"Good job!" = "Хорошая работа!";
+"Well done!" = "Отлично сработано!";
+"Excellent!" = "Отлично!";
+"Nice work!" = "Хорошая работа!";
+"Keep it up!" = "Продолжайте в том же духе!";
+"Fantastic!" = "Фантастически!";
+
+"Keep trying!" = "Продолжайте пытаться!";
+"Don't give up!" = "Не сдавайтесь!";
+"You'll get it next time!" = "В следующий раз получится!";
+"Almost there!" = "Почти получилось!";
+"Good effort!" = "Хорошее усилие!";
+"Nice try!" = "Хорошая попытка!";
+
+"Too late!" = "Слишком поздно!";
+"Time's up!" = "Время вышло!";
+"You missed that one!" = "Вы пропустили этот вопрос!";
+"Try to be faster!" = "Попробуйте быть быстрее!";
+"Don't hesitate!" = "Не стесняйтесь!";
+"Missed the buzzer!" = "Пропустили сигнал!";
+
+"No game data available." = "Нет доступных игровых данных.";
+"Unknown" = "Неизвестно";
+"The winner is %@, and the loser is %@." = "Победитель: %@, проигравший: %@.";
+"Your opponent didn't finish the quiz yet" = "Ваш соперник еще не закончил викторину.";
+"Ranking:\n" = "Рейтинг:\n";
+"%d. %@ with %d points\n" = "%d. %@ с %d очками\n";
+"\n\nSome players didn't finish the quiz yet" = "\n\nНекоторые игроки еще не закончили викторину.";
+
+//QuestionResultVC
+"Answer: %@" = "Ответ: %@";
+"Points: %d" = "Очки: %d";
+"Correct answer: %@" = "Правильный ответ: %@";

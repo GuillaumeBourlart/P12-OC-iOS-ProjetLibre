@@ -99,25 +99,24 @@ class AddQuestionVC: UIViewController {
         explanationField.resignFirstResponder()
     }
     
-    func setUI(){
-        
+    func setUI() {
         // Question
-        questionField.setup(image: UIImage(systemName: "questionmark"), placeholder: "Question", placeholderColor: UIColor(named: "placeholder") ?? .gray)
+        questionField.setup(image: UIImage(systemName: "questionmark"), placeholder: NSLocalizedString("Question", comment: ""), placeholderColor: UIColor(named: "placeholder") ?? .gray)
         
         // CORRECT ANSWER
-        correctAnswerField.setup(image: UIImage(systemName: "checkmark"), placeholder: "Correct answer", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
+        correctAnswerField.setup(image: UIImage(systemName: "checkmark"), placeholder: NSLocalizedString("Correct answer", comment: ""), placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
         
         // INCORRECT ANSWER 1
-        incorrectAnswersFields[0].setup(image: UIImage(systemName: "1.circle"), placeholder: "Incorrect answer 1", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
+        incorrectAnswersFields[0].setup(image: UIImage(systemName: "1.circle"), placeholder: NSLocalizedString("Incorrect answer 1", comment: ""), placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
         
         // INCORRECT ANSWER 2
-        incorrectAnswersFields[1].setup(image: UIImage(systemName: "2.circle"), placeholder: "Incorrect answer 2", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
+        incorrectAnswersFields[1].setup(image: UIImage(systemName: "2.circle"), placeholder: NSLocalizedString("Incorrect answer 2", comment: ""), placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
         
         // INCORRECT ANSWER 3
-        incorrectAnswersFields[2].setup(image: UIImage(systemName: "3.circle"), placeholder: "Incorrect answer 3", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
+        incorrectAnswersFields[2].setup(image: UIImage(systemName: "3.circle"), placeholder: NSLocalizedString("Incorrect answer 3", comment: ""), placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
         
         // Explanation
-        explanationField.setup(image: UIImage(systemName: "book"), placeholder: "Explanation", placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
+        explanationField.setup(image: UIImage(systemName: "book"), placeholder: NSLocalizedString("Explanation", comment: ""), placeholderColor: UIColor(named: "placeholder") ?? .lightGray)
     }
     
 }

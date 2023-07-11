@@ -33,7 +33,9 @@ class ResetPasswordVC: UIViewController {
             if timePassed < resetButtonSeconds {
                 resetButtonSeconds -= timePassed
                 resetButton.isEnabled = false
-                resetButton.setTitle("Please wait \(resetButtonSeconds) seconds", for: .disabled)
+                let string1 = NSLocalizedString("Please wait", comment: "")
+                let string2 = NSLocalizedString("seconds", comment: "")
+                resetButton.setTitle(string1 + " \(resetButtonSeconds) " + string2, for: .disabled)
                 resetButtonTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateResetButtonTitle(_:)), userInfo: nil, repeats: true)
             }
         }
@@ -48,7 +50,7 @@ class ResetPasswordVC: UIViewController {
         } else {
             textField.layer.borderColor = UIColor.red.cgColor
             textField.layer.borderWidth = 1
-            errorLabel.text = "Please, enter a valid email adress."
+            errorLabel.text = NSLocalizedString("Please, enter a valid email adress.", comment: "")
         }
         // Sauvegarder le texte chaque fois qu'il change
         UserDefaults.standard.set(textField.text, forKey: "emailFieldText")
@@ -60,7 +62,9 @@ class ResetPasswordVC: UIViewController {
             return
         }
         resetButton.isEnabled = false
-        resetButton.setTitle("Please wait \(resetButtonSeconds) seconds", for: .disabled)
+        let string1 = NSLocalizedString("Please wait", comment: "")
+        let string2 = NSLocalizedString("seconds", comment: "")
+        resetButton.setTitle(string1 + " \(resetButtonSeconds) " + string2, for: .disabled)
         
         // Démarrer le Timer
         resetButtonTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateResetButtonTitle(_:)), userInfo: nil, repeats: true)
@@ -74,7 +78,7 @@ class ResetPasswordVC: UIViewController {
             }
             self.errorLabel.isHidden = false
             self.errorLabel.textColor = .green
-            self.errorLabel.text = "If this email address is associated with an account, we will send you a password reset email."
+            self.errorLabel.text = NSLocalizedString("If this email address is associated with an account, we will send you a password reset email.", comment: "")
             
         }
         
@@ -90,12 +94,15 @@ class ResetPasswordVC: UIViewController {
         resetButtonSeconds -= 1
         if resetButtonSeconds <= 0 {
             resetButton.isEnabled = true
-            resetButton.setTitle("Reset Password", for: .normal)
+            let title = NSLocalizedString("Reset password", comment: "")
+            resetButton.setTitle(title, for: .normal)
             resetButtonTimer?.invalidate()
             resetButtonTimer = nil
             resetButtonSeconds = 60
         } else {
-            resetButton.setTitle("Please wait \(resetButtonSeconds) seconds", for: .disabled)
+            let string1 = NSLocalizedString("Please wait", comment: "")
+            let string2 = NSLocalizedString("seconds", comment: "")
+            resetButton.setTitle(string1 + " \(resetButtonSeconds) " + string2, for: .disabled)
         }
     }
     

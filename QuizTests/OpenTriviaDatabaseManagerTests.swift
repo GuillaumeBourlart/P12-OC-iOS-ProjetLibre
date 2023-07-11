@@ -70,7 +70,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                "translations": [
                    {
                        "detected_source_language": "EN",
-                       "text": "Divertissement: Livres"
+                       "text": "Livres"
                    }
                ]
            }
@@ -80,7 +80,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                "translations": [
                    {
                        "detected_source_language": "EN",
-                       "text": "Divertissement: Film"
+                       "text": "Film"
                    }
                ]
            }
@@ -102,6 +102,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                    fetchedError = error
                case .success(let categories):
                    fetchedCategories = categories
+                   print("cateeeeeeeeegories : \(fetchedCategories)")
                    // Then
                    XCTAssertNil(fetchedError)
                    XCTAssertNotNil(fetchedCategories)

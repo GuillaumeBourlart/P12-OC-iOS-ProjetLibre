@@ -16,6 +16,10 @@ class LoginVC: UIViewController{
     @IBOutlet weak var loginButton: CustomButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var resetPasswordButton: UILabel!
+    
+    @IBOutlet weak var backgroundForIndicator: UIView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -37,6 +41,8 @@ class LoginVC: UIViewController{
             FirebaseUser.shared.getUserInfo { result in
                 switch result {
                 case .failure(let error): print(error)
+                    self.backgroundForIndicator.isHidden = true
+                    self.indicator.stopAnimating()
                 case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
                 }
             }
@@ -62,11 +68,11 @@ class LoginVC: UIViewController{
                 if self.userEmail.text == "" {
                     self.userEmail.layer.borderColor = UIColor.red.cgColor
                     self.errorLabel.isHidden = false
-                    self.errorLabel.text = "Please, enter an email"
+                    self.errorLabel.text = NSLocalizedString("Please, enter an email", comment: "")
                 } else if self.userPassword.text == "" {
                     self.userPassword.layer.borderColor = UIColor.red.cgColor
                     self.errorLabel.isHidden = false
-                    self.errorLabel.text = "Please, enter a password"
+                    self.errorLabel.text = NSLocalizedString("Please, enter a password", comment: "")
                 }
                 
                 return
@@ -81,7 +87,7 @@ class LoginVC: UIViewController{
                     self.userEmail.layer.borderColor = UIColor.red.cgColor
                     self.userPassword.layer.borderColor = UIColor.red.cgColor
                     self.errorLabel.isHidden = false
-                    self.errorLabel.text = "The e-mail/password combination is incorrect."
+                    self.errorLabel.text = NSLocalizedString("The e-mail/password combination is incorrect.", comment: "")
                     self.loginButton.isEnabled = true
                 }
             }
@@ -116,11 +122,14 @@ class LoginVC: UIViewController{
         userEmail.layer.borderWidth = 0.0
         userPassword.layer.borderWidth = 0.0
         
+        
         // MAIL
-        userEmail.setup(image: UIImage(systemName: "mail"), placeholder: "Mail", placeholderColor: UIColor(named: "placeholder") ?? .gray)
+        let mail = NSLocalizedString("Mail", comment: "")
+        userEmail.setup(image: UIImage(systemName: "mail"), placeholder: mail, placeholderColor: UIColor(named: "placeholder") ?? .gray)
         
         // PASSWORD
-        userPassword.setup(image: UIImage(systemName: "lock"), placeholder: "Password", placeholderColor: UIColor(named: "placeholder") ?? .gray)
+        let lock = NSLocalizedString("Password", comment: "")
+        userPassword.setup(image: UIImage(systemName: "lock"), placeholder: lock, placeholderColor: UIColor(named: "placeholder") ?? .gray)
     }
     
     

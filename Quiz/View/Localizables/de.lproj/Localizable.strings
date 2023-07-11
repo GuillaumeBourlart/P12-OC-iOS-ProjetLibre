@@ -17,3 +17,91 @@
 "Preferences" = "Einstellungen";
 "Social" = "Sozial";
 "Disconnect" = "Trennen";
+
+//Register
+"Please, enter an email" = "Bitte geben Sie eine E-Mail-Adresse ein";
+"Please, enter a password" = "Bitte geben Sie ein Passwort ein";
+"The e-mail/password combination is incorrect." = "Die E-Mail-/Passwortkombination ist falsch.";
+"Mail" = "E-Mail";
+"Password" = "Passwort";
+"Username" = "Benutzername";
+"Please, enter a valid email address." = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+"Please wait" = "Bitte warten Sie";
+"seconds" = "Sekunden";
+"If this email address is associated with an account, we will send you a password reset email." = "Wenn diese E-Mail-Adresse mit einem Konto verknüpft ist, senden wir Ihnen eine E-Mail zum Zurücksetzen des Passworts.";
+"Reset password" = "Passwort zurücksetzen";
+
+//Social
+"Pull to refresh" = "Zum Aktualisieren ziehen";
+"User" = "Benutzer";
+"Lobby" = "Lobby";
+"Add a friend" = "Freund hinzufügen";
+"Enter the username" = "Benutzernamen eingeben";
+
+//Profile
+"Choose an image" = "Bild auswählen";
+"Camera" = "Kamera";
+"Gallery" = "Galerie";
+"Cancel" = "Abbrechen";
+"Add a quiz" = "Quiz hinzufügen";
+"Enter name, category, and difficulty" = "Name, Kategorie und Schwierigkeitsgrad eingeben";
+"Name" = "Name";
+"Category" = "Kategorie";
+"Difficulty" = "Schwierigkeitsgrad";
+"Add" = "Hinzufügen";
+"Cancel" = "Abbrechen";
+"Question" = "Frage";
+"Correct answer" = "Richtige Antwort";
+"Incorrect answer 1" = "Falsche Antwort 1";
+"Incorrect answer 2" = "Falsche Antwort 2";
+"Incorrect answer 3" = "Falsche Antwort 3";
+"Explanation" = "Erklärung";
+"Choose difficulty" = "Schwierigkeitsgrad wählen";
+"Easy" = "Einfach";
+"Medium" = "Mittel";
+"Hard" = "Schwer";
+"Cancel" = "Abbrechen";
+
+//QuickGame
+"Current Players" = "Aktuelle Spieler";
+"Invited Players" = "Eingeladene Spieler";
+"Confirmation" = "Bestätigung";
+"Are you sure you want to leave the room?" = "Sind Sie sicher, dass Sie den Raum verlassen möchten?";
+"Are you sure you want to leave the game?" = "Sind Sie sicher, dass Sie das Spiel verlassen möchten?";
+"Yes" = "Ja";
+"No" = "Nein";
+
+//GameVC
+"Good job!" = "Gut gemacht!";
+"Well done!" = "Gut gemacht!";
+"Excellent!" = "Ausgezeichnet!";
+"Nice work!" = "Schöne Arbeit!";
+"Keep it up!" = "Weiter so!";
+"Fantastic!" = "Fantastisch!";
+
+"Keep trying!" = "Weiter versuchen!";
+"Don't give up!" = "Gib nicht auf!";
+"You'll get it next time!" = "Beim nächsten Mal schaffst du es!";
+"Almost there!" = "Fast geschafft!";
+"Good effort!" = "Gute Leistung!";
+"Nice try!" = "Guter Versuch!";
+
+"Too late!" = "Zu spät!";
+"Time's up!" = "Zeit ist um!";
+"You missed that one!" = "Das hast du verpasst!";
+"Try to be faster!" = "Versuch schneller zu sein!";
+"Don't hesitate!" = "Zögere nicht!";
+"Missed the buzzer!" = "Du hast den Summer verpasst!";
+
+"No game data available." = "Keine Spieldaten verfügbar.";
+"Unknown" = "Unbekannt";
+"The winner is %@, and the loser is %@." = "Der Gewinner ist %@, und der Verlierer ist %@.";
+"Your opponent didn't finish the quiz yet" = "Ihr Gegner hat das Quiz noch nicht beendet.";
+"Ranking:\n" = "Rangliste:\n";
+"%d. %@ with %d points\n" = "%d. %@ mit %d Punkten\n";
+"\n\nSome players didn't finish the quiz yet" = "\n\nEinige Spieler haben das Quiz noch nicht beendet.";
+
+//QuestionResultVC
+"Answer: %@" = "Antwort: %@";
+"Points: %d" = "Punkte: %d";
+"Correct answer: %@" = "Richtige Antwort: %@";

@@ -439,7 +439,6 @@ class Game {
     
     // Function to create a game, with it's questions
     func createGame(questions: [UniversalQuestion], with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
-        print("createGame atteint")
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(GameError.noUserConnected)); return
         }
@@ -643,7 +642,7 @@ class Game {
     //-----------------------------------------------------------------------------------
     
     // Function to listen for change in a document
-    func ListenForChangeInDocument(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration {
+    func ListenForChangeInDocument(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration? {
         return firebaseService.addDocumentSnapshotListener(in: collection, documentId: documentId) { result in
             switch result {
             case .success(let data):
@@ -653,7 +652,7 @@ class Game {
             case .failure(let error):
                 completion(.failure(error))
             }
-        }
+        } ?? nil
     }
     
     // Function to convert timestamps to data

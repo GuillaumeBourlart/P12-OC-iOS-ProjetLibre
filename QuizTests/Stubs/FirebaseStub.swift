@@ -9,6 +9,12 @@ import XCTest
 import Firebase
 
 class FirebaseServiceStub: FirebaseServiceProtocol {
+   
+    
+    func isUserSignedIn() -> Bool {
+        return currentUserID != nil
+    }
+    
     func resetPassword(for email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         if let error = stubbedDocumentError {
             completion(.failure(error))
@@ -33,6 +39,7 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     }
     
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String : Any]], Error>) -> Void) {
+        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
         if let error = stubbedDocumentError {
             completion(.failure(error))
         } else if let data = stubbedQuerySnapshotDatas?.first {
@@ -44,6 +51,7 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     }
     
     func getDocument(in collection: String, documentId: String, completion: @escaping (Result<[String : Any], Error>) -> Void) {
+        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
         if let error = stubbedDocumentError {
             completion(.failure(error))
         } else if let data = stubbedDocumentSnapshots?.first {
@@ -55,12 +63,14 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     }
     
     func setDataWithMerge(in collection: String, documentId: String, data: [String : Any], merge: Bool, completion: @escaping (Error?) -> Void) {
+        guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}
         completion(stubbedDocumentError)
     }
     
     
     
-    func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String : Any], Error>) -> Void) -> ListenerRegistration {
+    func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String : Any], Error>) -> Void) -> ListenerRegistration? {
+        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return nil}
         if let error = stubbedDocumentError {
             completion(.failure(error))
         } else if let data = stubbedListenerData {
@@ -68,22 +78,20 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
         }
         return ListenerRegistrationStub()
     }
+//
+//    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String : Any]], Error>) -> Void) -> ListenerRegistration {
+//        if let error = stubbedDocumentError {
+//            completion(.failure(error))
+//        } else if let data = stubbedQuerySnapshotDatas?.first {
+//            stubbedQuerySnapshotDatas?.removeFirst()
+//            completion(.success(data))
+//        }
+//        return ListenerRegistrationStub()
+//    }
     
-    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String : Any]], Error>) -> Void) -> ListenerRegistration {
-        if let error = stubbedDocumentError {
-            completion(.failure(error))
-        } else if let data = stubbedQuerySnapshotDatas?.first {
-            stubbedQuerySnapshotDatas?.removeFirst()
-            completion(.success(data))
-        }
-        return ListenerRegistrationStub()
-    }
-    
-    func createGameAndDeleteLobby(gameData: [String : Any], gameId: String, lobbyId: String, completion: @escaping (Error?) -> Void) {
-        
-    }
     
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {
+        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
         if stubbedDocumentError != nil {
             completion(.failure(stubbedDocumentError!))
         }else{
@@ -93,19 +101,27 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     
     
     func setData(in collection: String, documentId: String, data: [String : Any], completion: @escaping (Error?) -> Void) {
+        guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}
+        
         completion(stubbedDocumentError)
     }
     
     func updateDocument(in collection: String, documentId: String, data: [String : Any], completion: @escaping (Error?) -> Void) {
+        guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}
+        
         completion(stubbedDocumentError)
     }
     
     
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void) {
+        guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}
+        
         completion(stubbedDocumentError)
     }
     
     func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void) {
+        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
+        
             if let error = stubbedDocumentError {
                 completion(.failure(error))
             } else {
@@ -114,6 +130,8 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
         }
 
         func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void) {
+            guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
+            
             if let error = stubbedDocumentError {
                 completion(.failure(error))
             } else if let data = stubbedDownloadData {
@@ -125,8 +143,8 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     
     
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        
         if stubbedDocumentError != nil {
-            print(1)
             completion(.failure(stubbedDocumentError!))
         }else{
             completion(.success(()))
@@ -134,6 +152,7 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     }
     
     func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
         if stubbedDocumentError != nil {
             completion(.failure(stubbedDocumentError!))
         }else{

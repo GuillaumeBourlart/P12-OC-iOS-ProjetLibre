@@ -90,13 +90,16 @@ class CreateAccountVC: UIViewController {
         userPseudo.layer.borderWidth = 0.0
         
         // MAIL
+        let mail = NSLocalizedString("Mail", comment: "")
         userEmail.setup(image: UIImage(systemName: "mail"), placeholder: "Email", placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
 
         // PASSWORD
+        let lock = NSLocalizedString("Password", comment: "")
         userPassword.setup(image: UIImage(systemName: "lock"), placeholder: "Password", placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
 
         // USERNAME
-        userPseudo.setup(image: UIImage(systemName: "person.fill"), placeholder: "Pseudo", placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
+        let username = NSLocalizedString("Username", comment: "")
+        userPseudo.setup(image: UIImage(systemName: "person.fill"), placeholder: username, placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
     }
     
     

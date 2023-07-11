@@ -90,7 +90,7 @@ class FriendsVC: UIViewController{
     
     func reloadData(){
         FirebaseUser.shared.getUserInfo { result in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                 switch result {
                 case .failure(let error): print(error)
                 case .success(): self.loadArrays()
@@ -185,7 +185,9 @@ class FriendsVC: UIViewController{
     
     // Function called when player wants to add a friend
     @IBAction func addFriend(sender: UIButton){
-        let alertController = UIAlertController(title: "Add a friend", message: "Enter the username", preferredStyle: .alert)
+        let alertTitle = NSLocalizedString("Add a friend", comment: "")
+        let alertMessage = NSLocalizedString("Enter the username", comment: "")
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         
         alertController.addTextField { (textField) in
             textField.placeholder = "Username"

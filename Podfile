@@ -7,16 +7,21 @@ target 'Quiz' do
 
   # Pods for Quiz
 
-pod 'Firebase', '8.0.0'
-  pod 'Alamofire', '~> 5.4.4'
-  pod 'SDWebImage', '5.12.1'
- pod 'Firebase/Firestore', '8.0.0'
-  pod 'Firebase/Messaging', '8.0.0'
-  pod 'Firebase/Auth', '8.0.0'
-  pod 'Firebase/Analytics', '8.0.0'
-pod 'Firebase/Performance', '8.0.0'
-pod 'Firebase/Storage', '8.0.0'
-pod 'SDWebImageFLPlugin'
+
+pod 'Alamofire', '5.5'
+
+pod 'Firebase', '10.11.0'
+pod 'Firebase/Firestore', '10.11.0'
+pod 'Firebase/Messaging', '10.11.0'
+pod 'Firebase/Auth', '10.11.0'
+pod 'Firebase/Analytics', '10.11.0'
+pod 'Firebase/Performance', '10.11.0'
+pod 'Firebase/Storage', '10.11.0'
+
+pod 'SDWebImage', '5.12.1'
+pod 'SDWebImageFLPlugin', '0.6.0'
+
+
 
   target 'QuizTests' do
     inherit! :search_paths

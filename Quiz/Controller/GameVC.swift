@@ -56,12 +56,32 @@ class GameVC: UIViewController, LeavePageProtocol {
     func displayAnswerLabel(answer: Answer){
         switch answer {
         case .correct:
-            answerLabel.text = "Good Job !"
+            let correctAnswers = [NSLocalizedString("Good job!", comment: ""),
+                                  NSLocalizedString("Well done!", comment: ""),
+                                  NSLocalizedString("Excellent!", comment: ""),
+                                  NSLocalizedString("Nice work!", comment: ""),
+                                  NSLocalizedString("Keep it up!", comment: ""),
+                                  NSLocalizedString("Fantastic!", comment: "")]
+            let randomIndex = Int(arc4random_uniform(UInt32(correctAnswers.count)))
+            answerLabel.text = correctAnswers[randomIndex]
         case .incorrect:
-            answerLabel.text = "keep trying !"
+            let incorrectAnswers = [NSLocalizedString("Keep trying!", comment: ""),
+                                    NSLocalizedString("Don't give up!", comment: ""),
+                                    NSLocalizedString("You'll get it next time!", comment: ""),
+                                    NSLocalizedString("Almost there!", comment: ""),
+                                    NSLocalizedString("Good effort!", comment: ""),
+                                    NSLocalizedString("Nice try!", comment: "")]
+            let randomIndex = Int(arc4random_uniform(UInt32(incorrectAnswers.count)))
+            answerLabel.text = incorrectAnswers[randomIndex]
         case .noAnswer:
-            answerLabel.text = "Too late"
-            
+            let noAnswerResponses = [NSLocalizedString("Too late!", comment: ""),
+                                     NSLocalizedString("Time's up!", comment: ""),
+                                     NSLocalizedString("You missed that one!", comment: ""),
+                                     NSLocalizedString("Try to be faster!", comment: ""),
+                                     NSLocalizedString("Don't hesitate!", comment: ""),
+                                     NSLocalizedString("Missed the buzzer!", comment: "")]
+            let randomIndex = Int(arc4random_uniform(UInt32(noAnswerResponses.count)))
+            answerLabel.text = noAnswerResponses[randomIndex]
         }
         
         answerLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
@@ -232,12 +252,12 @@ class GameVC: UIViewController, LeavePageProtocol {
     
     
     func showLeaveConfirmation(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to leave the game ?", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Confirmation", comment: ""), message: NSLocalizedString("Are you sure you want to leave the game ?", comment: ""), preferredStyle: .alert)
         
-        let confirmAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
+        let confirmAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { _ in
             completion()
         }
-        let cancelAction = UIAlertAction(title: "No", style: .cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel)
         
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
@@ -246,6 +266,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         
         self.present(alert, animated: true)
     }
+    
     
     
     func displayQuestion() {

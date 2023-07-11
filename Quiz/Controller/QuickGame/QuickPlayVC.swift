@@ -55,7 +55,6 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
                     DispatchQueue.main.async {
                         self?.collectionView.reloadData()
                     }
-                    print(categories)
                 }
                 
             }
@@ -116,25 +115,25 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         let cellTag = cell?.tag
         self.category = cellTag
         
-        let alertController = UIAlertController(title: "Choisir la difficulté", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: NSLocalizedString("Choose difficulty", comment: ""), message: nil, preferredStyle: .alert)
         
-        let facileAction = UIAlertAction(title: "Facile", style: .default) { (action) in
+        let facileAction = UIAlertAction(title: NSLocalizedString("Easy", comment: ""), style: .default) { (action) in
             // Code à exécuter lorsque l'utilisateur choisit "Facile"
             self.difficulty = "easy"
             self.performSegue(withIdentifier: "goToOpponentsList", sender: self)
         }
-        let moyenAction = UIAlertAction(title: "Moyen", style: .default) { (action) in
+        let moyenAction = UIAlertAction(title: NSLocalizedString("Medium", comment: ""), style: .default) { (action) in
             // Code à exécuter lorsque l'utilisateur choisit "Moyen"
             self.difficulty = "medium"
             self.performSegue(withIdentifier: "goToOpponentsList", sender: self)
         }
-        let difficileAction = UIAlertAction(title: "Difficile", style: .default) { (action) in
+        let difficileAction = UIAlertAction(title: NSLocalizedString("Hard", comment: ""), style: .default) { (action) in
             // Code à exécuter lorsque l'utilisateur choisit "Difficile"
             self.difficulty = "hard"
             self.performSegue(withIdentifier: "goToOpponentsList", sender: self)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
         
         alertController.addAction(facileAction)
         alertController.addAction(moyenAction)

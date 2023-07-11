@@ -22,7 +22,8 @@ class QuestionResultVC: UIViewController {
         
         guard let questionData = question?.values.first else { return }
         questionLabel.text = questionData.question
-        correctAnswerLabel.text = "Correct answer : \(questionData.correct_answer)"
+        let localizedCorrectAnswer = NSLocalizedString("Correct answer: %@", comment: "The correct answer to the question")
+        correctAnswerLabel.text = String(format: localizedCorrectAnswer, questionData.correct_answer)
         
         // Get usernames for UIDs
         if let userIDs = usersAnswer?.keys {
@@ -65,18 +66,19 @@ extension QuestionResultVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         guard let usersAnswer = usersAnswer else { return cell }
-        
+
         let userID = Array(usersAnswer.keys)[indexPath.section]
         guard let userAnswers = usersAnswer[userID],
               let questionKey = question?.keys.first,
               let userAnswer = userAnswers[questionKey] else { return cell }
-        
+
         cell.selectionStyle = .none
-        cell.textLabel?.text = "Answer : \(userAnswer.selected_answer)"
+        let localizedAnswer = NSLocalizedString("Answer: %@", comment: "User's selected answer")
+        cell.textLabel?.text = String(format: localizedAnswer, userAnswer.selected_answer)
         cell.textLabel?.textColor = userAnswer.selected_answer == question?.values.first?.correct_answer ? .green : .red
-        cell.detailTextLabel?.text = "points : \(userAnswer.points)"
-        
-        
+        let localizedPoints = NSLocalizedString("Points: %d", comment: "User's points for the answer")
+        cell.detailTextLabel?.text = String(format: localizedPoints, userAnswer.points)
+
         return cell
     }
     

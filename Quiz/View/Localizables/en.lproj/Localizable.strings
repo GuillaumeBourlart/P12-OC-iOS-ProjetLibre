@@ -16,3 +16,96 @@
 "Preferences" = "Preferences";
 "Social" = "Social";
 "Disconnect" = "Disconnect";
+
+//Register
+"Please, enter an email" = "Please, enter an email";
+"Please, enter a password" = "Please, enter a password";
+"The e-mail/password combination is incorrect." = "The e-mail/password combination is incorrect.";
+"Mail" = "Mail";
+"Password" = "Password";
+"Username" = "Username";
+"Please, enter a valid email adress.";
+"Please wait" = "Please wait";
+"seconds" = "seconds";
+"If this email address is associated with an account, we will send you a password reset email." = "If this email address is associated with an account, we will send you a password reset email.";
+"Reset password" = "Reset password";
+
+
+//Social
+"Pull to refresh" = "Pull to refresh";
+"User" = "User";
+"Lobby" = "Lobby";
+"Add a friend" = "Add a friend";
+"Enter the username" = "Enter the username";
+
+
+//Profile
+"Choose an image"= "Choose an image";
+"Camera" = "Camera";
+"Gallery" = "Gallery";
+"Cancel" = "Cancel";
+"Add a quiz" = "Add a quiz";
+"Enter name, category, and difficulty" = "Enter name, category, and difficulty";
+"Name" = "Name";
+"Category" = "Category";
+"Difficulty" = "Difficulty";
+"Add" = "Add";
+"Cancel" = "Cancel";
+"Question" = "Question";
+"Correct answer" = "Correct answer";
+"Incorrect answer 1" = "Incorrect answer 1";
+"Incorrect answer 2" = "Incorrect answer 2";
+"Incorrect answer 3" = "Incorrect answer 3";
+"Explanation" = "Explanation";
+"Choose difficulty" = "Choose difficulty";
+"Easy" = "Easy";
+"Medium" = "Medium";
+"Hard" = "Hard";
+"Cancel" = "Cancel";
+
+
+//QuickGame
+"Current Players" = "Current Players";
+"Invited Players" = "Invited Players";
+"Confirmation" = "Confirmation";
+"Are you sure you want to leave the room?" = "Are you sure you want to leave the room?";
+"Are you sure you want to leave the game?" = "Are you sure you want to leave the game?";
+"Yes" = "Yes";
+"No" = "No";
+
+
+//GameVC
+"Good job!" = "Good job!";
+"Well done!" = "Well done!";
+"Excellent!" = "Excellent!";
+"Nice work!" = "Nice work!";
+"Keep it up!" = "Keep it up!";
+"Fantastic!" = "Fantastic!";
+
+"Keep trying!" = "Keep trying!";
+"Don't give up!" = "Don't give up!";
+"You'll get it next time!" = "You'll get it next time!";
+"Almost there!" = "Almost there!";
+"Good effort!" = "Good effort!";
+"Nice try!" = "Nice try!";
+
+"Too late!" = "Too late!";
+"Time's up!" = "Time's up!";
+"You missed that one!" = "You missed that one!";
+"Try to be faster!" = "Try to be faster!";
+"Don't hesitate!" = "Don't hesitate!";
+"Missed the buzzer!" = "Missed the buzzer!";
+
+"No game data available." = "No game data available.";
+"Unknown" = "Unknown";
+"The winner is %@, and the loser is %@." = "The winner is %@, and the loser is %@.";
+"Your opponent didn't finish the quiz yet" = "Your opponent didn't finish the quiz yet.";
+"Ranking:\n" = "Ranking:\n";
+"%d. %@ with %d points\n" = "%d. %@ with %d points\n";
+"\n\nSome players didn't finish the quiz yet" = "\n\nSome players didn't finish the quiz yet.";
+
+
+//QuestionResultVC
+"Answer: %@" = "Answer: %@";
+"Points: %d" = "Points: %d";
+"Correct answer: %@" = "Correct answer: %@";

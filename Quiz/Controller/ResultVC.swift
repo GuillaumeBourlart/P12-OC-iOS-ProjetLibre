@@ -123,7 +123,7 @@ class ResultVC: UIViewController {
     
     func displayResults() {
         guard let gameData = self.gameData else {
-            print("No game data available.")
+            print(NSLocalizedString("No game data available.", comment: ""))
             return
         }
         
@@ -146,22 +146,22 @@ class ResultVC: UIViewController {
                     if competitive {
                         // Competitive game, just show winner and loser
                         let sortedScores = finalScores.sorted { $0.value > $1.value }
-                        let winner = sortedScores.first?.key ?? "Unknown"
-                        let loser = sortedScores.last?.key ?? "Unknown"
+                        let winner = sortedScores.first?.key ?? NSLocalizedString("Unknown", comment: "")
+                        let loser = sortedScores.last?.key ?? NSLocalizedString("Unknown", comment: "")
                         if let scores = gameData.final_scores, gameData.players.count == scores.count {
-                            self.label.text = "Le gagnant est \(winner), et le perdant est \(loser)."
+                            self.label.text = String(format: NSLocalizedString("The winner is %@, and the loser is %@.", comment: ""), winner, loser)
                         }else{
-                            self.label.text = "Your opponent didn't finish the quiz yet"
+                            self.label.text = NSLocalizedString("Your opponent didn't finish the quiz yet", comment: "")
                         }
                     } else {
                         // Non-competitive game, display ranking
                         let sortedScores = finalScores.sorted { $0.value > $1.value }
-                        var rankingText = "Classement :\n"
+                        var rankingText = NSLocalizedString("Ranking:\n", comment: "")
                         for (index, element) in sortedScores.enumerated() {
-                            rankingText += "\(index + 1). \(element.key) avec \(element.value) points\n"
+                            rankingText += String(format: NSLocalizedString("%d. %@ with %d points\n", comment: ""), index + 1, element.key, element.value)
                         }
                         if let scores = gameData.final_scores, gameData.players.count != scores.count {
-                            rankingText += "\n\nSome players didn't finish the quiz yet"
+                            rankingText += NSLocalizedString("\n\nSome players didn't finish the quiz yet", comment: "")
                         }
                         
                         self.label.text = rankingText

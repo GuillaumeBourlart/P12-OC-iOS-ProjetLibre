@@ -84,12 +84,12 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     }
     
     func showLeaveConfirmation(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to leave the room ?", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Confirmation", comment: ""), message: NSLocalizedString("Are you sure you want to leave the room ?", comment: ""), preferredStyle: .alert)
         
-        let confirmAction = UIAlertAction(title: "yes", style: .destructive) { _ in
+        let confirmAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { _ in
             completion()
         }
-        let cancelAction = UIAlertAction(title: "No", style: .cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel)
         
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
@@ -287,9 +287,9 @@ extension PrivateLobbyVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Current Players"
+            return NSLocalizedString("Current Players", comment: "")
         } else {
-            return "Invited Players"
+            return NSLocalizedString("Invited Players", comment: "")
         }
     }
 }
