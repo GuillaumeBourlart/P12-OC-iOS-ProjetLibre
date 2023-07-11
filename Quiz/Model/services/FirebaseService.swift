@@ -20,31 +20,8 @@ enum FirestoreCondition {
 
 // Enum to handle errors
 enum FirebaseError: Error, Equatable {
-    case noFriendRequestYet
-    case noUsernammesFound
-    case noInvitesInInvitesList
-    case noFriendsInFriendList
-    case noUserConnected
-    case usernameAlreadyUsed
-    case documentDoesntExist
-    case failedToGetData
-    case cantAddYourself
-    case alreadyFriend
-    case alreadySentInvite
-    case userNotFound
-    case noCurrentLobby
-    case noWaitingLobby
-    case questionNotFound
-    case failedToMakeURL
-    case invalidJsonFormat
     case noDataInResponse
-    case failedToGetPlayers
-    case failedToUpdateGroupName
-    case failedToUpdateGroupMembers
-    case failedToRemoveMembersFromGroup
-    case unableToDecodeLobbyId
-    case noDataFound
-    case cancellingOpponentSearchFailed
+    case failedToMakeURL
 }
 
 
@@ -133,7 +110,7 @@ class FirebaseService: FirebaseServiceProtocol{
                 data["id"] = documentSnapshot?.documentID
                 completion(.success(data))
             } else {
-                completion(.failure(FirebaseError.noDataFound))
+                completion(.failure(FirebaseError.noDataInResponse))
             }
         }
         return listener
@@ -153,7 +130,7 @@ class FirebaseService: FirebaseServiceProtocol{
                 }
                 completion(.success(documentsData))
             } else {
-                completion(.failure(FirebaseError.noDataFound))
+                completion(.failure(FirebaseError.noDataInResponse))
             }
         }
         return listener

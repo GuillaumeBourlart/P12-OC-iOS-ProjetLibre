@@ -85,7 +85,6 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {
         if stubbedDocumentError != nil {
-            print(1)
             completion(.failure(stubbedDocumentError!))
         }else{
             completion(.success(()))

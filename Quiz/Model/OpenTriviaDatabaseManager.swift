@@ -9,6 +9,14 @@ import Foundation
 import Alamofire
 import FirebaseAuth
 
+enum OpenTriviaDBError: Error {
+    case invalidURL
+    case noTranslationAvailable
+    case invalidJsonFormat
+    case noDataInResponse
+    case failedToMakeURL
+}
+
 class OpenTriviaDatabaseManager {
     
     var service: Service // service that allows to stub alamofire
@@ -28,7 +36,7 @@ class OpenTriviaDatabaseManager {
         let urlString = "https://opentdb.com/api_category.php"
 
         guard let url = URL(string: urlString) else {
-            completion(.failure(FirebaseError.failedToMakeURL))
+            completion(.failure(OpenTriviaDBError.failedToMakeURL))
             return
         }
 
@@ -43,7 +51,7 @@ class OpenTriviaDatabaseManager {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                     guard let json = jsonObject as? [String: Any],
                           let categoriesJSON = json["trivia_categories"] as? [[String: Any]] else {
-                        completion(.failure(FirebaseError.invalidJsonFormat))
+                        completion(.failure(OpenTriviaDBError.invalidJsonFormat))
                         return
                     }
                     
@@ -51,17 +59,20 @@ class OpenTriviaDatabaseManager {
                     var translatedCategories = categoriesJSON
                     var translatedCategoriesCount = 0
                     for index in 0..<translatedCategories.count {
+                        var categoryName = translatedCategories[index]["name"] as! String
+                        // Remove ':' and everything before it
+                        if let range = categoryName.range(of: ":") {
+                            categoryName = String(categoryName[range.upperBound...])
+                        }
+                        categoryName = categoryName.trimmingCharacters(in: .whitespaces)
+                        
                         if let languageCode = Locale.current.languageCode {
-                            self.translator.translate(translatedCategories[index]["name"] as! String, targetLanguage: languageCode) { result in
+                            self.translator.translate(categoryName, targetLanguage: languageCode) { result in
                                 switch result {
                                 case .failure(let error):
-                                    print("Failed to translate category: \(error)")
+                                    completion(.failure(error))
                                 case .success(let translatedName):
-                                    var nameWithoutColon = translatedName
-                                    if let range = translatedName.range(of: ":") {
-                                        nameWithoutColon = String(translatedName[range.upperBound...])
-                                    }
-                                    translatedCategories[index]["name"] = nameWithoutColon.trimmingCharacters(in: .whitespaces)
+                                    translatedCategories[index]["name"] = translatedName
                                 }
                                 translatedCategoriesCount += 1
                                 if translatedCategoriesCount == translatedCategories.count {
@@ -69,17 +80,16 @@ class OpenTriviaDatabaseManager {
                                     completion(.success(translatedCategories))
                                 }
                             }
-                        }else{
+                        } else {
                             completion(.success(translatedCategories))
                         }
-                        
                     }
 
                 } catch {
                     completion(.failure(error))
                 }
             } else {
-                completion(.failure(error ?? FirebaseError.noDataInResponse))
+                completion(.failure(error ?? OpenTriviaDBError.noDataInResponse))
             }
         }
     }
@@ -94,11 +104,9 @@ class OpenTriviaDatabaseManager {
         guard let url = URL(string: urlString) else {
             return
         }
-        print("avant load")
         
         service.load(url: url) { (data, response, error) in
             if let error = error {
-                print("aerreur 0")
                 completion(.failure(error))
                 return
             }
@@ -108,7 +116,7 @@ class OpenTriviaDatabaseManager {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                     guard var json = jsonObject as? [String: Any],
                           var questionsData = json["results"] as? [[String: Any]] else {
-                        completion(.failure(FirebaseError.invalidJsonFormat))
+                        completion(.failure(OpenTriviaDBError.invalidJsonFormat))
                         return
                     }
 
@@ -133,17 +141,12 @@ class OpenTriviaDatabaseManager {
                     let jsonData = try JSONSerialization.data(withJSONObject: questionsData, options: [])
                     let decoder = JSONDecoder()
                     let questions = try decoder.decode([UniversalQuestion].self, from: jsonData)
-                    print("apres load")
                     completion(.success(questions))
                 } catch {
-                    print("aerreur 1")
-                    print("Decoding error: \(error)")
                     completion(.failure(error))
                 }
             } else {
-                print("aerreur 2")
-                print("Decoding error: \(error)")
-                completion(.failure(FirebaseError.noDataInResponse))
+                completion(.failure(OpenTriviaDBError.noDataInResponse))
             }
         }
     }

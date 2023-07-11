@@ -14,6 +14,7 @@ class CustomButton2: UIButton {
             super.init(frame: frame)
             setupButton()
         }
+    
         
         required init?(coder: NSCoder) {
             super.init(coder: coder)

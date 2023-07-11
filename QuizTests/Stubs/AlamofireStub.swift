@@ -13,14 +13,11 @@ class NetworkRequestStub: NetworkRequest {
     var error: Error?
 
     func request(_ request: URLRequest, completion: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
-        print("appelé")
         if let data = dataQueue?.first {
             dataQueue?.removeFirst()
-            print("fait1")
             completion(data, nil, nil)
             
         }else{
-            print("fait2")
             completion(nil, nil, error)
             
         }

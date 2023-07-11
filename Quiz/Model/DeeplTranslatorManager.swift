@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum DeepLError: Error {
+    case invalidURL
+    case noTranslationAvailable
+    case noDataInResponse
+    case failedToMakeURL
+}
+
 class DeepLTranslator {
     var apiKey = "d35a5eeb-9d0c-4229-65e6-50a5ac70d7be:fx"
     var service: Service
@@ -28,7 +35,7 @@ class DeepLTranslator {
             URLQueryItem(name: "auth_key", value: apiKey)
         ]
         guard let url = urlComponent?.url else {
-            completion(.failure(FirebaseError.failedToMakeURL)) // a modifier
+            completion(.failure(DeepLError.failedToMakeURL)) // a modifier
             return
         }
 
@@ -63,13 +70,6 @@ class DeepLTranslator {
     struct Translation: Codable {
         let text: String
     }
-
-    enum DeepLError: Error {
-        case invalidURL
-        case noTranslationAvailable
-        case noDataInResponse
-    }
-
 
     func translateQuestions(questions : [UniversalQuestion], to: String, completion: @escaping ([UniversalQuestion]) -> Void) {
         var newArray = [UniversalQuestion]()

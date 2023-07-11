@@ -155,7 +155,6 @@ final class FirebaseUserTests: XCTestCase {
 
     func testSignInUser_withoutStubbedError_returnsSuccess() {
         // Arrange
-        firebaseServiceStub.stubbedDocumentError = nil
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
         
         // Act
@@ -586,7 +585,7 @@ final class FirebaseUserTests: XCTestCase {
     func testFetchFriends_withError_returnsError() {
         // Arrange
         let expectation = self.expectation(description: "Fetch Friends")
-        firebaseServiceStub.stubbedDocumentError = FirebaseError.noFriendsInFriendList
+        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noFriendsInFriendList
 
         // Act
         firebaseUser.fetchFriends { friends, error in
@@ -601,7 +600,7 @@ final class FirebaseUserTests: XCTestCase {
     func testFetchInvites_withError_returnsError() {
         // Arrange
         let expectation = self.expectation(description: "Fetch Invites")
-        firebaseServiceStub.stubbedDocumentError = FirebaseError.noInvitesInInvitesList
+        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noInvitesInInvitesList
 
         // Act
         firebaseUser.fetchInvites { invites, error in
@@ -616,7 +615,7 @@ final class FirebaseUserTests: XCTestCase {
     func testSendFriendRequest_withError_returnsError() {
         // Arrange
         let expectation = self.expectation(description: "Send Friend Request")
-        firebaseServiceStub.stubbedDocumentError = FirebaseError.userNotFound
+        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.userNotFound
         let username = "user1"
 
         // Act
@@ -635,7 +634,7 @@ final class FirebaseUserTests: XCTestCase {
     func testFetchFriendRequests_withError_returnsError() {
         // Arrange
         let expectation = self.expectation(description: "Fetch Friend Requests")
-        firebaseServiceStub.stubbedDocumentError = FirebaseError.noFriendRequestYet
+        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noFriendRequestYet
 
         // Act
         firebaseUser.fetchFriendRequests(status: .sent) { friends, error in
@@ -650,7 +649,7 @@ final class FirebaseUserTests: XCTestCase {
     func testAcceptFriendRequest_withError_returnsError() {
         // Arrange
         let expectation = self.expectation(description: "Accept Friend Request")
-        firebaseServiceStub.stubbedDocumentError = FirebaseError.noUserConnected
+        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noUserConnected
         let friendID = "friend1"
         let friendUsername = "friendName"
 
@@ -670,7 +669,7 @@ final class FirebaseUserTests: XCTestCase {
     func testRejectFriendRequest_withError_returnsError() {
         // Arrange
         let expectation = self.expectation(description: "Reject Friend Request")
-        firebaseServiceStub.stubbedDocumentError = FirebaseError.noUserConnected
+        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noUserConnected
         let friendID = "friend1"
 
         // Act
@@ -689,7 +688,7 @@ final class FirebaseUserTests: XCTestCase {
     func testRemoveFriend_withError_returnsError() {
         // Arrange
         let expectation = self.expectation(description: "Remove Friend")
-        firebaseServiceStub.stubbedDocumentError = FirebaseError.noUserConnected
+        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noUserConnected
         let friendID = "friend1"
 
         // Act

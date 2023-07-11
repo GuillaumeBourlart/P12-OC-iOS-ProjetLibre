@@ -33,7 +33,7 @@ class Game {
     // Function to search a competitive room
     func searchCompetitiveRoom(completion: @escaping (Result<String, Error>) -> Void ) {
         guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(FirebaseError.noUserConnected))
+            completion(.failure(GameError.noUserConnected))
             return
         }
         
@@ -49,7 +49,7 @@ class Game {
             case .success(let lobbyData):
                 if !lobbyData.isEmpty {
                     guard let lobbyId = lobbyData.first?[FirestoreFields.id] as? String else {
-                        completion(.failure(FirebaseError.unableToDecodeLobbyId))
+                        completion(.failure(GameError.unableToDecodeLobbyId))
                         return
                     }
                     self.joinCompetitiveRoom(lobbyId: lobbyId) { result in
@@ -77,7 +77,7 @@ class Game {
     // Function to join a competitive room from it's lobby ID
     func joinCompetitiveRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected))
+            completion(.failure(GameError.noUserConnected))
             return
         }
         
@@ -92,7 +92,7 @@ class Game {
                     case .failure(let error):
                         completion(.failure(error))
                     case .success(let lobbyData):
-                        guard !lobbyData.isEmpty else { return }
+                        guard !lobbyData.isEmpty else { completion(.failure(GameError.lobbyNotFound)); return }
                         var players = lobbyData[FirestoreFields.Lobby.players] as! [String]
                         players.append(currentUserId)
                         
@@ -112,7 +112,7 @@ class Game {
     // Function to create competitive room
     func createCompetitiveRoom(completion: @escaping (Result<String, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
 
         let newLobbyId = UUID().uuidString
@@ -129,7 +129,7 @@ class Game {
     // Function to get questions from a quiz ID (when launching a custom quiz) or from gameID when game starts
     func getQuestions(quizId: String? ,gameId: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
         guard firebaseService.currentUserID != nil else {
-            completion(.failure(FirebaseError.noUserConnected))
+            completion(.failure(GameError.noUserConnected))
             return
         }
         
@@ -149,12 +149,12 @@ class Game {
                 completion(.failure(error))
             case .success(let gameData):
                 guard  !gameData.isEmpty else {
-                    completion(.failure(FirebaseError.documentDoesntExist))
+                    completion(.failure(GameError.noDataInResponse))
                     return
                 }
                 
                 guard let questionsData = gameData[FirestoreFields.Game.questions] as? [String: [String: Any]] else {
-                    completion(.failure(FirebaseError.failedToGetData))
+                    completion(.failure(GameError.failedToGetData))
                     return
                 }
 
@@ -184,7 +184,7 @@ class Game {
     // Function to create a private room
     func createRoom(quizID: String?, completion: @escaping (Result<String, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected))
+            completion(.failure(GameError.noUserConnected))
             return
         }
         let newLobbyId = UUID().uuidString
@@ -221,7 +221,7 @@ class Game {
     // Funcrtion to invite a pplayer in a private room
     func invitePlayerInRoom(lobbyId: String,invited_players: [String], invited_groups: [String], completion: @escaping (Result<Void, Error>) -> Void ){
         guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
         let data = [
             FirestoreFields.Lobby.invitedUsers: invited_players,
@@ -240,7 +240,7 @@ class Game {
     // Function to delete current room
     func deleteCurrentRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void ) {
         guard firebaseService.currentUserID != nil else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
         
         firebaseService.deleteDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { error in
@@ -256,7 +256,7 @@ class Game {
     // Function to join a private room
     func joinRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected))
+            completion(.failure(GameError.noUserConnected))
             return
         }
         firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { result in
@@ -264,11 +264,12 @@ class Game {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let data):
+                guard !data.isEmpty else { completion(.failure(GameError.noDataInResponse)) ; return }
                 var players = (data[FirestoreFields.Lobby.players] as? [String]) ?? []
                 players.append(currentUserId)
                 
                 guard var invitedPlayers = data[FirestoreFields.Lobby.invitedUsers] as? [String] else {
-                    completion(.failure(FirebaseError.failedToGetPlayers))
+                    completion(.failure(GameError.failedToGetPlayers))
                     return
                 }
                 if let index = invitedPlayers.firstIndex(of: currentUserId) {
@@ -302,7 +303,7 @@ class Game {
     // Function to join a room with its code
     func joinWithCode(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(FirebaseError.noUserConnected))
+            completion(.failure(GameError.noUserConnected))
             return
         }
 
@@ -314,7 +315,7 @@ class Game {
                 completion(.failure(error))
             case .success(let data):
                 guard !data.isEmpty, let lobbyData = data.first, let lobbyId = lobbyData["id"] as? String else {
-                    completion(.failure(FirebaseError.noDataInResponse))
+                    completion(.failure(GameError.noDataInResponse))
                     return
                 }
 
@@ -334,7 +335,7 @@ class Game {
     // Function to delete invite from invites
     func deleteInvite(inviteId: String,  completion: @escaping (Result<String, Error>) -> Void){
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected))
+            completion(.failure(GameError.noUserConnected))
             return
         }
         
@@ -344,7 +345,7 @@ class Game {
                 completion(.failure(error))
             case .success(let data):
                 guard let invites = data[FirestoreFields.User.invites] as? [String: String] else {
-                    completion(.failure(FirebaseError.failedToGetData))
+                    completion(.failure(GameError.failedToGetData))
                     return
                 }
                 var newInvites = invites
@@ -379,7 +380,7 @@ class Game {
                 completion(.failure(error))
             case .success(let data):
                 guard var players = data[FirestoreFields.Lobby.players] as? [String], let currentUserId = self.firebaseService.currentUserID else {
-                    completion(.failure(FirebaseError.failedToGetPlayers))
+                    completion(.failure(GameError.failedToGetPlayers))
                     return
                 }
                 if let index = players.firstIndex(of: currentUserId) {
@@ -403,12 +404,10 @@ class Game {
     // Function to create question of the game, depending of it is a custom quiz or a TriviaDB quiz
     func createQuestionsForGame(quizId: String?, category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
         if let quizId = quizId {
-            print(1)
             self.getQuestions(quizId: quizId, gameId: nil) { result in
-                print(2)
                 switch result {
                 case .failure(let error):
                     completion(.failure(error))
@@ -422,9 +421,7 @@ class Game {
                 }
             }
         } else{
-            print(3)
             self.apiManager.fetchQuestions(inCategory: category, difficulty: difficulty) { result in
-                print(4)
                 switch result {
                 case .failure(let error):
                     completion(.failure(error))
@@ -444,7 +441,7 @@ class Game {
     func createGame(questions: [UniversalQuestion], with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
         print("createGame atteint")
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
         
         let gameId = documentId ?? UUID().uuidString
@@ -493,7 +490,7 @@ class Game {
     // Function to leave a game
     func leaveGame(gameId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
         
         firebaseService.getDocument(in: FirestoreFields.gamesCollection, documentId: gameId) { result in
@@ -502,7 +499,7 @@ class Game {
                 completion(.failure(error))
             case .success(let data):
                 guard var players = data[FirestoreFields.Game.players] as? [String] else {
-                    completion(.failure(FirebaseError.failedToGetPlayers))
+                    completion(.failure(GameError.failedToGetPlayers))
                     return
                 }
                 if let index = players.firstIndex(of: currentUserId) {
@@ -530,7 +527,7 @@ class Game {
     // Function to check if a game exist
     func checkIfGameExist(gameID: String, completion: @escaping (Result<String, Error>) -> Void){
         guard firebaseService.currentUserID != nil else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
         
         firebaseService.getDocument(in: "games", documentId: gameID) { result in
@@ -539,7 +536,7 @@ class Game {
                 completion(.failure(error))
             case .success(let data):
                 guard let gameId = data["id"] as? String, let status = data["status"] as? String, status == "waiting" else {
-                    completion(.failure(FirebaseError.documentDoesntExist)); return
+                    completion(.failure(GameError.failedToGetData)); return
                 }
                 completion(.success(gameId))
             }
@@ -549,7 +546,7 @@ class Game {
     // Function to get user's completed games
     func getCompletedGames(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
         
         let conditions: [FirestoreCondition] = [
@@ -585,7 +582,7 @@ class Game {
     // Function to get a game data from it's gameID
     func getGameData(gameId: String, completion: @escaping (Result<GameData, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else {
-            completion(.failure(FirebaseError.noUserConnected)); return
+            completion(.failure(GameError.noUserConnected)); return
         }
         
         firebaseService.getDocument(in: FirestoreFields.gamesCollection, documentId: gameId) { result in
@@ -593,6 +590,7 @@ class Game {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let gameData):
+                guard !gameData.isEmpty else { completion(.failure(GameError.noDataInResponse)); return}
                 do {
                     let convertedDataWithDate = self.convertTimestampsToDate(in: gameData)
                     let jsonData = try JSONSerialization.data(withJSONObject: convertedDataWithDate, options: [])
@@ -612,7 +610,7 @@ class Game {
     // Function to save player stats of the game
     func saveStats(finalScore: Int, userAnswers: [String: UserAnswer], gameID: String, completion: @escaping (Result<Void, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseError.noUserConnected))
+            completion(.failure(GameError.noUserConnected))
             return
         }
         
@@ -696,4 +694,15 @@ class Game {
             }
         }
     }
+}
+
+
+// Enum to handle errors
+enum GameError: Error, Equatable {
+    case noUserConnected
+    case failedToGetData
+    case failedToGetPlayers
+    case noDataInResponse
+    case unableToDecodeLobbyId
+    case lobbyNotFound
 }

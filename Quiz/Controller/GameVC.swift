@@ -69,7 +69,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         UIView.animate(withDuration: 0.5, animations: {
             self.answerLabel.transform = CGAffineTransform.identity
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                self.answerLabel.isHidden = true // On désactive le confettiLayer après 1 seconde.
+                self.answerLabel.isHidden = true
             }
         })
     }
@@ -494,7 +494,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         UIView.animate(withDuration: 0.5, animations: {
             self.questionLabel.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         }) { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.currentQuestionIndex += 1
                 self.displayQuestion()
             }

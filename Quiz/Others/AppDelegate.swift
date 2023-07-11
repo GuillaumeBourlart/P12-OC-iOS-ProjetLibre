@@ -199,10 +199,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
             completionHandler()
             return
         }
-        print(1)
         if let currentViewController = getTopViewController(), let viewControllerToLeave = currentViewController as? LeavePageProtocol {
             viewControllerToLeave.leavePage {
-                print(2)
                 switch notificationType {
                 case "gameInvitation":
                     guard let lobbyID = userInfo["lobbyID"] as? String else {
@@ -455,10 +453,8 @@ extension AppDelegate {
                     // Si darkModeOn est true, réglez le style d'interface utilisateur sur .dark, sinon sur .light
                     if darkModeOn {
                         window?.overrideUserInterfaceStyle = .dark
-                        print("dark")
                     } else {
                         window?.overrideUserInterfaceStyle = .light
-                        print("light")
                     }
                 } else {
                     // Si aucune valeur n'est enregistrée pour "darkmode", réglez le style d'interface utilisateur sur le style par défaut
