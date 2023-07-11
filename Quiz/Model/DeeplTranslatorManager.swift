@@ -164,7 +164,7 @@ class DeepLTranslator {
         
         for pair in questionPairs {
             let questionID = pair.key
-            var question = pair.value
+            let question = pair.value
             var translatedQuestion: String?
             var translatedCorrectAnswer: String?
             var translatedIncorrectAnswers: [String]?

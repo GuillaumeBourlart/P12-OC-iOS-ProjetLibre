@@ -63,8 +63,10 @@ class OpenTriviaDatabaseManager {
                         // Remove ':' and everything before it
                         if let range = categoryName.range(of: ":") {
                             categoryName = String(categoryName[range.upperBound...])
+                            
                         }
                         categoryName = categoryName.trimmingCharacters(in: .whitespaces)
+                        translatedCategories[index]["name"] = categoryName
                         
                         if let languageCode = Locale.current.languageCode {
                             self.translator.translate(categoryName, targetLanguage: languageCode) { result in

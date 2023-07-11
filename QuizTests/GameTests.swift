@@ -283,7 +283,7 @@ final class GameTests: XCTestCase {
             case .success(let lobbyId):
                 XCTFail("Expected failure, got \(lobbyId) instead")
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             }
         }
@@ -317,7 +317,7 @@ final class GameTests: XCTestCase {
             case .success:
                 XCTFail("Expected failure, got success instead")
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             }
         }
@@ -401,7 +401,7 @@ final class GameTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Expected failure, got success instead")
-            case .failure(let error):
+            case .failure(_):
                 
                 expectation.fulfill()
             }
@@ -435,7 +435,7 @@ final class GameTests: XCTestCase {
             case .success:
                 XCTFail("Expected failure, got success instead")
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             }
         }
@@ -474,7 +474,7 @@ final class GameTests: XCTestCase {
             case .success:
                 XCTFail("Expected failure, got success instead")
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             }
         }
@@ -546,8 +546,6 @@ final class GameTests: XCTestCase {
         
         guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {print("error");return}
         networkRequestStub.dataQueue = [jsonData]
-        sleep(4)
-        print(networkRequestStub.dataQueue)
         game.createQuestionsForGame(quizId: nil, category: 1, difficulty: "easy", with: "doc1", competitive: true, players: ["player1", "player2"]) { result in
             switch result {
             case .failure:
@@ -571,7 +569,7 @@ final class GameTests: XCTestCase {
             case .success:
                 XCTFail("Expected failure, got success instead")
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             }
         }
@@ -611,7 +609,7 @@ final class GameTests: XCTestCase {
         game.createGame(questions: [question], with: "doc1", competitive: true, players: ["player1", "player2"]) { result in
             switch result {
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             case .success(_):
                 XCTFail("Expected error, got success instead")
@@ -688,7 +686,7 @@ final class GameTests: XCTestCase {
         game.checkIfGameExist(gameID: "game1") { result in
             switch result {
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             case .success(_):
                 XCTFail("Expected error, got success instead")
@@ -726,7 +724,7 @@ final class GameTests: XCTestCase {
         game.getCompletedGames { result in
             switch result {
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             case .success(_):
                 XCTFail("Expected error, got success instead")
@@ -764,7 +762,7 @@ final class GameTests: XCTestCase {
         game.getGameData(gameId: "game1") { result in
             switch result {
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             case .success(_):
                 XCTFail("Expected error, got success instead")
@@ -802,7 +800,7 @@ final class GameTests: XCTestCase {
         game.saveStats(finalScore: 100, userAnswers: userAnswers, gameID: "game1") { result in
             switch result {
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             case .success(_):
                 XCTFail("Expected error, got success instead")
@@ -839,7 +837,7 @@ final class GameTests: XCTestCase {
         let listener = game.ListenForChangeInDocument(in: "collection1", documentId: "doc1") { result in
             switch result {
             case .failure(let error):
-                XCTAssertEqual(error as? NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             case .success(_):
                 XCTFail("Expected error, got success instead")
@@ -866,7 +864,7 @@ final class GameTests: XCTestCase {
             "key3": [
                 "nestedKey1": "nestedValue1",
                 "nestedKey2": nestedTimestamp
-            ]
+            ] as [String : Any]
         ]
         
         let convertedData = game.convertTimestampsToDate(in: data)

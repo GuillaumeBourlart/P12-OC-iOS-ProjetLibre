@@ -624,7 +624,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("expected to fail")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -659,7 +659,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("expected to fail")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -678,7 +678,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("expected to fail")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -697,7 +697,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("expected to fail")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -868,7 +868,7 @@ final class FirebaseUserTests: XCTestCase {
             case .success:
                 XCTAssertTrue(true)
                 XCTFail("Method succee, excpected error")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
                 
             }
@@ -909,7 +909,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("expected to fail")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
                 
             }
@@ -1086,7 +1086,7 @@ final class FirebaseUserTests: XCTestCase {
         let expectation = self.expectation(description: "Generate unique code")
         firebaseUser.generateUniqueCode() { result  in
             switch result {
-            case .failure(let error):
+            case .failure(_):
                 XCTFail("unexpected error")
             case .success(let code):
                 XCTAssertNotNil(code, "Code should not be nil")

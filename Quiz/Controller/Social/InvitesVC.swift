@@ -36,7 +36,7 @@ class InvitesVC: UIViewController {
         self.tableView.refreshControl?.endRefreshing()
         // Chargez vos nouvelles données ici
         // Commencer l'animation de couleur
-           if let emptyCell = tableView.visibleCells.first(where: { $0 is EmptyCell }) as? EmptyCell {
+        if tableView.visibleCells.first(where: { $0 is EmptyCell }) is EmptyCell {
                startColorChangeAnimation()
            }
         loadInvites()
@@ -66,7 +66,7 @@ class InvitesVC: UIViewController {
             
             // Arrêter l'animation de couleur
            
-                if let emptyCell = self.tableView.visibleCells.first(where: { $0 is EmptyCell }) as? EmptyCell {
+                if self.tableView.visibleCells.first(where: { $0 is EmptyCell }) is EmptyCell {
                     self.stopColorChangeAnimation()
                 }
             }

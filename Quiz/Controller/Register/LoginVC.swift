@@ -33,14 +33,14 @@ class LoginVC: UIViewController{
     }
     // check if user is already connected
     func tryToGetUser() {
-        if Auth.auth().currentUser != nil {
+        
             FirebaseUser.shared.getUserInfo { result in
                 switch result {
                 case .failure(let error): print(error)
                 case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
                 }
             }
-        }
+        
     }
     
     // Fonction appelée lorsque l'utilisateur appuie sur le label

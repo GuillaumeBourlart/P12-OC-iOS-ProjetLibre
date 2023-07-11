@@ -32,7 +32,7 @@ class fakeResponsesData {
                 "question": "What was William Frederick Cody better known as?",
                 "correct_answer": "Buffalo Bill",
                 "incorrect_answers": ["Billy the Kid", "Wild Bill Hickok", "Pawnee Bill"]
-            ],
+            ] as [String : Any],
             "question_id_2": [
                 "category": "Geography",
                 "type": "multiple",
@@ -51,7 +51,7 @@ class fakeResponsesData {
                 "question_id_2": [
                     "selected_answer": "A",
                     "points": 10
-                ]
+                ] as [String : Any]
             ],
             "user_id_2": [
                 "question_id_1": [
@@ -111,7 +111,7 @@ class fakeResponsesData {
                 "correct_answer": "Buffalo Bill",
                 "incorrect_answers": ["Billy the Kid", "Wild Bill Hickok", "Pawnee Bill"],
                 "explanation": "frytguyhiujik",
-            ]
+            ] as [String : Any]
         ],
     ]
     
@@ -127,7 +127,7 @@ class fakeResponsesData {
         "status": "waiting",
         "competitive": true,
         "players": ["user2", "user3"],
-        "invited_users": [],
+        "invited_users": [String](),
         "invited_groups": ["group1", "group2"],
     ]
     
@@ -155,7 +155,7 @@ class fakeResponsesData {
             "question": "What was William Frederick Cody better known as?",
             "correct_answer": "Buffalo Bill",
             "incorrect_answers": ["Billy the Kid", "Wild Bill Hickok", "Pawnee Bill"]
-        ],
+        ] as [String : Any],
         "question_id_2": [
             "category": "Geography",
             "type": "multiple",
@@ -178,7 +178,7 @@ class fakeResponsesData {
                 "question_id_2": [
                     "selected_answer": "A",
                     "points": 10
-                ]
+                ] as [String : Any]
             ],
             "user_id_2": [
                 "question_id_1": [
