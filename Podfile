@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '15.0'
+platform :ios, '14.0'
 
 target 'Quiz' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -7,18 +7,17 @@ target 'Quiz' do
 
   # Pods for Quiz
 
+pod 'Alamofire', '5.7.1'
 
-pod 'Alamofire', '5.5'
+pod 'Firebase', '10.12.0'
+pod 'Firebase/Firestore', '10.12.0'
+pod 'Firebase/Messaging', '10.12.0'
+pod 'Firebase/Auth', '10.12.0'
+pod 'Firebase/Analytics', '10.12.0'
+pod 'Firebase/Performance', '10.12.0'
+pod 'Firebase/Storage', '10.12.0'
 
-pod 'Firebase', '10.11.0'
-pod 'Firebase/Firestore', '10.11.0'
-pod 'Firebase/Messaging', '10.11.0'
-pod 'Firebase/Auth', '10.11.0'
-pod 'Firebase/Analytics', '10.11.0'
-pod 'Firebase/Performance', '10.11.0'
-pod 'Firebase/Storage', '10.11.0'
-
-pod 'SDWebImage', '5.12.1'
+pod 'SDWebImage', '5.17.0'
 pod 'SDWebImageFLPlugin', '0.6.0'
 
 
