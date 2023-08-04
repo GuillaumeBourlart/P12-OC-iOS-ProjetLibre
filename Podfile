@@ -15,9 +15,11 @@ target 'Quiz' do
   pod 'Firebase/Analytics', '10.13.0'
   pod 'Firebase/Performance', '10.13.0'
   pod 'Firebase/Storage', '10.13.0'
+  pod 'FirebaseAuthInterop', '10.13.0'
+  pod 'FirebaseAppCheckInterop', '10.13.0'
+
 
   pod 'SDWebImage', '5.17.0'
-  pod 'SDWebImageFLPlugin', '0.6.0'
 
   target 'QuizTests' do
     inherit! :search_paths
