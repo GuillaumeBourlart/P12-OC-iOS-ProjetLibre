@@ -846,7 +846,7 @@ final class GameTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 2.0, handler: nil)
-        listener.remove() // Remove the listener after testing
+        listener?.remove() // Remove the listener after testing
     }
     
     
