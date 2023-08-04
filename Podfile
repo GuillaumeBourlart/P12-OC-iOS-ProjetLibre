@@ -18,7 +18,6 @@ target 'Quiz' do
   pod 'FirebaseAuthInterop', '10.13.0'
   pod 'FirebaseAppCheckInterop', '10.13.0'
 
-
   pod 'SDWebImage', '5.17.0'
 
   target 'QuizTests' do
