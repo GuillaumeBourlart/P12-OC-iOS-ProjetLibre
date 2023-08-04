@@ -8,13 +8,13 @@ target 'Quiz' do
   # Pods for Quiz
   pod 'Alamofire', '5.7.1'
 
-  pod 'Firebase', '10.12.0'
-  pod 'Firebase/Firestore', '10.12.0'
-  pod 'Firebase/Messaging', '10.12.0'
-  pod 'Firebase/Auth', '10.12.0'
-  pod 'Firebase/Analytics', '10.12.0'
-  pod 'Firebase/Performance', '10.12.0'
-  pod 'Firebase/Storage', '10.12.0'
+  pod 'Firebase', '10.13.0'
+  pod 'Firebase/Firestore', '10.13.0'
+  pod 'Firebase/Messaging', '10.13.0'
+  pod 'Firebase/Auth', '10.13.0'
+  pod 'Firebase/Analytics', '10.13.0'
+  pod 'Firebase/Performance', '10.13.0'
+  pod 'Firebase/Storage', '10.13.0'
 
   pod 'SDWebImage', '5.17.0'
   pod 'SDWebImageFLPlugin', '0.6.0'
