@@ -31,6 +31,9 @@ jobs:
 
       - name: Install dependencies
         run: pod install
+        
+      - name: Update Pods
+        run: pod update
 
       - name: Build
         env:
