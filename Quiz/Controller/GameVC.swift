@@ -174,7 +174,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     }
     
     func resetAnimations() {
-        timer?.invalidate()
+        timer?.invalidate() 
         questionLabel.layer.removeAllAnimations()
         timerLabel.layer.removeAllAnimations()
         for button in answerButtons {
