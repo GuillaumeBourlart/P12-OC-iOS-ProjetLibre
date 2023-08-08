@@ -91,11 +91,11 @@ class CreateAccountVC: UIViewController {
         
         // MAIL
         let mail = NSLocalizedString("Mail", comment: "")
-        userEmail.setup(image: UIImage(systemName: "mail"), placeholder: "Email", placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
+        userEmail.setup(image: UIImage(systemName: "mail"), placeholder: mail, placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
 
         // PASSWORD
-        let lock = NSLocalizedString("Password", comment: "")
-        userPassword.setup(image: UIImage(systemName: "lock"), placeholder: "Password", placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
+        let password = NSLocalizedString("Password", comment: "")
+        userPassword.setup(image: UIImage(systemName: "lock"), placeholder: password, placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
 
         // USERNAME
         let username = NSLocalizedString("Username", comment: "")
