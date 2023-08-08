@@ -327,15 +327,17 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
+    
+    
     func leaveGame(completion: @escaping () -> Void) {
         self.leaveButton.isEnabled = false
-        CustomAnimations.buttonPressAnimation(for: self.leaveButton) {
-            self.leaveCurrentGame() {
+        CustomAnimations.buttonPressAnimation(for: self.leaveButton) { [weak self] in
+            self?.leaveCurrentGame() {
                 completion()
             }
-            
         }
     }
+
     
     func leaveCurrentGame(completion: @escaping () -> Void) {
         guard let gameID = self.gameID else { return }
