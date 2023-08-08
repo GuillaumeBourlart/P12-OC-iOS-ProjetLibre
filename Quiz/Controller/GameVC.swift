@@ -198,7 +198,6 @@ class GameVC: UIViewController, LeavePageProtocol {
                     self.displayQuestion()
                 }
                 
-                
             case .failure(let error):
                 print(error)
             }
@@ -222,7 +221,6 @@ class GameVC: UIViewController, LeavePageProtocol {
                 self.scoreLabel.transform = CGAffineTransform.identity
                 self.scoreImage.transform = CGAffineTransform.identity
             })
-            
         }
     }
     
@@ -234,7 +232,6 @@ class GameVC: UIViewController, LeavePageProtocol {
                 self.timerImage.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
                 self.timerLabel.isHidden = true
                 self.timerImage.isHidden = true
-                
             })
         }else {
             self.timerLabel.isHidden = false

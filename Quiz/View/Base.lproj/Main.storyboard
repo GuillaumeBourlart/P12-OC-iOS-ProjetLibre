@@ -492,12 +492,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good job !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5wI-kt-0u1" userLabel="GoodAnswerLabel">
-                                <rect key="frame" x="5" y="261.5" width="310" height="45.5"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good job !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5wI-kt-0u1" userLabel="GoodAnswerLabel">
+                                <rect key="frame" x="5" y="234" width="310" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45.5" id="Lsw-Dg-3T5"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="bSs-fs-9ms"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="46"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="66"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
