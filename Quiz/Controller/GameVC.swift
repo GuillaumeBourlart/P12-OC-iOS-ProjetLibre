@@ -452,11 +452,11 @@ class GameVC: UIViewController, LeavePageProtocol {
             if self.timeRemaining == 0 {
                 
                 timer.invalidate()
-                hideScore()
-                hideTimer()
+                self.hideScore()
+                self.hideTimer()
                 self.showCorrectAnswerAndProceed()
-                displayAnswerLabel(answer: .noAnswer)
-                appDelegate.playSoundEffect(soundName: "disapointed", fileType: "mp3")
+                self.displayAnswerLabel(answer: .noAnswer)
+                self.appDelegate.playSoundEffect(soundName: "disapointed", fileType: "mp3")
             }
         }
     }
