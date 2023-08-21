@@ -186,6 +186,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     
     func loadQuestions() {
         Game.shared.getQuestions(quizId: nil, gameId: gameID!) { result in
+            
             switch result {
             case .success(let questions):
                 if let languageCode = Locale.current.languageCode, languageCode != "EN", languageCode != "en" {
