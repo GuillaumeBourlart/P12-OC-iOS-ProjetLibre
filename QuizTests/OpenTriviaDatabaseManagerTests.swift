@@ -182,5 +182,6 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
             
             
         }
+    
     }
 

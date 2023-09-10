@@ -316,6 +316,18 @@ extension FriendsVC: CustomCellDelegate {
                     }
                 }
             }
+        }else if isShowingSentFriendRequests {
+            friendUID = Array(sentFriendRequests.keys)[indexPath.row]
+            if let friendUID = friendUID {
+                FirebaseUser.shared.rejectFriendRequest(friendID: friendUID) { result in
+                    switch result {
+                    case .success:
+                        self.loadArrays()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
         }else if !isShowingSentFriendRequests, !isShowingReceivedFriendRequests {
             friendUID = Array(friends.keys)[indexPath.row]
             if let friendUID = friendUID {

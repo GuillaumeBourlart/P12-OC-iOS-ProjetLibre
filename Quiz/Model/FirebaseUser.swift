@@ -467,6 +467,8 @@ class FirebaseUser {
         }
     }
     
+   
+    
     // Function to remove a friend from friends list
     func removeFriend(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(FirebaseUserError.noUserConnected)); return }
