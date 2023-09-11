@@ -154,16 +154,37 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
             print("Failed to register for remote notifications: \(error.localizedDescription)")
         }
 
-        // This function handles push notifications when the app is in the foreground.
-        func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                    willPresent notification: UNNotification,
-                                    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-            let userInfo = notification.request.content.userInfo
-            handleNotification(userInfo: userInfo)
-
-            // Display notification alert and play a sound
-            completionHandler([.banner, .sound])
+//        // This function handles push notifications when the app is in the foreground.
+//        func userNotificationCenter(_ center: UNUserNotificationCenter,
+//                                    willPresent notification: UNNotification,
+//                                    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//            let userInfo = notification.request.content.userInfo
+//            handleNotification(userInfo: userInfo)
+//
+//            // Display notification alert and play a sound
+//            completionHandler([.banner, .sound])
+//        }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        handleNotification(userInfo: userInfo)
+        
+        // Obtenez le type de notification
+        guard let notificationType = userInfo["notificationType"] as? String else {
+            completionHandler([])
+            return
         }
+        
+        // Affichez seulement certains types de notifications
+        switch notificationType {
+        case "gameInvitation", "friendRequest", "friendRequestAccepted":
+            completionHandler([.banner, .sound])
+        default:
+            completionHandler([])
+        }
+    }
     
     func getTopViewController(_ base: UIViewController? = UIApplication.shared.connectedScenes
         .filter({$0.activationState == .foregroundActive})
@@ -266,6 +287,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
                     }
                 }
             case "friendRequestAccepted":
+                // Actualisez les demandes d'amis
+            FirebaseUser.shared.getUserInfo { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(): print("success")
+                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
+                }
+            }
+            case "friendRequestCancelled":
                 // Actualisez les demandes d'amis
             FirebaseUser.shared.getUserInfo { result in
                 switch result {

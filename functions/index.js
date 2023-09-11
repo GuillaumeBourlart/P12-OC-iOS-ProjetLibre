@@ -114,11 +114,6 @@ exports.sendFriendRequest = functions.firestore
       const oldData = change.before.data();
       const newData = change.after.data();
 
-      if (newData.actionPerformer &&
-        newData.actionPerformer === context.params.userId) {
-        console.log("No new action from user. Exiting function.");
-        return null;
-      }
 
       if (Object.keys(oldData.friendRequests || {}).length !==
         Object.keys(newData.friendRequests || {}).length) {
@@ -202,11 +197,6 @@ exports.cancelFriendRequest = functions.firestore
       console.log(`OldData: ${JSON.stringify(oldData)}`);
       console.log(`NewData: ${JSON.stringify(newData)}`);
 
-      if (newData.actionPerformer && newData.actionPerformer === userId) {
-        console.log("Action performed by the same user. Exiting function.");
-        // Log
-        return null;
-      }
 
       if (Object.keys(oldData.friendRequests).length !== Object
           .keys(newData.friendRequests).length) {
@@ -284,11 +274,6 @@ exports.acceptFriendRequest = functions.firestore
       const newData = change.after.data();
       const userId = context.params.userId;
 
-      if (newData.actionPerformer && newData.actionPerformer === userId) {
-        console.log("Action performed by the same user. Exiting function.");
-        // Log ajouté
-        return null;
-      }
 
       if (oldData.friends.length !== newData.friends.length) {
         const addedFriends = newData.friends.filter((friend) => !oldData
@@ -362,10 +347,6 @@ exports.rejectFriendRequest = functions.firestore
       const newData = change.after.data();
       const userId = context.params.userId;
 
-      // Vérifier si l'utilisateur est celui qui a effectué l'action
-      if (newData.actionPerformer && newData.actionPerformer === userId) {
-        return null; // Ignorer si l'utilisateur est l'initiateur
-      }
 
       if (Object.keys(oldData.friendRequests).length !== Object
           .keys(newData.friendRequests).length) {
@@ -426,10 +407,6 @@ exports.removeFriend = functions.firestore
       const newData = change.after.data();
       const userId = context.params.userId;
 
-      // Vérifier si l'utilisateur est celui qui a effectué l'action
-      if (newData.actionPerformer && newData.actionPerformer === userId) {
-        return null; // Ignorer si l'utilisateur est l'initiateur
-      }
 
       if (oldData.friends.length !== newData.friends.length) {
         const removedFriends = oldData.friends

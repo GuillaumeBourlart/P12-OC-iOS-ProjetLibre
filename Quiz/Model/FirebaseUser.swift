@@ -432,9 +432,10 @@ class FirebaseUser {
         guard let currentUserId = firebaseService.currentUserID else { completion(.failure(FirebaseUserError.noUserConnected)); return }
         
         let data: [String: Any] = [
-            "\(FirestoreFields.User.friends)": [friendID],
+            "\(FirestoreFields.User.friends)": FieldValue.arrayUnion([friendID]),
             "\(FirestoreFields.User.friendRequests).\(friendID)": FieldValue.delete()
         ]
+
         
         firebaseService.setDataWithMerge(in: FirestoreFields.usersCollection, documentId: currentUserId, data: data, merge: true) { error in
             if let error = error {

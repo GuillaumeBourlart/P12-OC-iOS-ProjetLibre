@@ -202,6 +202,7 @@ class FriendsVC: UIViewController{
             FirebaseUser.shared.sendFriendRequest(username: username) { result in
                 switch result {
                 case .success():
+                    self.loadArrays()
                     self.tableView.reloadData()
                 case .failure(let error):
                     print("Error : \(error.localizedDescription)")
