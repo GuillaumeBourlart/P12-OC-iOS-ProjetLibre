@@ -59,7 +59,6 @@ class FirebaseService: FirebaseServiceProtocol{
     
     // Function to get documents data
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
-        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
         
         var collectionReference: Query = db.collection(collection)
         
@@ -76,6 +75,7 @@ class FirebaseService: FirebaseServiceProtocol{
         
         collectionReference.getDocuments { (querySnapshot, error) in
             if let error = error {
+                print("echec 4")
                 completion(.failure(error))
             } else if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
                 let documentsData = querySnapshot.documents.map {

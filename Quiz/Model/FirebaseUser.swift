@@ -73,6 +73,7 @@ class FirebaseUser {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
+                print("echec 1")
             case .success(let querySnapshot):
                 guard querySnapshot.isEmpty else {
                     completion(.failure(FirebaseUserError.usernameAlreadyUsed))
@@ -83,6 +84,7 @@ class FirebaseUser {
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))
+                        print("echec 2")
                     case .success(let uid):
                         let formatter = DateFormatter()
                         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

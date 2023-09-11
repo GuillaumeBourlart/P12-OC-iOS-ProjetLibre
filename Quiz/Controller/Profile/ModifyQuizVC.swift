@@ -39,6 +39,7 @@ class ModifyQuizVC: UIViewController{
             difficultyField.text = quiz?.difficulty
         }
         
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

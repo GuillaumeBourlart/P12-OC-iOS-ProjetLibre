@@ -14,6 +14,7 @@ class ProfileVC: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var level: UILabel!
+  
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let imagePickerController = UIImagePickerController()
@@ -53,8 +54,7 @@ class ProfileVC: UIViewController{
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
-        profileImageView.layer.borderWidth = 2
-        profileImageView.layer.borderColor = UIColor.gray.cgColor
+        
         
         self.username.text = FirebaseUser.shared.userInfo?.username ?? "username"
         self.level.text = String(FirebaseUser.shared.userInfo?.points ?? 0)

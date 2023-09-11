@@ -12,9 +12,15 @@ class OpponentChoice: UIViewController {
     
     @IBOutlet var buttons: [UIButton]!
     
+    @IBOutlet weak var soloImage: CustomButton2!
+    @IBOutlet weak var multiImage: CustomButton2!
+    
+    
     var difficulty: String?
     var category: Int?
     var quizId: String?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +29,28 @@ class OpponentChoice: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         for button in self.buttons {
             button.isEnabled = true
+        }
+        updateImageViewForCurrentTraitCollection()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+            
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                // Mettre à jour l'image lorsque le mode clair/sombre change
+                updateImageViewForCurrentTraitCollection()
+            }
+        }
+
+    func updateImageViewForCurrentTraitCollection() {
+        if traitCollection.userInterfaceStyle == .dark {
+            // Mode sombre
+            soloImage.setImage(UIImage(named: "soloWhite"), for: .normal)
+            multiImage.setImage(UIImage(named: "multiplayersWhite"), for: .normal)
+        } else {
+            // Mode clair
+            multiImage.setImage(UIImage(named: "multiplayers"), for: .normal)
+            soloImage.setImage(UIImage(named: "solo"), for: .normal)
         }
     }
     

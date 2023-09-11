@@ -28,7 +28,7 @@ class SettingsCell: UITableViewCell {
             self.currentOption = sectionType
         
             if let accountOption = sectionType as? SettingsSections.AccountOptions, accountOption == .disconnect {
-                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.2)
+                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.5)
                 
                 
                     } 

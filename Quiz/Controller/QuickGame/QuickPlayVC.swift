@@ -19,6 +19,7 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     var category: Int?
     var activeAlert: UIAlertController?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()
@@ -37,6 +38,9 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
             self.activeAlert = nil
         }
     }
+    
+    
+
     
     func loadCategories() {
         if let categories = OpenTriviaDatabaseManager.categories, !categories.isEmpty {
@@ -101,8 +105,6 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         cell.categoryLabel.text = category["name"] as? String
         cell.tag = category["id"] as? Int ?? 0
         cell.layer.cornerRadius = 20
-        cell.layer.borderWidth = 2
-        cell.layer.borderColor = UIColor(named: "button")?.cgColor ?? UIColor.black.cgColor
         
         
         return cell

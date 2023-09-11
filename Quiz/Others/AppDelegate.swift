@@ -23,8 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
     var mainTabBarController: UITabBarController? {
         didSet {
-            mainTabBarController?.tabBar.isTranslucent = false
-            mainTabBarController?.tabBar.barTintColor = .systemBackground
+            self.mainTabBarController?.tabBar.tintColor = UIColor.black // Remplacer par la couleur désirée pour le fond
+            self.mainTabBarController?.tabBar.isTranslucent = false // Rend la TabBar non translucide
+
+               // Fixe la couleur des icônes et du texte non sélectionnés
+            self.mainTabBarController?.tabBar.unselectedItemTintColor = UIColor.gray // Remplacer par la couleur désirée pour les éléments non sélectionnés
+
+               // Fixe la couleur des icônes et du texte sélectionnés
+            self.mainTabBarController?.tabBar.tintColor = UIColor.white
+            
         }
     }
     
@@ -47,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+   
+
     
     // This function requests permission to send the user notifications.
         func registerForPushNotifications() {

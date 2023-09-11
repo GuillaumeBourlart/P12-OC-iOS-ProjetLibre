@@ -429,7 +429,14 @@ class GameVC: UIViewController, LeavePageProtocol {
             
             // Changer la couleur du label en fonction du temps restant
             let colorValue = CGFloat(self.timeRemaining) / 10.0 // This will give us a value between 0 and 1
-            self.timerLabel.textColor = UIColor(red: 1.0, green: colorValue, blue: colorValue, alpha: 1.0)
+            // Détecter le mode clair ou sombre
+                if self.traitCollection.userInterfaceStyle == .dark {
+                    // En mode sombre, aller du blanc vers le rouge
+                    self.timerLabel.textColor = UIColor(red: 1.0, green: colorValue, blue: colorValue, alpha: 1.0)
+                } else {
+                    // En mode clair, aller du noir vers le rouge
+                            self.timerLabel.textColor = UIColor(red: 1 - colorValue, green: 0, blue: 0, alpha: 1.0)
+                }
             
             // Changer la taille du label en fonction du temps restant
             let scale = 1.0 + (1.0 - colorValue) * 0.5 // This will give us a scale between 1.0 and 1.5
