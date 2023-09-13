@@ -21,15 +21,12 @@ class CustomTabBarController: UITabBarController {
     }
 
     private func setupTabBar() {
-        // Mettez toutes vos personnalisations de TabBar ici
-        self.tabBar.tintColor = UIColor.black // Couleur désirée pour le fond
-        self.tabBar.isTranslucent = false // Rend la TabBar non translucide
-        
-        // Fixe la couleur des icônes et du texte non sélectionnés
-        self.tabBar.unselectedItemTintColor = UIColor.gray // Couleur désirée pour les éléments non sélectionnés
-
-        // Fixe la couleur des icônes et du texte sélectionnés
+       
         self.tabBar.tintColor = UIColor.white
+        self.tabBar.isTranslucent = false
+        self.tabBar.unselectedItemTintColor = UIColor.gray
+        self.tabBar.barTintColor = UIColor.black
+        
     }
     
     
