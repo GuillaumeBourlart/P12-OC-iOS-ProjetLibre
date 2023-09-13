@@ -20,45 +20,44 @@ class CompetitiveVC: UIViewController{
     
     @IBOutlet weak var rankView: UIView!
     
-    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        updateUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        FirebaseUser.shared.getUserInfo { result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success():
-                self.updateUI()
-            }
+            super.viewDidLoad()
+            updateUI()
         }
-        self.startButton.isEnabled = true
         
-    }
-    
+        override func viewWillAppear(_ animated: Bool) {
+            FirebaseUser.shared.getUserInfo { result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success():
+                    self.updateUI()
+                }
+            }
+            self.startButton.isEnabled = true
+        }
+        
     func updateUI() {
         guard let rankValue = FirebaseUser.shared.userInfo?.rank else {
             return
         }
         
-        let level = Int(rankValue)
-        let progress = rankValue.truncatingRemainder(dividingBy: 1)
+        let intValue = Int(rankValue)  // Convertir en Int
+        let level = intValue / 10      // Obtenir le niveau
+        let progress = intValue % 10   // Obtenir la progression
         
         guard let rank = Rank(rawValue: level) else {
             return
         }
         
         rankView.layer.cornerRadius = 15
-        
-        rankBar.progress = Float(progress)
-        points.text = "\(Int(progress * 100))/100"
+        rankBar.progress = Float(progress) / 10.0
+        points.text = "\(progress)/10"
         
         previousRank.tintColor = rank.previous?.color ?? UIColor.clear
         currentRank.tintColor = rank.color
         nextRank.tintColor = rank.next?.color ?? UIColor.clear
+        
         if rank == .bests {
             nextRank.isHidden = true
             previousRank.isHidden = true
@@ -73,6 +72,10 @@ class CompetitiveVC: UIViewController{
     @IBAction func findOpponentButtonPressed(_ sender: Any) {
         self.startButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: self.startButton) {
+            
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "goToFindOpponent", sender: self)
             }

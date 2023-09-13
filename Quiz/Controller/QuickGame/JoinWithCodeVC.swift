@@ -24,6 +24,11 @@ class JoinWithCodeVC: UIViewController {
     
     @IBAction func joinButtonPressed(sender: UIButton){
         CustomAnimations.buttonPressAnimation(for: sender) {
+            
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
+            
             self.joinButton.isEnabled = false
             guard let code: String = self.codeField.text, !code.isEmpty else { print("error"); self.joinButton.isEnabled = true; return }
             Game.shared.joinWithCode(code: code) { result in

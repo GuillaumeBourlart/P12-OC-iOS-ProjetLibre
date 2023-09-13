@@ -41,12 +41,14 @@ class CreateAccountVC: UIViewController {
                 case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
                 }
             }
-        
     }
     
     // try to sign up user
     @IBAction func signUpUser(_ sender: Any) {
         CustomAnimations.buttonPressAnimation(for: self.signinButton) {
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSound(soundName: "button", fileType: "mp3")
+            }
             self.signinButton.isEnabled = false
             guard let email = self.userEmail.text, !email.isEmpty,
                   let password = self.userPassword.text, !password.isEmpty,

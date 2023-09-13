@@ -51,6 +51,9 @@ class ModifyGroupVC: UIViewController{
     @IBAction func modifyButtonWasTapped(_ sender: UIButton) {
         self.addQuestionButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: sender) {
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
             if self.isModifying {
                 self.isModifying = false
                 self.nameField.layer.borderColor = UIColor.clear.cgColor
@@ -96,6 +99,9 @@ class ModifyGroupVC: UIViewController{
     @IBAction func addButtonTapped(_ sender: UIButton) {
         self.addQuestionButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: sender) {
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
             self.addQuestionButton.isEnabled = false
             self.modifyButton.isEnabled = false
             

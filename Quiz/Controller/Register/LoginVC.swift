@@ -31,32 +31,35 @@ class LoginVC: UIViewController{
         self.loginButton.isEnabled = true
         
         // Add tap gesture to UIlabel reset password
-                let tap = UITapGestureRecognizer(target: self, action: #selector(resetPasswordTapped))
-                resetPasswordButton.isUserInteractionEnabled = true
-                resetPasswordButton.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(resetPasswordTapped))
+        resetPasswordButton.isUserInteractionEnabled = true
+        resetPasswordButton.addGestureRecognizer(tap)
     }
     // check if user is already connected
     func tryToGetUser() {
         
-            FirebaseUser.shared.getUserInfo { result in
-                switch result {
-                case .failure(let error): print(error)
-                    self.backgroundForIndicator.isHidden = true
-                    self.indicator.stopAnimating()
-                case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
-                }
+        FirebaseUser.shared.getUserInfo { result in
+            switch result {
+            case .failure(let error): print(error)
+                self.backgroundForIndicator.isHidden = true
+                self.indicator.stopAnimating()
+            case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
             }
+        }
         
     }
     
     // Fonction appelée lorsque l'utilisateur appuie sur le label
-        @objc func resetPasswordTapped() {
-            performSegue(withIdentifier: "goToResetPassword", sender: self)
-        }
+    @objc func resetPasswordTapped() {
+        performSegue(withIdentifier: "goToResetPassword", sender: self)
+    }
     
     // Func to try to log user
     @IBAction func loginUser(_ sender: UIButton) {
         CustomAnimations.buttonPressAnimation(for: self.loginButton) {
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSound(soundName: "button", fileType: "mp3")
+            }
             self.loginButton.isEnabled = false
             guard let email = self.userEmail.text,
                   email != "",
@@ -100,21 +103,10 @@ class LoginVC: UIViewController{
         userPassword.resignFirstResponder()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToMenu" {
-            let tabBarController = segue.destination as! UITabBarController
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.mainTabBarController = tabBarController
-        }
-    }
     
     @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
         // Vous pouvez utiliser cette méthode pour nettoyer toute donnée si nécessaire
     }
-    
-    
-    
-    
     
     func setUI(){
         // Reset UI

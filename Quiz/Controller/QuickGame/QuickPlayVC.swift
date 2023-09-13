@@ -26,8 +26,11 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         setCategoriesSize()
         
         //handle music
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.playSound(soundName: "appMusic", fileType: "mp3")
+        if let tabBar = self.tabBarController as? CustomTabBarController {
+            tabBar.playSound(soundName: "appMusic", fileType: "mp3")
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.mainTabBarController = tabBar
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -180,7 +180,9 @@ class GameVC: UIViewController, LeavePageProtocol {
         for button in answerButtons {
             button.layer.removeAllAnimations()
         }
-        appDelegate.soundEffectPlayer?.stop()
+        if let tabBar = self.tabBarController as? CustomTabBarController {
+            tabBar.soundEffectPlayer?.stop()
+        }
     }
     
     
@@ -281,7 +283,9 @@ class GameVC: UIViewController, LeavePageProtocol {
         questionLabel.text = question.question
         UIView.animate(withDuration: 0.5, animations: {
             self.questionLabel.transform = CGAffineTransform.identity
-            self.appDelegate.playSoundEffect(soundName: "slide", fileType: "mp3")
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "slide", fileType: "mp3")
+            }
         })
         
         
@@ -334,6 +338,9 @@ class GameVC: UIViewController, LeavePageProtocol {
         self.leaveButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: self.leaveButton) { [weak self] in
             self?.leaveCurrentGame() {
+                if let tabBar = self?.tabBarController as? CustomTabBarController {
+                    tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+                }
                 completion()
             }
         }
@@ -452,7 +459,9 @@ class GameVC: UIViewController, LeavePageProtocol {
                 }
                 // Jouer le son seulement lors des trois dernières secondes
                 if self.timeRemaining <= 3 && self.timeRemaining > 0 {
-                    self.appDelegate.playSoundEffect(soundName: "beep", fileType: "mp3")
+                    if let tabBar = self.tabBarController as? CustomTabBarController {
+                        tabBar.playSoundEffect(soundName: "beep", fileType: "mp3")
+                    }
                 }
             })
             
@@ -463,7 +472,9 @@ class GameVC: UIViewController, LeavePageProtocol {
                 self.hideTimer()
                 self.showCorrectAnswerAndProceed()
                 self.displayAnswerLabel(answer: .noAnswer)
-                self.appDelegate.playSoundEffect(soundName: "disapointed", fileType: "mp3")
+                if let tabBar = self.tabBarController as? CustomTabBarController {
+                    tabBar.playSoundEffect(soundName: "disapointed", fileType: "mp3")
+                }
             }
         }
     }
@@ -484,11 +495,15 @@ class GameVC: UIViewController, LeavePageProtocol {
         finalScore += selectedAnswer == correctAnswer ? 1*timeRemaining : 0
         scoreLabel.text = String(finalScore)
         if selectedAnswer == correctAnswer {
-            appDelegate.playSoundEffect(soundName: "correct", fileType: "mp3")
-            appDelegate.playSoundEffect(soundName: "happy", fileType: "mp3")
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "correct", fileType: "mp3")
+                tabBar.playSoundEffect(soundName: "happy", fileType: "mp3")
+            }
         }else{
-            appDelegate.playSoundEffect(soundName: "incorrect", fileType: "mp3")
-            appDelegate.playSoundEffect(soundName: "disapointed", fileType: "mp3")
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "incorrect", fileType: "mp3")
+                tabBar.playSoundEffect(soundName: "disapointed", fileType: "mp3")
+            }
         }
         userAnswers[questionId] = userAnswer
         

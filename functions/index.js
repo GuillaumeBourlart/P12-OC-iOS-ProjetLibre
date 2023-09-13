@@ -554,12 +554,16 @@ exports.updateRank = functions.firestore
           }
 
           // Update winner rank
-          const newWinnerRank = winnerDoc.data().rank + 0.1;
+          let newWinnerRank = winnerDoc.data().rank + 1;
+          if (newWinnerRank > 60) {
+            newWinnerRank = 60;
+          }
           transaction.update(winnerRef, {rank: newWinnerRank});
+
 
           // Update loser ranks
           for (const {ref, doc} of loserDocs) {
-            let newLoserRank = doc.data().rank - 0.1;
+            let newLoserRank = doc.data().rank - 1;
             if (newLoserRank < 0) {
               newLoserRank = 0;
             }

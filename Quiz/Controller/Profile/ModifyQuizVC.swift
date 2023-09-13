@@ -55,6 +55,10 @@ class ModifyQuizVC: UIViewController{
         self.launchQuizButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: sender) {
             
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
+            
             if self.isModifying {
                 self.isModifying = false
                 self.nameField.layer.borderColor = UIColor.clear.cgColor
@@ -114,6 +118,11 @@ class ModifyQuizVC: UIViewController{
         self.addQuestionButton.isEnabled = false
         self.launchQuizButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: sender) {
+            
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
+            
             self.addQuestionButton.isEnabled = false
             self.modifyButton.isEnabled = false
             self.launchQuizButton.isEnabled = false
@@ -154,6 +163,11 @@ class ModifyQuizVC: UIViewController{
         self.addQuestionButton.isEnabled = false
         self.launchQuizButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: sender) {
+            
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
+            
             self.modifyButton.isEnabled = false
             if let quizID = self.quizID {
                 Game.shared.createRoom(quizID: quizID) { result in

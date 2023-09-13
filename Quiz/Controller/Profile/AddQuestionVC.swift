@@ -50,6 +50,10 @@ class AddQuestionVC: UIViewController {
     @IBAction func validateButtonPressed(_ sender: Any) {
         CustomAnimations.buttonPressAnimation(for: self.validateButton) {
             
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
+            
             self.validateButton.isEnabled = false
             guard let question = self.questionField.text, !question.isEmpty,
                   let correctAnswer = self.correctAnswerField.text, !correctAnswer.isEmpty,

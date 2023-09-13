@@ -131,6 +131,11 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     func leaveLobby(completion: @escaping (Result<Void, Error>) -> Void) {
         self.leave.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: self.leave) {
+            
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
+            
             guard let lobbyId = self.lobbyId else { return }
             Game.shared.leaveLobby(lobbyId: lobbyId) { result in
                 switch result {
@@ -169,6 +174,11 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     // Functin to launch the game
     @IBAction func launchGame(){
         CustomAnimations.buttonPressAnimation(for: self.launchButton) {
+            
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSound(soundName: "button", fileType: "mp3")
+            }
+            
             self.launchButton.isEnabled = false
             Game.shared.createQuestionsForGame(quizId: self.quizId ,category: self.category, difficulty: self.difficulty, with: self.lobbyId, competitive: false, players: self.players) { result in
                 switch result {

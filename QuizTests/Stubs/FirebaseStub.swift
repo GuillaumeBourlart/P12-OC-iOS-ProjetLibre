@@ -78,16 +78,6 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
         }
         return ListenerRegistrationStub()
     }
-//
-//    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String : Any]], Error>) -> Void) -> ListenerRegistration {
-//        if let error = stubbedDocumentError {
-//            completion(.failure(error))
-//        } else if let data = stubbedQuerySnapshotDatas?.first {
-//            stubbedQuerySnapshotDatas?.removeFirst()
-//            completion(.success(data))
-//        }
-//        return ListenerRegistrationStub()
-//    }
     
     
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {

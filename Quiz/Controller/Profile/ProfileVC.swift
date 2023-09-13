@@ -76,6 +76,10 @@ class ProfileVC: UIViewController{
     @objc func profileImageTapped() {
         CustomAnimations.imagePressAnimation(for: self.profileImageView) {
             
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
+            
             let alert = UIAlertController(title: NSLocalizedString("Choose an image", comment: ""), message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .default, handler: { _ in
                 self.openCamera()
@@ -256,8 +260,12 @@ extension ProfileVC: SettingsCellDelegate{
     
     func SoundSwitchChanged(in cell: SettingsCell, isOn: Bool) {
         switch isOn {
-        case true : appDelegate.resumeSound()
-        case false : appDelegate.stopSound()
+        case true : if let tabBar = self.tabBarController as? CustomTabBarController {
+            tabBar.resumeSound()
+        }
+        case false : if let tabBar = self.tabBarController as? CustomTabBarController {
+            tabBar.stopSound()
+        }
         }
         UserDefaults.standard.setValue(isOn, forKey: "sound")
         UserDefaults.standard.synchronize()

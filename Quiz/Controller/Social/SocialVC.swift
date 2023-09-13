@@ -20,8 +20,9 @@ class SocialVC: UIViewController {
         super.viewDidLoad()
 
         // handle music
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.playSound(soundName: "appMusic", fileType: "mp3")
+        if let tabBar = self.tabBarController as? CustomTabBarController {
+            tabBar.playSound(soundName: "appMusic", fileType: "mp3")
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +65,9 @@ class SocialVC: UIViewController {
             button.isEnabled = false
 
             CustomAnimations.buttonPressAnimation(for: sender as! UIButton) {
+                if let tabBar = self.tabBarController as? CustomTabBarController {
+                    tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+                }
                 for button in self.buttons {
                     button.isEnabled = false
 

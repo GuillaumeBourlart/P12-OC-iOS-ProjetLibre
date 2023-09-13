@@ -60,6 +60,12 @@ class OpponentChoice: UIViewController {
         }
         
         CustomAnimations.buttonPressAnimation(for: sender) {
+            
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
+            }
+            
+            
             guard let currentUserId = Game.shared.currentUserId else {
                 return
             }
