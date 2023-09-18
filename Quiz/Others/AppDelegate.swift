@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 import FirebaseCore
 import FirebaseMessaging
+import FirebasePerformance
 
 
 
@@ -32,6 +33,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set the delegate for Firebase Messaging
         Messaging.messaging().delegate = self
+        
+        // chech firebase performance consent 
+        if let userAnswerExists = UserDefaults.standard.object(forKey: "firebasePerformanceEnabled") as? Bool {
+                    Performance.sharedInstance().isDataCollectionEnabled = userAnswerExists
+                } else {
+                    Performance.sharedInstance().isDataCollectionEnabled = true // Active par défaut si la question n'a jamais été posée
+                }
         
         //checkdarMode
         checkdarkMode()

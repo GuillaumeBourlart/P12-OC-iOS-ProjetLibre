@@ -29,12 +29,9 @@ class CategoryCell: UICollectionViewCell {
             if traitCollection.userInterfaceStyle == .dark {
                 // Mode sombre
                 self.image.image = UIImage(named: "darkCategoriesBackground")
-                self.categoryLabel.textColor = UIColor.white
             } else {
                 // Mode clair
                 self.image.image = UIImage(named: "lightCategoriesBackground")
-                self.categoryLabel.textColor = UIColor.black
-                
             }
         }
 }

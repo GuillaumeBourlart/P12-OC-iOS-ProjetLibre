@@ -15,7 +15,6 @@ class ProfileVC: UIViewController{
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var level: UILabel!
   
-    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let imagePickerController = UIImagePickerController()
     var activeAlert: UIAlertController?
@@ -54,10 +53,9 @@ class ProfileVC: UIViewController{
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
-        
-        
+
         self.username.text = FirebaseUser.shared.userInfo?.username ?? "username"
-        self.level.text = String(FirebaseUser.shared.userInfo?.points ?? 0)
+        self.level.text = "\(FirebaseUser.shared.userInfo?.points ?? 0) xp"
         
         
     }
@@ -72,7 +70,7 @@ class ProfileVC: UIViewController{
         }
     }
     
-    
+    // allow user to choose between camera and galery when profile image is tapped
     @objc func profileImageTapped() {
         CustomAnimations.imagePressAnimation(for: self.profileImageView) {
             
@@ -94,8 +92,13 @@ class ProfileVC: UIViewController{
             self.activeAlert = alert
             
             self.present(alert, animated: true, completion: nil)
+            
         }
-    }}
+    }
+    
+    
+    
+}
 
 
 // Extension for image picker, to change profil Image
@@ -120,28 +123,39 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
     // MARK: - UIImagePickerControllerDelegate Methods
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            profileImageView.image = pickedImage
+            picker.dismiss(animated: true, completion: nil)
+            let consentAlert = UIAlertController(title: "Consentement", message: "Acceptez-vous d'utiliser cette photo comme image de profil visible par d'autres utilisateurs ?", preferredStyle: .alert)
             
-            if let imageData = pickedImage.jpegData(compressionQuality: 0.1) {
-                FirebaseUser.shared.saveImageInStorage(imageData: imageData) { result in
-                    switch result {
-                    case .failure(let error):
-                        print("Error saving image in storage:", error)
-                    case .success(let downloadURL):
-                        FirebaseUser.shared.saveProfileImage(url: downloadURL) { result in
-                            switch result {
-                            case .failure(let error):
-                                print("Error saving profile image:", error)
-                            case .success:
-                                print("success saving profile image:")
-                            }
+            consentAlert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { _ in
+                self.uploadProfileImage(pickedImage: pickedImage)
+            }))
+            
+            consentAlert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+            
+            self.present(consentAlert, animated: true, completion: nil)
+        }
+    }
+
+    func uploadProfileImage(pickedImage: UIImage) {
+        profileImageView.image = pickedImage
+        
+        if let imageData = pickedImage.jpegData(compressionQuality: 0.1) {
+            FirebaseUser.shared.saveImageInStorage(imageData: imageData) { result in
+                switch result {
+                case .failure(let error):
+                    print("Error saving image in storage:", error)
+                case .success(let downloadURL):
+                    FirebaseUser.shared.saveProfileImage(url: downloadURL) { result in
+                        switch result {
+                        case .failure(let error):
+                            print("Error saving profile image:", error)
+                        case .success:
+                            print("success saving profile image:")
                         }
                     }
                 }
             }
         }
-        
-        picker.dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -181,6 +195,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         switch settingsSection {
         case .account: return SettingsSections.AccountOptions.allCases.count
         case .preferences: return SettingsSections.SecurityOptions.allCases.count
+        case .privacy: return SettingsSections.PrivacyOptions.allCases.count
         }
     }
     
@@ -198,6 +213,9 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         case .preferences:
             guard let securityOption = SettingsSections.SecurityOptions(rawValue: indexPath.row) else { return UITableViewCell() }
             cell.sectionType = securityOption
+        case .privacy:
+            guard let privacyOptions = SettingsSections.PrivacyOptions(rawValue: indexPath.row) else { return UITableViewCell() }
+            cell.sectionType = privacyOptions
             
         }
         
@@ -240,6 +258,12 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
                     performSegue(withIdentifier: identifier, sender: securityOption.description)
                 }
             }
+        case .privacy:
+            if let privacyOptions = SettingsSections.PrivacyOptions(rawValue: indexPath.row) {
+                if privacyOptions.description == "Privacy policy" {
+                    downloadPrivacyPolicy()
+                }
+            }
         }
     }
 }
@@ -272,3 +296,38 @@ extension ProfileVC: SettingsCellDelegate{
     }
     
 }
+
+
+extension ProfileVC {
+    func downloadPrivacyPolicy() {
+        // Chemin vers le fichier PDF (à remplacer par votre propre fichier)
+        if let pdfURL = Bundle.main.url(forResource: "privacy policy", withExtension: "pdf") {
+            
+            // Copier le fichier PDF dans un dossier temporaire pour pouvoir le partager
+            let tempDirectory = NSTemporaryDirectory()
+            let fileManager = FileManager.default
+            
+            var index = 0
+            var newFileName = pdfURL.lastPathComponent
+            var tempFileURL = URL(fileURLWithPath: tempDirectory).appendingPathComponent(newFileName)
+            
+            while fileManager.fileExists(atPath: tempFileURL.path) {
+                index += 1
+                newFileName = "privacy policy(\(index)).pdf"
+                tempFileURL = URL(fileURLWithPath: tempDirectory).appendingPathComponent(newFileName)
+            }
+            
+            do {
+                try FileManager.default.copyItem(at: pdfURL, to: tempFileURL)
+                
+                // Partager le fichier PDF
+                let activityViewController = UIActivityViewController(activityItems: [tempFileURL], applicationActivities: nil)
+                present(activityViewController, animated: true, completion: nil)
+                
+            } catch {
+                print("Erreur : \(error)")
+            }
+        }
+    }
+}
+

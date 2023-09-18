@@ -38,8 +38,6 @@ class ModifyQuizVC: UIViewController{
             themeField.text = quiz?.category_id
             difficultyField.text = quiz?.difficulty
         }
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

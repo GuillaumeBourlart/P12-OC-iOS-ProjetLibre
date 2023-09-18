@@ -18,6 +18,7 @@ class ModifyGroupVC: UIViewController{
     @IBOutlet weak var addQuestionButton: UIButton!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
+    // properties
     var groupID: String?
     var group: FriendGroup? {
         return FirebaseUser.shared.friendGroups?.first(where: { $0.id == groupID })
@@ -37,6 +38,7 @@ class ModifyGroupVC: UIViewController{
         getUsernames()
     }
     
+    // get group's members names
     func getUsernames(){
         guard let group = group, group.members != [] else { self.usernames = [:]; self.tableView.reloadData(); return}
         FirebaseUser.shared.fetchGroupMembers(group: group) { result in
@@ -48,6 +50,7 @@ class ModifyGroupVC: UIViewController{
         }
     }
     
+    // function called when modify button is pressed
     @IBAction func modifyButtonWasTapped(_ sender: UIButton) {
         self.addQuestionButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: sender) {
@@ -80,6 +83,7 @@ class ModifyGroupVC: UIViewController{
         }
     }
     
+    // save name modification
     func saveModifications(){
         guard let name = nameField.text, name != "", let id = group?.id else {return}
         
@@ -151,6 +155,7 @@ extension ModifyGroupVC: UITableViewDelegate, UITableViewDataSource {
             cell.label.text = userName
         }
         
+        // create the disclosure indicator
         let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Remplacez "customDisclosureIndicator" par le nom de votre image.
         whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
         cell.accessoryView = whiteDisclosureIndicator

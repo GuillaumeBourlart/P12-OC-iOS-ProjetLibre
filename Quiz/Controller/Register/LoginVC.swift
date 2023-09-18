@@ -37,7 +37,6 @@ class LoginVC: UIViewController{
     }
     // check if user is already connected
     func tryToGetUser() {
-        
         FirebaseUser.shared.getUserInfo { result in
             switch result {
             case .failure(let error): print(error)
@@ -114,7 +113,6 @@ class LoginVC: UIViewController{
         userEmail.layer.borderWidth = 0.0
         userPassword.layer.borderWidth = 0.0
         
-        
         // MAIL
         let mail = NSLocalizedString("Mail", comment: "")
         userEmail.setup(image: UIImage(systemName: "mail"), placeholder: mail, placeholderColor: UIColor(named: "placeholder") ?? .gray)
@@ -133,6 +131,4 @@ extension LoginVC: UITextFieldDelegate {
         userPassword.resignFirstResponder()
         return true
     }
-    
-    
 }

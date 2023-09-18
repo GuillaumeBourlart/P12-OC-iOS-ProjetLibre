@@ -9,16 +9,14 @@ import Foundation
 import UIKit
 
 class SocialVC: UIViewController {
+    
     @IBOutlet var buttons: [UIButton]!
-    
-    
     @IBOutlet weak var friendsButton: CustomButton2!
     @IBOutlet weak var groupsButton: CustomButton2!
     @IBOutlet weak var invitesButton: CustomButton2!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // handle music
         if let tabBar = self.tabBarController as? CustomTabBarController {
             tabBar.playSound(soundName: "appMusic", fileType: "mp3")
@@ -33,19 +31,22 @@ class SocialVC: UIViewController {
             button.transform = .identity
             button.alpha = 1
         }
-        updateImageViewForCurrentTraitCollection()
+        // display images
+        displayImages()
     }
     
+    // function called when light mode change
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
             super.traitCollectionDidChange(previousTraitCollection)
             
             if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
                 // Mettre à jour l'image lorsque le mode clair/sombre change
-                updateImageViewForCurrentTraitCollection()
+                displayImages()
             }
         }
 
-    func updateImageViewForCurrentTraitCollection() {
+    // display images depending of light mode
+    func displayImages() {
         if traitCollection.userInterfaceStyle == .dark {
             // Mode sombre
             friendsButton.setImage(UIImage(named: "friendsWhite"), for: .normal)
@@ -63,16 +64,16 @@ class SocialVC: UIViewController {
 
         if let button = sender as? UIButton {
             button.isEnabled = false
-
+            // Animate the button
             CustomAnimations.buttonPressAnimation(for: sender as! UIButton) {
+                // play button sound
                 if let tabBar = self.tabBarController as? CustomTabBarController {
                     tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
                 }
+                // disable every other buttons and move all buttons to the left
                 for button in self.buttons {
                     button.isEnabled = false
-
                     UIView.animate(withDuration: 0.3, animations: {
-                        // Déplace le bouton vers la gauche en soustrayant la largeur de la vue du bouton
                         button.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
                         button.alpha = 0
                     })

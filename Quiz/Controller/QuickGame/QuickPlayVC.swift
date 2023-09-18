@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import FirebasePerformance
 
 class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -31,6 +32,12 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.mainTabBarController = tabBar
         }
+        
+        // show consent for firebase performance only the first time
+                if UserDefaults.standard.object(forKey: "firebasePerformanceEnabled") == nil {
+                    showFirebaseConsentDialog()
+                }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,7 +49,24 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         }
     }
     
-    
+    // Et dans votre UIViewController où vous demandez le consentement
+    func showFirebaseConsentDialog() {
+            let alertController = UIAlertController(title: "Consentement utilisateur", message: "Nous utilisons Firebase Performance pour améliorer l'efficacité de notre application. Acceptez-vous notre politique de confidentialité?", preferredStyle: .alert)
+            
+            let agreeAction = UIAlertAction(title: "Accepter", style: .default) { _ in
+                UserDefaults.standard.set(true, forKey: "firebasePerformanceEnabled")
+                Performance.sharedInstance().isDataCollectionEnabled = true
+            }
+            
+            let disagreeAction = UIAlertAction(title: "Refuser", style: .cancel) { _ in
+                UserDefaults.standard.set(false, forKey: "firebasePerformanceEnabled")
+                Performance.sharedInstance().isDataCollectionEnabled = false
+            }
+            
+            alertController.addAction(agreeAction)
+            alertController.addAction(disagreeAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
 
     
     func loadCategories() {

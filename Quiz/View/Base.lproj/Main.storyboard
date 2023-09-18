@@ -262,7 +262,7 @@
                     <tabBarItem key="tabBarItem" title="Ranked" image="flag" catalog="system" selectedImage="flag.checkered" springLoaded="YES" id="qZ9-Bu-vAN"/>
                     <navigationItem key="navigationItem" id="tKn-fo-Wik"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="chj-W2-VB0" customClass="CustomNavigationBar" customModule="Quiz" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="20" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1245,14 +1245,14 @@
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xtz-Zc-n5j" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="260" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="260" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xtz-Zc-n5j" id="6cY-t0-Wh1">
-                                            <rect key="frame" x="0.0" y="0.0" width="260" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZ5-5x-9jZ">
-                                                    <rect key="frame" x="16" y="11" width="228" height="21.5"/>
+                                                    <rect key="frame" x="16" y="11" width="228" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="text"/>
                                                     <nil key="highlightedColor"/>
@@ -1873,7 +1873,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="insetGrouped" sectionIndexMinimumDisplayRowCount="5" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="H5N-eT-u8B">
-                                <rect key="frame" x="10" y="223" width="300" height="296"/>
+                                <rect key="frame" x="10" y="263" width="300" height="256"/>
                                 <color key="backgroundColor" name="background"/>
                                 <color key="separatorColor" name="background"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1908,27 +1908,27 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ilo-1U-MEy">
-                                <rect key="frame" x="40" y="64" width="240" height="134"/>
+                                <rect key="frame" x="40" y="64" width="240" height="174"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0H-MS-rUT">
-                                        <rect key="frame" x="104.5" y="114" width="31.5" height="20"/>
+                                        <rect key="frame" x="104.5" y="154" width="31.5" height="20"/>
                                         <fontDescription key="fontDescription" name="NotoSansOriya-Bold" family="Noto Sans Oriya" pointSize="14"/>
                                         <color key="textColor" name="text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2w2-M6-4dv">
-                                        <rect key="frame" x="80" y="85" width="80.5" height="24"/>
+                                        <rect key="frame" x="80" y="125" width="80.5" height="24"/>
                                         <fontDescription key="fontDescription" name="NotoSansOriya-Bold" family="Noto Sans Oriya" pointSize="17"/>
                                         <color key="textColor" name="text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hZA-Da-2vF">
-                                        <rect key="frame" x="80" y="1" width="80" height="78"/>
+                                        <rect key="frame" x="60" y="1" width="120" height="118"/>
                                         <color key="tintColor" name="text"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="80" id="9cN-v4-LEu"/>
+                                            <constraint firstAttribute="height" constant="120" id="9cN-v4-LEu"/>
                                             <constraint firstAttribute="width" secondItem="hZA-Da-2vF" secondAttribute="height" multiplier="1:1" id="YYF-ch-tvB"/>
-                                            <constraint firstAttribute="width" constant="80" id="fXL-6x-guP"/>
+                                            <constraint firstAttribute="width" constant="120" id="fXL-6x-guP"/>
                                         </constraints>
                                         <imageReference key="image" image="plus" catalog="system" symbolScale="default"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small" weight="heavy"/>
@@ -2861,7 +2861,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="SyW-dz-AQx"/>
         <segue reference="gh0-tC-Q8T"/>
-        <segue reference="axf-xm-Zem"/>
+        <segue reference="VMf-YG-tkp"/>
         <segue reference="qAE-Zc-maS"/>
         <segue reference="sSV-FG-nyi"/>
     </inferredMetricsTieBreakers>
@@ -2897,7 +2897,7 @@
             <color red="0.83137254901960789" green="0.87450980392156863" blue="0.83137254901960789" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="button">
-            <color red="0.53299999237060547" green="0.61599999666213989" blue="0.53700000047683716" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.47099998593330383" green="0.53299999237060547" blue="0.47499999403953552" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="color2">
             <color red="0.039136238396167755" green="0.010203234851360321" blue="0.0129415113478899" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

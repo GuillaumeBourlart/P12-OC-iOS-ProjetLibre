@@ -20,41 +20,41 @@ class InvitesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
-        
         // setup pull to refresh
         createAnimatio()
-        // Initialiser le UIRefreshControl
-            let refreshControl = UIRefreshControl()
-            refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        // initiate UIRefreshControl
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         refreshControl.tintColor = UIColor.clear
         refreshControl.subviews.first?.backgroundColor = UIColor.clear
-            // Ajouter le UIRefreshControl à votre UITableView
-            tableView.refreshControl = refreshControl
-    }
-    
-    @objc func refreshData(_ sender: Any) {
-        self.tableView.refreshControl?.endRefreshing()
-        // Chargez vos nouvelles données ici
-        // Commencer l'animation de couleur
-        if tableView.visibleCells.first(where: { $0 is EmptyCell }) is EmptyCell {
-               startColorChangeAnimation()
-           }
-        loadInvites()
+        // add UIRefresh to the table
+        tableView.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // load invites
         loadInvites()
     }
     
-   
     
+    // Refresh invites when user pull to refresh
+    @objc func refreshData(_ sender: Any) {
+        self.tableView.refreshControl?.endRefreshing()
+        if tableView.visibleCells.first(where: { $0 is EmptyCell }) is EmptyCell {
+               startColorChangeAnimation()
+           }
+        // refresh invites
+        loadInvites()
+    }
     
+    // Refresh invites when the controller receive the Notification
     @objc func refreshTable() {
         DispatchQueue.main.async {
             self.loadInvites()
         }
     }
     
+    // function to reload invites
     func loadInvites() {
         FirebaseUser.shared.getUserInfo { result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2){
@@ -63,9 +63,7 @@ class InvitesVC: UIViewController {
             case .success():
                 self.fetchInvites()
             }
-            
-            // Arrêter l'animation de couleur
-           
+            // stop the color animation
                 if self.tableView.visibleCells.first(where: { $0 is EmptyCell }) is EmptyCell {
                     self.stopColorChangeAnimation()
                 }
@@ -73,6 +71,18 @@ class InvitesVC: UIViewController {
         }
     }
     
+    // create the color animation
+    func createAnimatio() {
+        // Création de l'animation de couleur
+        colorChangeAnimation = CABasicAnimation(keyPath: "backgroundColor")
+        colorChangeAnimation?.fromValue = UIColor.green.cgColor
+        colorChangeAnimation?.toValue = UIColor.red.cgColor
+        colorChangeAnimation?.duration = 1.0
+        colorChangeAnimation?.repeatCount = .infinity
+        colorChangeAnimation?.autoreverses = true
+    }
+    
+    // animate the top border in multicolor
     func startColorChangeAnimation() {
         if let animation = colorChangeAnimation {
             // Créez le layer pour la bordure en haut
@@ -88,13 +98,14 @@ class InvitesVC: UIViewController {
         }
     }
 
+    // stop the color change animation
     func stopColorChangeAnimation() {
         borderLayer?.removeAnimation(forKey: "colorChange")
         borderLayer?.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 0.0)
         
     }
     
-    
+    // function that fetch invites
     func fetchInvites() {
         FirebaseUser.shared.fetchInvites { data, error in
             if let error = error {
@@ -108,6 +119,7 @@ class InvitesVC: UIViewController {
         }
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? PrivateLobbyVC {
             destination.lobbyId = sender as? String
@@ -115,6 +127,7 @@ class InvitesVC: UIViewController {
         }
     }
     
+    // function to join a lobby from the tapped invite
     func joinLobby(lobbyId: String) {
         Game.shared.joinRoom(lobbyId: lobbyId){ result in
             switch result {
@@ -129,15 +142,7 @@ class InvitesVC: UIViewController {
         // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
     }
     
-    func createAnimatio() {
-        // Création de l'animation de couleur
-        colorChangeAnimation = CABasicAnimation(keyPath: "backgroundColor")
-        colorChangeAnimation?.fromValue = UIColor.green.cgColor
-        colorChangeAnimation?.toValue = UIColor.red.cgColor
-        colorChangeAnimation?.duration = 1.0
-        colorChangeAnimation?.repeatCount = .infinity
-        colorChangeAnimation?.autoreverses = true
-    }
+    
 }
 
 
@@ -175,6 +180,7 @@ extension InvitesVC: UITableViewDataSource {
             let lobbyText = NSLocalizedString("Lobby", comment: "")
             cell.label.text = userText + ": \(invite.key) - " + lobbyText + invite.value
 
+            // create the disclosure indicator
             let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
             whiteDisclosureIndicator.tintColor = .white
             whiteDisclosureIndicator.backgroundColor = UIColor.clear

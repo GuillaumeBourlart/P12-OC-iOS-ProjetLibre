@@ -21,13 +21,13 @@ class GroupsVC: UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // try to get user groups
         FirebaseUser.shared.getUserGroups { result in
             switch result {
             case .success():
                 self.tableView.reloadData()
             case .failure(let error):
                 print("Error getting groups: \(error.localizedDescription)")
-                // Afficher une alerte à l'utilisateur ou gérer l'erreur de manière appropriée
             }
         }
     }
@@ -42,12 +42,12 @@ class GroupsVC: UIViewController{
         }
     }
     
-    
+    // display an alert when user push the button
     @IBAction func plusButtonTapped(_ sender: Any) {
         displayAddGroupAlert()
     }
     
-    
+    // function that display an alert so the user can create a group and choose a name
     func displayAddGroupAlert() {
         let alert = UIAlertController(title: "Add a group", message: "Enter group name", preferredStyle: .alert)
         
@@ -70,12 +70,9 @@ class GroupsVC: UIViewController{
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
         alert.addAction(addAction)
         alert.addAction(cancelAction)
-        
         self.activeAlert = alert
-        
         present(alert, animated: true)
     }
     
@@ -86,7 +83,6 @@ class GroupsVC: UIViewController{
             }
         }
     }
-    
 }
 
 extension GroupsVC: UITableViewDelegate {
@@ -101,8 +97,6 @@ extension GroupsVC: UITableViewDelegate {
                 print("Error removing group : \(error.localizedDescription)")
             }
         }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -130,7 +124,7 @@ extension GroupsVC: UITableViewDataSource {
         
         cell.label.text = groups[indexPath.row].name
         
-        
+        // create the disclosure indicator
         let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
         whiteDisclosureIndicator.tintColor = .white // Remplacez "customDisclosureIndicator" par le nom de votre image.
         whiteDisclosureIndicator.backgroundColor = UIColor.clear

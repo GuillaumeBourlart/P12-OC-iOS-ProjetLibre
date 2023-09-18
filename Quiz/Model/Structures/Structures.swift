@@ -59,7 +59,7 @@ struct aUser: Decodable {
     let email: String
     let inscription_date: Date
     let rank: Double
-    let points: Int
+    var points: Int
     var invites: [String: String]
     var profile_picture: String
     var friends: [String]

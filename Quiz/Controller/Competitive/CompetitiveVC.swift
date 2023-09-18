@@ -60,9 +60,9 @@ class CompetitiveVC: UIViewController{
         
         if rank == .bests {
             nextRank.isHidden = true
-            previousRank.isHidden = true
-            rankBar.isHidden = true
-            points.isHidden = true
+//            previousRank.isHidden = true
+//            rankBar.isHidden = true
+//            points.isHidden = true
         }
     }
     
@@ -99,9 +99,9 @@ enum Rank: Int {
                 case .silver: return UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1.0)
                 case .gold: return UIColor(red: 255/255, green: 235/255, blue: 180/255, alpha: 1.0)
                 case .platinum: return UIColor(red: 180/255, green: 225/255, blue: 240/255, alpha: 1.0)
-                case .diamond: return UIColor(red: 180/255, green: 230/255, blue: 255/255, alpha: 1.0)
-                case .master: return UIColor(red: 255/255, green: 180/255, blue: 255/255, alpha: 1.0)
-                case .bests: return UIColor(red: 255/255, green: 215/255, blue: 180/255, alpha: 1.0)
+        case .diamond: return UIColor.orange
+        case .master: return UIColor.magenta
+        case .bests: return UIColor.systemPink
         }
     }
     

@@ -28,6 +28,7 @@ class HistoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // get all completed games of user
         Game.shared.getCompletedGames { result in
             switch result {
             case .success(): self.tableView.reloadData()
@@ -36,6 +37,7 @@ class HistoryVC: UIViewController {
         }
     }
     
+    // reload data depending of the selected segmented control index
     @IBAction func gameModeChanged(_ sender: UISegmentedControl) {
         tableView.reloadData()
     }
@@ -46,8 +48,6 @@ class HistoryVC: UIViewController {
             destination.gameData = sender as? GameData
         }
     }
-    
-    
 }
 
 

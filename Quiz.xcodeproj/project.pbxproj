@@ -15,6 +15,7 @@
 		7E53C1432A3C80210046CC5E /* DeeplTranslatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */; };
 		7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F99A52A39FCF800476A4D /* SettingsCell.swift */; };
 		7E634E922AB112F90024C2C9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E634E912AB112F90024C2C9 /* CustomTabBarController.swift */; };
+		7E69C4122AB8F7FD00D73B97 /* privacy policy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 7E69C4112AB8F7FD00D73B97 /* privacy policy.pdf */; };
 		7E727B9B2A38BAB20025AC80 /* incorrect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B992A38BAB20025AC80 /* incorrect.mp3 */; };
 		7E727B9C2A38BAB20025AC80 /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9A2A38BAB20025AC80 /* correct.mp3 */; };
 		7E727B9F2A38BDD20025AC80 /* lose.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E727B9D2A38BDD20025AC80 /* lose.mp3 */; };
@@ -101,6 +102,7 @@
 		7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplTranslatorManager.swift; sourceTree = "<group>"; };
 		7E5F99A52A39FCF800476A4D /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		7E634E912AB112F90024C2C9 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		7E69C4112AB8F7FD00D73B97 /* privacy policy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "privacy policy.pdf"; sourceTree = "<group>"; };
 		7E727B992A38BAB20025AC80 /* incorrect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incorrect.mp3; sourceTree = "<group>"; };
 		7E727B9A2A38BAB20025AC80 /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
 		7E727B9D2A38BDD20025AC80 /* lose.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lose.mp3; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				D0B7B38F2A5883E40005C008 /* square.jpg */,
+				7E69C4112AB8F7FD00D73B97 /* privacy policy.pdf */,
 				7E53C15F2A3C9AF50046CC5E /* sounds */,
 				D084EC452A0F7EF700544AA3 /* Assets.xcassets */,
 				D084EC3B2A0F7EF400544AA3 /* SceneDelegate.swift */,
@@ -547,6 +550,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E69C4122AB8F7FD00D73B97 /* privacy policy.pdf in Resources */,
 				7E727BA02A38BDD20025AC80 /* button.mp3 in Resources */,
 				D0CEA5C12A58605B007CDDB4 /* disapointed.mp3 in Resources */,
 				7E727BA62A38CC810025AC80 /* slide.mp3 in Resources */,

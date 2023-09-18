@@ -21,12 +21,10 @@ class CustomTabBarController: UITabBarController {
     }
 
     private func setupTabBar() {
-       
         self.tabBar.tintColor = UIColor.white
         self.tabBar.isTranslucent = false
         self.tabBar.unselectedItemTintColor = UIColor.gray
         self.tabBar.barTintColor = UIColor.black
-        
     }
     
     

@@ -16,11 +16,13 @@ protocol SectionType: CustomStringConvertible{
 enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
     case account
     case preferences
+    case privacy
     // title
     var description: String {
         switch self {
         case .account: return NSLocalizedString("Account", comment: "")
         case .preferences: return NSLocalizedString("Preferences", comment: "")
+        case .privacy: return NSLocalizedString("Privacy", comment: "")
         }
     }
     // Section 1
@@ -79,6 +81,31 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
         var containsSwitch: Bool {
             switch self {
             case .sounds: return true
+            }
+        }
+    }
+    
+    // Section 3
+    enum PrivacyOptions: Int, CaseIterable, SectionType {
+        case privacypolicy
+        // titles
+        var description: String {
+            switch self {
+            case .privacypolicy:
+                return NSLocalizedString("Privacy policy", comment: "")
+            }
+        }
+        // segue's IDS
+        var segueIdentifier: String? {
+            switch self {
+            case .privacypolicy:
+                return "goToPrivacy"
+            }
+        }
+        
+        var containsSwitch: Bool {
+            switch self {
+            case .privacypolicy: return false
             }
         }
     }

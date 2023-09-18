@@ -13,6 +13,7 @@ class AddMemberVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var validateButton: CustomButton!
     
+    //properties
     var group: FriendGroup?
     var friends: [String: String] = [:]
     var selectedFriends: [String] = []
@@ -22,6 +23,7 @@ class AddMemberVC: UIViewController {
         loadFriends()
     }
     
+    // display friends
     func loadFriends(){
         FirebaseUser.shared.fetchFriends(){data, error in
             if let error = error {
@@ -34,6 +36,7 @@ class AddMemberVC: UIViewController {
         }
     }
     
+    // add selected members to the group when button is pressed
     @IBAction func validateButtonPressed(_ sender: Any) {
         CustomAnimations.buttonPressAnimation(for: self.validateButton) {
             if let tabBar = self.tabBarController as? CustomTabBarController {
@@ -50,10 +53,7 @@ class AddMemberVC: UIViewController {
                 }
             }
         }
-        
-    
     }
-    
 }
 
 
@@ -61,8 +61,7 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
 
-        // Get memberId from friends keys
-        let memberId = Array(self.friends.keys)[indexPath.row]
+        let memberId = Array(self.friends.keys)[indexPath.row] // Get memberId from friends keys
         let memberUsername = self.friends[memberId] // Get username from friends values
 
         cell.label.text = memberUsername
@@ -81,7 +80,7 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0 // Remplacer par la hauteur désirée
+        return 70.0
     }
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -99,7 +98,6 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
         
         // Update the selection state of the cell
         tableView.reloadRows(at: [indexPath], with: .none)
-        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

@@ -34,23 +34,13 @@ class FriendsVC: UIViewController{
         createAnimatio()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
         
-        // setup pull to refresh
-        // Initialiser le UIRefreshControl
+        // initiate pull to refresh
             let refreshControl = UIRefreshControl()
             refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         refreshControl.tintColor = UIColor.clear
         refreshControl.subviews.first?.backgroundColor = UIColor.clear
             // Ajouter le UIRefreshControl à votre UITableView
             tableView.refreshControl = refreshControl
-        
-
-    }
-    
-    @objc func refreshData(_ sender: Any) {
-        self.tableView.refreshControl?.endRefreshing()
-        startColorChangeAnimation()
-        // Chargez vos nouvelles données ici
-        reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,21 +48,9 @@ class FriendsVC: UIViewController{
         onSwitch(switchControl)
         let attributesNormal = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let attributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.black]
-
         switchControl.setTitleTextAttributes(attributesNormal, for: .normal)
         switchControl.setTitleTextAttributes(attributesSelected, for: .selected)
     }
-    
-    func createAnimatio() {
-        // Création de l'animation de couleur
-        colorChangeAnimation = CABasicAnimation(keyPath: "backgroundColor")
-        colorChangeAnimation?.fromValue = UIColor.blue.cgColor
-        colorChangeAnimation?.toValue = UIColor.orange.cgColor
-        colorChangeAnimation?.duration = 1.0
-        colorChangeAnimation?.repeatCount = .infinity
-        colorChangeAnimation?.autoreverses = true
-    }
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -83,11 +61,30 @@ class FriendsVC: UIViewController{
         }
     }
     
-    @objc func refreshTable() {
-        self.loadArrays()
-        
+    // refresh data when user pull to refresh
+    @objc func refreshData(_ sender: Any) {
+        self.tableView.refreshControl?.endRefreshing()
+        startColorChangeAnimation()
+        // Chargez vos nouvelles données ici
+        reloadData()
     }
     
+    // create the color animation for pull to refresh
+    func createAnimatio() {
+        colorChangeAnimation = CABasicAnimation(keyPath: "backgroundColor")
+        colorChangeAnimation?.fromValue = UIColor.blue.cgColor
+        colorChangeAnimation?.toValue = UIColor.orange.cgColor
+        colorChangeAnimation?.duration = 1.0
+        colorChangeAnimation?.repeatCount = .infinity
+        colorChangeAnimation?.autoreverses = true
+    }
+    
+    // refresh the table when controller receive a notification
+    @objc func refreshTable() {
+        self.loadArrays()
+    }
+    
+    // reload friends
     func reloadData(){
         FirebaseUser.shared.getUserInfo { result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2){
@@ -100,7 +97,6 @@ class FriendsVC: UIViewController{
             }
         }
     }
-    
     
     // Load friends array and friend requests array for displaying
     func loadArrays(){
@@ -142,25 +138,22 @@ class FriendsVC: UIViewController{
         }
     }
     
+    // start the color animation when user pull to refresh
     func startColorChangeAnimation() {
         if let animation = colorChangeAnimation {
-            // Créez le layer pour la bordure en haut
             borderLayer = CALayer()
             guard let borderLayer = borderLayer else {return}
             borderLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 8.0)
             borderLayer.backgroundColor = UIColor.green.cgColor
-
-            // Ajoutez le layer à la vue
             tableView.layer.addSublayer(borderLayer)
-            
             borderLayer.add(animation, forKey: "colorChange")
         }
     }
 
+    // stop the color animation
     func stopColorChangeAnimation() {
         borderLayer?.removeAnimation(forKey: "colorChange")
         borderLayer?.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 0.0)
-        
     }
     
     // Function called when switching UIsegmentedCotroll index

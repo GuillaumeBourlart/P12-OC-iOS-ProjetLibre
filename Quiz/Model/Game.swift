@@ -636,6 +636,39 @@ class Game {
     }
     
     
+    // Function to delete invite from invites
+    func updateXP(completion: @escaping (Result<Int, Error>) -> Void){
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(GameError.noUserConnected))
+            return
+        }
+        
+        firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: currentUserId) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let data):
+                guard var points = data[FirestoreFields.User.points] as? Int else {
+                    completion(.failure(GameError.failedToGetData))
+                    return
+                }
+                points += 30
+
+                self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.points: points]) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+                    else {
+                        FirebaseUser.shared.userInfo?.points += 30
+                        completion(.success(points))
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
     
     //-----------------------------------------------------------------------------------
     //                                 LISTENER FOR GAME STARTING

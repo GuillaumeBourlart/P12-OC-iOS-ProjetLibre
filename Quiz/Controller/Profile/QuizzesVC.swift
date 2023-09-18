@@ -20,7 +20,7 @@ class QuizzesVC: UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+            // get all user's quizzes
             FirebaseUser.shared.getUserQuizzes { result in
                 switch result {
                 case .success():
@@ -41,12 +41,12 @@ class QuizzesVC: UIViewController{
                }
     }
     
+    // display an alert
     @IBAction func plusButtonTapped(_ sender: Any) {
-       
             displayAddQuizAlert()
-        
     }
     
+    // create an alert so user can create a quiz
     func displayAddQuizAlert() {
         let alert = UIAlertController(title: NSLocalizedString("Add a quiz", comment: ""), message: NSLocalizedString("Enter name, category and difficulty", comment: ""), preferredStyle: .alert)
         
@@ -81,12 +81,9 @@ class QuizzesVC: UIViewController{
         }
         
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
-        
         alert.addAction(addAction)
         alert.addAction(cancelAction)
-        
         self.activeAlert = alert
-        
         present(alert, animated: true)
     }
     

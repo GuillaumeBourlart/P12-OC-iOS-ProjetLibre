@@ -549,7 +549,14 @@ class GameVC: UIViewController, LeavePageProtocol {
         Game.shared.saveStats(finalScore: finalScore, userAnswers: userAnswers, gameID: gameId){ result in
             switch result {
             case .success():
-                self.performSegue(withIdentifier: "goToResult", sender: gameId)
+                Game.shared.updateXP { result in
+                    switch result {
+                    case .success(var Int): self.performSegue(withIdentifier: "goToResult", sender: gameId)
+                    case .failure(let error): print(error)
+                    }
+                }
+                
+                
             case .failure(let error):
                 print("Error saving stats': \(error.localizedDescription)")
             }
