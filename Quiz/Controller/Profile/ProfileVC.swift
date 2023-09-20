@@ -7,6 +7,7 @@
 import Foundation
 import UIKit
 import FirebaseStorage
+import WebKit
 
 class ProfileVC: UIViewController{
     
@@ -22,13 +23,16 @@ class ProfileVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureProfileViews()
         imagePickerController.delegate = self
         
         // Add UITapGestureRecognizer to profilImage view
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGesture)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        configureProfileViews()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -86,6 +90,10 @@ class ProfileVC: UIViewController{
             alert.addAction(UIAlertAction(title: NSLocalizedString("Gallery", comment: ""), style: .default, handler: { _ in
                 self.openGallery()
             }))
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Delete current photo", comment: ""), style: .destructive, handler: { _ in
+                   self.deleteProfileImage()
+               }))
             
             alert.addAction(UIAlertAction.init(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             
@@ -157,6 +165,29 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
             }
         }
     }
+    
+    func deleteProfileImage() {
+        // Supprimez l'image de Firebase Storage ici.
+        // Vous pouvez utiliser les méthodes Firebase Storage pour le faire.
+        FirebaseUser.shared.deleteImageInStorage { result in
+            switch result {
+            case .failure(let error):
+                print("Error deleting image from storage:", error)
+            case .success:
+                // Mettez à jour l'interface utilisateur pour supprimer l'image
+                self.profileImageView.image = UIImage(named: "plus")
+                FirebaseUser.shared.deleteProfileImageURL(){result in
+                    switch result {
+                    case .success:  print("Successfully deleted profile image")
+                    case .failure(let error): print(error)
+                    }
+                }
+               
+            }
+        }
+    }
+    
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
@@ -261,7 +292,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         case .privacy:
             if let privacyOptions = SettingsSections.PrivacyOptions(rawValue: indexPath.row) {
                 if privacyOptions.description == "Privacy policy" {
-                    downloadPrivacyPolicy()
+                    displayPrivacyPolicyInWebView()
                 }
             }
         }
@@ -299,35 +330,21 @@ extension ProfileVC: SettingsCellDelegate{
 
 
 extension ProfileVC {
-    func downloadPrivacyPolicy() {
-        // Chemin vers le fichier PDF (à remplacer par votre propre fichier)
+    func displayPrivacyPolicyInWebView() {
+        // Chemin vers le fichier PDF
         if let pdfURL = Bundle.main.url(forResource: "privacy policy", withExtension: "pdf") {
+            let webView = WKWebView()
+            let request = URLRequest(url: pdfURL)
+            webView.load(request)
             
-            // Copier le fichier PDF dans un dossier temporaire pour pouvoir le partager
-            let tempDirectory = NSTemporaryDirectory()
-            let fileManager = FileManager.default
+            // Créer un nouveau UIViewController pour afficher le WKWebView
+            let webViewController = UIViewController()
+            webViewController.view.addSubview(webView)
+            webView.frame = webViewController.view.bounds
+            webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            var index = 0
-            var newFileName = pdfURL.lastPathComponent
-            var tempFileURL = URL(fileURLWithPath: tempDirectory).appendingPathComponent(newFileName)
-            
-            while fileManager.fileExists(atPath: tempFileURL.path) {
-                index += 1
-                newFileName = "privacy policy(\(index)).pdf"
-                tempFileURL = URL(fileURLWithPath: tempDirectory).appendingPathComponent(newFileName)
-            }
-            
-            do {
-                try FileManager.default.copyItem(at: pdfURL, to: tempFileURL)
-                
-                // Partager le fichier PDF
-                let activityViewController = UIActivityViewController(activityItems: [tempFileURL], applicationActivities: nil)
-                present(activityViewController, animated: true, completion: nil)
-                
-            } catch {
-                print("Erreur : \(error)")
-            }
+            // Pousser le nouveau UIViewController
+            self.navigationController?.pushViewController(webViewController, animated: true)
         }
     }
 }
-

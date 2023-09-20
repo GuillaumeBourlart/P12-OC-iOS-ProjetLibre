@@ -13,6 +13,8 @@
 		7E33A7112A44E3A0008947BF /* SocialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A7102A44E3A0008947BF /* SocialVC.swift */; };
 		7E47A9192A4F406F0032D836 /* DeeplManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47A9182A4F406F0032D836 /* DeeplManagerTests.swift */; };
 		7E53C1432A3C80210046CC5E /* DeeplTranslatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */; };
+		7E5B14602AB9A02A00B3D46D /* displayXpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5B145F2AB9A02A00B3D46D /* displayXpViewController.swift */; };
+		7E5B14642AB9AE5D00B3D46D /* money-counter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E5B14632AB9AE5D00B3D46D /* money-counter.mp3 */; };
 		7E5F99A62A39FCF800476A4D /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F99A52A39FCF800476A4D /* SettingsCell.swift */; };
 		7E634E922AB112F90024C2C9 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E634E912AB112F90024C2C9 /* CustomTabBarController.swift */; };
 		7E69C4122AB8F7FD00D73B97 /* privacy policy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 7E69C4112AB8F7FD00D73B97 /* privacy policy.pdf */; };
@@ -100,6 +102,8 @@
 		7E33A7102A44E3A0008947BF /* SocialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialVC.swift; sourceTree = "<group>"; };
 		7E47A9182A4F406F0032D836 /* DeeplManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplManagerTests.swift; sourceTree = "<group>"; };
 		7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplTranslatorManager.swift; sourceTree = "<group>"; };
+		7E5B145F2AB9A02A00B3D46D /* displayXpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = displayXpViewController.swift; sourceTree = "<group>"; };
+		7E5B14632AB9AE5D00B3D46D /* money-counter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "money-counter.mp3"; sourceTree = "<group>"; };
 		7E5F99A52A39FCF800476A4D /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		7E634E912AB112F90024C2C9 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		7E69C4112AB8F7FD00D73B97 /* privacy policy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "privacy policy.pdf"; sourceTree = "<group>"; };
@@ -291,6 +295,7 @@
 				D03083DC2A0F8A5000A8FBB7 /* ResultVC.swift */,
 				D074D66F2A26A2A7004942C4 /* QuestionResultVC.swift */,
 				7E634E912AB112F90024C2C9 /* CustomTabBarController.swift */,
+				7E5B145F2AB9A02A00B3D46D /* displayXpViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 		D084EC722A0F7FD700544AA3 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				7E5B14632AB9AE5D00B3D46D /* money-counter.mp3 */,
 				D0B7B38F2A5883E40005C008 /* square.jpg */,
 				7E69C4112AB8F7FD00D73B97 /* privacy policy.pdf */,
 				7E53C15F2A3C9AF50046CC5E /* sounds */,
@@ -550,6 +556,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E5B14642AB9AE5D00B3D46D /* money-counter.mp3 in Resources */,
 				7E69C4122AB8F7FD00D73B97 /* privacy policy.pdf in Resources */,
 				7E727BA02A38BDD20025AC80 /* button.mp3 in Resources */,
 				D0CEA5C12A58605B007CDDB4 /* disapointed.mp3 in Resources */,
@@ -670,6 +677,7 @@
 				D054E7502A56799A0065FD30 /* EmptyCell.swift in Sources */,
 				7E33A70D2A44C258008947BF /* GroupsVC.swift in Sources */,
 				D030840B2A0F8CEB00A8FBB7 /* CategoryCell.swift in Sources */,
+				7E5B14602AB9A02A00B3D46D /* displayXpViewController.swift in Sources */,
 				D0B35CDC2A159B0C007B3431 /* FirebaseService.swift in Sources */,
 				7E53C1432A3C80210046CC5E /* DeeplTranslatorManager.swift in Sources */,
 				D03083F82A0F8A7900A8FBB7 /* AlamofireService.swift in Sources */,

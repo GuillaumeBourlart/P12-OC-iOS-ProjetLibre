@@ -40,8 +40,7 @@ class ResultVC: UIViewController {
                             DispatchQueue.main.async {
                                 self.displayResults()
                                 self.tableView.reloadData()
-                                self.startListening()
-                            }
+                                self.startListening()                            }
                         }
                     } else {
                         self.questions = gameData.questions

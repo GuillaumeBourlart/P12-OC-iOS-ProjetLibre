@@ -211,23 +211,7 @@ class FirebaseUser {
         }
     }
     
-    // Function to save user's profile image on Firestore Storage
-    func saveImageInStorage(imageData: Data, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let currentUserId = firebaseService.currentUserID else {
-            completion(.failure(FirebaseUserError.noUserConnected))
-            return
-        }
-        
-        let imageFileName = "\(currentUserId).jpg"
-        firebaseService.storeData(in: "profile_images", fileName: imageFileName, data: imageData) { result in
-            switch result {
-            case .success(let downloadURL):
-                completion(.success(downloadURL))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
+   
 
     // Function to save Firestore Storage URL of the profile image in Firestore user's document
     func saveProfileImage(url: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -237,6 +221,22 @@ class FirebaseUser {
         }
         
         firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.profilePicture: url]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
+    // Function to delete Firestore Storage URL of the profile image in Firestore user's document
+    func deleteProfileImageURL(completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(FirebaseUserError.noUserConnected))
+            return
+        }
+        
+        firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.profilePicture: ""]) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -256,6 +256,50 @@ class FirebaseUser {
             }
         }
     }
+    
+    
+    
+    // Function to delete user's profile image from Firestore Storage
+    func deleteImageInStorage(completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(FirebaseUserError.noUserConnected))
+            return
+        }
+
+        let imageFileName = "profile.jpg"
+        let folderPath = "profile_images/\(currentUserId)/"
+        firebaseService.deleteData(in: folderPath, fileName: imageFileName) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+
+    // Function to save user's profile image on Firestore Storage
+    func saveImageInStorage(imageData: Data, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let currentUserId = firebaseService.currentUserID else {
+            completion(.failure(FirebaseUserError.noUserConnected))
+            return
+        }
+        
+        let imageFileName = "profile.jpg"
+        let folderPath = "profile_images/\(currentUserId)/"
+        firebaseService.storeData(in: folderPath, fileName: imageFileName, data: imageData) { result in
+            switch result {
+            case .success(let downloadURL):
+                completion(.success(downloadURL))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    
+    
+
+
     
     // Function to save user's new username
 //    func updateUsername(username: String, completion: @escaping (Result<Void, Error>) -> Void){

@@ -548,14 +548,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         guard let gameId = gameID else { print("error"); return }
         Game.shared.saveStats(finalScore: finalScore, userAnswers: userAnswers, gameID: gameId){ result in
             switch result {
-            case .success():
-                Game.shared.updateXP { result in
-                    switch result {
-                    case .success(var Int): self.performSegue(withIdentifier: "goToResult", sender: gameId)
-                    case .failure(let error): print(error)
-                    }
-                }
-                
+            case .success():self.performSegue(withIdentifier: "goTodisplayXp", sender: gameId)                
                 
             case .failure(let error):
                 print("Error saving stats': \(error.localizedDescription)")
@@ -565,7 +558,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? ResultVC {
+        if let destination = segue.destination as? displayXpViewControler {
             if let gameID = sender as? String {
                 destination.gameID = gameID
                 destination.isResultAfterGame = true

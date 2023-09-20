@@ -36,6 +36,7 @@ protocol FirebaseServiceProtocol {
 //    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration?
     func isUserSignedIn() -> Bool
     func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void)
+    func deleteData(in folder: String, fileName: String, completion: @escaping (Error?) -> Void)
         func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void)
     
     var currentUserID: String? { get }
@@ -196,6 +197,19 @@ class FirebaseService: FirebaseServiceProtocol{
                 }
             }
         }
+    
+    func deleteData(in folder: String, fileName: String, completion: @escaping (Error?) -> Void) {
+        let storage = Storage.storage().reference()
+        let imageRef = storage.child("\(folder)/\(fileName)")
+
+        imageRef.delete { error in
+            if let error = error {
+                completion(error)
+            } else {
+                completion(nil)
+            }
+        }
+    }
 
         func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void) {
             guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}

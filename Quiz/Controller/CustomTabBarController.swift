@@ -14,6 +14,7 @@ class CustomTabBarController: UITabBarController {
     var musicPlayer: AVAudioPlayer?
     var soundEffectPlayer: AVAudioPlayer?
     var soundEffectPlayer2: AVAudioPlayer?
+    var countLabel: UILabel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,4 +87,6 @@ class CustomTabBarController: UITabBarController {
     func setVolume(volume: Float) {
         musicPlayer?.volume = volume
     }
+    
+   
 }

@@ -554,10 +554,10 @@ exports.updateRank = functions.firestore
           }
 
           // Update winner rank
-          let newWinnerRank = winnerDoc.data().rank + 1;
-          if (newWinnerRank > 60) {
-            newWinnerRank = 60;
-          }
+          const newWinnerRank = winnerDoc.data().rank + 1;
+          // if (newWinnerRank > 60) {
+          //  newWinnerRank = 60;
+          // }
           transaction.update(winnerRef, {rank: newWinnerRank});
 
 
