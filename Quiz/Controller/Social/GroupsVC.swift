@@ -9,17 +9,19 @@ import Foundation
 import UIKit
 
 class GroupsVC: UIViewController{
-    
+    // Outlets
     @IBOutlet weak var tableView: UITableView!
-    
+    // Properties
     var groups: [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] }
     var activeAlert: UIAlertController?
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         // try to get user groups
         FirebaseUser.shared.getUserGroups { result in
@@ -32,7 +34,7 @@ class GroupsVC: UIViewController{
         }
     }
     
-    
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
@@ -78,6 +80,7 @@ class GroupsVC: UIViewController{
         present(alert, animated: true)
     }
     
+    // called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ModifyGroupVC {
             if let group = sender as? FriendGroup {
@@ -87,35 +90,38 @@ class GroupsVC: UIViewController{
     }
 }
 
+// UITableViewDelegate methods for handling table view actions
 extension GroupsVC: UITableViewDelegate {
     
+    // Handle deletion of a group when swiping left on a cell
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let groupToDelete = groups[indexPath.row]
         FirebaseUser.shared.deleteGroup(group: groupToDelete) { result in
             switch result {
             case .success:
-                tableView.reloadData()
+                tableView.reloadData() // Reload the table view to reflect the changes
             case .failure(let error):
                 print("Error removing group : \(error.localizedDescription)")
             }
         }
     }
     
+    // Set the height for table view cells
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0 // Remplacer par la hauteur désirée
+        return 70.0 // Replace with the desired cell height
     }
     
+    // Handle selection of a table view cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
+        tableView.deselectRow(at: indexPath, animated: true) // Deselect the cell for a better user experience
         
         let selectedGroup = groups[indexPath.row]
         print("Selected group : \(selectedGroup)")
         performSegue(withIdentifier: "goToModifyGroups", sender: selectedGroup)
     }
-    
 }
 
-
+// UITableViewDataSource methods for providing data to the table view
 extension GroupsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
@@ -124,11 +130,12 @@ extension GroupsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCell
         
+        // Set the cell label to display the group name
         cell.label.text = groups[indexPath.row].name
         
-        // create the disclosure indicator
+        // Create the disclosure indicator for the cell
         let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-        whiteDisclosureIndicator.tintColor = .white // Remplacez "customDisclosureIndicator" par le nom de votre image.
+        whiteDisclosureIndicator.tintColor = .white // Replace "customDisclosureIndicator" with your image's name.
         whiteDisclosureIndicator.backgroundColor = UIColor.clear
         whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
         cell.accessoryView = whiteDisclosureIndicator
@@ -136,4 +143,5 @@ extension GroupsVC: UITableViewDataSource {
         return cell
     }
 }
+
 

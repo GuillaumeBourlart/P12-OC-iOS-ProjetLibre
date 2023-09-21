@@ -11,15 +11,17 @@ import WebKit
 
 class ProfileVC: UIViewController{
     
+    // Outlets
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var level: UILabel!
-  
+    // Properties
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let imagePickerController = UIImagePickerController()
     var activeAlert: UIAlertController?
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,10 +33,12 @@ class ProfileVC: UIViewController{
         profileImageView.addGestureRecognizer(tapGesture)
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         configureProfileViews()
     }
     
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
@@ -54,14 +58,10 @@ class ProfileVC: UIViewController{
                 self.profileImageView.image = UIImage(data: data)
             }
         }
-        
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
-
         self.username.text = FirebaseUser.shared.userInfo?.username ?? "username"
         self.level.text = "\(FirebaseUser.shared.userInfo?.points ?? 0) xp"
-        
-        
     }
     
     // Call function to log out

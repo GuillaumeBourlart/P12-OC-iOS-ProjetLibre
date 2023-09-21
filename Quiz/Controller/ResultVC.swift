@@ -22,6 +22,7 @@ class ResultVC: UIViewController {
     var isResultAfterGame: Bool?
     var listener: ListenerRegistration?
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,6 +80,7 @@ class ResultVC: UIViewController {
         
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         if isResultAfterGame != nil, isResultAfterGame == true{
             navigationController?.setNavigationBarHidden(true, animated: true)
@@ -87,6 +89,7 @@ class ResultVC: UIViewController {
         displayResults()
     }
     
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         if isResultAfterGame != nil, isResultAfterGame == true{
             navigationController?.setNavigationBarHidden(false, animated: true)

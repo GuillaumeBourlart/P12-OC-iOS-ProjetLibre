@@ -30,6 +30,7 @@ class ModifyQuizVC: UIViewController{
     var usernames = [String: String]()
     var isModifying = false
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         tapGestureRecognizer.cancelsTouchesInView = false
         super.viewDidLoad()
@@ -40,6 +41,7 @@ class ModifyQuizVC: UIViewController{
         }
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         launchQuizButton.isEnabled = true
         addQuestionButton.isEnabled = true

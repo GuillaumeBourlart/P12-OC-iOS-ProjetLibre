@@ -10,24 +10,26 @@ import FirebaseAuth
 import FirebaseFirestore
 import UIKit
 
+// Controller to reset the password
 class ResetPasswordVC: UIViewController {
     
+    // Outlets
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var emailField: CustomTextField!
+    // Properties
+    var resetButtonTimer: Timer? // timer
+    var resetButtonSeconds: Int = 60 // default value for timer
     
-    var resetButtonTimer: Timer?
-    var resetButtonSeconds: Int = 60
-    
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Charger le texte sauvegardé
+        // Load saved text
         emailField.text = UserDefaults.standard.string(forKey: "emailFieldText")
-        
         emailField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         
-        // Calculer le temps restant basé sur l'heure de dernier clic
+        // Calculate remaining time base on lat clic time
         if let lastResetTime = UserDefaults.standard.object(forKey: "lastResetTime") as? Date {
             let timePassed = Int(Date().timeIntervalSince(lastResetTime))
             if timePassed < resetButtonSeconds {
@@ -41,9 +43,9 @@ class ResetPasswordVC: UIViewController {
         }
     }
     
+    // Called each time the text in textField change
     @objc func textFieldDidChange(_ textField: UITextField) {
         if let email = emailField.text, isValidEmail(email) {
-            
             textField.borderStyle = .line
             textField.layer.borderColor = UIColor.green.cgColor
             textField.layer.borderWidth = 1
@@ -52,11 +54,11 @@ class ResetPasswordVC: UIViewController {
             textField.layer.borderWidth = 1
             errorLabel.text = NSLocalizedString("Please, enter a valid email adress.", comment: "")
         }
-        // Sauvegarder le texte chaque fois qu'il change
+        // Save the current text
         UserDefaults.standard.set(textField.text, forKey: "emailFieldText")
     }
     
-    
+    // try to send reset email when user push the reset button
     @IBAction @objc func resetButtonTapped(_ sender: Any) {
         guard let email = emailField.text, isValidEmail(email) else {
             return
@@ -66,12 +68,11 @@ class ResetPasswordVC: UIViewController {
         let string2 = NSLocalizedString("seconds", comment: "")
         resetButton.setTitle(string1 + " \(resetButtonSeconds) " + string2, for: .disabled)
         
-        // Démarrer le Timer
+        // Start the timer
         resetButtonTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateResetButtonTitle(_:)), userInfo: nil, repeats: true)
-        
-        // Sauvegarder l'heure du dernier clic
+        // Save time of last clic
         UserDefaults.standard.set(Date(), forKey: "lastResetTime")
-        
+        // Send the mail
         Auth.auth().sendPasswordReset(withEmail: email) { error in
             if let error = error {
                 print(error.localizedDescription)
@@ -83,13 +84,13 @@ class ResetPasswordVC: UIViewController {
         }
         
     }
-    
+    // Check if email is valid
     func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: email)
     }
-    
+    // refresh button title
     @objc func updateResetButtonTitle(_ timer: Timer) {
         resetButtonSeconds -= 1
         if resetButtonSeconds <= 0 {

@@ -8,13 +8,15 @@
 import Foundation
 import UIKit
 
+// controller in which you can choose to displaye Friends, Groups or invites
 class SocialVC: UIViewController {
-    
+    // Outlets
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet weak var friendsButton: CustomButton2!
     @IBOutlet weak var groupsButton: CustomButton2!
     @IBOutlet weak var invitesButton: CustomButton2!
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         // handle music
@@ -22,7 +24,8 @@ class SocialVC: UIViewController {
             tabBar.playSound(soundName: "appMusic", fileType: "mp3")
         }
     }
-
+    
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Reactivate buttons
@@ -37,31 +40,31 @@ class SocialVC: UIViewController {
     
     // function called when light mode change
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-            super.traitCollectionDidChange(previousTraitCollection)
-            
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                // Mettre à jour l'image lorsque le mode clair/sombre change
-                displayImages()
-            }
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            // update images in light/dark mode
+            displayImages()
         }
-
-    // display images depending of light mode
+    }
+    
+    // display images depending of light/dark mode
     func displayImages() {
         if traitCollection.userInterfaceStyle == .dark {
-            // Mode sombre
+            // light mode
             friendsButton.setImage(UIImage(named: "friendsWhite"), for: .normal)
             groupsButton.setImage(UIImage(named: "groupsWhite"), for: .normal)
             invitesButton.setImage(UIImage(named: "invitesWhite"), for: .normal)
         } else {
-            // Mode clair
+            // dark mode
             friendsButton.setImage(UIImage(named: "friends"), for: .normal)
             groupsButton.setImage(UIImage(named: "groups"), for: .normal)
             invitesButton.setImage(UIImage(named: "invites"), for: .normal)
         }
     }
     
+    // Prepare for the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
         if let button = sender as? UIButton {
             button.isEnabled = false
             // Animate the button
@@ -77,7 +80,7 @@ class SocialVC: UIViewController {
                         button.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
                         button.alpha = 0
                     })
-
+                    
                 }
             }
         }

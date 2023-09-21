@@ -16,6 +16,7 @@ class CustomTabBarController: UITabBarController {
     var soundEffectPlayer2: AVAudioPlayer?
     var countLabel: UILabel?
 
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()

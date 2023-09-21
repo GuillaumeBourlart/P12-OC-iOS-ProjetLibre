@@ -22,6 +22,7 @@ class AddQuestionVC: UIViewController {
     var quiz: Quiz?
     var activeTextField: UITextField?
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         loadExistingQuestion()

@@ -9,21 +9,24 @@ import Foundation
 import UIKit
 import FirebaseAuth
 
+// Controller for login
 class LoginVC: UIViewController{
     
+    //Outlets
     @IBOutlet private weak var userEmail: CustomTextField!
     @IBOutlet private weak var userPassword: CustomTextField!
     @IBOutlet weak var loginButton: CustomButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var resetPasswordButton: UILabel!
-    
     @IBOutlet weak var backgroundForIndicator: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUI()
@@ -35,6 +38,7 @@ class LoginVC: UIViewController{
         resetPasswordButton.isUserInteractionEnabled = true
         resetPasswordButton.addGestureRecognizer(tap)
     }
+    
     // check if user is already connected
     func tryToGetUser() {
         FirebaseUser.shared.getUserInfo { result in
@@ -48,12 +52,12 @@ class LoginVC: UIViewController{
         
     }
     
-    // Fonction appelée lorsque l'utilisateur appuie sur le label
+    // called when user push "reset password" label
     @objc func resetPasswordTapped() {
         performSegue(withIdentifier: "goToResetPassword", sender: self)
     }
     
-    // Func to try to log user
+    // Try to log user when he pushed "log in" button
     @IBAction func loginUser(_ sender: UIButton) {
         CustomAnimations.buttonPressAnimation(for: self.loginButton) {
             if let tabBar = self.tabBarController as? CustomTabBarController {
@@ -96,17 +100,7 @@ class LoginVC: UIViewController{
         }
     }
     
-    // Func that handle keyboard
-    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-        userEmail.resignFirstResponder()
-        userPassword.resignFirstResponder()
-    }
-    
-    
-    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
-        // Vous pouvez utiliser cette méthode pour nettoyer toute donnée si nécessaire
-    }
-    
+    // Set the page design
     func setUI(){
         // Reset UI
         self.errorLabel.isHidden = true
@@ -122,9 +116,17 @@ class LoginVC: UIViewController{
         userPassword.setup(image: UIImage(systemName: "lock"), placeholder: lock, placeholderColor: UIColor(named: "placeholder") ?? .gray)
     }
     
+    // handle keyboard dismissing
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        userEmail.resignFirstResponder()
+        userPassword.resignFirstResponder()
+    }
     
-    
+    // Unwind segue action method
+    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
+    }
 }
+
 extension LoginVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         userEmail.resignFirstResponder()

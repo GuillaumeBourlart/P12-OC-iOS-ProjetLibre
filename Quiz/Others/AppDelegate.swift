@@ -34,20 +34,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set the delegate for Firebase Messaging
         Messaging.messaging().delegate = self
         
-        // chech firebase performance consent 
+        // chech firebase performance consent
         if let userAnswerExists = UserDefaults.standard.object(forKey: "firebasePerformanceEnabled") as? Bool {
-                    Performance.sharedInstance().isDataCollectionEnabled = userAnswerExists
-                } else {
-                    Performance.sharedInstance().isDataCollectionEnabled = true // Active par défaut si la question n'a jamais été posée
-                }
+            Performance.sharedInstance().isDataCollectionEnabled = userAnswerExists
+        } else {
+            Performance.sharedInstance().isDataCollectionEnabled = true // Activate firebase performance until the consent alert is displayed
+        }
         
-        //checkdarMode
-        checkdarkMode()
+        // check current phone mode
+        checkDarkMode()
         
         return true
     }
-    
-    
     
     // This function requests permission to send the user notifications.
     func registerForPushNotifications() {
@@ -125,6 +123,7 @@ protocol LeavePageProtocol {
     func leavePage(completion: @escaping () -> Void)
 }
 
+// handle notifications
 extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
     
     // This function is called when the app successfully registers for push notifications.
@@ -156,19 +155,23 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
     }
     
     
+    // Function to determine how to present a notification when it's received in the foreground.
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Extract the user info from the notification.
         let userInfo = notification.request.content.userInfo
+        
+        // Handle the incoming notification.
         handleNotification(userInfo: userInfo)
         
-        // Obtenez le type de notification
+        // Determine the type of notification.
         guard let notificationType = userInfo["notificationType"] as? String else {
             completionHandler([])
             return
         }
         
-        // Affichez seulement certains types de notifications
+        // Specify how the notification should be presented based on its type.
         switch notificationType {
         case "gameInvitation", "friendRequest", "friendRequestAccepted":
             completionHandler([.banner, .sound])
@@ -177,6 +180,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
         }
     }
     
+    // Function to retrieve the top-most visible view controller.
     func getTopViewController(_ base: UIViewController? = UIApplication.shared.connectedScenes
         .filter({$0.activationState == .foregroundActive})
         .map({$0 as? UIWindowScene})
@@ -184,31 +188,43 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
         .first?.windows
         .filter({$0.isKeyWindow}).first?.rootViewController) -> UIViewController? {
             
+            // If the base controller is a navigation controller, get its top-most controller.
             if let nav = base as? UINavigationController {
                 return getTopViewController(nav.visibleViewController)
             }
             
+            // If the base controller is a tab bar controller, get the selected controller.
             if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
                 return getTopViewController(selected)
             }
             
+            // If there's a presented view controller, get it.
             if let presented = base?.presentedViewController {
                 return getTopViewController(presented)
             }
             
+            // If none of the above, return the base.
             return base
         }
     
+    // Function to handle user actions in response to a delivered notification.
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
+        // Extract user info from the notification response.
         let userInfo = response.notification.request.content.userInfo
+        
+        // Handle the user's response to the notification.
         handleNotification(userInfo: userInfo)
         
+        // Determine the type of the notification.
         guard let notificationType = userInfo["notificationType"] as? String else {
             completionHandler()
             return
         }
+        
+        // Check if the current top-most view controller conforms to the `LeavePageProtocol`.
+        // If yes, trigger the `leavePage` action. Else, handle the notification directly.
         if let currentViewController = getTopViewController(), let viewControllerToLeave = currentViewController as? LeavePageProtocol {
             viewControllerToLeave.leavePage {
                 switch notificationType {
@@ -242,189 +258,186 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
         }
     }
     
+    
     // This function handles silent push notifications (also known as data notifications).
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         handleNotification(userInfo: userInfo)
-        
         completionHandler(.newData)
     }
     
-    // This function determines what action to take based on the notification.
+    
+    // Function to handle notifications based on the provided user info.
     private func handleNotification(userInfo: [AnyHashable : Any]) {
-        // Insert notification handling code here.
-        // You can perform a switch on userInfo to determine what action to take.
+        // Retrieve the type of notification from user info.
         guard let notificationType = userInfo["notificationType"] as? String else { return }
         
         switch notificationType {
         case "gameInvitation":
+            // Check if a lobby ID is present for game invitation notifications.
             guard userInfo["lobbyID"] is String else { return }
-            // Utilisez lobbyID pour actualiser les invitations
-            FirebaseUser.shared.getUserInfo { result in
-                switch result {
-                case .failure(let error): print(error)
-                case .success(): print("success")
-                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
-                }
-                
-            }
-        case "friendRequest":
-            // Actualisez les demandes d'amis
-            FirebaseUser.shared.getUserInfo { result in
-                switch result {
-                case .failure(let error): print(error)
-                case .success(): print("success")
-                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
-                }
-            }
-        case "friendRequestAccepted":
-            // Actualisez les demandes d'amis
-            FirebaseUser.shared.getUserInfo { result in
-                switch result {
-                case .failure(let error): print(error)
-                case .success(): print("success")
-                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
-                }
-            }
-        case "friendRequestCancelled":
-            // Actualisez les demandes d'amis
-            FirebaseUser.shared.getUserInfo { result in
-                switch result {
-                case .failure(let error): print(error)
-                case .success(): print("success")
-                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
-                }
-            }
-        case "friendRequestRejected":
-            // Actualisez les demandes d'amis
-            FirebaseUser.shared.getUserInfo { result in
-                switch result {
-                case .failure(let error): print(error)
-                case .success(): print("success")
-                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
-                }
-            }
-        case "friendRemoved":
-            // Actualisez les demandes d'amis
-            FirebaseUser.shared.getUserInfo { result in
-                switch result {
-                case .failure(let error): print(error)
-                case .success(): print("success")
-                    NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
-                }
-            }
+            // Update the user's information.
+            updateUserInfo()
+            
+            // Handle multiple friend-related notification types.
+        case "friendRequest",
+            "friendRequestAccepted",
+            "friendRequestCancelled",
+            "friendRequestRejected",
+            "friendRemoved":
+            // Update the user's information.
+            updateUserInfo()
+            
         default:
+            // If the notification type is not recognized, do nothing.
             break
         }
     }
     
+    // Function to retrieve and update the user's information from Firebase.
+    private func updateUserInfo() {
+        // Request user information from Firebase.
+        FirebaseUser.shared.getUserInfo { result in
+            switch result {
+            case .failure(let error):
+                // If there's an error, print it.
+                print(error)
+            case .success():
+                // If successful, print success and post a notification to update data.
+                print("success")
+                NotificationCenter.default.post(name: NSNotification.Name("DataUpdated"), object: nil)
+            }
+        }
+    }
     
+    // Navigate to friends page from any location
     func navigateToFriendsPage() {
-        // Obtenez le contrôleur de vue actuel
         guard let tabBarController = mainTabBarController else {
             print("Unable to find the tab bar controller.")
             return
         }
         
-        
-        // Sélectionnez le navigationController contenant la page Profil
-        // Ici, on suppose que le navigationController est le deuxième onglet. Modifiez l'index en fonction de votre configuration.
+        // Assuming the navigation controller containing the profile page is the third tab
         tabBarController.selectedIndex = 2
         
-        // Assurez-vous que le navigationController est bien le contrôleur de vue sélectionné
         guard let navigationController = tabBarController.selectedViewController as? UINavigationController else {
             print("Expected a navigation controller.")
             return
         }
         
-        // Retour à la vue de base
+        navigateToSocialIfNeeded(on: navigationController)
+        navigateToFriends(on: navigationController)
+    }
+    
+    // Navigate to the social view controller if not already displayed
+    private func navigateToSocialIfNeeded(on navigationController: UINavigationController) {
         navigationController.popToRootViewController(animated: false)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil) // Remplacez "Main" par le nom de votre storyboard
-        // Naviguez vers la page Profil, si ce n'est pas déjà la vue de base
-        if !(navigationController.topViewController is SocialVC) {
-            
-            if let profileViewController = storyboard.instantiateViewController(withIdentifier: "ProfilVC") as? SocialVC {
-                // Utilisez friendsViewController ici
-                navigationController.pushViewController(profileViewController, animated: false)
-            }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if !(navigationController.topViewController is SocialVC),
+           let profileViewController = storyboard.instantiateViewController(withIdentifier: "SocialVC") as? SocialVC {
+            navigationController.pushViewController(profileViewController, animated: false)
         }
-        
-        
+    }
+    
+    // Navigate to the friends view controller
+    private func navigateToFriends(on navigationController: UINavigationController) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let friendsViewController = storyboard.instantiateViewController(withIdentifier: "FriendsVC") as? FriendsVC {
-            // Utilisez friendsViewController ici
             navigationController.pushViewController(friendsViewController, animated: true)
         }
-        
     }
     
+    // Function to join a game based on the provided lobby ID
     func joinGameFromInvitation(lobbyID: String) {
+        // Attempt to join the game room
         Game.shared.joinRoom(lobbyId: lobbyID) { result in
             switch result {
-            case .failure(let error): print(error)
+            case .failure(let error):
+                // Print the error if joining fails
+                print(error)
             case .success():
-                // Obtenez le contrôleur de vue actuel
-                guard let tabBarController = self.mainTabBarController else {
-                    print("Unable to find the tab bar controller.")
-                    return
-                }
-                
-                tabBarController.selectedIndex = 0
-                
-                // Assurez-vous que le navigationController est bien le contrôleur de vue sélectionné
-                guard let navigationController = tabBarController.selectedViewController as? UINavigationController else {
-                    print("Expected a navigation controller.")
-                    return
-                }
-                
-                // Retour à la vue de base
-                navigationController.popToRootViewController(animated: false)
-                let storyboard = UIStoryboard(name: "Main", bundle: nil) // Remplacez "Main" par le nom de votre storyboard
-                // Naviguez vers la page Profil, si ce n'est pas déjà la vue de base
-                if !(navigationController.topViewController is QuickPlayVC) {
-                    
-                    if let profileViewController = storyboard.instantiateViewController(withIdentifier: "HomeVC") as? QuickPlayVC {
-                        // Utilisez friendsViewController ici
-                        navigationController.pushViewController(profileViewController, animated: false)
-                    }
-                }
-                
-                
-                if let roomViewController = storyboard.instantiateViewController(withIdentifier: "PrivateLobbyVC") as? PrivateLobbyVC {
-                    // Ici, vous pouvez définir les propriétés nécessaires sur `roomViewController`
-                    roomViewController.lobbyId = lobbyID
-                    roomViewController.isCreator = false
-                    // Utilisez friendsViewController ici
-                    navigationController.pushViewController(roomViewController, animated: true)
-                }
+                // Navigate to the appropriate view controller if joining is successful
+                self.navigateAfterJoining(lobbyID: lobbyID)
             }
         }
-        
     }
     
+    // Function to navigate the user to the relevant view controller after successfully joining the game
+    func navigateAfterJoining(lobbyID: String) {
+        // Ensure the main tab bar controller exists
+        guard let tabBarController = self.mainTabBarController else {
+            print("Unable to find the tab bar controller.")
+            return
+        }
+        
+        // Set the selected index to the first tab
+        tabBarController.selectedIndex = 0
+        
+        // Ensure the selected view controller is a navigation controller
+        guard let navigationController = tabBarController.selectedViewController as? UINavigationController else {
+            print("Expected a navigation controller.")
+            return
+        }
+        
+        // Navigate to the profile view controller if it's not already visible
+        self.navigateToProfileIfNeeded(on: navigationController)
+        // Navigate to the room view controller
+        self.navigateToRoom(lobbyID: lobbyID, on: navigationController)
+    }
     
+    // Function to navigate to the profile view controller if it's not already the top view controller
+    func navigateToProfileIfNeeded(on navigationController: UINavigationController) {
+        // Navigate to the root view controller of the navigation stack
+        navigationController.popToRootViewController(animated: false)
+        
+        // Retrieve the main storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // Check if the top view controller isn't the QuickPlayVC
+        if !(navigationController.topViewController is QuickPlayVC),
+           let profileViewController = storyboard.instantiateViewController(withIdentifier: "QuickPlayVC") as? QuickPlayVC {
+            // Push the profile view controller to the navigation stack
+            navigationController.pushViewController(profileViewController, animated: false)
+        }
+    }
+    
+    // Function to navigate to the room view controller and set its properties
+    func navigateToRoom(lobbyID: String, on navigationController: UINavigationController) {
+        // Retrieve the main storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // Instantiate the room view controller from the storyboard
+        if let roomViewController = storyboard.instantiateViewController(withIdentifier: "PrivateLobbyVC") as? PrivateLobbyVC {
+            // Set the properties of the room view controller
+            roomViewController.lobbyId = lobbyID
+            roomViewController.isCreator = false
+            
+            // Push the room view controller to the navigation stack
+            navigationController.pushViewController(roomViewController, animated: true)
+        }
+    }
 }
 
-
-// Handle sound and darkmode in the app
+// Handle dark mode settings in the app
 extension AppDelegate {
     
-    
-    func checkdarkMode() {
-        // Vérifiez la valeur enregistrée pour "darkmode" dans UserDefaults
+    func checkDarkMode() {
+        // Check the saved value for "darkmode" in UserDefaults
         let defaults = UserDefaults.standard
         if let darkModeOn = defaults.object(forKey: "darkmode") as? Bool {
-            // Si darkModeOn est true, réglez le style d'interface utilisateur sur .dark, sinon sur .light
+            // If darkModeOn is true, set the UI style to .dark, otherwise to .light
             if darkModeOn {
                 window?.overrideUserInterfaceStyle = .dark
             } else {
                 window?.overrideUserInterfaceStyle = .light
             }
         } else {
-            // Si aucune valeur n'est enregistrée pour "darkmode", réglez le style d'interface utilisateur sur le style par défaut
+            // If no value is saved for "darkmode", set the UI style to the default style
             window?.overrideUserInterfaceStyle = .unspecified
         }
-        
     }
 }
+
 
 

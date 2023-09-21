@@ -13,10 +13,12 @@ class JoinWithCodeVC: UIViewController {
     @IBOutlet weak var codeField: UITextField!
     @IBOutlet weak var joinButton: UIButton!
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         self.joinButton.isEnabled = true
         

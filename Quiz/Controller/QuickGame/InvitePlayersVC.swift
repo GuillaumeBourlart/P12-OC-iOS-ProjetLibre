@@ -20,6 +20,7 @@ class InvitePlayersVC: UIViewController{
     var selectedFriends: [String] = []
     var selectedGroups: [FriendGroup] = []
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -28,6 +29,7 @@ class InvitePlayersVC: UIViewController{
         loadFriends()
     }
     
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)

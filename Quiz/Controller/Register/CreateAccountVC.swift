@@ -9,23 +9,24 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
+// Controller to create ana ccount
 class CreateAccountVC: UIViewController {
     
+    // Outlets
     @IBOutlet private weak var userPseudo: CustomTextField!
     @IBOutlet private weak var userPassword: CustomTextField!
     @IBOutlet private weak var userEmail: CustomTextField!
     @IBOutlet weak var signinButton: CustomButton!
     @IBOutlet weak var errorLabel: UILabel!
+    // Properties
+    var activeTextField: UITextField? // textfield where user write
     
-    var activeTextField: UITextField?
-    
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear(_:)), name: UIViewController.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear(_:)), name: UIViewController.keyboardWillHideNotification, object: nil)
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUI()
@@ -33,17 +34,17 @@ class CreateAccountVC: UIViewController {
         self.signinButton.isEnabled = true
     }
     
-    // check if user is already connected
+    // Check if user is already connected
     func tryToGetUser(){
-            FirebaseUser.shared.getUserInfo { result in
-                switch result {
-                case .failure(let error): print(error)
-                case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
-                }
+        FirebaseUser.shared.getUserInfo { result in
+            switch result {
+            case .failure(let error): print(error)
+            case .success(): self.performSegue(withIdentifier: "goToMenu", sender: self)
             }
+        }
     }
     
-    // try to sign up user
+    // Try to sign up user
     @IBAction func signUpUser(_ sender: Any) {
         CustomAnimations.buttonPressAnimation(for: self.signinButton) {
             if let tabBar = self.tabBarController as? CustomTabBarController {
@@ -72,6 +73,7 @@ class CreateAccountVC: UIViewController {
         }
     }
     
+    // Update UI if there is an error (display the error)
     func updateUIForError(_ error: String, textField: UITextField?) {
         self.errorLabel.text = error
         self.errorLabel.isHidden = false
@@ -83,8 +85,8 @@ class CreateAccountVC: UIViewController {
         }
     }
     
+    // Set page's UI
     func setUI(){
-        
         // Reset UI
         self.errorLabel.isHidden = true
         userEmail.layer.borderWidth = 0.0
@@ -94,11 +96,11 @@ class CreateAccountVC: UIViewController {
         // MAIL
         let mail = NSLocalizedString("Email", comment: "")
         userEmail.setup(image: UIImage(systemName: "mail"), placeholder: mail, placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
-
+        
         // PASSWORD
         let password = NSLocalizedString("Password", comment: "")
         userPassword.setup(image: UIImage(systemName: "lock"), placeholder: password, placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
-
+        
         // USERNAME
         let username = NSLocalizedString("Username", comment: "")
         userPseudo.setup(image: UIImage(systemName: "person.fill"), placeholder: username, placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
@@ -112,7 +114,7 @@ class CreateAccountVC: UIViewController {
         userPassword.resignFirstResponder()
     }
     
-    
+    // Dismiss the controller
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -126,26 +128,5 @@ extension CreateAccountVC: UITextFieldDelegate {
         userPseudo.resignFirstResponder()
         userPassword.resignFirstResponder()
         return true
-    }
-    
-    @objc func keyboardAppear(_ notification: Notification) {
-        guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let keyboardFrame = frame.cgRectValue
-        guard let activeTextField = activeTextField else { return }
-        let activeTextFieldFrame = activeTextField.convert(activeTextField.bounds, to: self.view)
-        
-        if self.view.frame.origin.y == 0 && activeTextFieldFrame.maxY > keyboardFrame.origin.y {
-            self.view.frame.origin.y -= activeTextFieldFrame.maxY - keyboardFrame.origin.y + 20 // +20 for a little extra space
-        }
-    }
-    
-    @objc func keyboardDisappear(_ notification: Notification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
     }
 }

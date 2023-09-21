@@ -20,11 +20,13 @@ class CompetitiveVC: UIViewController{
     
     @IBOutlet weak var rankView: UIView!
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         FirebaseUser.shared.getUserInfo { result in
             switch result {

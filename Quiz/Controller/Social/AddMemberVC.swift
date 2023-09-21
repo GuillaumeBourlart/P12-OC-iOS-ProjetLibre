@@ -9,15 +9,15 @@ import Foundation
 import UIKit
 
 class AddMemberVC: UIViewController {
-    
+    // Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var validateButton: CustomButton!
-    
-    //properties
+    // Properties
     var group: FriendGroup?
     var friends: [String: String] = [:]
     var selectedFriends: [String] = []
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         loadFriends()
@@ -55,9 +55,10 @@ class AddMemberVC: UIViewController {
         }
     }
 }
-
-
+// UITableViewDelegate and UITableViewDataSource methods for handling table view actions
 extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
+    
+    // Configure and provide cells for the table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
 
@@ -75,14 +76,18 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
+    // Define the number of rows in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return friends.count
     }
     
+    // Define the height for table view rows
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70.0
     }
    
+    // Handle row selection and updating the selection state
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Get memberId from friends keys
         let memberId = Array(self.friends.keys)[indexPath.row]
@@ -100,6 +105,6 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
         tableView.reloadRows(at: [indexPath], with: .none)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
 }
+
 

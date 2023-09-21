@@ -20,7 +20,7 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     var category: Int?
     var activeAlert: UIAlertController?
     
-    
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()
@@ -37,9 +37,9 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
                 if UserDefaults.standard.object(forKey: "firebasePerformanceEnabled") == nil {
                     showFirebaseConsentDialog()
                 }
-        
     }
     
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it

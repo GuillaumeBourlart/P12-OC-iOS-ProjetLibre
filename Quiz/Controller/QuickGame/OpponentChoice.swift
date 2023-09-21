@@ -21,11 +21,12 @@ class OpponentChoice: UIViewController {
     var quizId: String?
     
     
-    
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         for button in self.buttons {
             button.isEnabled = true

@@ -30,12 +30,14 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     var usernamesForUIDs = [String: String]()
     var activeAlert: UIAlertController?
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         tabBarController?.tabBar.isHidden = true
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let lobbyId = lobbyId {
@@ -56,6 +58,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         }
     }
     
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let listener = listener {

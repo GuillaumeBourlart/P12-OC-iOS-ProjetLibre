@@ -17,6 +17,7 @@ class QuestionResultVC: UIViewController {
     var question: [String: UniversalQuestion]?
     var usernamesForUIDs = [String: String]()
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         

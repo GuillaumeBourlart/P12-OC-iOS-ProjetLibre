@@ -41,6 +41,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     
     @IBOutlet weak var scoreLabel: UILabel!
     
+    // Method called when view is loaded
     override func viewDidLoad() {
            super.viewDidLoad()
            setUpUI()
@@ -129,15 +130,14 @@ class GameVC: UIViewController, LeavePageProtocol {
            }
        }
     
-    
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         questionLabel.layer.masksToBounds = true
         questionLabel.layer.cornerRadius = 15
-        
-        
     }
     
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)

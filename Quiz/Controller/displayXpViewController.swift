@@ -17,13 +17,7 @@ class displayXpViewControler: UIViewController {
     var isResultAfterGame: Bool?
     var gameID: String?
     
-    override func viewWillAppear(_ animated: Bool) {
-        if isResultAfterGame != nil, isResultAfterGame == true{
-            navigationController?.setNavigationBarHidden(true, animated: true)
-            tabBarController?.tabBar.isHidden = true
-        }
-    }
-    
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,6 +42,15 @@ class displayXpViewControler: UIViewController {
             self.animateProgress()
         }
     }
+    
+    // Method called when view will appear
+    override func viewWillAppear(_ animated: Bool) {
+        if isResultAfterGame != nil, isResultAfterGame == true{
+            navigationController?.setNavigationBarHidden(true, animated: true)
+            tabBarController?.tabBar.isHidden = true
+        }
+    }
+    
     @IBAction func continueButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "goToResult", sender: gameID)
     }

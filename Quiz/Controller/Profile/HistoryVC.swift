@@ -26,6 +26,7 @@ class HistoryVC: UIViewController {
         }
     }
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         // get all completed games of user

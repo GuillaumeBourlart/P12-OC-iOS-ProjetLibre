@@ -10,25 +10,32 @@ import FirebaseFirestore
 import FirebaseAuth
 import UIKit
 
+// Controller to consult all invites
 class FriendsVC: UIViewController{
-    
+    // Outlets
     @IBOutlet weak var switchControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    // Properties
+    // Listener for user data updates
+        var userListener: ListenerRegistration?
+        // Dictionary to store user's friends with their usernames
+        var friends: [String: String] = [:]
+        // Dictionary to store received friend requests with sender usernames
+        var receivedFriendRequests: [String: String] = [:]
+        // Dictionary to store sent friend requests with receiver usernames
+        var sentFriendRequests: [String: String] = [:]
+        // Boolean flag to track whether received friend requests are displayed
+        var isShowingReceivedFriendRequests = false
+        // Boolean flag to track whether sent friend requests are displayed
+        var isShowingSentFriendRequests = false
+        // An active alert controller to manage displayed alerts
+        var activeAlert: UIAlertController?
+        // Animation for changing background color during pull-to-refresh
+        var colorChangeAnimation: CABasicAnimation?
+        // Layer for the pull-to-refresh color animation
+        var borderLayer: CALayer?
     
-    // variables
-    var userListener: ListenerRegistration?
-    
-    var friends: [String: String] = [:]
-    var receivedFriendRequests: [String: String] = [:]
-    var sentFriendRequests: [String: String] = [:]
-    
-    var isShowingReceivedFriendRequests = false
-    var isShowingSentFriendRequests = false
-    var activeAlert: UIAlertController?
-    
-    var colorChangeAnimation: CABasicAnimation?
-    var borderLayer: CALayer?
-    
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         createAnimatio()
@@ -39,10 +46,11 @@ class FriendsVC: UIViewController{
             refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         refreshControl.tintColor = UIColor.clear
         refreshControl.subviews.first?.backgroundColor = UIColor.clear
-            // Ajouter le UIRefreshControl à votre UITableView
+            // Add UIRefreshControl to UITableView
             tableView.refreshControl = refreshControl
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         loadArrays()
         onSwitch(switchControl)
@@ -52,6 +60,7 @@ class FriendsVC: UIViewController{
         switchControl.setTitleTextAttributes(attributesSelected, for: .selected)
     }
     
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
@@ -218,17 +227,20 @@ class FriendsVC: UIViewController{
 
 
 
+// UITableViewDataSource and UITableViewDelegate methods
 extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
+    // Determine the number of rows based on the current view mode
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isShowingReceivedFriendRequests {
             return receivedFriendRequests.isEmpty ? 1 : receivedFriendRequests.count
-        }else if isShowingSentFriendRequests {
+        } else if isShowingSentFriendRequests {
             return sentFriendRequests.isEmpty ? 1 : sentFriendRequests.count
-        }else{
+        } else {
             return friends.isEmpty ? 1 : friends.count
         }
     }
     
+    // Configure and return table view cells based on the current view mode and data availability
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var data: [String: String]
         if isShowingReceivedFriendRequests {
@@ -240,12 +252,15 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
         }
         
         if data.isEmpty {
+            // Create an empty cell with no separator
             let cell = tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath) as! EmptyCell
             self.tableView.separatorStyle = .none
             cell.isUserInteractionEnabled = false
             return cell
         } else {
             self.tableView.separatorStyle = .singleLine
+            
+            // Create and configure a custom cell with friend information
             let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! CustomCell
             let username = Array(data.values)[indexPath.row]
             if let label = cell.label {
@@ -259,26 +274,26 @@ extension FriendsVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // Set the height for table view cells based on the current view mode and data availability
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if isShowingReceivedFriendRequests {
             return receivedFriendRequests.isEmpty ? tableView.bounds.size.height : 50.0
-        }else if isShowingSentFriendRequests {
+        } else if isShowingSentFriendRequests {
             return sentFriendRequests.isEmpty ? tableView.bounds.size.height : 50.0
-        }else{
+        } else {
             return friends.isEmpty ? tableView.bounds.size.height : 50.0
         }
     }
 }
 
-
+// CustomCellDelegate methods
 extension FriendsVC: CustomCellDelegate {
-    
-    
+    // Handle tapping the "Add" button in a custom cell
     func didTapAddButton(in cell: CustomCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             let friendUID = Array(receivedFriendRequests.keys)[indexPath.row]
             let friendUsername = Array(receivedFriendRequests.values)[indexPath.row]
-            // Ajouter l'ami à la liste d'amis ou effectuer d'autres actions avec l'UID de l'ami
+            // Add the friend to the list of friends or perform other actions with the friend's UID
             FirebaseUser.shared.acceptFriendRequest(friendID: friendUID, friendUsername: friendUsername) { result in
                 switch result {
                 case .success():
@@ -290,18 +305,18 @@ extension FriendsVC: CustomCellDelegate {
         }
     }
     
+    // Handle tapping the "Remove" button in a custom cell
     func didTapRemoveButton(in cell: CustomCell) {
-        
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
         
-        let friendUID : String?
-        
+        let friendUID: String?
         
         if isShowingReceivedFriendRequests {
             friendUID = Array(receivedFriendRequests.keys)[indexPath.row]
             if let friendUID = friendUID {
+                // Reject the received friend request
                 FirebaseUser.shared.rejectFriendRequest(friendID: friendUID) { result in
                     switch result {
                     case .success:
@@ -311,9 +326,10 @@ extension FriendsVC: CustomCellDelegate {
                     }
                 }
             }
-        }else if isShowingSentFriendRequests {
+        } else if isShowingSentFriendRequests {
             friendUID = Array(sentFriendRequests.keys)[indexPath.row]
             if let friendUID = friendUID {
+                // Reject the sent friend request
                 FirebaseUser.shared.rejectFriendRequest(friendID: friendUID) { result in
                     switch result {
                     case .success:
@@ -323,9 +339,10 @@ extension FriendsVC: CustomCellDelegate {
                     }
                 }
             }
-        }else if !isShowingSentFriendRequests, !isShowingReceivedFriendRequests {
+        } else if !isShowingSentFriendRequests, !isShowingReceivedFriendRequests {
             friendUID = Array(friends.keys)[indexPath.row]
             if let friendUID = friendUID {
+                // Remove the friend from the list of friends
                 FirebaseUser.shared.removeFriend(friendID: friendUID) { result in
                     switch result {
                     case .success:
@@ -339,11 +356,13 @@ extension FriendsVC: CustomCellDelegate {
     }
 }
 
+// UIScrollViewDelegate method
 extension FriendsVC: UIScrollViewDelegate {
+    // Handle scrolling in the table view to transform an empty cell's label
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let emptyCell = tableView.visibleCells.first(where: { $0 is EmptyCell }) as? EmptyCell {
             let pullDistance = -tableView.contentOffset.y
-            let scale = min(max(pullDistance / 50, 1.0), 10.0) // ici on divise par 50 au lieu de 100
+            let scale = min(max(pullDistance / 50, 1.0), 10.0) // Here, we divide by 50 instead of 100
             emptyCell.label.transform = CGAffineTransform(scaleX: scale, y: scale)
         }
     }

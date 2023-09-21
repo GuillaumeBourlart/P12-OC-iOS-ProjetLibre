@@ -9,14 +9,19 @@ import Foundation
 import UIKit
 import Firebase
 
+// Controller to consult all invites
 class InvitesVC: UIViewController {
-    
+    // Outlets
     @IBOutlet weak var tableView: UITableView!
+    // Properties
+    // Dictionary to store invites with usernames as keys and lobby IDs as values
+        var invites: [String: String] = [:]
+        // Animation for changing background color during pull-to-refresh
+        var colorChangeAnimation: CABasicAnimation?
+        // Layer for the pull-to-refresh color animation
+        var borderLayer: CALayer?
     
-    var invites: [String: String] = [:]
-    var colorChangeAnimation: CABasicAnimation?
-    var borderLayer: CALayer?
-    
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
@@ -31,6 +36,7 @@ class InvitesVC: UIViewController {
         tableView.refreshControl = refreshControl
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         // load invites
         loadInvites()
@@ -73,7 +79,6 @@ class InvitesVC: UIViewController {
     
     // create the color animation
     func createAnimatio() {
-        // Création de l'animation de couleur
         colorChangeAnimation = CABasicAnimation(keyPath: "backgroundColor")
         colorChangeAnimation?.fromValue = UIColor.green.cgColor
         colorChangeAnimation?.toValue = UIColor.red.cgColor
@@ -85,13 +90,12 @@ class InvitesVC: UIViewController {
     // animate the top border in multicolor
     func startColorChangeAnimation() {
         if let animation = colorChangeAnimation {
-            // Créez le layer pour la bordure en haut
+            // Create layer for the border
             borderLayer = CALayer()
             guard let borderLayer = borderLayer else {return}
             borderLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 8.0)
             borderLayer.backgroundColor = UIColor.green.cgColor
-
-            // Ajoutez le layer à la vue
+            // Add the layer to tableView
             tableView.layer.addSublayer(borderLayer)
             
             borderLayer.add(animation, forKey: "colorChange")
@@ -119,7 +123,7 @@ class InvitesVC: UIViewController {
         }
     }
     
-    
+    // Prepare for the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? PrivateLobbyVC {
             destination.lobbyId = sender as? String
@@ -138,34 +142,41 @@ class InvitesVC: UIViewController {
         }
     }
     
+    // Unwind segue action method
     @IBAction func unwindToInvites(segue: UIStoryboardSegue) {
-        // Vous pouvez utiliser cette méthode pour effectuer des actions lorsque l'unwind segue est exécuté.
     }
     
     
 }
 
-
+// UITableViewDelegate methods
 extension InvitesVC: UITableViewDelegate {
+    // Set the height for table view cells based on data or a default value
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return invites.isEmpty ? tableView.bounds.size.height : 70.0
     }
     
+    // Handle selection of a table view cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        // Retrieve the selected invite and join the lobby
         let selectedInvite = Array(invites)[indexPath.row]
         self.joinLobby(lobbyId: selectedInvite.value)
     }
 }
 
+// UITableViewDataSource methods
 extension InvitesVC: UITableViewDataSource {
+    // Return the number of rows in the table view based on data or a default value
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return invites.isEmpty ? 1 : invites.count
     }
     
+    // Create and configure table view cells based on data or a default empty cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if invites.isEmpty {
+            // Create an empty cell with a "Pull to refresh" message
             let emptyCell = tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath) as! EmptyCell
             emptyCell.label.text = NSLocalizedString("Pull to refresh", comment: "")
             self.tableView.separatorStyle = .none
@@ -174,13 +185,14 @@ extension InvitesVC: UITableViewDataSource {
         } else {
             self.tableView.separatorStyle = .singleLine
             
+            // Create and configure a custom cell with invite information
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
             let invite = Array(invites)[indexPath.row]
             let userText = NSLocalizedString("User", comment: "")
             let lobbyText = NSLocalizedString("Lobby", comment: "")
             cell.label.text = userText + ": \(invite.key) - " + lobbyText + invite.value
 
-            // create the disclosure indicator
+            // Create a disclosure indicator
             let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
             whiteDisclosureIndicator.tintColor = .white
             whiteDisclosureIndicator.backgroundColor = UIColor.clear
@@ -191,12 +203,13 @@ extension InvitesVC: UITableViewDataSource {
     }
 }
 
-
+// UIScrollViewDelegate method
 extension InvitesVC: UIScrollViewDelegate {
+    // Handle scrolling in the table view to transform an empty cell's label
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let emptyCell = tableView.visibleCells.first(where: { $0 is EmptyCell }) as? EmptyCell {
             let pullDistance = -tableView.contentOffset.y
-            let scale = min(max(pullDistance / 50, 1.0), 10.0) // ici on divise par 50 au lieu de 100
+            let scale = min(max(pullDistance / 50, 1.0), 10.0)
             emptyCell.label.transform = CGAffineTransform(scaleX: scale, y: scale)
         }
     }

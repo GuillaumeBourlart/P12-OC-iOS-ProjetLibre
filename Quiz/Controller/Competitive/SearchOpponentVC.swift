@@ -16,17 +16,19 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
     var isCancelSearchCalled = false
     var gameFound = false
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         tabBarController?.tabBar.isHidden = true
         super.viewDidLoad()
         findOpponent()
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         
     }
     
-    
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)
             if let listener = listener {

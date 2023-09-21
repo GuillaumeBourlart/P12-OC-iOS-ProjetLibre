@@ -15,10 +15,12 @@ class QuizzesVC: UIViewController{
     var quizzes: [Quiz] { return FirebaseUser.shared.userQuizzes ?? [] }
     var activeAlert: UIAlertController?
     
+    // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
             // get all user's quizzes
             FirebaseUser.shared.getUserQuizzes { result in
@@ -29,9 +31,9 @@ class QuizzesVC: UIViewController{
                     print("Error getting quizzes : \(error.localizedDescription)")
                 }
             }
-        
     }
     
+    // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
