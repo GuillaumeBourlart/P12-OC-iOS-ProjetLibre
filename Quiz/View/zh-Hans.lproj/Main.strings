@@ -1,425 +1,397 @@
-/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "0FS-gv-tPK"; */
+/* 类 = "UITextField"; 文本 = "rgvfcdxswsxdcf"; 对象ID = "0FS-gv-tPK"; */
 "0FS-gv-tPK.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UINavigationItem"; title = "Groups"; ObjectID = "0Ih-Hi-KQ6"; */
-"0Ih-Hi-KQ6.title" = "群组";
+/* 类 = "UINavigationItem"; 标题 = "小组"; 对象ID = "0Ih-Hi-KQ6"; */
+"0Ih-Hi-KQ6.title" = "小组";
 
-/* Class = "UIButton"; configuration.title = "Join room"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.configuration.title" = "加入房间";
+/* 类 = "UIButton"; 配置.标题 = "加入"; 对象ID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.configuration.title" = "加入";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "加入房间"; 对象ID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.normalTitle" = "加入房间";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0lb-sS-1xO"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "0lb-sS-1xO"; */
 "0lb-sS-1xO.normalTitle" = "按钮";
 
-/* Class = "UIButton"; configuration.title = "Create"; ObjectID = "1cu-04-f1V"; */
+/* 类 = "UIButton"; 配置.标题 = "创建"; 对象ID = "1cu-04-f1V"; */
 "1cu-04-f1V.configuration.title" = "创建";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "1cu-04-f1V"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "1cu-04-f1V"; */
 "1cu-04-f1V.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "1oU-Dd-LR2"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "1oU-Dd-LR2"; */
 "1oU-Dd-LR2.text" = "标签";
 
-/* Class = "UIButton"; configuration.title = "Groups"; ObjectID = "2bv-Ne-Wrk"; */
-"2bv-Ne-Wrk.configuration.title" = "群组";
+/* 类 = "UIButton"; 配置.标题 = "小组"; 对象ID = "2bv-Ne-Wrk"; */
+"2bv-Ne-Wrk.configuration.title" = "小组";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "2bv-Ne-Wrk"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "2bv-Ne-Wrk"; */
 "2bv-Ne-Wrk.normalTitle" = "按钮";
 
-/* Class = "UITextField"; placeholder = "email"; ObjectID = "2ff-Bb-QW1"; */
+/* 类 = "UITextField"; 占位符 = "电子邮件"; 对象ID = "2ff-Bb-QW1"; */
 "2ff-Bb-QW1.placeholder" = "电子邮件";
 
-/* Class = "UILabel"; text = "username"; ObjectID = "2w2-M6-4dv"; */
+/* 类 = "UILabel"; 文本 = "用户名"; 对象ID = "2w2-M6-4dv"; */
 "2w2-M6-4dv.text" = "用户名";
 
-/* Class = "UILabel"; text = "Players"; ObjectID = "3RA-CS-JYe"; */
+/* 类 = "UILabel"; 文本 = "玩家"; 对象ID = "3RA-CS-JYe"; */
 "3RA-CS-JYe.text" = "玩家";
 
-/* Class = "UIButton"; configuration.title = "GO!"; ObjectID = "4lN-hZ-XPS"; */
-"4lN-hZ-XPS.configuration.title" = "开始！";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "4lN-hZ-XPS"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "4lN-hZ-XPS"; */
 "4lN-hZ-XPS.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "5bM-De-r7t"; */
-"5bM-De-r7t.text" = "标签";
+/* 类 = "UILabel"; 文本 = "选择模式"; 对象ID = "5LP-rN-Y1y"; */
+"5LP-rN-Y1y.text" = "选择模式";
 
-/* Class = "UIButton"; configuration.title = "Leave"; ObjectID = "5gm-hJ-CWH"; */
-"5gm-hJ-CWH.configuration.title" = "离开";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "5gm-hJ-CWH"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "5gm-hJ-CWH"; */
 "5gm-hJ-CWH.normalTitle" = "按钮";
 
-/* Class = "UIButton"; configuration.title = "Log in"; ObjectID = "676-G7-ZuZ"; */
+/* 类 = "UILabel"; 文本 = "恭喜！"; 对象ID = "5wI-kt-0u1"; */
+"5wI-kt-0u1.text" = "恭喜！";
+
+/* 类 = "UIButton"; 配置.标题 = "登录"; 对象ID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.configuration.title" = "登录";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "676-G7-ZuZ"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Questions : "; ObjectID = "6UV-Lc-xW9"; */
+/* 类 = "UILabel"; 文本 = "问题："; 对象ID = "6UV-Lc-xW9"; */
 "6UV-Lc-xW9.text" = "问题：";
 
-/* Class = "UITextField"; placeholder = "Email"; ObjectID = "6n4-qw-W9F"; */
+/* 类 = "UITextField"; 占位符 = "电子邮件"; 对象ID = "6n4-qw-W9F"; */
 "6n4-qw-W9F.placeholder" = "电子邮件";
 
-/* Class = "UILabel"; text = "Correct Answer"; ObjectID = "7AN-aB-uru"; */
+/* 类 = "UILabel"; 文本 = "正确答案"; 对象ID = "7AN-aB-uru"; */
 "7AN-aB-uru.text" = "正确答案";
 
-/* Class = "UILabel"; text = "name : "; ObjectID = "7bU-Me-f3y"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "7PL-G3-baY"; */
+"7PL-G3-baY.text" = "标签";
+
+/* 类 = "UILabel"; 文本 = "姓名："; 对象ID = "7bU-Me-f3y"; */
 "7bU-Me-f3y.text" = "姓名：";
 
-/* Class = "UIButton"; configuration.title = "Sign up"; ObjectID = "7uh-XO-SLr"; */
+/* 类 = "UIButton"; 配置.标题 = "注册"; 对象ID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.configuration.title" = "注册";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7uh-XO-SLr"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "按钮";
 
-/* Class = "UINavigationItem"; title = "Social"; ObjectID = "84j-ov-DAs"; */
+/* 类 = "UINavigationItem"; 标题 = "社交"; 对象ID = "84j-ov-DAs"; */
 "84j-ov-DAs.title" = "社交";
 
-/* Class = "UIButton"; configuration.title = "My quizzes"; ObjectID = "BIo-kr-Tsf"; */
-"BIo-kr-Tsf.configuration.title" = "我的测验";
+/* 类 = "UIButton"; 配置.标题 = "测验"; 对象ID = "BIo-kr-Tsf"; */
+"BIo-kr-Tsf.configuration.title" = "测验";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "BIo-kr-Tsf"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "BIo-kr-Tsf"; */
 "BIo-kr-Tsf.normalTitle" = "按钮";
 
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "Bis-mJ-vER"; */
-"Bis-mJ-vER.configuration.title" = "按钮";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Bis-mJ-vER"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "Bis-mJ-vER"; */
 "Bis-mJ-vER.normalTitle" = "按钮";
 
-/* Class = "UIButton"; configuration.title = "Friends / Groups"; ObjectID = "CiQ-uc-p7v"; */
-"CiQ-uc-p7v.configuration.title" = "好友/群组";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "CiQ-uc-p7v"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "CiQ-uc-p7v"; */
 "CiQ-uc-p7v.normalTitle" = "按钮";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "EA1-Dw-ehh"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "EA1-Dw-ehh"; */
 "EA1-Dw-ehh.normalTitle" = "按钮";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Ezy-GI-XFI"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "Ezy-GI-XFI"; */
 "Ezy-GI-XFI.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "F2r-Df-ChQ"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "F2r-Df-ChQ"; */
 "F2r-Df-ChQ.text" = "标签";
 
-/* Class = "UITextField"; placeholder = "Code"; ObjectID = "FF4-NQ-Ldx"; */
+/* 类 = "UITextField"; 占位符 = "代码"; 对象ID = "FF4-NQ-Ldx"; */
 "FF4-NQ-Ldx.placeholder" = "代码";
 
-/* Class = "UILabel"; text = "name : "; ObjectID = "G26-73-clB"; */
+/* 类 = "UILabel"; 文本 = "姓名："; 对象ID = "G26-73-clB"; */
 "G26-73-clB.text" = "姓名：";
 
-/* Class = "UIButton"; configuration.title = "Sign up"; ObjectID = "GLh-lL-XXi"; */
+/* 类 = "UIButton"; 配置.标题 = "注册"; 对象ID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.configuration.title" = "注册";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GLh-lL-XXi"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "按钮";
 
-/* Class = "UINavigationItem"; title = "History"; ObjectID = "GQ9-HW-KCb"; */
+/* 类 = "UINavigationItem"; 标题 = "历史"; 对象ID = "GQ9-HW-KCb"; */
 "GQ9-HW-KCb.title" = "历史";
 
-/* Class = "UINavigationItem"; title = "Private room"; ObjectID = "Gur-eL-rdV"; */
-"Gur-eL-rdV.title" = "私人房间";
+/* 类 = "UINavigationItem"; 标题 = "私人房"; 对象ID = "Gur-eL-rdV"; */
+"Gur-eL-rdV.title" = "私人房";
 
-/* Class = "UILabel"; text = "Looking for an oponent"; ObjectID = "HNo-0d-sc7"; */
+/* 类 = "UILabel"; 文本 = "寻找对手"; 对象ID = "HNo-0d-sc7"; */
 "HNo-0d-sc7.text" = "寻找对手";
 
-/* Class = "UITextField"; placeholder = "password"; ObjectID = "Hte-ge-dVW"; */
+/* 类 = "UITextField"; 占位符 = "密码"; 对象ID = "Hte-ge-dVW"; */
 "Hte-ge-dVW.placeholder" = "密码";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "LEF-lm-mTa"; */
+/* 类 = "UILabel"; 文本 = "当前经验值："; 对象ID = "JZf-ig-Kz6"; */
+"JZf-ig-Kz6.text" = "当前经验值：";
+
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "KMq-qh-ez7"; */
+"KMq-qh-ez7.text" = "标签";
+
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "LEF-lm-mTa"; */
 "LEF-lm-mTa.text" = "标签";
 
-/* Class = "UIButton"; configuration.title = "Log in"; ObjectID = "LRV-Qh-49t"; */
+/* 类 = "UIButton"; 配置.标题 = "登录"; 对象ID = "LRV-Qh-49t"; */
 "LRV-Qh-49t.configuration.title" = "登录";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "LRV-Qh-49t"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "LRV-Qh-49t"; */
 "LRV-Qh-49t.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "LbA-QI-m0r"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "LbA-QI-m0r"; */
 "LbA-QI-m0r.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "Ldq-fm-vcu"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "Ldq-fm-vcu"; */
 "Ldq-fm-vcu.text" = "标签";
 
-/* Class = "UILabel"; text = "Official quizzes"; ObjectID = "MAv-zJ-l7h"; */
-"MAv-zJ-l7h.text" = "官方测验";
-
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "Competitive"; ObjectID = "Mhu-Mq-UrT"; */
+/* 类 = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "竞技"; 对象ID = "Mhu-Mq-UrT"; */
 "Mhu-Mq-UrT.segmentTitles[0]" = "竞技";
 
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "Quick play"; ObjectID = "Mhu-Mq-UrT"; */
+/* 类 = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "快速游戏"; 对象ID = "Mhu-Mq-UrT"; */
 "Mhu-Mq-UrT.segmentTitles[1]" = "快速游戏";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "Nas-EO-Jgf"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "Nas-EO-Jgf"; */
 "Nas-EO-Jgf.text" = "标签";
 
-/* Class = "UIButton"; configuration.title = "Join"; ObjectID = "Nw6-2g-Kne"; */
+/* 类 = "UIButton"; 配置.标题 = "加入"; 对象ID = "Nw6-2g-Kne"; */
 "Nw6-2g-Kne.configuration.title" = "加入";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Nw6-2g-Kne"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "Nw6-2g-Kne"; */
 "Nw6-2g-Kne.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Title"; ObjectID = "Ody-Bm-Bqd"; */
+/* 类 = "UILabel"; 文本 = "标题"; 对象ID = "Ody-Bm-Bqd"; */
 "Ody-Bm-Bqd.text" = "标题";
 
-/* Class = "UINavigationItem"; title = "Ranked"; ObjectID = "PMP-4e-WAw"; */
-"PMP-4e-WAw.title" = "排名";
+/* 类 = "UINavigationItem"; 标题 = "排行榜"; 对象ID = "PMP-4e-WAw"; */
+"PMP-4e-WAw.title" = "排行榜";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "PZ5-5x-9jZ"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "PZ5-5x-9jZ"; */
 "PZ5-5x-9jZ.text" = "标签";
 
-/* Class = "UINavigationItem"; title = "Quizzes"; ObjectID = "Ptl-sW-I4r"; */
+/* 类 = "UINavigationItem"; 标题 = "测验"; 对象ID = "Ptl-sW-I4r"; */
 "Ptl-sW-I4r.title" = "测验";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "QLd-xk-IDy"; */
-"QLd-xk-IDy.text" = "标签";
+/* 类 = "UILabel"; 文本 = "fcdx"; 对象ID = "QLd-xk-IDy"; */
+"QLd-xk-IDy.text" = "fcdx";
 
-/* Class = "UIButton"; configuration.title = "Find an opponent"; ObjectID = "UJS-pN-0nw"; */
-"UJS-pN-0nw.configuration.title" = "寻找对手";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "UJS-pN-0nw"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "UJS-pN-0nw"; */
 "UJS-pN-0nw.normalTitle" = "按钮";
 
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "Uem-di-lTH"; */
-"Uem-di-lTH.configuration.title" = "按钮";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Uem-di-lTH"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "Uem-di-lTH"; */
 "Uem-di-lTH.normalTitle" = "按钮";
 
-/* Class = "UITabBarItem"; title = "Profile"; ObjectID = "VM3-VU-Z7k"; */
+/* 类 = "UITabBarItem"; 标题 = "个人资料"; 对象ID = "VM3-VU-Z7k"; */
 "VM3-VU-Z7k.title" = "个人资料";
 
-/* Class = "UILabel"; text = "Incorrect Answers"; ObjectID = "WSO-1T-mHM"; */
+/* 类 = "UILabel"; 文本 = "错误答案"; 对象ID = "WSO-1T-mHM"; */
 "WSO-1T-mHM.text" = "错误答案";
 
-/* Class = "UIButton"; configuration.title = "Solo"; ObjectID = "XKK-oB-4KB"; */
-"XKK-oB-4KB.configuration.title" = "单人游戏";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "XKK-oB-4KB"; */
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "XKK-oB-4KB"; */
 "XKK-oB-4KB.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "XsD-7w-KZb"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "XsD-7w-KZb"; */
 "XsD-7w-KZb.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "Y3e-rz-BUl"; */
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "Y3e-rz-BUl"; */
 "Y3e-rz-BUl.text" = "标签";
 
-/* Class = "UITextField"; placeholder = "Code"; ObjectID = "YaM-h3-ySn"; */
-"YaM-h3-ySn.placeholder" = "代码";
+/* 类 = "UITextField"; 文本 = "rgvfcdxswsxdcf"; 对象ID = "YaM-h3-ySn"; */
+"YaM-h3-ySn.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "bT2-2H-KCc"; */
+/* 类 = "UILabel"; 文本 = "0"; 对象ID = "Yij-eg-PwO"; */
+"Yij-eg-PwO.text" = "0";
+
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "bT2-2H-KCc"; */
 "bT2-2H-KCc.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "50/100"; ObjectID = "c3c-z7-JnY"; */
+/* 类 = "UILabel"; 文本 = "50/100"; 对象ID = "c3c-z7-JnY"; */
 "c3c-z7-JnY.text" = "50/100";
 
-/* Class = "UITabBarItem"; title = "Item"; ObjectID = "cxf-DH-Nsd"; */
-"cxf-DH-Nsd.title" = "项目";
+/* 类 = "UITabBarItem"; 标题 = "物品"; 对象ID = "cxf-DH-Nsd"; */
+"cxf-DH-Nsd.title" = "物品";
 
-/* Class = "UINavigationItem"; title = "Quick play"; ObjectID = "d7u-7X-6Gu"; */
+/* 类 = "UINavigationItem"; 标题 = "快速游戏"; 对象ID = "d7u-7X-6Gu"; */
 "d7u-7X-6Gu.title" = "快速游戏";
 
-/* Class = "UILabel"; text = "Questions"; ObjectID = "dfX-4S-7MW"; */
-"dfX-4S-7MW.text" = "问题";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "dNN-If-JT5"; */
+"dNN-If-JT5.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "dpq-z8-MeF"; */
-"dpq-z8-MeF.text" = "标签";
+/* 类 = "UILabel"; 文本 = "输入您的电子邮件地址。我们将向您发送电子邮件以重置密码"; 对象ID = "des-6C-FMV"; */
+"des-6C-FMV.text" = "输入您的电子邮件地址。我们将向您发送电子邮件以重置密码";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "eRg-t7-cvt"; */
-"eRg-t7-cvt.text" = "标签";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "eSx-HP-P5x"; */
+"eSx-HP-P5x.normalTitle" = "按钮";
 
-/* Class = "UIButton"; configuration.title = "Start"; ObjectID = "el9-Fb-HLw"; */
-"el9-Fb-HLw.configuration.title" = "开始";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "eqz-gr-ieR"; */
+"eqz-gr-ieR.normalTitle" = "按钮";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el9-Fb-HLw"; */
-"el9-Fb-HLw.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "fTz-it-F3b"; */
+"fTz-it-F3b.normalTitle" = "按钮";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "f2S-ff-n2J"; */
-"f2S-ff-n2J.normalTitle" = "按钮";
+/* 类 = "UILabel"; 文本 = "难度："; 对象ID = "giF-Ps-7d8"; */
+"giF-Ps-7d8.text" = "难度：";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "f7s-ld-1A0"; */
-"f7s-ld-1A0.text" = "标签";
+/* 类 = "UITextField"; 文本 = "rgvfcdxswsxdcf"; 对象ID = "hz1-eT-Z9X"; */
+"hz1-eT-Z9X.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "fKf-37-TRr"; */
-"fKf-37-TRr.text" = "标签";
+/* 类 = "UINavigationItem"; 标题 = "朋友们"; 对象ID = "jbE-dc-dLO"; */
+"jbE-dc-dLO.title" = "朋友们";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "fsL-If-cJx"; */
-"fsL-If-cJx.text" = "标签";
+/* 类 = "UILabel"; 文本 = "水平"; 对象ID = "k0H-MS-rUT"; */
+"k0H-MS-rUT.text" = "水平";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "gH6-T9-tRi"; */
-"gH6-T9-tRi.text" = "标签";
+/* 类 = "UILabel"; 文本 = "代码"; 对象ID = "kGd-JE-LIh"; */
+"kGd-JE-LIh.text" = "代码";
 
-/* Class = "UILabel"; text = "Incorrect Answers"; ObjectID = "hEO-nn-qEN"; */
-"hEO-nn-qEN.text" = "错误答案";
+/* 类 = "UINavigationItem"; 标题 = "邀请"; 对象ID = "kQB-f5-x0x"; */
+"kQB-f5-x0x.title" = "邀请";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "hb6-sY-nHA"; */
-"hb6-sY-nHA.text" = "标签";
+/* 类 = "UISegmentedControl"; kj2-em-ceM.segmentTitles[0] = "朋友们"; 对象ID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[0]" = "朋友们";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "hm1-YO-i9s"; */
-"hm1-YO-i9s.text" = "标签";
+/* 类 = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "接收"; 对象ID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[1]" = "接收";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "jUz-WF-rDc"; */
-"jUz-WF-rDc.text" = "标签";
+/* 类 = "UISegmentedControl"; kj2-em-ceM.segmentTitles[2] = "发送"; 对象ID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[2]" = "发送";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "jc9-DI-ayK"; */
-"jc9-DI-ayK.text" = "标签";
+/* 类 = "UIButton"; 配置.标题 = "邀请"; 对象ID = "lOB-iE-odF"; */
+"lOB-iE-odF.configuration.title" = "邀请";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "jlv-lu-J8m"; */
-"jlv-lu-J8m.text" = "标签";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "lOB-iE-odF"; */
+"lOB-iE-odF.normalTitle" = "按钮";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "k0m-Xs-RFA"; */
-"k0m-Xs-RFA.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "mFL-ab-1Jp"; */
+"mFL-ab-1Jp.normalTitle" = "按钮";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "kLI-dz-RJU"; */
-"kLI-dz-RJU.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "nGF-2v-XrT"; */
+"nGF-2v-XrT.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "kV2-AZ-1pf"; */
-"kV2-AZ-1pf.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "oMq-jM-JiC"; */
+"oMq-jM-JiC.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "kmg-ix-fUp"; */
-"kmg-ix-fUp.text" = "标签";
+/* 类 = "UITextField"; 占位符 = "密码"; 对象ID = "oNm-Wc-ds1"; */
+"oNm-Wc-ds1.placeholder" = "密码";
 
-/* Class = "UIButton"; configuration.title = "Start"; ObjectID = "koq-6b-4ym"; */
-"koq-6b-4ym.configuration.title" = "开始";
+/* 类 = "UILabel"; 文本 = "游戏设置"; 对象ID = "p7g-aL-yav"; */
+"p7g-aL-yav.text" = "游戏设置";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "koq-6b-4ym"; */
-"koq-6b-4ym.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "pmg-hj-Tay"; */
+"pmg-hj-Tay.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "kz9-sg-waB"; */
-"kz9-sg-waB.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "qJz-MC-ohm"; */
+"qJz-MC-ohm.text" = "标签";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "lR5-qQ-DmT"; */
-"lR5-qQ-DmT.normalTitle" = "按钮";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "qN5-yA-TBq"; */
+"qN5-yA-TBq.text" = "标签";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "lkm-KT-0y6"; */
-"lkm-KT-0y6.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "qRv-O3-H5y"; */
+"qRv-O3-H5y.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "m7d-oy-48s"; */
-"m7d-oy-48s.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "qqE-Vy-6sW"; */
+"qqE-Vy-6sW.text" = "标签";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "maB-dR-DCy"; */
-"maB-dR-DCy.normalTitle" = "按钮";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "quO-3b-jmB"; */
+"quO-3b-jmB.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "n6P-yx-gai"; */
-"n6P-yx-gai.text" = "标签";
+/* 类 = "UISegmentedControl"; r2Z-1E-U9Z.segmentTitles[0] = "朋友们"; 对象ID = "r2Z-1E-U9Z"; */
+"r2Z-1E-U9Z.segmentTitles[0]" = "朋友们";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "oAd-62-8Gh"; */
-"oAd-62-8Gh.text" = "标签";
+/* 类 = "UISegmentedControl"; r2Z-1E-U9Z.segmentTitles[1] = "接收"; 对象ID = "r2Z-1E-U9Z"; */
+"r2Z-1E-U9Z.segmentTitles[1]" = "接收";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "oS6-Hq-0vX"; */
-"oS6-Hq-0vX.text" = "标签";
+/* 类 = "UISegmentedControl"; r2Z-1E-U9Z.segmentTitles[2] = "发送"; 对象ID = "r2Z-1E-U9Z"; */
+"r2Z-1E-U9Z.segmentTitles[2]" = "发送";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "p0J-2B-LyL"; */
-"p0J-2B-LyL.text" = "标签";
+/* 类 = "UISegmentedControl"; r2Z-1E-U9Z.segmentTitles[3] = "发送"; 对象ID = "r2Z-1E-U9Z"; */
+"r2Z-1E-U9Z.segmentTitles[3]" = "发送";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "p6L-0I-8r6"; */
-"p6L-0I-8r6.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "reP-DG-rE5"; */
+"reP-DG-rE5.normalTitle" = "按钮";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "pDC-UC-35a"; */
-"pDC-UC-35a.normalTitle" = "按钮";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "rht-8M-JuC"; */
+"rht-8M-JuC.text" = "标签";
 
-/* Class = "UIButton"; configuration.title = "Join room"; ObjectID = "qRj-ZL-bDJ"; */
-"qRj-ZL-bDJ.configuration.title" = "加入房间";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "rxd-8V-Hnc"; */
+"rxd-8V-Hnc.text" = "标签";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "qRj-ZL-bDJ"; */
-"qRj-ZL-bDJ.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "s7w-EG-67C"; */
+"s7w-EG-67C.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "qzT-Ui-Cl2"; */
-"qzT-Ui-Cl2.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "sMG-k7-2qY"; */
+"sMG-k7-2qY.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "rMj-vN-0NW"; */
-"rMj-vN-0NW.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "tHh-NS-MR0"; */
+"tHh-NS-MR0.text" = "标签";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "raT-t6-jRc"; */
-"raT-t6-jRc.normalTitle" = "按钮";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "tN2-8A-Q7N"; */
+"tN2-8A-Q7N.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "sBT-3r-0TX"; */
-"sBT-3r-0TX.text" = "标签";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "tXE-aY-KvY"; */
+"tXE-aY-KvY.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "sZW-v0-gEh"; */
-"sZW-v0-gEh.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "tq3-L3-jWV"; */
+"tq3-L3-jWV.text" = "标签";
 
-/* Class = "UIButton"; configuration.title = "Create"; ObjectID = "tjL-Sf-n1x"; */
-"tjL-Sf-n1x.configuration.title" = "创建";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "tqe-Pk-6ee"; */
+"tqe-Pk-6ee.text" = "标签";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "tjL-Sf-n1x"; */
-"tjL-Sf-n1x.normalTitle" = "按钮";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "u6w-NG-Dqa"; */
+"u6w-NG-Dqa.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "txr-yh-CdC"; */
-"txr-yh-CdC.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "uM9-IZ-3LQ"; */
+"uM9-IZ-3LQ.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "uHP-Hl-ASv"; */
-"uHP-Hl-ASv.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "v0l-G6-Qop"; */
+"v0l-G6-Qop.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "uYd-6x-9Ri"; */
-"uYd-6x-9Ri.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "vEZ-6o-0XW"; */
+"vEZ-6o-0XW.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "ur0-Td-Y8j"; */
-"ur0-Td-Y8j.text" = "标签";
+/* 类 = "UIButton"; 配置.标题 = "游戏设置"; 对象ID = "vEh-ZB-8Kc"; */
+"vEh-ZB-8Kc.configuration.title" = "游戏设置";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vFW-2P-7Pp"; */
-"vFW-2P-7Pp.normalTitle" = "按钮";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "vEh-ZB-8Kc"; */
+"vEh-ZB-8Kc.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "vQj-bF-M3a"; */
-"vQj-bF-M3a.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "x6i-mJ-Y1r"; */
+"x6i-mJ-Y1r.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "vUH-C7-75d"; */
-"vUH-C7-75d.text" = "标签";
+/* 类 = "UITextField"; 占位符 = "邮箱"; 对象ID = "yvO-Ua-RvT"; */
+"yvO-Ua-RvT.placeholder" = "邮箱";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vbn-q0-IGQ"; */
-"vbn-q0-IGQ.normalTitle" = "按钮";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "zCJ-W1-2H5"; */
+"zCJ-W1-2H5.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "w8v-jT-Lvo"; */
-"w8v-jT-Lvo.text" = "标签";
+/* 类 = "UITextField"; 占位符 = "密码"; 对象ID = "zH9-fO-sOi"; */
+"zH9-fO-sOi.placeholder" = "密码";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "wm3-Oy-ZFy"; */
-"wm3-Oy-ZFy.text" = "标签";
+/* 类 = "UILabel"; 文本 = "标签"; 对象ID = "zHp-Lv-N2m"; */
+"zHp-Lv-N2m.text" = "标签";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "wuK-kd-Hp2"; */
-"wuK-kd-Hp2.text" = "标签";
+/* 类 = "UIButton"; 配置.标题 = "注册"; 对象ID = "zvM-Q5-LLW"; */
+"zvM-Q5-LLW.configuration.title" = "注册";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "wzs-Zs-AZ1"; */
-"wzs-Zs-AZ1.text" = "标签";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "zvM-Q5-LLW"; */
+"zvM-Q5-LLW.normalTitle" = "按钮";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "xZL-Ng-7ch"; */
-"xZL-Ng-7ch.text" = "标签";
+/* 类 = "UIButton"; 普通标题 = "按钮"; 对象ID = "zz3-Ty-1eW"; */
+"zz3-Ty-1eW.normalTitle" = "按钮";
 
-/* Class = "UIButton"; configuration.title = "Leave"; ObjectID = "xsb-FD-tnO"; */
-"xsb-FD-tnO.configuration.title" = "离开";
+"tgl-rh-1ga.configuration.title" = "朋友";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "xsb-FD-tnO"; */
-"xsb-FD-tnO.normalTitle" = "按钮";
+"nWS-Y6-efk.text" = "问题";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "yJT-OC-d4t"; */
-"yJT-OC-d4t.text" = "标签";
+"v9T-VZ-s3z.configuration.title" = "发送邮件";
+"tZ4-wp-aB3.text" = "忘记密码";
+"uJZ-UU-FDj.text" = "解释";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "yPd-QB-cmT"; */
-"yPd-QB-cmT.text" = "标签";
+/* Class = "UITabBarItem"; title = "Social"; ObjectID = "wGJ-Zi-rZH"; */
+"wGJ-Zi-rZH.title" = "社交";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "yPz-WE-bhi"; */
-"yPz-WE-bhi.text" = "标签";
+/* Class = "UITabBarItem"; title = "Quick play"; ObjectID = "v2D-Lg-faA"; */
+"v2D-Lg-faA.title" = "快速游戏";
 
-/* Class = "UIButton"; configuration.title = "Log in"; ObjectID = "zA4-wd-BLN"; */
-"zA4-wd-BLN.configuration.title" = "登录";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "zA4-wd-BLN"; */
-"zA4-wd-BLN.normalTitle" = "按钮";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "zgE-Xg-ZgF"; */
-"zgE-Xg-ZgF.normalTitle" = "按钮";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "zsY-Rv-92U"; */
-"zsY-Rv-92U.text" = "标签";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "zyX-cL-ZQy"; */
-"zyX-cL-ZQy.text" = "标签";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "zze-GV-EZX"; */
-"zze-GV-EZX.text" = "标签";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "zzi-Kc-dqW"; */
-"zzi-Kc-dqW.text" = "标签";
+/* Class = "UITabBarItem"; title = "Classement"; ObjectID = "qZ9-Bu-vAN"; */
+"qZ9-Bu-vAN.title" = "排行榜";

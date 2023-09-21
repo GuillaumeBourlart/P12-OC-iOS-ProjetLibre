@@ -101,6 +101,16 @@
 		7E33A70E2A44C616008947BF /* ModifyGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGroupVC.swift; sourceTree = "<group>"; };
 		7E33A7102A44E3A0008947BF /* SocialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialVC.swift; sourceTree = "<group>"; };
 		7E47A9182A4F406F0032D836 /* DeeplManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplManagerTests.swift; sourceTree = "<group>"; };
+		7E4E07C92ABBC36C00EAC1E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07CB2ABBC3A100EAC1E7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07CD2ABBC50000EAC1E7 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07CF2ABBC59800EAC1E7 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07D12ABBC64400EAC1E7 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07D32ABBC6BD00EAC1E7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07D52ABBC73800EAC1E7 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07D72ABBC7AD00EAC1E7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07D92ABBC85B00EAC1E7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		7E4E07DB2ABBC87B00EAC1E7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		7E53C1422A3C80210046CC5E /* DeeplTranslatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplTranslatorManager.swift; sourceTree = "<group>"; };
 		7E5B145F2AB9A02A00B3D46D /* displayXpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = displayXpViewController.swift; sourceTree = "<group>"; };
 		7E5B14632AB9AE5D00B3D46D /* money-counter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "money-counter.mp3"; sourceTree = "<group>"; };
@@ -177,16 +187,6 @@
 		D0B35CDD2A159B3D007B3431 /* FirebaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStub.swift; sourceTree = "<group>"; };
 		D0B35CDF2A159C74007B3431 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
 		D0B582442A33622D00C0D5E2 /* CustomAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimations.swift; sourceTree = "<group>"; };
-		D0B74C632A496EB5007A5DD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C652A496F63007A5DD0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C672A496F77007A5DD0 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C692A496F7B007A5DD0 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C6B2A496F7C007A5DD0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C6D2A496F7D007A5DD0 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C6F2A496F7F007A5DD0 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C712A496F80007A5DD0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C732A496F81007A5DD0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
-		D0B74C742A497C77007A5DD0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		D0B74C752A497C77007A5DD0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D0B7B38F2A5883E40005C008 /* square.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = square.jpg; sourceTree = "<group>"; };
 		D0B8524F2A24AFF700A7D9B7 /* FirestoreFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFields.swift; sourceTree = "<group>"; };
@@ -734,16 +734,16 @@
 			isa = PBXVariantGroup;
 			children = (
 				7E98147B2A3DF61A008F3A4B /* Base */,
-				D0B74C632A496EB5007A5DD0 /* en */,
-				D0B74C652A496F63007A5DD0 /* fr */,
-				D0B74C672A496F77007A5DD0 /* de */,
-				D0B74C692A496F7B007A5DD0 /* it */,
-				D0B74C6B2A496F7C007A5DD0 /* ja */,
-				D0B74C6D2A496F7D007A5DD0 /* ko */,
-				D0B74C6F2A496F7F007A5DD0 /* pt */,
-				D0B74C712A496F80007A5DD0 /* ru */,
-				D0B74C732A496F81007A5DD0 /* es */,
-				D0B74C742A497C77007A5DD0 /* zh-Hans */,
+				7E4E07C92ABBC36C00EAC1E7 /* en */,
+				7E4E07CB2ABBC3A100EAC1E7 /* fr */,
+				7E4E07CD2ABBC50000EAC1E7 /* de */,
+				7E4E07CF2ABBC59800EAC1E7 /* it */,
+				7E4E07D12ABBC64400EAC1E7 /* ja */,
+				7E4E07D32ABBC6BD00EAC1E7 /* ko */,
+				7E4E07D52ABBC73800EAC1E7 /* pt */,
+				7E4E07D72ABBC7AD00EAC1E7 /* ru */,
+				7E4E07D92ABBC85B00EAC1E7 /* es */,
+				7E4E07DB2ABBC87B00EAC1E7 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

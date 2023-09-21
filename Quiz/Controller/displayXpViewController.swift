@@ -121,7 +121,7 @@ class displayXpViewControler: UIViewController {
                                 }) { _ in
                                     Game.shared.updateXP { result in
                                         switch result {
-                                        case .success(var Int): print("\(Int) points ajoutés")
+                                        case .success(var Int): print("\(Int) xp added")
                                         case .failure(let error): print(error)
                                         }
                                     }

@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 class GameVC: UIViewController, LeavePageProtocol {
+    
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
     @IBOutlet weak var leaveButton: CustomButton!
     @IBOutlet weak var answerLabel: UILabel!
-    
     @IBOutlet weak var timerImage: UIImageView!
     @IBOutlet weak var scoreImage: UIImageView!
     
@@ -56,30 +56,24 @@ class GameVC: UIViewController, LeavePageProtocol {
     func displayAnswerLabel(answer: Answer){
         switch answer {
         case .correct:
-            let correctAnswers = [NSLocalizedString("Good job!", comment: ""),
-                                  NSLocalizedString("Well done!", comment: ""),
-                                  NSLocalizedString("Excellent!", comment: ""),
-                                  NSLocalizedString("Nice work!", comment: ""),
-                                  NSLocalizedString("Keep it up!", comment: ""),
-                                  NSLocalizedString("Fantastic!", comment: "")]
+            let correctAnswers = [NSLocalizedString("Good job", comment: ""),
+                                  NSLocalizedString("Well done", comment: ""),
+                                  NSLocalizedString("Excellent", comment: ""),
+                                  NSLocalizedString("Nice work", comment: ""),
+                                  NSLocalizedString("Fantastic", comment: "")]
             let randomIndex = Int(arc4random_uniform(UInt32(correctAnswers.count)))
             answerLabel.text = correctAnswers[randomIndex]
         case .incorrect:
-            let incorrectAnswers = [NSLocalizedString("Keep trying!", comment: ""),
-                                    NSLocalizedString("Don't give up!", comment: ""),
-                                    NSLocalizedString("You'll get it next time!", comment: ""),
-                                    NSLocalizedString("Almost there!", comment: ""),
-                                    NSLocalizedString("Good effort!", comment: ""),
-                                    NSLocalizedString("Nice try!", comment: "")]
+            let incorrectAnswers = [NSLocalizedString("Try again", comment: ""),
+                                    NSLocalizedString("Don't give up", comment: ""),
+                                    NSLocalizedString("next time", comment: ""),
+                                    NSLocalizedString("Almost there", comment: ""),
+                                    NSLocalizedString("Nice try", comment: "")]
             let randomIndex = Int(arc4random_uniform(UInt32(incorrectAnswers.count)))
             answerLabel.text = incorrectAnswers[randomIndex]
         case .noAnswer:
-            let noAnswerResponses = [NSLocalizedString("Too late!", comment: ""),
-                                     NSLocalizedString("Time's up!", comment: ""),
-                                     NSLocalizedString("You missed that one!", comment: ""),
-                                     NSLocalizedString("Try to be faster!", comment: ""),
-                                     NSLocalizedString("Don't hesitate!", comment: ""),
-                                     NSLocalizedString("Missed the buzzer!", comment: "")]
+            let noAnswerResponses = [NSLocalizedString("Too late", comment: ""),
+                                     NSLocalizedString("Time's up", comment: "")]
             let randomIndex = Int(arc4random_uniform(UInt32(noAnswerResponses.count)))
             answerLabel.text = noAnswerResponses[randomIndex]
         }

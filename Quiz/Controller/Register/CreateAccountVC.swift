@@ -92,7 +92,7 @@ class CreateAccountVC: UIViewController {
         userPseudo.layer.borderWidth = 0.0
         
         // MAIL
-        let mail = NSLocalizedString("Mail", comment: "")
+        let mail = NSLocalizedString("Email", comment: "")
         userEmail.setup(image: UIImage(systemName: "mail"), placeholder: mail, placeholderColor: UIColor(named: "placeholder") ?? UIColor.gray)
 
         // PASSWORD

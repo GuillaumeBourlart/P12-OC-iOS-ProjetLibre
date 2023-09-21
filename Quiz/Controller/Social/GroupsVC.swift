@@ -49,14 +49,16 @@ class GroupsVC: UIViewController{
     
     // function that display an alert so the user can create a group and choose a name
     func displayAddGroupAlert() {
-        let alert = UIAlertController(title: "Add a group", message: "Enter group name", preferredStyle: .alert)
+        var alertTitle = NSLocalizedString("Add a group", comment: "")
+        let alertMessage = NSLocalizedString("Enter group name", comment: "")
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         
         alert.addTextField { (textField) in
             textField.placeholder = "Name"
             textField.autocorrectionType = .no
         }
-        
-        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
+        alertTitle = NSLocalizedString("Add", comment: "")
+        let addAction = UIAlertAction(title: alertTitle, style: .default) { (_) in
             guard let name = alert.textFields?[0].text, !name.isEmpty else { return }
             
             FirebaseUser.shared.addGroup(name: name) { result in
@@ -68,8 +70,8 @@ class GroupsVC: UIViewController{
                 }
             }
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancel = NSLocalizedString("Cancel", comment: "")
+        let cancelAction = UIAlertAction(title: cancel, style: .cancel)
         alert.addAction(addAction)
         alert.addAction(cancelAction)
         self.activeAlert = alert

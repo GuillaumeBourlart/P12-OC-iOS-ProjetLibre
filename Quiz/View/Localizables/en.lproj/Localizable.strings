@@ -18,11 +18,9 @@
 "Disconnect" = "Disconnect";
 
 //Register
-"Please, enter an email" = "Please, enter an email";
-"Please, enter a password" = "Please, enter a password";
-"The e-mail/password combination is incorrect." = "The e-mail/password combination is incorrect.";
-"Mail" = "Mail";
+"Email" = "Email";
 "Password" = "Password";
+"The e-mail/password combination is incorrect." = "The e-mail/password combination is incorrect.";
 "Username" = "Username";
 "Please, enter a valid email adress.";
 "Please wait" = "Please wait";
@@ -37,9 +35,18 @@
 "Lobby" = "Lobby";
 "Add a friend" = "Add a friend";
 "Enter the username" = "Enter the username";
+"Add" = "Addd";
+"Cancel" = "Cancel";
+"Add a group" = "Add a group";
+"Enter group name" = "Enter group name" ;
+"Yes" = "Yes";
+"No" = "No";
 
 
 //Profile
+"Consent" = "Consent";
+"Do you agree to use this photo as a profile image visible to other users?" = "Do you agree to use this photo as a profile image visible to other users?";
+"We use Firebase Performance to improve the efficiency of our application. Are you okay with leaving Firebase Performance enabled?" = "We use Firebase Performance to improve the efficiency of our application. Are you okay with leaving Firebase Performance enabled?";
 "Choose an image"= "Choose an image";
 "Camera" = "Camera";
 "Gallery" = "Gallery";
@@ -62,6 +69,7 @@
 "Medium" = "Medium";
 "Hard" = "Hard";
 "Cancel" = "Cancel";
+"Privacy policy" = "Privacy policy";
 
 
 //QuickGame
@@ -75,26 +83,19 @@
 
 
 //GameVC
-"Good job!" = "Good job!";
-"Well done!" = "Well done!";
-"Excellent!" = "Excellent!";
-"Nice work!" = "Nice work!";
-"Keep it up!" = "Keep it up!";
-"Fantastic!" = "Fantastic!";
+"Good job" = "Good job";
+"Well done" = "Well done";
+"Excellent" = "Excellent";
+"Nice work" = "Nice work";
+"Fantastic" = "Fantastic";
 
-"Keep trying!" = "Keep trying!";
-"Don't give up!" = "Don't give up!";
-"You'll get it next time!" = "You'll get it next time!";
-"Almost there!" = "Almost there!";
-"Good effort!" = "Good effort!";
-"Nice try!" = "Nice try!";
+"Try again" = "Try again";
+"Don't give up" = "Don't give up";
+"Almost there" = "Almost there";
+"Nice try" = "Nice try";
 
-"Too late!" = "Too late!";
-"Time's up!" = "Time's up!";
-"You missed that one!" = "You missed that one!";
-"Try to be faster!" = "Try to be faster!";
-"Don't hesitate!" = "Don't hesitate!";
-"Missed the buzzer!" = "Missed the buzzer!";
+"Too late" = "Too late";
+"Time's up" = "Time's up";
 
 "No game data available." = "No game data available.";
 "Unknown" = "Unknown";
@@ -104,8 +105,14 @@
 "%d. %@ with %d points\n" = "%d. %@ with %d points\n";
 "\n\nSome players didn't finish the quiz yet" = "\n\nSome players didn't finish the quiz yet.";
 
+//XP
+"Current xp" = "Current xp";
+
 
 //QuestionResultVC
 "Answer: %@" = "Answer: %@";
 "Points: %d" = "Points: %d";
 "Correct answer: %@" = "Correct answer: %@";
+
+
+"Privacy" = "Privacy";

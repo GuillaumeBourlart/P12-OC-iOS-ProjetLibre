@@ -5,11 +5,11 @@
 /* Class = "UINavigationItem"; title = "Groups"; ObjectID = "0Ih-Hi-KQ6"; */
 "0Ih-Hi-KQ6.title" = "Groups";
 
-/* Class = "UIButton"; configuration.title = "Join room"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.configuration.title" = "Join room";
+/* Class = "UIButton"; configuration.title = "Join"; ObjectID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.configuration.title" = "Join";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.normalTitle" = "Button";
+/* Class = "UIButton"; normalTitle = "Join room"; ObjectID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.normalTitle" = "Join room";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0lb-sS-1xO"; */
 "0lb-sS-1xO.normalTitle" = "Button";
@@ -38,20 +38,17 @@
 /* Class = "UILabel"; text = "Players"; ObjectID = "3RA-CS-JYe"; */
 "3RA-CS-JYe.text" = "Players";
 
-/* Class = "UIButton"; configuration.title = "GO!"; ObjectID = "4lN-hZ-XPS"; */
-"4lN-hZ-XPS.configuration.title" = "GO!";
-
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "4lN-hZ-XPS"; */
 "4lN-hZ-XPS.normalTitle" = "Button";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "5bM-De-r7t"; */
-"5bM-De-r7t.text" = "Label";
-
-/* Class = "UIButton"; configuration.title = "Leave"; ObjectID = "5gm-hJ-CWH"; */
-"5gm-hJ-CWH.configuration.title" = "Leave";
+/* Class = "UILabel"; text = "Choose a mode"; ObjectID = "5LP-rN-Y1y"; */
+"5LP-rN-Y1y.text" = "Choose a mode";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "5gm-hJ-CWH"; */
 "5gm-hJ-CWH.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Good job !"; ObjectID = "5wI-kt-0u1"; */
+"5wI-kt-0u1.text" = "Good job !";
 
 /* Class = "UIButton"; configuration.title = "Log in"; ObjectID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.configuration.title" = "Log in";
@@ -68,6 +65,9 @@
 /* Class = "UILabel"; text = "Correct Answer"; ObjectID = "7AN-aB-uru"; */
 "7AN-aB-uru.text" = "Correct Answer";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "7PL-G3-baY"; */
+"7PL-G3-baY.text" = "Label";
+
 /* Class = "UILabel"; text = "name : "; ObjectID = "7bU-Me-f3y"; */
 "7bU-Me-f3y.text" = "name : ";
 
@@ -80,20 +80,14 @@
 /* Class = "UINavigationItem"; title = "Social"; ObjectID = "84j-ov-DAs"; */
 "84j-ov-DAs.title" = "Social";
 
-/* Class = "UIButton"; configuration.title = "My quizzes"; ObjectID = "BIo-kr-Tsf"; */
-"BIo-kr-Tsf.configuration.title" = "My quizzes";
+/* Class = "UIButton"; configuration.title = "Quizzes"; ObjectID = "BIo-kr-Tsf"; */
+"BIo-kr-Tsf.configuration.title" = "Quizzes";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "BIo-kr-Tsf"; */
 "BIo-kr-Tsf.normalTitle" = "Button";
 
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "Bis-mJ-vER"; */
-"Bis-mJ-vER.configuration.title" = "Button";
-
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Bis-mJ-vER"; */
 "Bis-mJ-vER.normalTitle" = "Button";
-
-/* Class = "UIButton"; configuration.title = "Friends / Groups"; ObjectID = "CiQ-uc-p7v"; */
-"CiQ-uc-p7v.configuration.title" = "Friends / Groups";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "CiQ-uc-p7v"; */
 "CiQ-uc-p7v.normalTitle" = "Button";
@@ -131,6 +125,12 @@
 /* Class = "UITextField"; placeholder = "password"; ObjectID = "Hte-ge-dVW"; */
 "Hte-ge-dVW.placeholder" = "password";
 
+/* Class = "UILabel"; text = "current xp : "; ObjectID = "JZf-ig-Kz6"; */
+"JZf-ig-Kz6.text" = "current xp : ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "KMq-qh-ez7"; */
+"KMq-qh-ez7.text" = "Label";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "LEF-lm-mTa"; */
 "LEF-lm-mTa.text" = "Label";
 
@@ -145,9 +145,6 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Ldq-fm-vcu"; */
 "Ldq-fm-vcu.text" = "Label";
-
-/* Class = "UILabel"; text = "Official quizzes"; ObjectID = "MAv-zJ-l7h"; */
-"MAv-zJ-l7h.text" = "Official quizzes";
 
 /* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "Competitive"; ObjectID = "Mhu-Mq-UrT"; */
 "Mhu-Mq-UrT.segmentTitles[0]" = "Competitive";
@@ -176,17 +173,11 @@
 /* Class = "UINavigationItem"; title = "Quizzes"; ObjectID = "Ptl-sW-I4r"; */
 "Ptl-sW-I4r.title" = "Quizzes";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "QLd-xk-IDy"; */
-"QLd-xk-IDy.text" = "Label";
-
-/* Class = "UIButton"; configuration.title = "Find an opponent"; ObjectID = "UJS-pN-0nw"; */
-"UJS-pN-0nw.configuration.title" = "Find an opponent";
+/* Class = "UILabel"; text = "fcdx"; ObjectID = "QLd-xk-IDy"; */
+"QLd-xk-IDy.text" = "fcdx";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "UJS-pN-0nw"; */
 "UJS-pN-0nw.normalTitle" = "Button";
-
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "Uem-di-lTH"; */
-"Uem-di-lTH.configuration.title" = "Button";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Uem-di-lTH"; */
 "Uem-di-lTH.normalTitle" = "Button";
@@ -196,9 +187,6 @@
 
 /* Class = "UILabel"; text = "Incorrect Answers"; ObjectID = "WSO-1T-mHM"; */
 "WSO-1T-mHM.text" = "Incorrect Answers";
-
-/* Class = "UIButton"; configuration.title = "Solo"; ObjectID = "XKK-oB-4KB"; */
-"XKK-oB-4KB.configuration.title" = "Solo";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "XKK-oB-4KB"; */
 "XKK-oB-4KB.normalTitle" = "Button";
@@ -211,6 +199,9 @@
 
 /* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "YaM-h3-ySn"; */
 "YaM-h3-ySn.text" = "rgvfcdxswsxdcf";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Yij-eg-PwO"; */
+"Yij-eg-PwO.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "bT2-2H-KCc"; */
 "bT2-2H-KCc.normalTitle" = "Button";
@@ -227,17 +218,14 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "dNN-If-JT5"; */
 "dNN-If-JT5.text" = "Label";
 
+/* Class = "UILabel"; text = "Enter your email. We will send you an mail to reset your password"; ObjectID = "des-6C-FMV"; */
+"des-6C-FMV.text" = "Enter your email. We will send you an mail to reset your password";
+
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "eSx-HP-P5x"; */
 "eSx-HP-P5x.normalTitle" = "Button";
 
-/* Class = "UIButton"; normalTitle = "Home"; ObjectID = "eo8-CD-Z39"; */
-"eo8-CD-Z39.normalTitle" = "Home";
-
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "eqz-gr-ieR"; */
 "eqz-gr-ieR.normalTitle" = "Button";
-
-/* Class = "UIButton"; configuration.title = "Leave"; ObjectID = "fTz-it-F3b"; */
-"fTz-it-F3b.configuration.title" = "Leave";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "fTz-it-F3b"; */
 "fTz-it-F3b.normalTitle" = "Button";
@@ -248,11 +236,11 @@
 /* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "hz1-eT-Z9X"; */
 "hz1-eT-Z9X.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UINavigationItem"; title = "Amis"; ObjectID = "jbE-dc-dLO"; */
-"jbE-dc-dLO.title" = "Amis";
+/* Class = "UINavigationItem"; title = "Friends"; ObjectID = "jbE-dc-dLO"; */
+"jbE-dc-dLO.title" = "Friends";
 
-/* Class = "UILabel"; text = "niveau"; ObjectID = "k0H-MS-rUT"; */
-"k0H-MS-rUT.text" = "niveau";
+/* Class = "UILabel"; text = "level"; ObjectID = "k0H-MS-rUT"; */
+"k0H-MS-rUT.text" = "level";
 
 /* Class = "UILabel"; text = "code"; ObjectID = "kGd-JE-LIh"; */
 "kGd-JE-LIh.text" = "code";
@@ -263,8 +251,11 @@
 /* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[0] = "Friends"; ObjectID = "kj2-em-ceM"; */
 "kj2-em-ceM.segmentTitles[0]" = "Friends";
 
-/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "Requests"; ObjectID = "kj2-em-ceM"; */
-"kj2-em-ceM.segmentTitles[1]" = "Requests";
+/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "Received"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[1]" = "Received";
+
+/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[2] = "Sent"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[2]" = "Sent";
 
 /* Class = "UIButton"; configuration.title = "Invites"; ObjectID = "lOB-iE-odF"; */
 "lOB-iE-odF.configuration.title" = "Invites";
@@ -272,20 +263,17 @@
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "lOB-iE-odF"; */
 "lOB-iE-odF.normalTitle" = "Button";
 
-/* Class = "UIButton"; configuration.title = "Add"; ObjectID = "mFL-ab-1Jp"; */
-"mFL-ab-1Jp.configuration.title" = "Add";
-
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "mFL-ab-1Jp"; */
 "mFL-ab-1Jp.normalTitle" = "Button";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "nGF-2v-XrT"; */
 "nGF-2v-XrT.normalTitle" = "Button";
 
-/* Class = "UILabel"; text = "Quetion"; ObjectID = "nWS-Y6-efk"; */
-"nWS-Y6-efk.text" = "Quetion";
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "nIU-wO-94t"; */
+"nIU-wO-94t.normalTitle" = "Button";
 
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "oB7-XM-CDC"; */
-"oB7-XM-CDC.configuration.title" = "Button";
+/* Class = "UILabel"; text = "Quetion"; ObjectID = "nWS-Y6-efk"; */
+"nWS-Y6-efk.text" = "Question";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "oB7-XM-CDC"; */
 "oB7-XM-CDC.normalTitle" = "Button";
@@ -308,8 +296,8 @@
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "rhM-ft-R7S"; */
 "rhM-ft-R7S.normalTitle" = "Button";
 
-/* Class = "UIButton"; configuration.title = "Validate"; ObjectID = "tb8-yO-A2H"; */
-"tb8-yO-A2H.configuration.title" = "Validate";
+/* Class = "UILabel"; text = "Password forgotten"; ObjectID = "tZ4-wp-aB3"; */
+"tZ4-wp-aB3.text" = "Password forgotten";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "tb8-yO-A2H"; */
 "tb8-yO-A2H.normalTitle" = "Button";
@@ -317,17 +305,11 @@
 /* Class = "UIButton"; configuration.title = "Friends"; ObjectID = "tgl-rh-1ga"; */
 "tgl-rh-1ga.configuration.title" = "Friends";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "tgl-rh-1ga"; */
-"tgl-rh-1ga.normalTitle" = "Button";
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "tri-T4-5y5"; */
 "tri-T4-5y5.text" = "Label";
 
 /* Class = "UILabel"; text = "Explanation"; ObjectID = "uJZ-UU-FDj"; */
 "uJZ-UU-FDj.text" = "Explanation";
-
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "ucV-ge-bsl"; */
-"ucV-ge-bsl.configuration.title" = "Button";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ucV-ge-bsl"; */
 "ucV-ge-bsl.normalTitle" = "Button";
@@ -335,11 +317,20 @@
 /* Class = "UITabBarItem"; title = "Quick play"; ObjectID = "v2D-Lg-faA"; */
 "v2D-Lg-faA.title" = "Quick play";
 
+/* Class = "UIButton"; configuration.title = "Send email"; ObjectID = "v9T-VZ-s3z"; */
+"v9T-VZ-s3z.configuration.title" = "Send email";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "v9T-VZ-s3z"; */
+"v9T-VZ-s3z.normalTitle" = "Button";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "vH0-8Z-WMS"; */
 "vH0-8Z-WMS.text" = "Label";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "vOP-j1-sOt"; */
 "vOP-j1-sOt.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vwU-Hn-gm0"; */
+"vwU-Hn-gm0.text" = "Label";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "w4h-1i-m7k"; */
 "w4h-1i-m7k.text" = "Label";
@@ -350,6 +341,9 @@
 /* Class = "UILabel"; text = "Theme : "; ObjectID = "wQd-D8-m12"; */
 "wQd-D8-m12.text" = "Theme : ";
 
+/* Class = "UILabel"; text = "Pull to refresh"; ObjectID = "xCd-Fp-TIV"; */
+"xCd-Fp-TIV.text" = "Pull to refresh";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "xzd-nu-mjD"; */
 "xzd-nu-mjD.text" = "Label";
 
@@ -358,3 +352,5 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "zRj-Kk-caM"; */
 "zRj-Kk-caM.text" = "Label";
+
+

@@ -1,533 +1,354 @@
 /* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "0FS-gv-tPK"; */
 "0FS-gv-tPK.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UINavigationItem"; title = "グループ"; ObjectID = "0Ih-Hi-KQ6"; */
+/* Class = "UINavigationItem"; title = "Groupes"; ObjectID = "0Ih-Hi-KQ6"; */
 "0Ih-Hi-KQ6.title" = "グループ";
 
-/* Class = "UIButton"; configuration.title = "ルームに参加"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.configuration.title" = "ルームに参加";
+/* Class = "UIButton"; configuration.title = "Rejoindre"; ObjectID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.configuration.title" = "参加";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.normalTitle" = "ボタン";
+/* Class = "UIButton"; normalTitle = "Rejoindre la salle"; ObjectID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.normalTitle" = "ルームに参加";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "0lb-sS-1xO"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "0lb-sS-1xO"; */
 "0lb-sS-1xO.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; configuration.title = "作成する"; ObjectID = "1cu-04-f1V"; */
-"1cu-04-f1V.configuration.title" = "作成する";
+/* Class = "UIButton"; configuration.title = "Créer"; ObjectID = "1cu-04-f1V"; */
+"1cu-04-f1V.configuration.title" = "作成";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "1cu-04-f1V"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "1cu-04-f1V"; */
 "1cu-04-f1V.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "1oU-Dd-LR2"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "1oU-Dd-LR2"; */
 "1oU-Dd-LR2.text" = "ラベル";
 
-/* Class = "UIButton"; configuration.title = "グループ"; ObjectID = "2bv-Ne-Wrk"; */
+/* Class = "UIButton"; configuration.title = "Groupes"; ObjectID = "2bv-Ne-Wrk"; */
 "2bv-Ne-Wrk.configuration.title" = "グループ";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "2bv-Ne-Wrk"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "2bv-Ne-Wrk"; */
 "2bv-Ne-Wrk.normalTitle" = "ボタン";
 
-/* Class = "UITextField"; placeholder = "メール"; ObjectID = "2ff-Bb-QW1"; */
+/* Class = "UITextField"; placeholder = "email"; ObjectID = "2ff-Bb-QW1"; */
 "2ff-Bb-QW1.placeholder" = "メール";
 
-/* Class = "UILabel"; text = "ユーザー名"; ObjectID = "2w2-M6-4dv"; */
+/* Class = "UILabel"; text = "Nom d'utilisateur"; ObjectID = "2w2-M6-4dv"; */
 "2w2-M6-4dv.text" = "ユーザー名";
 
-/* Class = "UILabel"; text = "プレイヤー"; ObjectID = "3RA-CS-JYe"; */
+/* Class = "UILabel"; text = "Joueurs"; ObjectID = "3RA-CS-JYe"; */
 "3RA-CS-JYe.text" = "プレイヤー";
 
-/* Class = "UIButton"; configuration.title = "GO!"; ObjectID = "4lN-hZ-XPS"; */
-"4lN-hZ-XPS.configuration.title" = "GO!";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "4lN-hZ-XPS"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "4lN-hZ-XPS"; */
 "4lN-hZ-XPS.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "5bM-De-r7t"; */
-"5bM-De-r7t.text" = "ラベル";
+/* Class = "UILabel"; text = "Choisissez un mode"; ObjectID = "5LP-rN-Y1y"; */
+"5LP-rN-Y1y.text" = "モードを選択";
 
-/* Class = "UIButton"; configuration.title = "退席"; ObjectID = "5gm-hJ-CWH"; */
-"5gm-hJ-CWH.configuration.title" = "退席";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "5gm-hJ-CWH"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "5gm-hJ-CWH"; */
 "5gm-hJ-CWH.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; configuration.title = "ログイン"; ObjectID = "676-G7-ZuZ"; */
+/* Class = "UILabel"; text = "Bravo !"; ObjectID = "5wI-kt-0u1"; */
+"5wI-kt-0u1.text" = "おめでとう！";
+
+/* Class = "UIButton"; configuration.title = "Se connecter"; ObjectID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.configuration.title" = "ログイン";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "676-G7-ZuZ"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "質問："; ObjectID = "6UV-Lc-xW9"; */
+/* Class = "UILabel"; text = "Questions : "; ObjectID = "6UV-Lc-xW9"; */
 "6UV-Lc-xW9.text" = "質問：";
 
-/* Class = "UITextField"; placeholder = "メール"; ObjectID = "6n4-qw-W9F"; */
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "6n4-qw-W9F"; */
 "6n4-qw-W9F.placeholder" = "メール";
 
-/* Class = "UILabel"; text = "正しい答え"; ObjectID = "7AN-aB-uru"; */
-"7AN-aB-uru.text" = "正しい答え";
+/* Class = "UILabel"; text = "Bonne réponse"; ObjectID = "7AN-aB-uru"; */
+"7AN-aB-uru.text" = "正解";
 
-/* Class = "UILabel"; text = "名前："; ObjectID = "7bU-Me-f3y"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "7PL-G3-baY"; */
+"7PL-G3-baY.text" = "ラベル";
+
+/* Class = "UILabel"; text = "Nom : "; ObjectID = "7bU-Me-f3y"; */
 "7bU-Me-f3y.text" = "名前：";
 
-/* Class = "UIButton"; configuration.title = "サインアップ"; ObjectID = "7uh-XO-SLr"; */
-"7uh-XO-SLr.configuration.title" = "サインアップ";
+/* Class = "UIButton"; configuration.title = "S'inscrire"; ObjectID = "7uh-XO-SLr"; */
+"7uh-XO-SLr.configuration.title" = "登録";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "7uh-XO-SLr"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "ボタン";
 
-/* Class = "UINavigationItem"; title = "ソーシャル"; ObjectID = "84j-ov-DAs"; */
+/* Class = "UINavigationItem"; title = "Social"; ObjectID = "84j-ov-DAs"; */
 "84j-ov-DAs.title" = "ソーシャル";
 
-/* Class = "UIButton"; configuration.title = "マイクイズ"; ObjectID = "BIo-kr-Tsf"; */
-"BIo-kr-Tsf.configuration.title" = "マイクイズ";
+/* Class = "UIButton"; configuration.title = "Quiz"; ObjectID = "BIo-kr-Tsf"; */
+"BIo-kr-Tsf.configuration.title" = "クイズ";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "BIo-kr-Tsf"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "BIo-kr-Tsf"; */
 "BIo-kr-Tsf.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; configuration.title = "ボタン"; ObjectID = "Bis-mJ-vER"; */
-"Bis-mJ-vER.configuration.title" = "ボタン";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "Bis-mJ-vER"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "Bis-mJ-vER"; */
 "Bis-mJ-vER.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; configuration.title = "友達/グループ"; ObjectID = "CiQ-uc-p7v"; */
-"CiQ-uc-p7v.configuration.title" = "友達/グループ";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "CiQ-uc-p7v"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "CiQ-uc-p7v"; */
 "CiQ-uc-p7v.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "EA1-Dw-ehh"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "EA1-Dw-ehh"; */
 "EA1-Dw-ehh.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "Ezy-GI-XFI"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "Ezy-GI-XFI"; */
 "Ezy-GI-XFI.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "F2r-Df-ChQ"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "F2r-Df-ChQ"; */
 "F2r-Df-ChQ.text" = "ラベル";
 
-/* Class = "UITextField"; placeholder = "コード"; ObjectID = "FF4-NQ-Ldx"; */
+/* Class = "UITextField"; placeholder = "Code"; ObjectID = "FF4-NQ-Ldx"; */
 "FF4-NQ-Ldx.placeholder" = "コード";
 
-/* Class = "UILabel"; text = "名前："; ObjectID = "G26-73-clB"; */
+/* Class = "UILabel"; text = "Nom : "; ObjectID = "G26-73-clB"; */
 "G26-73-clB.text" = "名前：";
 
-/* Class = "UIButton"; configuration.title = "サインアップ"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.configuration.title" = "サインアップ";
+/* Class = "UIButton"; configuration.title = "S'inscrire"; ObjectID = "GLh-lL-XXi"; */
+"GLh-lL-XXi.configuration.title" = "登録";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "GLh-lL-XXi"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "ボタン";
 
-/* Class = "UINavigationItem"; title = "ヒストリー"; ObjectID = "GQ9-HW-KCb"; */
-"GQ9-HW-KCb.title" = "ヒストリー";
+/* Class = "UINavigationItem"; title = "Historique"; ObjectID = "GQ9-HW-KCb"; */
+"GQ9-HW-KCb.title" = "履歴";
 
-/* Class = "UINavigationItem"; title = "プライベートルーム"; ObjectID = "Gur-eL-rdV"; */
+/* Class = "UINavigationItem"; title = "Salle privée"; ObjectID = "Gur-eL-rdV"; */
 "Gur-eL-rdV.title" = "プライベートルーム";
 
-/* Class = "UILabel"; text = "対戦相手を探しています"; ObjectID = "HNo-0d-sc7"; */
-"HNo-0d-sc7.text" = "対戦相手を探しています";
+/* Class = "UILabel"; text = "Recherche d'un adversaire"; ObjectID = "HNo-0d-sc7"; */
+"HNo-0d-sc7.text" = "対戦相手を探す";
 
-/* Class = "UITextField"; placeholder = "パスワード"; ObjectID = "Hte-ge-dVW"; */
+/* Class = "UITextField"; placeholder = "Mot de passe"; ObjectID = "Hte-ge-dVW"; */
 "Hte-ge-dVW.placeholder" = "パスワード";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "LEF-lm-mTa"; */
+/* Class = "UILabel"; text = "XP actuel : "; ObjectID = "JZf-ig-Kz6"; */
+"JZf-ig-Kz6.text" = "現在のXP：";
+
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "KMq-qh-ez7"; */
+"KMq-qh-ez7.text" = "ラベル";
+
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "LEF-lm-mTa"; */
 "LEF-lm-mTa.text" = "ラベル";
 
-/* Class = "UIButton"; configuration.title = "ログイン"; ObjectID = "LRV-Qh-49t"; */
+/* Class = "UIButton"; configuration.title = "Se connecter"; ObjectID = "LRV-Qh-49t"; */
 "LRV-Qh-49t.configuration.title" = "ログイン";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "LRV-Qh-49t"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "LRV-Qh-49t"; */
 "LRV-Qh-49t.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "LbA-QI-m0r"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "LbA-QI-m0r"; */
 "LbA-QI-m0r.text" = "ラベル";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Ldq-fm-vcu"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "Ldq-fm-vcu"; */
 "Ldq-fm-vcu.text" = "ラベル";
 
-/* Class = "UILabel"; text = "公式クイズ"; ObjectID = "MAv-zJ-l7h"; */
-"MAv-zJ-l7h.text" = "公式クイズ";
-
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "競争"; ObjectID = "Mhu-Mq-UrT"; */
+/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "Compétitif"; ObjectID = "Mhu-Mq-UrT"; */
 "Mhu-Mq-UrT.segmentTitles[0]" = "競争";
 
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "クイックプレイ"; ObjectID = "Mhu-Mq-UrT"; */
+/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "Partie rapide"; ObjectID = "Mhu-Mq-UrT"; */
 "Mhu-Mq-UrT.segmentTitles[1]" = "クイックプレイ";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Nas-EO-Jgf"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "Nas-EO-Jgf"; */
 "Nas-EO-Jgf.text" = "ラベル";
 
-/* Class = "UIButton"; configuration.title = "参加"; ObjectID = "Nw6-2g-Kne"; */
+/* Class = "UIButton"; configuration.title = "Rejoindre"; ObjectID = "Nw6-2g-Kne"; */
 "Nw6-2g-Kne.configuration.title" = "参加";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "Nw6-2g-Kne"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "Nw6-2g-Kne"; */
 "Nw6-2g-Kne.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "タイトル"; ObjectID = "Ody-Bm-Bqd"; */
+/* Class = "UILabel"; text = "Titre"; ObjectID = "Ody-Bm-Bqd"; */
 "Ody-Bm-Bqd.text" = "タイトル";
 
-/* Class = "UINavigationItem"; title = "ランク付け"; ObjectID = "PMP-4e-WAw"; */
-"PMP-4e-WAw.title" = "ランク付け";
+/* Class = "UINavigationItem"; title = "Classement"; ObjectID = "PMP-4e-WAw"; */
+"PMP-4e-WAw.title" = "ランキング";
 
-/* Class = "UILabel"; text = "50/100"; ObjectID = "c3c-z7-JnY"; */
-"c3c-z7-JnY.text" = "50/100";
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "PZ5-5x-9jZ"; */
+"PZ5-5x-9jZ.text" = "ラベル";
 
-/* Class = "UITabBarItem"; title = "プロファイル"; ObjectID = "VM3-VU-Z7k"; */
-"VM3-VU-Z7k.title" = "プロファイル";
+/* Class = "UINavigationItem"; title = "Quiz"; ObjectID = "Ptl-sW-I4r"; */
+"Ptl-sW-I4r.title" = "クイズ";
 
-/* Class = "UILabel"; text = "不正解の回答"; ObjectID = "WSO-1T-mHM"; */
-"WSO-1T-mHM.text" = "不正解の回答";
+/* Class = "UILabel"; text = "fcdx"; ObjectID = "QLd-xk-IDy"; */
+"QLd-xk-IDy.text" = "fcdx";
 
-/* Class = "UIButton"; configuration.title = "ソロ"; ObjectID = "XKK-oB-4KB"; */
-"XKK-oB-4KB.configuration.title" = "ソロ";
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "UJS-pN-0nw"; */
+"UJS-pN-0nw.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "XKK-oB-4KB"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "Uem-di-lTH"; */
+"Uem-di-lTH.normalTitle" = "ボタン";
+
+/* Class = "UITabBarItem"; title = "Profil"; ObjectID = "VM3-VU-Z7k"; */
+"VM3-VU-Z7k.title" = "プロフィール";
+
+/* Class = "UILabel"; text = "Réponses incorrectes"; ObjectID = "WSO-1T-mHM"; */
+"WSO-1T-mHM.text" = "不正解";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "XKK-oB-4KB"; */
 "XKK-oB-4KB.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "XsD-7w-KZb"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "XsD-7w-KZb"; */
 "XsD-7w-KZb.text" = "ラベル";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Y3e-rz-BUl"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "Y3e-rz-BUl"; */
 "Y3e-rz-BUl.text" = "ラベル";
 
 /* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "YaM-h3-ySn"; */
 "YaM-h3-ySn.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "bT2-2H-KCc"; */
+/* Class = "UILabel"; text = "0"; ObjectID = "Yij-eg-PwO"; */
+"Yij-eg-PwO.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "bT2-2H-KCc"; */
 "bT2-2H-KCc.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "c3c-z7-JnY"; */
-"c3c-z7-JnY.text" = "ラベル";
-
-/* Class = "UILabel"; text = "正解率"; ObjectID = "c3c-z7-JnY"; */
-"c3c-z7-JnY.text" = "正解率";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "dNN-If-JT5"; */
-"dNN-If-JT5.text" = "ラベル";
-
-/* Class = "UITextField"; placeholder = "コード"; ObjectID = "FF4-NQ-Ldx"; */
-"FF4-NQ-Ldx.placeholder" = "コード";
-
-/* Class = "UITextField"; placeholder = "コード"; ObjectID = "FF4-NQ-Ldx"; */
-"FF4-NQ-Ldx.placeholder" = "コード";
-
-/* Class = "UILabel"; text = "名前："; ObjectID = "G26-73-clB"; */
-"G26-73-clB.text" = "名前：";
-
-/* Class = "UIButton"; configuration.title = "サインアップ"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.configuration.title" = "サインアップ";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.normalTitle" = "ボタン";
-
-/* Class = "UINavigationItem"; title = "ヒストリー"; ObjectID = "GQ9-HW-KCb"; */
-"GQ9-HW-KCb.title" = "ヒストリー";
-
-/* Class = "UINavigationItem"; title = "プライベートルーム"; ObjectID = "Gur-eL-rdV"; */
-"Gur-eL-rdV.title" = "プライベートルーム";
-
-/* Class = "UILabel"; text = "対戦相手を探しています"; ObjectID = "HNo-0d-sc7"; */
-"HNo-0d-sc7.text" = "対戦相手を探しています";
-
-/* Class = "UITextField"; placeholder = "パスワード"; ObjectID = "Hte-ge-dVW"; */
-"Hte-ge-dVW.placeholder" = "パスワード";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "LEF-lm-mTa"; */
-"LEF-lm-mTa.text" = "ラベル";
-
-/* Class = "UIButton"; configuration.title = "ログイン"; ObjectID = "LRV-Qh-49t"; */
-"LRV-Qh-49t.configuration.title" = "ログイン";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "LRV-Qh-49t"; */
-"LRV-Qh-49t.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "LbA-QI-m0r"; */
-"LbA-QI-m0r.text" = "ラベル";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Ldq-fm-vcu"; */
-"Ldq-fm-vcu.text" = "ラベル";
-
-/* Class = "UILabel"; text = "公式クイズ"; ObjectID = "MAv-zJ-l7h"; */
-"MAv-zJ-l7h.text" = "公式クイズ";
-
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "競争"; ObjectID = "Mhu-Mq-UrT"; */
-"Mhu-Mq-UrT.segmentTitles[0]" = "競争";
-
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "クイックプレイ"; ObjectID = "Mhu-Mq-UrT"; */
-"Mhu-Mq-UrT.segmentTitles[1]" = "クイックプレイ";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Nas-EO-Jgf"; */
-"Nas-EO-Jgf.text" = "ラベル";
-
-/* Class = "UIButton"; configuration.title = "参加"; ObjectID = "Nw6-2g-Kne"; */
-"Nw6-2g-Kne.configuration.title" = "参加";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "Nw6-2g-Kne"; */
-"Nw6-2g-Kne.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "タイトル"; ObjectID = "Ody-Bm-Bqd"; */
-"Ody-Bm-Bqd.text" = "タイトル";
-
-/* Class = "UINavigationItem"; title = "ランク付け"; ObjectID = "PMP-4e-WAw"; */
-"PMP-4e-WAw.title" = "ランク付け";
 
 /* Class = "UILabel"; text = "50/100"; ObjectID = "c3c-z7-JnY"; */
 "c3c-z7-JnY.text" = "50/100";
 
-/* Class = "UITabBarItem"; title = "プロファイル"; ObjectID = "VM3-VU-Z7k"; */
-"VM3-VU-Z7k.title" = "プロファイル";
-
-/* Class = "UILabel"; text = "不正解の回答"; ObjectID = "WSO-1T-mHM"; */
-"WSO-1T-mHM.text" = "不正解の回答";
-
-/* Class = "UIButton"; configuration.title = "ソロ"; ObjectID = "XKK-oB-4KB"; */
-"XKK-oB-4KB.configuration.title" = "ソロ";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "XKK-oB-4KB"; */
-"XKK-oB-4KB.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "XsD-7w-KZb"; */
-"XsD-7w-KZb.text" = "ラベル";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Y3e-rz-BUl"; */
-"Y3e-rz-BUl.text" = "ラベル";
-
-/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "YaM-h3-ySn"; */
-"YaM-h3-ySn.text" = "rgvfcdxswsxdcf";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "bT2-2H-KCc"; */
-"bT2-2H-KCc.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "c3c-z7-JnY"; */
-"c3c-z7-JnY.text" = "ラベル";
-
-/* Class = "UILabel"; text = "正解率"; ObjectID = "c3c-z7-JnY"; */
-"c3c-z7-JnY.text" = "正解率";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "dNN-If-JT5"; */
-"dNN-If-JT5.text" = "ラベル";
-
-/* Class = "UITextField"; placeholder = "コード"; ObjectID = "FF4-NQ-Ldx"; */
-"FF4-NQ-Ldx.placeholder" = "コード";
-
-/* Class = "UITextField"; placeholder = "コード"; ObjectID = "FF4-NQ-Ldx"; */
-"FF4-NQ-Ldx.placeholder" = "コード";
-
-/* Class = "UILabel"; text = "名前："; ObjectID = "G26-73-clB"; */
-"G26-73-clB.text" = "名前：";
-
-/* Class = "UIButton"; configuration.title = "サインアップ"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.configuration.title" = "サインアップ";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "GLh-lL-XXi"; */
-"GLh-lL-XXi.normalTitle" = "ボタン";
-
-/* Class = "UINavigationItem"; title = "ヒストリー"; ObjectID = "GQ9-HW-KCb"; */
-"GQ9-HW-KCb.title" = "ヒストリー";
-
-/* Class = "UINavigationItem"; title = "プライベートルーム"; ObjectID = "Gur-eL-rdV"; */
-"Gur-eL-rdV.title" = "プライベートルーム";
-
-/* Class = "UILabel"; text = "対戦相手を探しています"; ObjectID = "HNo-0d-sc7"; */
-"HNo-0d-sc7.text" = "対戦相手を探しています";
-
-/* Class = "UITextField"; placeholder = "パスワード"; ObjectID = "Hte-ge-dVW"; */
-"Hte-ge-dVW.placeholder" = "パスワード";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "LEF-lm-mTa"; */
-"LEF-lm-mTa.text" = "ラベル";
-
-/* Class = "UIButton"; configuration.title = "ログイン"; ObjectID = "LRV-Qh-49t"; */
-"LRV-Qh-49t.configuration.title" = "ログイン";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "LRV-Qh-49t"; */
-"LRV-Qh-49t.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "LbA-QI-m0r"; */
-"LbA-QI-m0r.text" = "ラベル";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Ldq-fm-vcu"; */
-"Ldq-fm-vcu.text" = "ラベル";
-
-/* Class = "UILabel"; text = "公式クイズ"; ObjectID = "MAv-zJ-l7h"; */
-"MAv-zJ-l7h.text" = "公式クイズ";
-
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "競争"; ObjectID = "Mhu-Mq-UrT"; */
-"Mhu-Mq-UrT.segmentTitles[0]" = "競争";
-
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "クイックプレイ"; ObjectID = "Mhu-Mq-UrT"; */
-"Mhu-Mq-UrT.segmentTitles[1]" = "クイックプレイ";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Nas-EO-Jgf"; */
-"Nas-EO-Jgf.text" = "ラベル";
-
-/* Class = "UIButton"; configuration.title = "参加"; ObjectID = "Nw6-2g-Kne"; */
-"Nw6-2g-Kne.configuration.title" = "参加";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "Nw6-2g-Kne"; */
-"Nw6-2g-Kne.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "タイトル"; ObjectID = "Ody-Bm-Bqd"; */
-"Ody-Bm-Bqd.text" = "タイトル";
-
-/* Class = "UINavigationItem"; title = "ランク付け"; ObjectID = "PMP-4e-WAw"; */
-"PMP-4e-WAw.title" = "ランク付け";
-
-/* Class = "UILabel"; text = "50/100"; ObjectID = "c3c-z7-JnY"; */
-"c3c-z7-JnY.text" = "50/100";
-
-/* Class = "UITabBarItem"; title = "プロファイル"; ObjectID = "VM3-VU-Z7k"; */
-"VM3-VU-Z7k.title" = "プロファイル";
-
-/* Class = "UILabel"; text = "不正解の回答"; ObjectID = "WSO-1T-mHM"; */
-"WSO-1T-mHM.text" = "不正解の回答";
-
-/* Class = "UIButton"; configuration.title = "ソロ"; ObjectID = "XKK-oB-4KB"; */
-"XKK-oB-4KB.configuration.title" = "ソロ";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "XKK-oB-4KB"; */
-"XKK-oB-4KB.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "XsD-7w-KZb"; */
-"XsD-7w-KZb.text" = "ラベル";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "Y3e-rz-BUl"; */
-"Y3e-rz-BUl.text" = "ラベル";
-
-/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "YaM-h3-ySn"; */
-"YaM-h3-ySn.text" = "rgvfcdxswsxdcf";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "bT2-2H-KCc"; */
-"bT2-2H-KCc.normalTitle" = "ボタン";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "c3c-z7-JnY"; */
-"c3c-z7-JnY.text" = "ラベル";
-
-/* Class = "UITabBarItem"; title = "アイテム"; ObjectID = "cxf-DH-Nsd"; */
+/* Class = "UITabBarItem"; title = "Objet"; ObjectID = "cxf-DH-Nsd"; */
 "cxf-DH-Nsd.title" = "アイテム";
 
-/* Class = "UINavigationItem"; title = "クイックプレイ"; ObjectID = "d7u-7X-6Gu"; */
+/* Class = "UINavigationItem"; title = "Partie rapide"; ObjectID = "d7u-7X-6Gu"; */
 "d7u-7X-6Gu.title" = "クイックプレイ";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "dNN-If-JT5"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "dNN-If-JT5"; */
 "dNN-If-JT5.text" = "ラベル";
 
-/* Class = "UIButton"; configuration.title = "参加"; ObjectID = "eqz-gr-ieR"; */
-"eqz-gr-ieR.configuration.title" = "参加";
+/* Class = "UILabel"; text = "Entrez votre adresse e-mail. Nous vous enverrons un e-mail pour réinitialiser votre mot de passe"; ObjectID = "des-6C-FMV"; */
+"des-6C-FMV.text" = "メールアドレスを入力してください。パスワードのリセット用のメールを送信します";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "eqz-gr-ieR"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "eSx-HP-P5x"; */
+"eSx-HP-P5x.normalTitle" = "ボタン";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "eqz-gr-ieR"; */
 "eqz-gr-ieR.normalTitle" = "ボタン";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "fTz-it-F3b"; */
+"fTz-it-F3b.normalTitle" = "ボタン";
+
+/* Class = "UILabel"; text = "Difficulté : "; ObjectID = "giF-Ps-7d8"; */
+"giF-Ps-7d8.text" = "難易度：";
 
 /* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "hz1-eT-Z9X"; */
 "hz1-eT-Z9X.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UINavigationItem"; title = "フレンズ"; ObjectID = "jbE-dc-dLO"; */
-"jbE-dc-dLO.title" = "フレンズ";
+/* Class = "UINavigationItem"; title = "Amis"; ObjectID = "jbE-dc-dLO"; */
+"jbE-dc-dLO.title" = "友達";
 
-/* Class = "UILabel"; text = "レベル"; ObjectID = "k0H-MS-rUT"; */
+/* Class = "UILabel"; text = "Niveau"; ObjectID = "k0H-MS-rUT"; */
 "k0H-MS-rUT.text" = "レベル";
 
-/* Class = "UILabel"; text = "コード"; ObjectID = "kGd-JE-LIh"; */
+/* Class = "UILabel"; text = "Code"; ObjectID = "kGd-JE-LIh"; */
 "kGd-JE-LIh.text" = "コード";
 
-/* Class = "UINavigationItem"; title = "招待"; ObjectID = "kQB-f5-x0x"; */
-"kQB-f5-x0x.title" = "招待";
+/* Class = "UINavigationItem"; title = "Invitations"; ObjectID = "kQB-f5-x0x"; */
+"kQB-f5-x0x.title" = "招待状";
 
-/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[0] = "フレンズ"; ObjectID = "kj2-em-ceM"; */
-"kj2-em-ceM.segmentTitles[0]" = "フレンズ";
+/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[0] = "Amis"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[0]" = "友達";
 
-/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "リクエスト"; ObjectID = "kj2-em-ceM"; */
-"kj2-em-ceM.segmentTitles[1]" = "リクエスト";
+/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "Reçues"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[1]" = "受信済み";
 
-/* Class = "UIButton"; configuration.title = "招待"; ObjectID = "lOB-iE-odF"; */
-"lOB-iE-odF.configuration.title" = "招待";
+/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[2] = "Envoyées"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[2]" = "送信済み";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "lOB-iE-odF"; */
+/* Class = "UIButton"; configuration.title = "Invitations"; ObjectID = "lOB-iE-odF"; */
+"lOB-iE-odF.configuration.title" = "招待状";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "lOB-iE-odF"; */
 "lOB-iE-odF.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; configuration.title = "追加"; ObjectID = "mFL-ab-1Jp"; */
-"mFL-ab-1Jp.configuration.title" = "追加";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "mFL-ab-1Jp"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "mFL-ab-1Jp"; */
 "mFL-ab-1Jp.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "nGF-2v-XrT"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "nGF-2v-XrT"; */
 "nGF-2v-XrT.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "質問"; ObjectID = "nWS-Y6-efk"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "nIU-wO-94t"; */
+"nIU-wO-94t.normalTitle" = "ボタン";
+
+/* Class = "UILabel"; text = "Question"; ObjectID = "nWS-Y6-efk"; */
 "nWS-Y6-efk.text" = "質問";
 
-/* Class = "UIButton"; configuration.title = "ボタン"; ObjectID = "oB7-XM-CDC"; */
-"oB7-XM-CDC.configuration.title" = "ボタン";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "oB7-XM-CDC"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "oB7-XM-CDC"; */
 "oB7-XM-CDC.normalTitle" = "ボタン";
 
 /* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "oBf-Pg-Xh6"; */
 "oBf-Pg-Xh6.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[0] = "フレンズ"; ObjectID = "q0a-Cy-c21"; */
-"q0a-Cy-c21.segmentTitles[0]" = "フレンズ";
+/* Class = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[0] = "Amis"; ObjectID = "q0a-Cy-c21"; */
+"q0a-Cy-c21.segmentTitles[0]" = "友達";
 
-/* Class = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[1] = "グループ"; ObjectID = "q0a-Cy-c21"; */
+/* Class = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[1] = "Groupes"; ObjectID = "q0a-Cy-c21"; */
 "q0a-Cy-c21.segmentTitles[1]" = "グループ";
 
-/* Class = "UITabBarItem"; title = "ランク付け"; ObjectID = "qZ9-Bu-vAN"; */
-"qZ9-Bu-vAN.title" = "ランク付け";
+/* Class = "UITabBarItem"; title = "Classement"; ObjectID = "qZ9-Bu-vAN"; */
+"qZ9-Bu-vAN.title" = "ランキング";
 
-/* Class = "UINavigationItem"; title = "プレイヤーを招待する"; ObjectID = "qwe-NI-WFm"; */
-"qwe-NI-WFm.title" = "プレイヤーを招待する";
+/* Class = "UINavigationItem"; title = "Inviter des joueurs"; ObjectID = "qwe-NI-WFm"; */
+"qwe-NI-WFm.title" = "プレイヤーを招待";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "rhM-ft-R7S"; */
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "rhM-ft-R7S"; */
 "rhM-ft-R7S.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; configuration.title = "確認"; ObjectID = "tb8-yO-A2H"; */
-"tb8-yO-A2H.configuration.title" = "確認";
+/* Class = "UILabel"; text = "Mot de passe oublié"; ObjectID = "tZ4-wp-aB3"; */
+"tZ4-wp-aB3.text" = "パスワードをお忘れですか？";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "tb8-yO-A2H"; */
-"tb8-yO-A2H.normalTitle" = "ボタン";
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "tb8-yR-iil"; */
+"tb8-yR-iil.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; configuration.title = "フレンズ"; ObjectID = "tgl-rh-1ga"; */
-"tgl-rh-1ga.configuration.title" = "フレンズ";
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "tcE-KC-LGU"; */
+"tcE-KC-LGU.normalTitle" = "ボタン";
 
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "tgl-rh-1ga"; */
-"tgl-rh-1ga.normalTitle" = "ボタン";
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "uG3-UP-4IL"; */
+"uG3-UP-4IL.normalTitle" = "ボタン";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "tri-T4-5y5"; */
-"tri-T4-5y5.text" = "ラベル";
+/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "uVP-Xa-J8p"; */
+"uVP-Xa-J8p.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UILabel"; text = "説明"; ObjectID = "uJZ-UU-FDj"; */
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "vqq-nT-pCv"; */
+"vqq-nT-pCv.text" = "ラベル";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "w46-mU-uuA"; */
+"w46-mU-uuA.normalTitle" = "ボタン";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "w4l-LH-nN0"; */
+"w4l-LH-nN0.normalTitle" = "ボタン";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "w4l-LH-nN0"; */
+"w4l-LH-nN0.normalTitle" = "ボタン";
+
+/* Class = "UILabel"; text = "Étiquette"; ObjectID = "x0p-MY-vNW"; */
+"x0p-MY-vNW.text" = "ラベル";
+
+/* Class = "UILabel"; text = "XP : "; ObjectID = "xgM-JF-YR6"; */
+"xgM-JF-YR6.text" = "XP：";
+
+/* Class = "UINavigationItem"; title = "Paramètres"; ObjectID = "xwD-aZ-bXw"; */
+"xwD-aZ-bXw.title" = "設定";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "y19-jE-khl"; */
+"y19-jE-khl.normalTitle" = "ボタン";
+
+/* Class = "UINavigationItem"; title = "Historique"; ObjectID = "zGp-Qk-fFO"; */
+"zGp-Qk-fFO.title" = "履歴";
+
+/* Class = "UIButton"; normalTitle = "Bouton"; ObjectID = "ztp-Gz-4ap"; */
+"ztp-Gz-4ap.normalTitle" = "ボタン";
+
+"tgl-rh-1ga.configuration.title" = "友達";
+
+"v9T-VZ-s3z.configuration.title" = "メールを送信";
+"tZ4-wp-aB3.text" = "パスワードを忘れました";
 "uJZ-UU-FDj.text" = "説明";
 
-/* Class = "UIButton"; configuration.title = "ボタン"; ObjectID = "ucV-ge-bsl"; */
-"ucV-ge-bsl.configuration.title" = "ボタン";
-
-/* Class = "UIButton"; normalTitle = "ボタン"; ObjectID = "ucV-ge-bsl"; */
-"ucV-ge-bsl.normalTitle" = "ボタン";
-
-/* Class = "UITabBarItem"; title = "クイックプレイ"; ObjectID = "v2D-Lg-faA"; */
-"v2D-Lg-faA.title" = "クイックプレイ";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "vH0-8Z-WMS"; */
-"vH0-8Z-WMS.text" = "ラベル";
-
-/* Class = "UITextField"; placeholder = "パスワード"; ObjectID = "vOP-j1-sOt"; */
-"vOP-j1-sOt.placeholder" = "パスワード";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "w4h-1i-m7k"; */
-"w4h-1i-m7k.text" = "ラベル";
-
-/* Class = "UITabBarItem"; title = "ソーシャル"; ObjectID = "wGJ-Zi-rZH"; */
+/* Class = "UITabBarItem"; title = "Social"; ObjectID = "wGJ-Zi-rZH"; */
 "wGJ-Zi-rZH.title" = "ソーシャル";
 
-/* Class = "UILabel"; text = "テーマ : "; ObjectID = "wQd-D8-m12"; */
-"wQd-D8-m12.text" = "テーマ : ";
+/* Class = "UITabBarItem"; title = "Quick play"; ObjectID = "v2D-Lg-faA"; */
+"v2D-Lg-faA.title" = "クイックプレイ";
 
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "xzd-nu-mjD"; */
-"xzd-nu-mjD.text" = "ラベル";
-
-/* Class = "UITextField"; placeholder = "ニックネーム"; ObjectID = "zNz-hZ-TWk"; */
-"zNz-hZ-TWk.placeholder" = "ニックネーム";
-
-/* Class = "UILabel"; text = "ラベル"; ObjectID = "zRj-Kk-caM"; */
-"zRj-Kk-caM.text" = "ラベル";

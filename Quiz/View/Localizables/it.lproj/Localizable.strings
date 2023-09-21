@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Quiz
 
@@ -17,28 +17,37 @@
 "Social" = "Social";
 "Disconnect" = "Disconnetti";
 
-//Register
-"Please, enter an email" = "Inserisci un'email";
-"Please, enter a password" = "Inserisci una password";
-"The e-mail/password combination is incorrect." = "La combinazione e-mail/password non è corretta.";
-"Mail" = "Mail";
+//Registrazione
+"Email" = "Email";
 "Password" = "Password";
+"The e-mail/password combination is incorrect." = "La combinazione email/password non è corretta.";
 "Username" = "Nome utente";
-"Please, enter a valid email address." = "Inserisci un indirizzo email valido.";
+"Please, enter a valid email address." = "Per favore, inserisci un indirizzo email valido.";
 "Please wait" = "Attendere prego";
 "seconds" = "secondi";
-"If this email address is associated with an account, we will send you a password reset email." = "Se questo indirizzo email è associato a un account, ti invieremo un'email per reimpostare la password.";
+"If this email address is associated with an account, we will send you a password reset email." = "Se questo indirizzo email è associato a un account, ti invieremo un'email per il reset della password.";
 "Reset password" = "Reimposta password";
 
+
 //Social
-"Pull to refresh" = "Trascina per aggiornare";
+"Pull to refresh" = "Tira per aggiornare";
 "User" = "Utente";
 "Lobby" = "Lobby";
 "Add a friend" = "Aggiungi un amico";
 "Enter the username" = "Inserisci il nome utente";
+"Add" = "Aggiungi";
+"Cancel" = "Annulla";
+"Add a group" = "Aggiungi un gruppo";
+"Enter group name" = "Inserisci il nome del gruppo";
+"Yes" = "Sì";
+"No" = "No";
 
-//Profile
-"Choose an image" = "Scegli un'immagine";
+
+//Profilo
+"Consent" = "Consenso";
+"Do you agree to use this photo as a profile image visible to other users?" = "Accetti di utilizzare questa foto come immagine del profilo visibile agli altri utenti?";
+"We use Firebase Performance to improve the efficiency of our application. Are you okay with leaving Firebase Performance enabled?" = "Utilizziamo Firebase Performance per migliorare l'efficienza della nostra applicazione. Sei d'accordo nel lasciare attivato Firebase Performance?";
+"Choose an image"= "Scegli un'immagine";
 "Camera" = "Fotocamera";
 "Gallery" = "Galleria";
 "Cancel" = "Annulla";
@@ -51,56 +60,58 @@
 "Cancel" = "Annulla";
 "Question" = "Domanda";
 "Correct answer" = "Risposta corretta";
-"Incorrect answer 1" = "Risposta scorretta 1";
-"Incorrect answer 2" = "Risposta scorretta 2";
-"Incorrect answer 3" = "Risposta scorretta 3";
+"Incorrect answer 1" = "Risposta sbagliata 1";
+"Incorrect answer 2" = "Risposta sbagliata 2";
+"Incorrect answer 3" = "Risposta sbagliata 3";
 "Explanation" = "Spiegazione";
 "Choose difficulty" = "Scegli la difficoltà";
 "Easy" = "Facile";
 "Medium" = "Medio";
 "Hard" = "Difficile";
 "Cancel" = "Annulla";
+"Privacy policy" = "Informativa sulla privacy";
 
-//QuickGame
+
+//Partita veloce
 "Current Players" = "Giocatori attuali";
 "Invited Players" = "Giocatori invitati";
 "Confirmation" = "Conferma";
-"Are you sure you want to leave the room?" = "Sei sicuro di voler lasciare la stanza?";
-"Are you sure you want to leave the game?" = "Sei sicuro di voler lasciare il gioco?";
+"Are you sure you want to leave the room?" = "Sei sicuro di voler uscire dalla stanza?";
+"Are you sure you want to leave the game?" = "Sei sicuro di voler uscire dal gioco?";
 "Yes" = "Sì";
 "No" = "No";
 
-//GameVC
-"Good job!" = "Bel lavoro!";
-"Well done!" = "Ben fatto!";
-"Excellent!" = "Eccellente!";
-"Nice work!" = "Bel lavoro!";
-"Keep it up!" = "Continua così!";
-"Fantastic!" = "Fantastico!";
 
-"Keep trying!" = "Continua a provare!";
-"Don't give up!" = "Non mollare!";
-"You'll get it next time!" = "Ce la farai la prossima volta!";
-"Almost there!" = "Quasi arrivato!";
-"Good effort!" = "Bel tentativo!";
-"Nice try!" = "Buon tentativo!";
+//Gioco
+"Good job" = "Ottimo lavoro";
+"Well done" = "Ben fatto";
+"Excellent" = "Eccellente";
+"Nice work" = "Bel lavoro";
+"Fantastic" = "Fantastico";
 
-"Too late!" = "Troppo tardi!";
-"Time's up!" = "Tempo scaduto!";
-"You missed that one!" = "Hai perso quella!";
-"Try to be faster!" = "Cerca di essere più veloce!";
-"Don't hesitate!" = "Non esitare!";
-"Missed the buzzer!" = "Hai perso il segnale!";
+"Try again" = "Prova di nuovo";
+"Don't give up" = "Non arrenderti";
+"Almost there" = "Quasi arrivato";
+"Nice try" = "Bel tentativo";
+
+"Too late" = "Troppo tardi";
+"Time's up" = "Tempo scaduto";
 
 "No game data available." = "Nessun dato di gioco disponibile.";
 "Unknown" = "Sconosciuto";
-"The winner is %@, and the loser is %@." = "Il vincitore è %@ e il perdente è %@.";
-"Your opponent didn't finish the quiz yet" = "Il tuo avversario non ha ancora finito il quiz.";
+"The winner is %@, and the loser is %@." = "Il vincitore è %@, e il perdente è %@.";
+"Your opponent didn't finish the quiz yet" = "Il tuo avversario non ha ancora completato il quiz.";
 "Ranking:\n" = "Classifica:\n";
 "%d. %@ with %d points\n" = "%d. %@ con %d punti\n";
-"\n\nSome players didn't finish the quiz yet" = "\n\nAlcuni giocatori non hanno ancora finito il quiz.";
+"\n\nSome players didn't finish the quiz yet" = "\n\nAlcuni giocatori non hanno ancora completato il quiz.";
 
-//QuestionResultVC
+//Punti esperienza
+"Current xp" = "Punti esperienza attuali";
+
+
+//Risultati della domanda
 "Answer: %@" = "Risposta: %@";
 "Points: %d" = "Punti: %d";
 "Correct answer: %@" = "Risposta corretta: %@";
+
+"Privacy" = "Privacy";

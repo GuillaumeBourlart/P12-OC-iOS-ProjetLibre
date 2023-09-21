@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Quiz
 
@@ -6,39 +6,48 @@
   
 */
 
-"Friends" = "친구들";
+"Friends" = "친구";
 "Groups" = "그룹";
-"History" = "기록";
+"History" = "연혁";
 "Quizzes" = "퀴즈";
 "Invites" = "초대";
-"Sounds" = "소리";
+"Sounds" = "사운드";
 "Account" = "계정";
 "Preferences" = "환경 설정";
 "Social" = "소셜";
 "Disconnect" = "연결 해제";
 
-//Register
-"Please, enter an email" = "이메일을 입력하세요";
-"Please, enter a password" = "비밀번호를 입력하세요";
-"The e-mail/password combination is incorrect." = "이메일/비밀번호 조합이 올바르지 않습니다.";
-"Mail" = "이메일";
+//가입
+"Email" = "이메일";
 "Password" = "비밀번호";
+"The e-mail/password combination is incorrect." = "이메일/비밀번호 조합이 올바르지 않습니다.";
 "Username" = "사용자 이름";
 "Please, enter a valid email address." = "유효한 이메일 주소를 입력하세요.";
 "Please wait" = "기다려주세요";
 "seconds" = "초";
-"If this email address is associated with an account, we will send you a password reset email." = "이 이메일 주소가 계정과 연결되어 있다면 비밀번호 재설정 이메일을 보내드립니다.";
+"If this email address is associated with an account, we will send you a password reset email." = "이 이메일 주소가 계정과 연결되어 있으면 비밀번호 재설정 이메일을 보내드립니다.";
 "Reset password" = "비밀번호 재설정";
 
-//Social
-"Pull to refresh" = "새로고침하려면 당겨주세요";
+
+//소셜
+"Pull to refresh" = "새로 고침하려면 당기세요";
 "User" = "사용자";
 "Lobby" = "로비";
 "Add a friend" = "친구 추가";
-"Enter the username" = "사용자 이름을 입력하세요";
+"Enter the username" = "사용자 이름 입력";
+"Add" = "추가";
+"Cancel" = "취소";
+"Add a group" = "그룹 추가";
+"Enter group name" = "그룹 이름 입력";
+"Yes" = "예";
+"No" = "아니오";
 
-//Profile
-"Choose an image" = "이미지 선택";
+
+//프로필
+"Consent" = "동의";
+"Do you agree to use this photo as a profile image visible to other users?" = "이 사진을 다른 사용자에게 표시되는 프로필 이미지로 사용하겠습니까?";
+"We use Firebase Performance to improve the efficiency of our application. Are you okay with leaving Firebase Performance enabled?" = "애플리케이션의 효율성을 향상시키기 위해 Firebase Performance를 사용합니다. Firebase Performance를 사용 중인 것에 동의하십니까?";
+"Choose an image"= "이미지 선택";
 "Camera" = "카메라";
 "Gallery" = "갤러리";
 "Cancel" = "취소";
@@ -57,50 +66,52 @@
 "Explanation" = "설명";
 "Choose difficulty" = "난이도 선택";
 "Easy" = "쉬움";
-"Medium" = "중간";
+"Medium" = "보통";
 "Hard" = "어려움";
 "Cancel" = "취소";
+"Privacy policy" = "개인 정보 보호 정책";
 
-//QuickGame
+
+//빠른 게임
 "Current Players" = "현재 플레이어";
-"Invited Players" = "초대받은 플레이어";
+"Invited Players" = "초대한 플레이어";
 "Confirmation" = "확인";
-"Are you sure you want to leave the room?" = "정말로 방을 나가시겠습니까?";
-"Are you sure you want to leave the game?" = "정말로 게임을 나가시겠습니까?";
+"Are you sure you want to leave the room?" = "방을 나가시겠습니까?";
+"Are you sure you want to leave the game?" = "게임을 나가시겠습니까?";
 "Yes" = "예";
-"No" = "아니요";
+"No" = "아니오";
 
-//GameVC
-"Good job!" = "잘했어요!";
-"Well done!" = "잘 했어요!";
-"Excellent!" = "최고!";
-"Nice work!" = "잘 했어요!";
-"Keep it up!" = "계속 해주세요!";
-"Fantastic!" = "환상적입니다!";
 
-"Keep trying!" = "계속 시도하세요!";
-"Don't give up!" = "포기하지 마세요!";
-"You'll get it next time!" = "다음에 잘 될 거예요!";
-"Almost there!" = "거의 다 왔어요!";
-"Good effort!" = "좋은 노력!";
-"Nice try!" = "잘했어요!";
+//게임
+"Good job" = "잘 했어요";
+"Well done" = "잘 했어요";
+"Excellent" = "훌륭해요";
+"Nice work" = "잘 했어요";
+"Fantastic" = "환상적이에요";
 
-"Too late!" = "너무 늦었어요!";
-"Time's up!" = "시간 초과!";
-"You missed that one!" = "그걸 놓쳤어요!";
-"Try to be faster!" = "좀 더 빨리 해보세요!";
-"Don't hesitate!" = "망설이지 마세요!";
-"Missed the buzzer!" = "부저를 놓쳤어요!";
+"Try again" = "다시 시도하세요";
+"Don't give up" = "포기하지 마세요";
+"Almost there" = "거의 다 왔어요";
+"Nice try" = "잘 노력했어요";
 
-"No game data available." = "게임 데이터를 사용할 수 없습니다.";
+"Too late" = "너무 늦었어요";
+"Time's up" = "시간 초과";
+
+"No game data available." = "게임 데이터가 없습니다.";
 "Unknown" = "알 수 없음";
 "The winner is %@, and the loser is %@." = "승자는 %@이고, 패자는 %@입니다.";
-"Your opponent didn't finish the quiz yet" = "상대방이 아직 퀴즈를 마치지 않았습니다.";
+"Your opponent didn't finish the quiz yet" = "상대방은 아직 퀴즈를 완료하지 않았습니다.";
 "Ranking:\n" = "랭킹:\n";
-"%d. %@ with %d points\n" = "%d위: %@님(%d점)\n";
-"\n\nSome players didn't finish the quiz yet" = "\n\n일부 플레이어가 아직 퀴즈를 마치지 않았습니다.";
+"%d. %@ with %d points\n" = "%d. %@님, %d점\n";
+"\n\nSome players didn't finish the quiz yet" = "\n\n일부 플레이어는 아직 퀴즈를 완료하지 않았습니다.";
 
-//QuestionResultVC
+//경험치
+"Current xp" = "현재 경험치";
+
+
+//질문 결과
 "Answer: %@" = "답변: %@";
 "Points: %d" = "점수: %d";
 "Correct answer: %@" = "정답: %@";
+
+"Privacy" = "개인 정보 보호";

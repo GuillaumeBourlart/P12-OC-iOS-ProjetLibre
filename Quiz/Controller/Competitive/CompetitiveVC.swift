@@ -51,7 +51,7 @@ class CompetitiveVC: UIViewController{
                    nextRank.isHidden = true
                    previousRank.isHidden = true
                    rankBar.isHidden = true
-                   points.text = "\(intValue) points"
+                   points.text = "\(intValue) xp"
                    currentRank.image = UIImage(named: "level6") ?? UIImage(systemName: "star.fill")
                    return
                }
@@ -72,7 +72,7 @@ class CompetitiveVC: UIViewController{
                     nextRank.isHidden = true
                     previousRank.isHidden = true
                     rankBar.isHidden = true
-                    points.text = "\(intValue) points"
+                    points.text = "\(intValue) xp"
         } else if level == 0 {
             nextRank.isHidden = false
             previousRank.isHidden = true

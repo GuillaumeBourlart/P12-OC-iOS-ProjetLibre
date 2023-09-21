@@ -51,14 +51,14 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     
     // Et dans votre UIViewController où vous demandez le consentement
     func showFirebaseConsentDialog() {
-            let alertController = UIAlertController(title: "Consentement utilisateur", message: "Nous utilisons Firebase Performance pour améliorer l'efficacité de notre application. Acceptez-vous notre politique de confidentialité?", preferredStyle: .alert)
+            let alertController = UIAlertController(title: NSLocalizedString("Consent", comment: ""), message: NSLocalizedString("We use Firebase Performance to improve the efficiency of our application. Are you okay with leaving Firebase Performance enabled?", comment: ""), preferredStyle: .alert)
             
-            let agreeAction = UIAlertAction(title: "Accepter", style: .default) { _ in
+            let agreeAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default) { _ in
                 UserDefaults.standard.set(true, forKey: "firebasePerformanceEnabled")
                 Performance.sharedInstance().isDataCollectionEnabled = true
             }
             
-            let disagreeAction = UIAlertAction(title: "Refuser", style: .cancel) { _ in
+            let disagreeAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel) { _ in
                 UserDefaults.standard.set(false, forKey: "firebasePerformanceEnabled")
                 Performance.sharedInstance().isDataCollectionEnabled = false
             }

@@ -70,11 +70,11 @@ class LoginVC: UIViewController{
                 if self.userEmail.text == "" {
                     self.userEmail.layer.borderColor = UIColor.red.cgColor
                     self.errorLabel.isHidden = false
-                    self.errorLabel.text = NSLocalizedString("Please, enter an email", comment: "")
+                    self.errorLabel.text = NSLocalizedString("Email", comment: "")
                 } else if self.userPassword.text == "" {
                     self.userPassword.layer.borderColor = UIColor.red.cgColor
                     self.errorLabel.isHidden = false
-                    self.errorLabel.text = NSLocalizedString("Please, enter a password", comment: "")
+                    self.errorLabel.text = NSLocalizedString("Password", comment: "")
                 }
                 
                 return
@@ -114,7 +114,7 @@ class LoginVC: UIViewController{
         userPassword.layer.borderWidth = 0.0
         
         // MAIL
-        let mail = NSLocalizedString("Mail", comment: "")
+        let mail = NSLocalizedString("Email", comment: "")
         userEmail.setup(image: UIImage(systemName: "mail"), placeholder: mail, placeholderColor: UIColor(named: "placeholder") ?? .gray)
         
         // PASSWORD

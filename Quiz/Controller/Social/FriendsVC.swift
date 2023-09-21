@@ -180,13 +180,14 @@ class FriendsVC: UIViewController{
     @IBAction func addFriend(sender: UIButton){
         let alertTitle = NSLocalizedString("Add a friend", comment: "")
         let alertMessage = NSLocalizedString("Enter the username", comment: "")
+        let addMessage = NSLocalizedString("Add", comment: "")
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         
         alertController.addTextField { (textField) in
             textField.placeholder = "Username"
         }
         
-        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
+        let addAction = UIAlertAction(title: addMessage, style: .default) { (_) in
             guard let username = alertController.textFields?.first?.text, !username.isEmpty else {
                 print("field is empty")
                 return
@@ -202,8 +203,8 @@ class FriendsVC: UIViewController{
                 }
             }
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelMessage = NSLocalizedString("Cancel", comment: "")
+        let cancelAction = UIAlertAction(title: cancelMessage, style: .cancel, handler: nil)
         
         alertController.addAction(addAction)
         alertController.addAction(cancelAction)

@@ -1,209 +1,357 @@
-/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "0FS-gv-tPK"; */
+/* Clase = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "0FS-gv-tPK"; */
 "0FS-gv-tPK.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UINavigationItem"; title = "Grupos"; ObjectID = "0Ih-Hi-KQ6"; */
+/* Clase = "UINavigationItem"; title = "Grupos"; ObjectID = "0Ih-Hi-KQ6"; */
 "0Ih-Hi-KQ6.title" = "Grupos";
 
-/* Class = "UIButton"; configuration.title = "Unirse a la sala"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.configuration.title" = "Unirse a la sala";
+/* Clase = "UIButton"; configuration.title = "Unirse"; ObjectID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.configuration.title" = "Unirse";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.normalTitle" = "Botón";
+/* Clase = "UIButton"; normalTitle = "Unirse a la sala"; ObjectID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.normalTitle" = "Unirse a la sala";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "0lb-sS-1xO"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "0lb-sS-1xO"; */
 "0lb-sS-1xO.normalTitle" = "Botón";
 
-/* Class = "UIButton"; configuration.title = "Crear"; ObjectID = "1cu-04-f1V"; */
+/* Clase = "UIButton"; configuration.title = "Crear"; ObjectID = "1cu-04-f1V"; */
 "1cu-04-f1V.configuration.title" = "Crear";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "1cu-04-f1V"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "1cu-04-f1V"; */
 "1cu-04-f1V.normalTitle" = "Botón";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "1oU-Dd-LR2"; */
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "1oU-Dd-LR2"; */
 "1oU-Dd-LR2.text" = "Etiqueta";
 
-/* Class = "UIButton"; configuration.title = "Grupos"; ObjectID = "2bv-Ne-Wrk"; */
+/* Clase = "UIButton"; configuration.title = "Grupos"; ObjectID = "2bv-Ne-Wrk"; */
 "2bv-Ne-Wrk.configuration.title" = "Grupos";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "2bv-Ne-Wrk"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "2bv-Ne-Wrk"; */
 "2bv-Ne-Wrk.normalTitle" = "Botón";
 
-/* Class = "UITextField"; placeholder = "correo electrónico"; ObjectID = "2ff-Bb-QW1"; */
-"2ff-Bb-QW1.placeholder" = "correo electrónico";
+/* Clase = "UITextField"; placeholder = "Correo electrónico"; ObjectID = "2ff-Bb-QW1"; */
+"2ff-Bb-QW1.placeholder" = "Correo electrónico";
 
-/* Class = "UILabel"; text = "nombre de usuario"; ObjectID = "2w2-M6-4dv"; */
-"2w2-M6-4dv.text" = "nombre de usuario";
+/* Clase = "UILabel"; text = "Nombre de usuario"; ObjectID = "2w2-M6-4dv"; */
+"2w2-M6-4dv.text" = "Nombre de usuario";
 
-/* Class = "UILabel"; text = "Jugadores"; ObjectID = "3RA-CS-JYe"; */
+/* Clase = "UILabel"; text = "Jugadores"; ObjectID = "3RA-CS-JYe"; */
 "3RA-CS-JYe.text" = "Jugadores";
 
-/* Class = "UIButton"; configuration.title = "¡VAMOS!"; ObjectID = "4lN-hZ-XPS"; */
-"4lN-hZ-XPS.configuration.title" = "¡VAMOS!";
-
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "4lN-hZ-XPS"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "4lN-hZ-XPS"; */
 "4lN-hZ-XPS.normalTitle" = "Botón";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "5bM-De-r7t"; */
-"5bM-De-r7t.text" = "Etiqueta";
+/* Clase = "UILabel"; text = "Seleccione un modo"; ObjectID = "5LP-rN-Y1y"; */
+"5LP-rN-Y1y.text" = "Seleccione un modo";
 
-/* Class = "UIButton"; configuration.title = "Salir"; ObjectID = "5gm-hJ-CWH"; */
-"5gm-hJ-CWH.configuration.title" = "Salir";
-
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "5gm-hJ-CWH"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "5gm-hJ-CWH"; */
 "5gm-hJ-CWH.normalTitle" = "Botón";
 
-/* Class = "UIButton"; configuration.title = "Iniciar sesión"; ObjectID = "676-G7-ZuZ"; */
+/* Clase = "UILabel"; text = "¡Enhorabuena!"; ObjectID = "5wI-kt-0u1"; */
+"5wI-kt-0u1.text" = "¡Enhorabuena!";
+
+/* Clase = "UIButton"; configuration.title = "Iniciar sesión"; ObjectID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.configuration.title" = "Iniciar sesión";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "676-G7-ZuZ"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.normalTitle" = "Botón";
 
-/* Class = "UILabel"; text = "Preguntas: "; ObjectID = "6UV-Lc-xW9"; */
+/* Clase = "UILabel"; text = "Preguntas: "; ObjectID = "6UV-Lc-xW9"; */
 "6UV-Lc-xW9.text" = "Preguntas: ";
 
-/* Class = "UITextField"; placeholder = "Correo electrónico"; ObjectID = "6n4-qw-W9F"; */
+/* Clase = "UITextField"; placeholder = "Correo electrónico"; ObjectID = "6n4-qw-W9F"; */
 "6n4-qw-W9F.placeholder" = "Correo electrónico";
 
-/* Class = "UILabel"; text = "Respuesta correcta"; ObjectID = "7AN-aB-uru"; */
+/* Clase = "UILabel"; text = "Respuesta correcta"; ObjectID = "7AN-aB-uru"; */
 "7AN-aB-uru.text" = "Respuesta correcta";
 
-/* Class = "UILabel"; text = "nombre: "; ObjectID = "7bU-Me-f3y"; */
-"7bU-Me-f3y.text" = "nombre: ";
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "7PL-G3-baY"; */
+"7PL-G3-baY.text" = "Etiqueta";
 
-/* Class = "UIButton"; configuration.title = "Registrarse"; ObjectID = "7uh-XO-SLr"; */
+/* Clase = "UILabel"; text = "Nombre: "; ObjectID = "7bU-Me-f3y"; */
+"7bU-Me-f3y.text" = "Nombre: ";
+
+/* Clase = "UIButton"; configuration.title = "Registrarse"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.configuration.title" = "Registrarse";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "7uh-XO-SLr"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "Botón";
 
-/* Class = "UINavigationItem"; title = "Social"; ObjectID = "84j-ov-DAs"; */
+/* Clase = "UINavigationItem"; title = "Social"; ObjectID = "84j-ov-DAs"; */
 "84j-ov-DAs.title" = "Social";
 
-/* Class = "UIButton"; configuration.title = "Mis cuestionarios"; ObjectID = "BIo-kr-Tsf"; */
-"BIo-kr-Tsf.configuration.title" = "Mis cuestionarios";
+/* Clase = "UIButton"; configuration.title = "Cuestionario"; ObjectID = "BIo-kr-Tsf"; */
+"BIo-kr-Tsf.configuration.title" = "Cuestionario";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "BIo-kr-Tsf"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "BIo-kr-Tsf"; */
 "BIo-kr-Tsf.normalTitle" = "Botón";
 
-/* Class = "UIButton"; configuration.title = "Botón"; ObjectID = "Bis-mJ-vER"; */
-"Bis-mJ-vER.configuration.title" = "Botón";
-
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "Bis-mJ-vER"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "Bis-mJ-vER"; */
 "Bis-mJ-vER.normalTitle" = "Botón";
 
-/* Class = "UIButton"; configuration.title = "Amigos / Grupos"; ObjectID = "CiQ-uc-p7v"; */
-"CiQ-uc-p7v.configuration.title" = "Amigos / Grupos";
-
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "CiQ-uc-p7v"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "CiQ-uc-p7v"; */
 "CiQ-uc-p7v.normalTitle" = "Botón";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "EA1-Dw-ehh"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "EA1-Dw-ehh"; */
 "EA1-Dw-ehh.normalTitle" = "Botón";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "Ezy-GI-XFI"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "Ezy-GI-XFI"; */
 "Ezy-GI-XFI.normalTitle" = "Botón";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "F2r-Df-ChQ"; */
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "F2r-Df-ChQ"; */
 "F2r-Df-ChQ.text" = "Etiqueta";
 
-/* Class = "UITextField"; placeholder = "Código"; ObjectID = "FF4-NQ-Ldx"; */
+/* Clase = "UITextField"; placeholder = "Código"; ObjectID = "FF4-NQ-Ldx"; */
 "FF4-NQ-Ldx.placeholder" = "Código";
 
-/* Class = "UILabel"; text = "nombre: "; ObjectID = "G26-73-clB"; */
-"G26-73-clB.text" = "nombre: ";
+/* Clase = "UILabel"; text = "Nombre: "; ObjectID = "G26-73-clB"; */
+"G26-73-clB.text" = "Nombre: ";
 
-/* Class = "UIButton"; configuration.title = "Registrarse"; ObjectID = "GLh-lL-XXi"; */
+/* Clase = "UIButton"; configuration.title = "Registrarse"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.configuration.title" = "Registrarse";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "GLh-lL-XXi"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "Botón";
 
-/* Class = "UINavigationItem"; title = "Historial"; ObjectID = "GQ9-HW-KCb"; */
+/* Clase = "UINavigationItem"; title = "Historial"; ObjectID = "GQ9-HW-KCb"; */
 "GQ9-HW-KCb.title" = "Historial";
 
-/* Class = "UINavigationItem"; title = "Sala privada"; ObjectID = "Gur-eL-rdV"; */
+/* Clase = "UINavigationItem"; title = "Sala privada"; ObjectID = "Gur-eL-rdV"; */
 "Gur-eL-rdV.title" = "Sala privada";
 
-/* Class = "UILabel"; text = "Buscando un oponente"; ObjectID = "HNo-0d-sc7"; */
+/* Clase = "UILabel"; text = "Buscando un oponente"; ObjectID = "HNo-0d-sc7"; */
 "HNo-0d-sc7.text" = "Buscando un oponente";
 
-/* Class = "UITextField"; placeholder = "contraseña"; ObjectID = "Hte-ge-dVW"; */
-"Hte-ge-dVW.placeholder" = "contraseña";
+/* Clase = "UITextField"; placeholder = "Contraseña"; ObjectID = "Hte-ge-dVW"; */
+"Hte-ge-dVW.placeholder" = "Contraseña";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "LEF-lm-mTa"; */
+/* Clase = "UILabel"; text = "XP actual: "; ObjectID = "JZf-ig-Kz6"; */
+"JZf-ig-Kz6.text" = "XP actual: ";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "KMq-qh-ez7"; */
+"KMq-qh-ez7.text" = "Etiqueta";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "LEF-lm-mTa"; */
 "LEF-lm-mTa.text" = "Etiqueta";
 
-/* Class = "UIButton"; configuration.title = "Iniciar sesión"; ObjectID = "LRV-Qh-49t"; */
+/* Clase = "UIButton"; configuration.title = "Iniciar sesión"; ObjectID = "LRV-Qh-49t"; */
 "LRV-Qh-49t.configuration.title" = "Iniciar sesión";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "LRV-Qh-49t"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "LRV-Qh-49t"; */
 "LRV-Qh-49t.normalTitle" = "Botón";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "LbA-QI-m0r"; */
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "LbA-QI-m0r"; */
 "LbA-QI-m0r.text" = "Etiqueta";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "Ldq-fm-vcu"; */
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "Ldq-fm-vcu"; */
 "Ldq-fm-vcu.text" = "Etiqueta";
 
-/* Class = "UILabel"; text = "Cuestionarios oficiales"; ObjectID = "MAv-zJ-l7h"; */
-"MAv-zJ-l7h.text" = "Cuestionarios oficiales";
-
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "Competitivo"; ObjectID = "Mhu-Mq-UrT"; */
+/* Clase = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "Competitivo"; ObjectID = "Mhu-Mq-UrT"; */
 "Mhu-Mq-UrT.segmentTitles[0]" = "Competitivo";
 
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "Juego rápido"; ObjectID = "Mhu-Mq-UrT"; */
-"Mhu-Mq-UrT.segmentTitles[1]" = "Juego rápido";
+/* Clase = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "Partida rápida"; ObjectID = "Mhu-Mq-UrT"; */
+"Mhu-Mq-UrT.segmentTitles[1]" = "Partida rápida";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "Nas-EO-Jgf"; */
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "Nas-EO-Jgf"; */
 "Nas-EO-Jgf.text" = "Etiqueta";
 
-/* Class = "UIButton"; configuration.title = "Unirse"; ObjectID = "Nw6-2g-Kne"; */
+/* Clase = "UIButton"; configuration.title = "Unirse"; ObjectID = "Nw6-2g-Kne"; */
 "Nw6-2g-Kne.configuration.title" = "Unirse";
 
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "Nw6-2g-Kne"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "Nw6-2g-Kne"; */
 "Nw6-2g-Kne.normalTitle" = "Botón";
 
-/* Class = "UILabel"; text = "Título"; ObjectID = "Ody-Bm-Bqd"; */
+/* Clase = "UILabel"; text = "Título"; ObjectID = "Ody-Bm-Bqd"; */
 "Ody-Bm-Bqd.text" = "Título";
 
-/* Class = "UINavigationItem"; title = "Rankeado"; ObjectID = "PMP-4e-WAw"; */
-"PMP-4e-WAw.title" = "Rankeado";
+/* Clase = "UINavigationItem"; title = "Clasificación"; ObjectID = "PMP-4e-WAw"; */
+"PMP-4e-WAw.title" = "Clasificación";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "PZ5-5x-9jZ"; */
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "PZ5-5x-9jZ"; */
 "PZ5-5x-9jZ.text" = "Etiqueta";
 
-/* Class = "UINavigationItem"; title = "Cuestionarios"; ObjectID = "Ptl-sW-I4r"; */
-"Ptl-sW-I4r.title" = "Cuestionarios";
+/* Clase = "UINavigationItem"; title = "Cuestionario"; ObjectID = "Ptl-sW-I4r"; */
+"Ptl-sW-I4r.title" = "Cuestionario";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "QLd-xk-IDy"; */
-"QLd-xk-IDy.text" = "Etiqueta";
+/* Clase = "UILabel"; text = "fcdx"; ObjectID = "QLd-xk-IDy"; */
+"QLd-xk-IDy.text" = "fcdx";
 
-/* Class = "UIButton"; configuration.title = "Encontrar un oponente"; ObjectID = "UJS-pN-0nw"; */
-"UJS-pN-0nw.configuration.title" = "Encontrar un oponente";
-
-/* Class = "UIButton"; normalTitle = "Botón"; ObjectID = "UJS-pN-0nw"; */
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "UJS-pN-0nw"; */
 "UJS-pN-0nw.normalTitle" = "Botón";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "V2D-LG-FAA"; */
-"V2D-LG-FAA.text" = "Etiqueta";
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "Uem-di-lTH"; */
+"Uem-di-lTH.normalTitle" = "Botón";
 
-/* Class = "UITextField"; placeholder = "Contraseña"; ObjectID = "vOP-j1-sOt"; */
-"vOP-j1-sOt.placeholder" = "Contraseña";
+/* Clase = "UITabBarItem"; title = "Perfil"; ObjectID = "VM3-VU-Z7k"; */
+"VM3-VU-Z7k.title" = "Perfil";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "w4h-1i-m7k"; */
-"w4h-1i-m7k.text" = "Etiqueta";
+/* Clase = "UILabel"; text = "Respuestas incorrectas"; ObjectID = "WSO-1T-mHM"; */
+"WSO-1T-mHM.text" = "Respuestas incorrectas";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "XKK-oB-4KB"; */
+"XKK-oB-4KB.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "XsD-7w-KZb"; */
+"XsD-7w-KZb.text" = "Etiqueta";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "Y3e-rz-BUl"; */
+"Y3e-rz-BUl.text" = "Etiqueta";
+
+/* Clase = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "YaM-h3-ySn"; */
+"YaM-h3-ySn.text" = "rgvfcdxswsxdcf";
+
+/* Clase = "UILabel"; text = "0"; ObjectID = "Yij-eg-PwO"; */
+"Yij-eg-PwO.text" = "0";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "bT2-2H-KCc"; */
+"bT2-2H-KCc.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "50/100"; ObjectID = "c3c-z7-JnY"; */
+"c3c-z7-JnY.text" = "50/100";
+
+/* Clase = "UITabBarItem"; title = "Objeto"; ObjectID = "cxf-DH-Nsd"; */
+"cxf-DH-Nsd.title" = "Objeto";
+
+/* Clase = "UINavigationItem"; title = "Partida rápida"; ObjectID = "d7u-7X-6Gu"; */
+"d7u-7X-6Gu.title" = "Partida rápida";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "dNN-If-JT5"; */
+"dNN-If-JT5.text" = "Etiqueta";
+
+/* Clase = "UILabel"; text = "Introduce tu dirección de correo electrónico. Te enviaremos un correo electrónico para restablecer tu contraseña"; ObjectID = "des-6C-FMV"; */
+"des-6C-FMV.text" = "Introduce tu dirección de correo electrónico. Te enviaremos un correo electrónico para restablecer tu contraseña";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "eSx-HP-P5x"; */
+"eSx-HP-P5x.normalTitle" = "Botón";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "eqz-gr-ieR"; */
+"eqz-gr-ieR.normalTitle" = "Botón";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "fTz-it-F3b"; */
+"fTz-it-F3b.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "Dificultad: "; ObjectID = "giF-Ps-7d8"; */
+"giF-Ps-7d8.text" = "Dificultad: ";
+
+/* Clase = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "hz1-eT-Z9X"; */
+"hz1-eT-Z9X.text" = "rgvfcdxswsxdcf";
+
+/* Clase = "UINavigationItem"; title = "Amigos"; ObjectID = "jbE-dc-dLO"; */
+"jbE-dc-dLO.title" = "Amigos";
+
+/* Clase = "UILabel"; text = "Nivel"; ObjectID = "k0H-MS-rUT"; */
+"k0H-MS-rUT.text" = "Nivel";
+
+/* Clase = "UILabel"; text = "Código"; ObjectID = "kGd-JE-LIh"; */
+"kGd-JE-LIh.text" = "Código";
+
+/* Clase = "UINavigationItem"; title = "Invitaciones"; ObjectID = "kQB-f5-x0x"; */
+"kQB-f5-x0x.title" = "Invitaciones";
+
+/* Clase = "UISegmentedControl"; kj2-em-ceM.segmentTitles[0] = "Amigos"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[0]" = "Amigos";
+
+/* Clase = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "Recibidas"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[1]" = "Recibidas";
+
+/* Clase = "UISegmentedControl"; kj2-em-ceM.segmentTitles[2] = "Enviadas"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[2]" = "Enviadas";
+
+/* Clase = "UIButton"; configuration.title = "Invitaciones"; ObjectID = "lOB-iE-odF"; */
+"lOB-iE-odF.configuration.title" = "Invitaciones";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "lOB-iE-odF"; */
+"lOB-iE-odF.normalTitle" = "Botón";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "mFL-ab-1Jp"; */
+"mFL-ab-1Jp.normalTitle" = "Botón";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "nGF-2v-XrT"; */
+"nGF-2v-XrT.normalTitle" = "Botón";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "nIU-wO-94t"; */
+"nIU-wO-94t.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "Pregunta"; ObjectID = "nWS-Y6-efk"; */
+"nWS-Y6-efk.text" = "Pregunta";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "oB7-XM-CDC"; */
+"oB7-XM-CDC.normalTitle" = "Botón";
+
+/* Clase = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "oBf-Pg-Xh6"; */
+"oBf-Pg-Xh6.text" = "rgvfcdxswsxdcf";
+
+/* Clase = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[0] = "Amigos"; ObjectID = "q0a-Cy-c21"; */
+"q0a-Cy-c21.segmentTitles[0]" = "Amigos";
+
+/* Clase = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[1] = "Grupos"; ObjectID = "q0a-Cy-c21"; */
+"q0a-Cy-c21.segmentTitles[1]" = "Grupos";
+
+/* Clase = "UITabBarItem"; title = "Clasificación"; ObjectID = "qZ9-Bu-vAN"; */
+"qZ9-Bu-vAN.title" = "Clasificación";
+
+/* Clase = "UINavigationItem"; title = "Invitar jugadores"; ObjectID = "qwe-NI-WFm"; */
+"qwe-NI-WFm.title" = "Invitar jugadores";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "rhM-ft-R7S"; */
+"rhM-ft-R7S.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "Contraseña olvidada"; ObjectID = "tZ4-wp-aB3"; */
+"tZ4-wp-aB3.text" = "Contraseña olvidada";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "tb8-yO-A2H"; */
+"tb8-yO-A2H.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "u5V-kR-BjI"; */
+"u5V-kR-BjI.text" = "Etiqueta";
+
+/* Clase = "UILabel"; text = "Registro"; ObjectID = "vWQ-XI-Mwh"; */
+"vWQ-XI-Mwh.text" = "Registro";
+
+/* Clase = "UITextField"; placeholder = "Nombre de usuario"; ObjectID = "vYc-w6-bm6"; */
+"vYc-w6-bm6.placeholder" = "Nombre de usuario";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "wMe-QI-ZN6"; */
+"wMe-QI-ZN6.normalTitle" = "Botón";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "wvO-iw-Op1"; */
+"wvO-iw-Op1.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "x1F-dl-OrO"; */
+"x1F-dl-OrO.text" = "Etiqueta";
+
+/* Clase = "UIButton"; configuration.title = "Unirse"; ObjectID = "xUy-df-ByD"; */
+"xUy-df-ByD.configuration.title" = "Unirse";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "xUy-df-ByD"; */
+"xUy-df-ByD.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "y6H-7x-TFU"; */
+"y6H-7x-TFU.text" = "Etiqueta";
+
+/* Clase = "UILabel"; text = "Etiqueta"; ObjectID = "yIo-kq-iNM"; */
+"yIo-kq-iNM.text" = "Etiqueta";
+
+/* Clase = "UITextField"; placeholder = "Contraseña"; ObjectID = "yJh-Wv-8GL"; */
+"yJh-Wv-8GL.placeholder" = "Contraseña";
+
+/* Clase = "UIButton"; normalTitle = "Botón"; ObjectID = "ymN-dg-kdT"; */
+"ymN-dg-kdT.normalTitle" = "Botón";
+
+/* Clase = "UILabel"; text = "Aciertos: "; ObjectID = "z0p-5G-8Y2"; */
+"z0p-5G-8Y2.text" = "Aciertos: ";
+
+/* Clase = "UILabel"; text = "rgvfcdxswsxdcf"; ObjectID = "z10-ND-bla"; */
+"z10-ND-bla.text" = "rgvfcdxswsxdcf";
+
+"tgl-rh-1ga.configuration.title" = "Amigos";
+
+"v9T-VZ-s3z.configuration.title" = "Enviar correo electrónico";
+"tZ4-wp-aB3.text" = "Contraseña olvidada";
+"uJZ-UU-FDj.text" = "Explicación";
 
 /* Class = "UITabBarItem"; title = "Social"; ObjectID = "wGJ-Zi-rZH"; */
 "wGJ-Zi-rZH.title" = "Social";
 
-/* Class = "UILabel"; text = "Tema: "; ObjectID = "wQd-D8-m12"; */
-"wQd-D8-m12.text" = "Tema: ";
+/* Class = "UITabBarItem"; title = "Quick play"; ObjectID = "v2D-Lg-faA"; */
+"v2D-Lg-faA.title" = "Juego Rápido";
 
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "xzd-nu-mjD"; */
-"xzd-nu-mjD.text" = "Etiqueta";
-
-/* Class = "UITextField"; placeholder = "seudónimo"; ObjectID = "zNz-hZ-TWk"; */
-"zNz-hZ-TWk.placeholder" = "seudónimo";
-
-/* Class = "UILabel"; text = "Etiqueta"; ObjectID = "zRj-Kk-caM"; */
-"zRj-Kk-caM.text" = "Etiqueta";

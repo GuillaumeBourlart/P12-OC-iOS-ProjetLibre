@@ -1,338 +1,376 @@
-/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "0FS-gv-tPK"; */
+/* Класс = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "0FS-gv-tPK"; */
 "0FS-gv-tPK.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UINavigationItem"; title = "Группы"; ObjectID = "0Ih-Hi-KQ6"; */
+/* Класс = "UINavigationItem"; title = "Группы"; ObjectID = "0Ih-Hi-KQ6"; */
 "0Ih-Hi-KQ6.title" = "Группы";
 
-/* Class = "UIButton"; configuration.title = "Присоединиться к комнате"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.configuration.title" = "Присоединиться к комнате";
+/* Класс = "UIButton"; configuration.title = "Присоединиться"; ObjectID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.configuration.title" = "Присоединиться";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "0f1-ID-V1v"; */
-"0f1-ID-V1v.normalTitle" = "Кнопка";
+/* Класс = "UIButton"; normalTitle = "Присоединиться к комнате"; ObjectID = "0f1-ID-V1v"; */
+"0f1-ID-V1v.normalTitle" = "Присоединиться к комнате";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "0lb-sS-1xO"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "0lb-sS-1xO"; */
 "0lb-sS-1xO.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; configuration.title = "Создать"; ObjectID = "1cu-04-f1V"; */
+/* Класс = "UIButton"; configuration.title = "Создать"; ObjectID = "1cu-04-f1V"; */
 "1cu-04-f1V.configuration.title" = "Создать";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "1cu-04-f1V"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "1cu-04-f1V"; */
 "1cu-04-f1V.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "1oU-Dd-LR2"; */
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "1oU-Dd-LR2"; */
 "1oU-Dd-LR2.text" = "Метка";
 
-/* Class = "UIButton"; configuration.title = "Группы"; ObjectID = "2bv-Ne-Wrk"; */
+/* Класс = "UIButton"; configuration.title = "Группы"; ObjectID = "2bv-Ne-Wrk"; */
 "2bv-Ne-Wrk.configuration.title" = "Группы";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "2bv-Ne-Wrk"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "2bv-Ne-Wrk"; */
 "2bv-Ne-Wrk.normalTitle" = "Кнопка";
 
-/* Class = "UITextField"; placeholder = "электронная почта"; ObjectID = "2ff-Bb-QW1"; */
+/* Класс = "UITextField"; placeholder = "электронная почта"; ObjectID = "2ff-Bb-QW1"; */
 "2ff-Bb-QW1.placeholder" = "электронная почта";
 
-/* Class = "UILabel"; text = "имя пользователя"; ObjectID = "2w2-M6-4dv"; */
-"2w2-M6-4dv.text" = "имя пользователя";
+/* Класс = "UILabel"; text = "Имя пользователя"; ObjectID = "2w2-M6-4dv"; */
+"2w2-M6-4dv.text" = "Имя пользователя";
 
-/* Class = "UILabel"; text = "Игроки"; ObjectID = "3RA-CS-JYe"; */
+/* Класс = "UILabel"; text = "Игроки"; ObjectID = "3RA-CS-JYe"; */
 "3RA-CS-JYe.text" = "Игроки";
 
-/* Class = "UIButton"; configuration.title = "Поехали!"; ObjectID = "4lN-hZ-XPS"; */
-"4lN-hZ-XPS.configuration.title" = "Поехали!";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "4lN-hZ-XPS"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "4lN-hZ-XPS"; */
 "4lN-hZ-XPS.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "5bM-De-r7t"; */
-"5bM-De-r7t.text" = "Метка";
+/* Класс = "UILabel"; text = "Выберите режим"; ObjectID = "5LP-rN-Y1y"; */
+"5LP-rN-Y1y.text" = "Выберите режим";
 
-/* Class = "UIButton"; configuration.title = "Покинуть"; ObjectID = "5gm-hJ-CWH"; */
-"5gm-hJ-CWH.configuration.title" = "Покинуть";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "5gm-hJ-CWH"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "5gm-hJ-CWH"; */
 "5gm-hJ-CWH.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; configuration.title = "Войти"; ObjectID = "676-G7-ZuZ"; */
+/* Класс = "UILabel"; text = "Молодец!"; ObjectID = "5wI-kt-0u1"; */
+"5wI-kt-0u1.text" = "Молодец!";
+
+/* Класс = "UIButton"; configuration.title = "Войти"; ObjectID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.configuration.title" = "Войти";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "676-G7-ZuZ"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "676-G7-ZuZ"; */
 "676-G7-ZuZ.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Вопросы:"; ObjectID = "6UV-Lc-xW9"; */
-"6UV-Lc-xW9.text" = "Вопросы:";
+/* Класс = "UILabel"; text = "Вопросы: "; ObjectID = "6UV-Lc-xW9"; */
+"6UV-Lc-xW9.text" = "Вопросы: ";
 
-/* Class = "UITextField"; placeholder = "Электронная почта"; ObjectID = "6n4-qw-W9F"; */
+/* Класс = "UITextField"; placeholder = "Электронная почта"; ObjectID = "6n4-qw-W9F"; */
 "6n4-qw-W9F.placeholder" = "Электронная почта";
 
-/* Class = "UILabel"; text = "Правильный ответ"; ObjectID = "7AN-aB-uru"; */
+/* Класс = "UILabel"; text = "Правильный ответ"; ObjectID = "7AN-aB-uru"; */
 "7AN-aB-uru.text" = "Правильный ответ";
 
-/* Class = "UILabel"; text = "название:"; ObjectID = "7bU-Me-f3y"; */
-"7bU-Me-f3y.text" = "название:";
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "7PL-G3-baY"; */
+"7PL-G3-baY.text" = "Метка";
 
-/* Class = "UIButton"; configuration.title = "Зарегистрироваться"; ObjectID = "7uh-XO-SLr"; */
+/* Класс = "UILabel"; text = "Имя: "; ObjectID = "7bU-Me-f3y"; */
+"7bU-Me-f3y.text" = "Имя: ";
+
+/* Класс = "UIButton"; configuration.title = "Зарегистрироваться"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.configuration.title" = "Зарегистрироваться";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "7uh-XO-SLr"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "7uh-XO-SLr"; */
 "7uh-XO-SLr.normalTitle" = "Кнопка";
 
-/* Class = "UINavigationItem"; title = "Социальное"; ObjectID = "84j-ov-DAs"; */
-"84j-ov-DAs.title" = "Социальное";
+/* Класс = "UINavigationItem"; title = "Социальные"; ObjectID = "84j-ov-DAs"; */
+"84j-ov-DAs.title" = "Социальные";
 
-/* Class = "UIButton"; configuration.title = "Мои викторины"; ObjectID = "BIo-kr-Tsf"; */
-"BIo-kr-Tsf.configuration.title" = "Мои викторины";
+/* Класс = "UIButton"; configuration.title = "Викторина"; ObjectID = "BIo-kr-Tsf"; */
+"BIo-kr-Tsf.configuration.title" = "Викторина";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "BIo-kr-Tsf"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "BIo-kr-Tsf"; */
 "BIo-kr-Tsf.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; configuration.title = "Кнопка"; ObjectID = "Bis-mJ-vER"; */
-"Bis-mJ-vER.configuration.title" = "Кнопка";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "Bis-mJ-vER"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "Bis-mJ-vER"; */
 "Bis-mJ-vER.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; configuration.title = "Друзья / Группы"; ObjectID = "CiQ-uc-p7v"; */
-"CiQ-uc-p7v.configuration.title" = "Друзья / Группы";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "CiQ-uc-p7v"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "CiQ-uc-p7v"; */
 "CiQ-uc-p7v.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "EA1-Dw-ehh"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "EA1-Dw-ehh"; */
 "EA1-Dw-ehh.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "Ezy-GI-XFI"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "Ezy-GI-XFI"; */
 "Ezy-GI-XFI.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "F2r-Df-ChQ"; */
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "F2r-Df-ChQ"; */
 "F2r-Df-ChQ.text" = "Метка";
 
-/* Class = "UITextField"; placeholder = "Код"; ObjectID = "FF4-NQ-Ldx"; */
+/* Класс = "UITextField"; placeholder = "Код"; ObjectID = "FF4-NQ-Ldx"; */
 "FF4-NQ-Ldx.placeholder" = "Код";
 
-/* Class = "UILabel"; text = "название:"; ObjectID = "G26-73-clB"; */
-"G26-73-clB.text" = "название:";
+/* Класс = "UILabel"; text = "Имя: "; ObjectID = "G26-73-clB"; */
+"G26-73-clB.text" = "Имя: ";
 
-/* Class = "UIButton"; configuration.title = "Зарегистрироваться"; ObjectID = "GLh-lL-XXi"; */
+/* Класс = "UIButton"; configuration.title = "Зарегистрироваться"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.configuration.title" = "Зарегистрироваться";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "GLh-lL-XXi"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "GLh-lL-XXi"; */
 "GLh-lL-XXi.normalTitle" = "Кнопка";
 
-/* Class = "UINavigationItem"; title = "История"; ObjectID = "GQ9-HW-KCb"; */
+/* Класс = "UINavigationItem"; title = "История"; ObjectID = "GQ9-HW-KCb"; */
 "GQ9-HW-KCb.title" = "История";
 
-/* Class = "UINavigationItem"; title = "Приватная комната"; ObjectID = "Gur-eL-rdV"; */
-"Gur-eL-rdV.title" = "Приватная комната";
+/* Класс = "UINavigationItem"; title = "Частная комната"; ObjectID = "Gur-eL-rdV"; */
+"Gur-eL-rdV.title" = "Частная комната";
 
-/* Class = "UILabel"; text = "Поиск соперника"; ObjectID = "HNo-0d-sc7"; */
-"HNo-0d-sc7.text" = "Поиск соперника";
+/* Класс = "UILabel"; text = "Поиск противника"; ObjectID = "HNo-0d-sc7"; */
+"HNo-0d-sc7.text" = "Поиск противника";
 
-/* Class = "UITextField"; placeholder = "пароль"; ObjectID = "Hte-ge-dVW"; */
-"Hte-ge-dVW.placeholder" = "пароль";
+/* Класс = "UITextField"; placeholder = "Пароль"; ObjectID = "Hte-ge-dVW"; */
+"Hte-ge-dVW.placeholder" = "Пароль";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "LEF-lm-mTa"; */
+/* Класс = "UILabel"; text = "Текущий опыт: "; ObjectID = "JZf-ig-Kz6"; */
+"JZf-ig-Kz6.text" = "Текущий опыт: ";
+
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "KMq-qh-ez7"; */
+"KMq-qh-ez7.text" = "Метка";
+
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "LEF-lm-mTa"; */
 "LEF-lm-mTa.text" = "Метка";
 
-/* Class = "UIButton"; configuration.title = "Войти"; ObjectID = "LRV-Qh-49t"; */
+/* Класс = "UIButton"; configuration.title = "Войти"; ObjectID = "LRV-Qh-49t"; */
 "LRV-Qh-49t.configuration.title" = "Войти";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "LRV-Qh-49t"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "LRV-Qh-49t"; */
 "LRV-Qh-49t.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "LbA-QI-m0r"; */
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "LbA-QI-m0r"; */
 "LbA-QI-m0r.text" = "Метка";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "Ldq-fm-vcu"; */
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "Ldq-fm-vcu"; */
 "Ldq-fm-vcu.text" = "Метка";
 
-/* Class = "UILabel"; text = "Официальные викторины"; ObjectID = "MAv-zJ-l7h"; */
-"MAv-zJ-l7h.text" = "Официальные викторины";
-
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "Соревновательный"; ObjectID = "Mhu-Mq-UrT"; */
+/* Класс = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[0] = "Соревновательный"; ObjectID = "Mhu-Mq-UrT"; */
 "Mhu-Mq-UrT.segmentTitles[0]" = "Соревновательный";
 
-/* Class = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "Быстрая игра"; ObjectID = "Mhu-Mq-UrT"; */
+/* Класс = "UISegmentedControl"; Mhu-Mq-UrT.segmentTitles[1] = "Быстрая игра"; ObjectID = "Mhu-Mq-UrT"; */
 "Mhu-Mq-UrT.segmentTitles[1]" = "Быстрая игра";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "Nas-EO-Jgf"; */
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "Nas-EO-Jgf"; */
 "Nas-EO-Jgf.text" = "Метка";
 
-/* Class = "UIButton"; configuration.title = "Присоединиться"; ObjectID = "Nw6-2g-Kne"; */
+/* Класс = "UIButton"; configuration.title = "Присоединиться"; ObjectID = "Nw6-2g-Kne"; */
 "Nw6-2g-Kne.configuration.title" = "Присоединиться";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "Nw6-2g-Kne"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "Nw6-2g-Kne"; */
 "Nw6-2g-Kne.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Название"; ObjectID = "Ody-Bm-Bqd"; */
-"Ody-Bm-Bqd.text" = "Название";
+/* Класс = "UILabel"; text = "Заголовок"; ObjectID = "Ody-Bm-Bqd"; */
+"Ody-Bm-Bqd.text" = "Заголовок";
 
-/* Class = "UINavigationItem"; title = "Рейтинговая игра"; ObjectID = "PMP-4e-WAw"; */
-"PMP-4e-WAw.title" = "Рейтинговая игра";
+/* Класс = "UINavigationItem"; title = "Рейтинг"; ObjectID = "PMP-4e-WAw"; */
+"PMP-4e-WAw.title" = "Рейтинг";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "PZ5-5x-9jZ"; */
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "PZ5-5x-9jZ"; */
 "PZ5-5x-9jZ.text" = "Метка";
 
-/* Class = "UINavigationItem"; title = "Викторины"; ObjectID = "Ptl-sW-I4r"; */
-"Ptl-sW-I4r.title" = "Викторины";
+/* Класс = "UINavigationItem"; title = "Викторина"; ObjectID = "Ptl-sW-I4r"; */
+"Ptl-sW-I4r.title" = "Викторина";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "QLd-xk-IDy"; */
-"QLd-xk-IDy.text" = "Метка";
+/* Класс = "UILabel"; text = "fcdx"; ObjectID = "QLd-xk-IDy"; */
+"QLd-xk-IDy.text" = "fcdx";
 
-/* Class = "UIButton"; configuration.title = "Найти соперника"; ObjectID = "UJS-pN-0nw"; */
-"UJS-pN-0nw.configuration.title" = "Найти соперника";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "UJS-pN-0nw"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "UJS-pN-0nw"; */
 "UJS-pN-0nw.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "XsD-7w-KZb"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "Uem-di-lTH"; */
+"Uem-di-lTH.normalTitle" = "Кнопка";
+
+/* Класс = "UITabBarItem"; title = "Профиль"; ObjectID = "VM3-VU-Z7k"; */
+"VM3-VU-Z7k.title" = "Профиль";
+
+/* Класс = "UILabel"; text = "Неправильные ответы"; ObjectID = "WSO-1T-mHM"; */
+"WSO-1T-mHM.text" = "Неправильные ответы";
+
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "XKK-oB-4KB"; */
+"XKK-oB-4KB.normalTitle" = "Кнопка";
+
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "XsD-7w-KZb"; */
 "XsD-7w-KZb.text" = "Метка";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "Y3e-rz-BUl"; */
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "Y3e-rz-BUl"; */
 "Y3e-rz-BUl.text" = "Метка";
 
-/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "YaM-h3-ySn"; */
+/* Класс = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "YaM-h3-ySn"; */
 "YaM-h3-ySn.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "bT2-2H-KCc"; */
+/* Класс = "UILabel"; text = "0"; ObjectID = "Yij-eg-PwO"; */
+"Yij-eg-PwO.text" = "0";
+
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "bT2-2H-KCc"; */
 "bT2-2H-KCc.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "50/100"; ObjectID = "c3c-z7-JnY"; */
+/* Класс = "UILabel"; text = "50/100"; ObjectID = "c3c-z7-JnY"; */
 "c3c-z7-JnY.text" = "50/100";
 
-/* Class = "UITabBarItem"; title = "Профиль"; ObjectID = "cxf-DH-Nsd"; */
-"cxf-DH-Nsd.title" = "Профиль";
+/* Класс = "UITabBarItem"; title = "Пункт"; ObjectID = "cxf-DH-Nsd"; */
+"cxf-DH-Nsd.title" = "Пункт";
 
-/* Class = "UINavigationItem"; title = "Быстрая игра"; ObjectID = "d7u-7X-6Gu"; */
+/* Класс = "UINavigationItem"; title = "Быстрая игра"; ObjectID = "d7u-7X-6Gu"; */
 "d7u-7X-6Gu.title" = "Быстрая игра";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "dNN-If-JT5"; */
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "dNN-If-JT5"; */
 "dNN-If-JT5.text" = "Метка";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "eo8-CD-Z39"; */
-"eo8-CD-Z39.normalTitle" = "Кнопка";
+/* Класс = "UILabel"; text = "Введите свой адрес электронной почты. Мы отправим вам письмо для сброса пароля"; ObjectID = "des-6C-FMV"; */
+"des-6C-FMV.text" = "Введите свой адрес электронной почты. Мы отправим вам письмо для сброса пароля";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "eqz-gr-ieR"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "eSx-HP-P5x"; */
+"eSx-HP-P5x.normalTitle" = "Кнопка";
+
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "eqz-gr-ieR"; */
 "eqz-gr-ieR.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; configuration.title = "Покинуть"; ObjectID = "fTz-it-F3b"; */
-"fTz-it-F3b.configuration.title" = "Покинуть";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "fTz-it-F3b"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "fTz-it-F3b"; */
 "fTz-it-F3b.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Сложность:"; ObjectID = "giF-Ps-7d8"; */
-"giF-Ps-7d8.text" = "Сложность:";
+/* Класс = "UILabel"; text = "Сложность: "; ObjectID = "giF-Ps-7d8"; */
+"giF-Ps-7d8.text" = "Сложность: ";
 
-/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "hz1-eT-Z9X"; */
+/* Класс = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "hz1-eT-Z9X"; */
 "hz1-eT-Z9X.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UINavigationItem"; title = "Друзья"; ObjectID = "jbE-dc-dLO"; */
+/* Класс = "UINavigationItem"; title = "Друзья"; ObjectID = "jbE-dc-dLO"; */
 "jbE-dc-dLO.title" = "Друзья";
 
-/* Class = "UILabel"; text = "уровень"; ObjectID = "k0H-MS-rUT"; */
-"k0H-MS-rUT.text" = "уровень";
+/* Класс = "UILabel"; text = "Уровень"; ObjectID = "k0H-MS-rUT"; */
+"k0H-MS-rUT.text" = "Уровень";
 
-/* Class = "UILabel"; text = "код"; ObjectID = "kGd-JE-LIh"; */
-"kGd-JE-LIh.text" = "код";
+/* Класс = "UILabel"; text = "Код"; ObjectID = "kGd-JE-LIh"; */
+"kGd-JE-LIh.text" = "Код";
 
-/* Class = "UINavigationItem"; title = "Приглашения"; ObjectID = "kQB-f5-x0x"; */
+/* Класс = "UINavigationItem"; title = "Приглашения"; ObjectID = "kQB-f5-x0x"; */
 "kQB-f5-x0x.title" = "Приглашения";
 
-/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[0] = "Друзья"; ObjectID = "kj2-em-ceM"; */
+/* Класс = "UISegmentedControl"; kj2-em-ceM.segmentTitles[0] = "Друзья"; ObjectID = "kj2-em-ceM"; */
 "kj2-em-ceM.segmentTitles[0]" = "Друзья";
 
-/* Class = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "Запросы"; ObjectID = "kj2-em-ceM"; */
-"kj2-em-ceM.segmentTitles[1]" = "Запросы";
+/* Класс = "UISegmentedControl"; kj2-em-ceM.segmentTitles[1] = "Полученные"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[1]" = "Полученные";
 
-/* Class = "UIButton"; configuration.title = "Приглашения"; ObjectID = "lOB-iE-odF"; */
+/* Класс = "UISegmentedControl"; kj2-em-ceM.segmentTitles[2] = "Отправленные"; ObjectID = "kj2-em-ceM"; */
+"kj2-em-ceM.segmentTitles[2]" = "Отправленные";
+
+/* Класс = "UIButton"; configuration.title = "Приглашения"; ObjectID = "lOB-iE-odF"; */
 "lOB-iE-odF.configuration.title" = "Приглашения";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "lOB-iE-odF"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "lOB-iE-odF"; */
 "lOB-iE-odF.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; configuration.title = "Добавить"; ObjectID = "mFL-ab-1Jp"; */
-"mFL-ab-1Jp.configuration.title" = "Добавить";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "mFL-ab-1Jp"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "mFL-ab-1Jp"; */
 "mFL-ab-1Jp.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "nGF-2v-XrT"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "nGF-2v-XrT"; */
 "nGF-2v-XrT.normalTitle" = "Кнопка";
 
-/* Class = "UILabel"; text = "Вопрос"; ObjectID = "nWS-Y6-efk"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "nIU-wO-94t"; */
+"nIU-wO-94t.normalTitle" = "Кнопка";
+
+/* Класс = "UILabel"; text = "Вопрос"; ObjectID = "nWS-Y6-efk"; */
 "nWS-Y6-efk.text" = "Вопрос";
 
-/* Class = "UIButton"; configuration.title = "Кнопка"; ObjectID = "oB7-XM-CDC"; */
-"oB7-XM-CDC.configuration.title" = "Кнопка";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "oB7-XM-CDC"; */
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "oB7-XM-CDC"; */
 "oB7-XM-CDC.normalTitle" = "Кнопка";
 
-/* Class = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "oBf-Pg-Xh6"; */
+/* Класс = "UITextField"; text = "rgvfcdxswsxdcf"; ObjectID = "oBf-Pg-Xh6"; */
 "oBf-Pg-Xh6.text" = "rgvfcdxswsxdcf";
 
-/* Class = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[0] = "Друзья"; ObjectID = "q0a-Cy-c21"; */
+/* Класс = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[0] = "Друзья"; ObjectID = "q0a-Cy-c21"; */
 "q0a-Cy-c21.segmentTitles[0]" = "Друзья";
 
-/* Class = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[1] = "Группы"; ObjectID = "q0a-Cy-c21"; */
-"q0a-Cy-c21.segmentTitles[1]" = "Группы";
+/* Класс = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[1] = "Полученные"; ObjectID = "q0a-Cy-c21"; */
+"q0a-Cy-c21.segmentTitles[1]" = "Полученные";
 
-/* Class = "UITabBarItem"; title = "Рейтинговая игра"; ObjectID = "qZ9-Bu-vAN"; */
-"qZ9-Bu-vAN.title" = "Рейтинговая игра";
+/* Класс = "UISegmentedControl"; q0a-Cy-c21.segmentTitles[2] = "Отправленные"; ObjectID = "q0a-Cy-c21"; */
+"q0a-Cy-c21.segmentTitles[2]" = "Отправленные";
 
-/* Class = "UINavigationItem"; title = "Пригласить игроков"; ObjectID = "qwe-NI-WFm"; */
-"qwe-NI-WFm.title" = "Пригласить игроков";
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "qkI-S3-HnK"; */
+"qkI-S3-HnK.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "rhM-ft-R7S"; */
-"rhM-ft-R7S.normalTitle" = "Кнопка";
+/* Класс = "UILabel"; text = "Заголовок"; ObjectID = "r47-Fv-f5L"; */
+"r47-Fv-f5L.text" = "Заголовок";
 
-/* Class = "UIButton"; configuration.title = "Подтвердить"; ObjectID = "tb8-yO-A2H"; */
-"tb8-yO-A2H.configuration.title" = "Подтвердить";
+/* Класс = "UILabel"; text = "Ответ"; ObjectID = "r6J-5s-bHR"; */
+"r6J-5s-bHR.text" = "Ответ";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "tb8-yO-A2H"; */
-"tb8-yO-A2H.normalTitle" = "Кнопка";
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "t7t-XM-63K"; */
+"t7t-XM-63K.normalTitle" = "Кнопка";
 
-/* Class = "UIButton"; configuration.title = "Друзья"; ObjectID = "tgl-rh-1ga"; */
+/* Класс = "UILabel"; text = "0"; ObjectID = "tB0-Do-Z7T"; */
+"tB0-Do-Z7T.text" = "0";
+
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "tRp-q0-KaN"; */
+"tRp-q0-KaN.normalTitle" = "Кнопка";
+
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "tfS-rK-1CT"; */
+"tfS-rK-1CT.text" = "Метка";
+
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "tu6-Jb-Mdp"; */
+"tu6-Jb-Mdp.text" = "Метка";
+
+/* Класс = "UILabel"; text = "Оцените приложение"; ObjectID = "tvk-Go-hDX"; */
+"tvk-Go-hDX.text" = "Оцените приложение";
+
+/* Класс = "UILabel"; text = "Заголовок"; ObjectID = "u6f-Tk-Zqw"; */
+"u6f-Tk-Zqw.text" = "Заголовок";
+
+/* Класс = "UILabel"; text = "Сложность: "; ObjectID = "uIU-By-6aU"; */
+"uIU-By-6aU.text" = "Сложность: ";
+
+/* Класс = "UILabel"; text = "Ответ"; ObjectID = "uMh-bT-mx2"; */
+"uMh-bT-mx2.text" = "Ответ";
+
+/* Класс = "UILabel"; text = "Текущий опыт: "; ObjectID = "umv-BY-R45"; */
+"umv-BY-R45.text" = "Текущий опыт: ";
+
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "uqD-8O-MrJ"; */
+"uqD-8O-MrJ.normalTitle" = "Кнопка";
+
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "vIz-OY-DsG"; */
+"vIz-OY-DsG.text" = "Метка";
+
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "vTt-nT-RG0"; */
+"vTt-nT-RG0.text" = "Метка";
+
+/* Класс = "UILabel"; text = "Метка"; ObjectID = "x8z-ky-o19"; */
+"x8z-ky-o19.text" = "Метка";
+
+/* Класс = "UIButton"; configuration.title = "Выйти"; ObjectID = "xDk-Dy-sTu"; */
+"xDk-Dy-sTu.configuration.title" = "Выйти";
+
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "xDk-Dy-sTu"; */
+"xDk-Dy-sTu.normalTitle" = "Кнопка";
+
+/* Класс = "UILabel"; text = "Имя пользователя"; ObjectID = "xNU-XB-J0n"; */
+"xNU-XB-J0n.text" = "Имя пользователя";
+
+/* Класс = "UILabel"; text = "Игроки"; ObjectID = "z5O-W0-yud"; */
+"z5O-W0-yud.text" = "Игроки";
+
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "zDB-6e-X2A"; */
+"zDB-6e-X2A.normalTitle" = "Кнопка";
+
+/* Класс = "UIButton"; configuration.title = "Игры"; ObjectID = "zZd-NS-KvH"; */
+"zZd-NS-KvH.configuration.title" = "Игры";
+
+/* Класс = "UIButton"; normalTitle = "Кнопка"; ObjectID = "zZd-NS-KvH"; */
+"zZd-NS-KvH.normalTitle" = "Кнопка";
+
 "tgl-rh-1ga.configuration.title" = "Друзья";
 
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "tgl-rh-1ga"; */
-"tgl-rh-1ga.normalTitle" = "Кнопка";
-
-/* Class = "UILabel"; text = "Метка"; ObjectID = "tri-T4-5y5"; */
-"tri-T4-5y5.text" = "Метка";
-
-/* Class = "UILabel"; text = "Объяснение"; ObjectID = "uJZ-UU-FDj"; */
+"v9T-VZ-s3z.configuration.title" = "Отправить письмо";
+"tZ4-wp-aB3.text" = "Забыли пароль";
 "uJZ-UU-FDj.text" = "Объяснение";
+/* Class = "UITabBarItem"; title = "Social"; ObjectID = "wGJ-Zi-rZH"; */
+"wGJ-Zi-rZH.title" = "Социальные сети";
 
-/* Class = "UIButton"; configuration.title = "Кнопка"; ObjectID = "ucV-ge-bsl"; */
-"ucV-ge-bsl.configuration.title" = "Кнопка";
-
-/* Class = "UIButton"; normalTitle = "Кнопка"; ObjectID = "ucV-ge-bsl"; */
-"ucV-ge-bsl.normalTitle" = "Кнопка";
-
-/* Class = "UITabBarItem"; title = "Быстрая игра"; ObjectID = "v2D-Lg-faA"; */
+/* Class = "UITabBarItem"; title = "Quick play"; ObjectID = "v2D-Lg-faA"; */
 "v2D-Lg-faA.title" = "Быстрая игра";
 
-/* Class = "UILabel"; text = "Метка"; ObjectID = "vH0-8Z-WMS"; */
-"vH0-8Z-WMS.text" = "Метка";
-
-/* Class = "UITextField"; placeholder = "Пароль"; ObjectID = "vOP-j1-sOt"; */
-"vOP-j1-sOt.placeholder" = "Пароль";
-
-/* Class = "UILabel"; text = "Метка"; ObjectID = "w4h-1i-m7k"; */
-"w4h-1i-m7k.text" = "Метка";
-
-/* Class = "UITabBarItem"; title = "Социальная сеть"; ObjectID = "wGJ-Zi-rZH"; */
-"wGJ-Zi-rZH.title" = "Социальная сеть";
-
-/* Class = "UILabel"; text = "Тема:"; ObjectID = "wQd-D8-m12"; */
-"wQd-D8-m12.text" = "Тема:";
-
-/* Class = "UILabel"; text = "Метка"; ObjectID = "xzd-nu-mjD"; */
-"xzd-nu-mjD.text" = "Метка";
-
-/* Class = "UITextField"; placeholder = "Псевдоним"; ObjectID = "zNz-hZ-TWk"; */
-"zNz-hZ-TWk.placeholder" = "Псевдоним";
-
-/* Class = "UILabel"; text = "Метка"; ObjectID = "zRj-Kk-caM"; */
-"zRj-Kk-caM.text" = "Метка";
+/* Class = "UITabBarItem"; title = "Classement"; ObjectID = "qZ9-Bu-vAN"; */
+"qZ9-Bu-vAN.title" = "Рейтинг";
