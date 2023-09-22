@@ -39,16 +39,15 @@ class InvitesVC: UIViewController {
     // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         // load invites
-        loadInvites()
+        fetchInvites()
     }
     
     
     // Refresh invites when user pull to refresh
     @objc func refreshData(_ sender: Any) {
         self.tableView.refreshControl?.endRefreshing()
-        if tableView.visibleCells.first(where: { $0 is EmptyCell }) is EmptyCell {
-               startColorChangeAnimation()
-           }
+        startColorChangeAnimation()
+         
         // refresh invites
         loadInvites()
     }
@@ -70,9 +69,8 @@ class InvitesVC: UIViewController {
                 self.fetchInvites()
             }
             // stop the color animation
-                if self.tableView.visibleCells.first(where: { $0 is EmptyCell }) is EmptyCell {
                     self.stopColorChangeAnimation()
-                }
+                
             }
         }
     }
@@ -133,6 +131,15 @@ class InvitesVC: UIViewController {
     
     // function to join a lobby from the tapped invite
     func joinLobby(lobbyId: String) {
+        // delete the invite after user clicked on it
+        Game.shared.deleteInvite(inviteId: lobbyId) { result in
+        switch result {
+        case .failure(let error): print(error)
+        case .success(let lobbyID): print("invite \(lobbyID) deleted")
+            self.fetchInvites()
+            }
+        }
+        // Try to join the room linked to the invite
         Game.shared.joinRoom(lobbyId: lobbyId){ result in
             switch result {
             case .failure(let error): print(error)
@@ -140,6 +147,7 @@ class InvitesVC: UIViewController {
                 self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyId)
             }
         }
+        
     }
     
     // Unwind segue action method
@@ -192,12 +200,9 @@ extension InvitesVC: UITableViewDataSource {
             let lobbyText = NSLocalizedString("Lobby", comment: "")
             cell.label.text = userText + ": \(invite.key) - " + lobbyText + invite.value
 
-            // Create a disclosure indicator
-            let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-            whiteDisclosureIndicator.tintColor = .white
-            whiteDisclosureIndicator.backgroundColor = UIColor.clear
-            whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
-            cell.accessoryView = whiteDisclosureIndicator
+            // Create the disclosure indicator for the cell
+            cell.accessoryType = .disclosureIndicator
+            
             return cell
         }
     }

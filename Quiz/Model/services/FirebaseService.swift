@@ -33,7 +33,6 @@ protocol FirebaseServiceProtocol {
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void)
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func addDocumentSnapshotListener(in collection: String, documentId: String, completion: @escaping (Result<[String: Any], Error>) -> Void) -> ListenerRegistration?
-//    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration?
     func isUserSignedIn() -> Bool
     func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void)
     func deleteData(in folder: String, fileName: String, completion: @escaping (Error?) -> Void)
@@ -42,6 +41,7 @@ protocol FirebaseServiceProtocol {
     var currentUserID: String? { get }
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
     func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void)
+    func checkIfUserAlreadyExist(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String: Any]], Error>) -> Void)
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void)
     func resetPassword(for email: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
@@ -60,7 +60,7 @@ class FirebaseService: FirebaseServiceProtocol{
     
     // Function to get documents data
     func getDocuments(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
-        
+        guard isUserSignedIn() else { completion(.failure(FirebaseServiceError.noUserConnected)); return }
         var collectionReference: Query = db.collection(collection)
         
         for field in fields {
@@ -126,29 +126,6 @@ class FirebaseService: FirebaseServiceProtocol{
         }
         return listener
     }
-    
-//    // Function to add collection snaphot to a collection
-//    func addCollectionSnapshotListener(in collection: String, completion: @escaping (Result<[[String: Any]], Error>) -> Void) -> ListenerRegistration? {
-//        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return nil}
-//
-//        let collectionReference = db.collection(collection)
-//        let listener = collectionReference.addSnapshotListener { querySnapshot, error in
-//            if let error = error {
-//                completion(.failure(error))
-//            } else if let documents = querySnapshot?.documents, !documents.isEmpty {
-//                let documentsData = documents.map { document in
-//                    var data = document.data()
-//                    data["id"] = document.documentID
-//                    return data
-//                }
-//                completion(.success(documentsData))
-//            } else {
-//                completion(.failure(FirebaseServiceError.noDataInResponse))
-//            }
-//        }
-//        return listener
-//    }
-    
     
     // Function set Data in a document
     func setData(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
@@ -229,7 +206,6 @@ class FirebaseService: FirebaseServiceProtocol{
         }
     // Function to sign a user
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        
         Auth.auth().signIn(withEmail: email, password: password) { authData, error in
             if let error = error {
                 completion(.failure(error))
@@ -240,7 +216,6 @@ class FirebaseService: FirebaseServiceProtocol{
     }
     // Function to create a user
     func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
-        
         Auth.auth().createUser(withEmail: email, password: password) { authData, error in
             if let error = error {
                 completion(.failure(error))
@@ -258,6 +233,41 @@ class FirebaseService: FirebaseServiceProtocol{
             completion(.success(()))
         } catch let error {
             completion(.failure(error))
+        }
+    }
+    
+    // Function to check if username already axist
+    func checkIfUserAlreadyExist(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
+        
+        var collectionReference: Query = db.collection(collection)
+        
+        for field in fields {
+            switch field {
+            case .isEqualTo(let key, let value):
+                collectionReference = collectionReference.whereField(key, isEqualTo: value)
+            case .arrayContains(let key, let value):
+                collectionReference = collectionReference.whereField(key, arrayContains: value)
+            case .isIn(let key, let value):
+                collectionReference = collectionReference.whereField(key, in: value)
+            }
+        }
+        
+        collectionReference.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print(1)
+                completion(.failure(error))
+            } else if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
+                print(2)
+                let documentsData = querySnapshot.documents.map {
+                    var data = $0.data()
+                    data["id"] = $0.documentID
+                    return data
+                }
+                completion(.success(documentsData))
+            } else {
+                print(3)
+                completion(.success([]))
+            }
         }
     }
     

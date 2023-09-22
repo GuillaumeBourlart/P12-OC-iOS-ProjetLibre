@@ -1108,7 +1108,7 @@
                     <navigationItem key="navigationItem" title="Friends" id="jbE-dc-dLO">
                         <barButtonItem key="rightBarButtonItem" style="done" id="Eeu-ac-pzk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="NRe-S3-NlF">
-                                <rect key="frame" x="257" y="7.5" width="47" height="35"/>
+                                <rect key="frame" x="257" y="4.5" width="47" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
@@ -1185,7 +1185,7 @@
                     <navigationItem key="navigationItem" title="Quizzes" id="Ptl-sW-I4r">
                         <barButtonItem key="rightBarButtonItem" style="done" id="xCS-iL-rRk">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="QPV-ki-bRo">
-                                <rect key="frame" x="217" y="5" width="87" height="34"/>
+                                <rect key="frame" x="217" y="8" width="87" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
@@ -1711,14 +1711,14 @@
                                 <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="lqm-GX-d03" customClass="CustomCell" customModule="Quiz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="240" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="240" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lqm-GX-d03" id="fur-qU-bea">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsD-7w-KZb">
-                                                    <rect key="frame" x="16" y="11" width="208" height="21.5"/>
+                                                    <rect key="frame" x="16" y="11" width="208" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="text"/>
                                                     <nil key="highlightedColor"/>
@@ -1802,7 +1802,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vH0-8Z-WMS">
                                                     <rect key="frame" x="16" y="11" width="288" height="48"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="text"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -2892,10 +2892,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8pC-NS-h5r">
                                 <rect key="frame" x="20" y="74" width="280" height="160"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="current xp : " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZf-ig-Kz6">
-                                        <rect key="frame" x="0.0" y="10" width="280" height="40"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="current xp : " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZf-ig-Kz6">
+                                        <rect key="frame" x="0.0" y="10" width="280" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Hjl-5J-SGf"/>
+                                            <constraint firstAttribute="height" constant="60" id="Hjl-5J-SGf"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <color key="textColor" name="button"/>
@@ -2916,7 +2916,7 @@
                                     <constraint firstItem="vwU-Hn-gm0" firstAttribute="centerX" secondItem="8pC-NS-h5r" secondAttribute="centerX" id="2dM-4d-MZv"/>
                                     <constraint firstItem="vwU-Hn-gm0" firstAttribute="leading" secondItem="8pC-NS-h5r" secondAttribute="leading" id="8E8-5Q-NbZ"/>
                                     <constraint firstItem="JZf-ig-Kz6" firstAttribute="top" secondItem="8pC-NS-h5r" secondAttribute="top" constant="10" id="BBz-LN-qJQ"/>
-                                    <constraint firstItem="vwU-Hn-gm0" firstAttribute="top" secondItem="JZf-ig-Kz6" secondAttribute="bottom" constant="30" id="Ik9-Gg-Z2P"/>
+                                    <constraint firstItem="vwU-Hn-gm0" firstAttribute="top" secondItem="JZf-ig-Kz6" secondAttribute="bottom" constant="10" id="Ik9-Gg-Z2P"/>
                                     <constraint firstItem="JZf-ig-Kz6" firstAttribute="centerX" secondItem="8pC-NS-h5r" secondAttribute="centerX" id="WMU-y6-c2a"/>
                                     <constraint firstAttribute="height" constant="160" id="ehY-SB-8Zc"/>
                                     <constraint firstItem="JZf-ig-Kz6" firstAttribute="leading" secondItem="8pC-NS-h5r" secondAttribute="leading" id="oAj-G9-mcg"/>
@@ -2952,7 +2952,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SyW-dz-AQx"/>
+        <segue reference="g8t-qW-Yby"/>
         <segue reference="gh0-tC-Q8T"/>
         <segue reference="axf-xm-Zem"/>
         <segue reference="Kre-pq-QlT"/>
@@ -2983,8 +2983,8 @@
         <image name="person.crop.circle" catalog="system" width="128" height="123"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="500" height="500"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <namedColor name="background">
             <color red="0.83137254901960789" green="0.87450980392156863" blue="0.83137254901960789" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

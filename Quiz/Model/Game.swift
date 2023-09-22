@@ -14,15 +14,12 @@ import FirebaseAuth
 class Game {
     
     static let shared = Game(apiManager: OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()), translatorService: Service(networkRequest: AlamofireNetworkRequest())), firebaseService: FirebaseService())
-    
     var apiManager: OpenTriviaDatabaseManager
     private var firebaseService: FirebaseServiceProtocol
-    
     init(apiManager: OpenTriviaDatabaseManager, firebaseService: FirebaseServiceProtocol) {
         self.apiManager = apiManager
         self.firebaseService = firebaseService
     }
-    
     var currentUserId: String? { return firebaseService.currentUserID } // get current UID
     
     
@@ -109,6 +106,7 @@ class Game {
             }
         }
     }
+    
     // Function to create competitive room
     func createCompetitiveRoom(completion: @escaping (Result<String, Error>) -> Void ) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -177,6 +175,7 @@ class Game {
             }
         }
     }
+    
     //-----------------------------------------------------------------------------------
     //                                 Quick play
     //-----------------------------------------------------------------------------------
@@ -285,12 +284,7 @@ class Game {
                         if let error = error {
                             completion(.failure(error))
                         } else {
-                            self.deleteInvite(inviteId: lobbyId) { result in
-                            switch result {
-                            case .failure(let error): completion(.failure(error))
-                                case .success: completion(.success(()))
-                                }
-                            }
+                            completion(.success(()))
                             
                         }
                     }
@@ -485,7 +479,6 @@ class Game {
 
     }
     
-        
     // Function to leave a game
     func leaveGame(gameId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -515,10 +508,7 @@ class Game {
         }
     }
     
-    
-    
-    
-    
+
     //-----------------------------------------------------------------------------------
     //                                 GAME DATA
     //-----------------------------------------------------------------------------------
@@ -636,13 +626,12 @@ class Game {
     }
     
     
-    // Function to delete invite from invites
+    // Function to add xp
     func updateXP(completion: @escaping (Result<Int, Error>) -> Void){
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(GameError.noUserConnected))
             return
         }
-        
         firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: currentUserId) { result in
             switch result {
             case .failure(let error):
@@ -653,7 +642,6 @@ class Game {
                     return
                 }
                 points += 30
-
                 self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.points: points]) { error in
                     if let error = error {
                         completion(.failure(error))
@@ -666,8 +654,6 @@ class Game {
             }
         }
     }
-    
-    
     
     
     //-----------------------------------------------------------------------------------
@@ -727,7 +713,6 @@ class Game {
         }
     }
 }
-
 
 // Enum to handle errors
 enum GameError: Error, Equatable {

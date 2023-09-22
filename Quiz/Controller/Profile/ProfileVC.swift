@@ -111,6 +111,7 @@ class ProfileVC: UIViewController{
 
 // Extension for image picker, to change profil Image
 extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    // method to open the camera
     func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePickerController.sourceType = .camera
@@ -121,6 +122,7 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         }
     }
     
+    // method to open the gallery
     func openGallery() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             imagePickerController.sourceType = .photoLibrary
@@ -128,7 +130,7 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         }
     }
     
-    // MARK: - UIImagePickerControllerDelegate Methods
+    // method called when user finished picking a photo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
             picker.dismiss(animated: true, completion: nil)
@@ -145,6 +147,7 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         }
     }
 
+    // Method to upload picked image on firebase storage
     func uploadProfileImage(pickedImage: UIImage) {
         profileImageView.image = pickedImage
         
@@ -167,15 +170,14 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         }
     }
     
+    // Method to remove profile image from firebasse storage
     func deleteProfileImage() {
-        // Supprimez l'image de Firebase Storage ici.
-        // Vous pouvez utiliser les méthodes Firebase Storage pour le faire.
         FirebaseUser.shared.deleteImageInStorage { result in
             switch result {
             case .failure(let error):
                 print("Error deleting image from storage:", error)
             case .success:
-                // Mettez à jour l'interface utilisateur pour supprimer l'image
+                // update UI by removing image
                 self.profileImageView.image = UIImage(named: "plus")
                 FirebaseUser.shared.deleteProfileImageURL(){result in
                     switch result {
@@ -188,8 +190,7 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         }
     }
     
-    
-    
+    // called when user cancel the picking
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
@@ -252,10 +253,8 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         }
         
         if !(cell.sectionType?.containsSwitch ?? false), let accountOption = cell.sectionType as? SettingsSections.AccountOptions, accountOption != .disconnect {
-            let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-            whiteDisclosureIndicator.tintColor = UIColor.white // Remplacez "customDisclosureIndicator" par le nom de votre image.
-            whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-            cell.accessoryView = whiteDisclosureIndicator
+            // Create the disclosure indicator for the cell except for disconnectc cell
+            cell.accessoryType = .disclosureIndicator
         }
         
         

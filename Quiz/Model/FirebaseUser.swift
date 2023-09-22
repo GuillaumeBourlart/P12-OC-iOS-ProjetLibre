@@ -13,15 +13,11 @@ import FirebaseFirestore
 // handle action and information concerning user
 class FirebaseUser {
     
+    // Properties
     static let shared = FirebaseUser(firebaseService: FirebaseService())
-    
     var currentUserId: String? { return firebaseService.currentUserID }
-    
     var firebaseService: FirebaseServiceProtocol
-    init(firebaseService: FirebaseServiceProtocol) {
-        self.firebaseService = firebaseService
-    }
-    
+    init(firebaseService: FirebaseServiceProtocol) { self.firebaseService = firebaseService }
     var userInfo: aUser? // User's informations
     var friendGroups: [FriendGroup]? // User's groups
     var userQuizzes: [Quiz]? // User's quizzes
@@ -50,7 +46,7 @@ class FirebaseUser {
         }
     }
     
-    // Function to sign out
+    // Function to sign in
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         firebaseService.signInUser(email: email, password: password) { result in
             switch result {
@@ -67,13 +63,13 @@ class FirebaseUser {
         }
     }
     
+    // method to create user
     func createUser(email: String, password: String, pseudo: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let conditions: [FirestoreCondition] = [.isEqualTo(FirestoreFields.User.username, pseudo)]
-        firebaseService.getDocuments(in: FirestoreFields.usersCollection, whereFields: conditions) { result in
+        firebaseService.checkIfUserAlreadyExist(in: FirestoreFields.usersCollection, whereFields: conditions) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                print("echec 1")
             case .success(let querySnapshot):
                 guard querySnapshot.isEmpty else {
                     completion(.failure(FirebaseUserError.usernameAlreadyUsed))
@@ -84,7 +80,6 @@ class FirebaseUser {
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))
-                        print("echec 2")
                     case .success(let uid):
                         let formatter = DateFormatter()
                         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -116,6 +111,7 @@ class FirebaseUser {
         }
     }
     
+    // method to get user informations
     func getUserInfo(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(FirebaseUserError.noUserConnected))
@@ -178,8 +174,6 @@ class FirebaseUser {
         }
     }
     
-   
-    
     // Function to get user's groups
     func getUserGroups(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -211,8 +205,6 @@ class FirebaseUser {
         }
     }
     
-   
-
     // Function to save Firestore Storage URL of the profile image in Firestore user's document
     func saveProfileImage(url: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -257,8 +249,6 @@ class FirebaseUser {
         }
     }
     
-    
-    
     // Function to delete user's profile image from Firestore Storage
     func deleteImageInStorage(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -295,32 +285,12 @@ class FirebaseUser {
             }
         }
     }
-
     
-    
-
-
-    
-    // Function to save user's new username
-//    func updateUsername(username: String, completion: @escaping (Result<Void, Error>) -> Void){
-//        guard let currentUserId = firebaseService.currentUserID else {
-//            completion(.failure(FirebaseUserError.noUserConnected))
-//            return
-//        }
-//
-//        self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.username: username]) { error in
-//            if let error = error {
-//                completion(.failure(error))
-//            }
-//            completion(.success(()))
-//        }
-//    }
-//
     //-----------------------------------------------------------------------------------
     //                                 FRIENDS
     //-----------------------------------------------------------------------------------
     
-    // Function to display freinds for UID's
+    // Function to display freinds from UID's
     func fetchFriends(completion: @escaping ([String: String]?, Error?) -> Void) {
         guard let frinedUIDs = self.userInfo?.friends, !frinedUIDs.isEmpty else {
             completion([:], FirebaseUserError.noFriendsInFriendList)
@@ -338,7 +308,7 @@ class FirebaseUser {
         }
     }
     
-    // Function to display invites form ID
+    // Function to display invites from ID
     func fetchInvites(completion: @escaping ([String: String]?, Error?) -> Void) {
         guard let invites = self.userInfo?.invites, !invites.isEmpty else {
             completion([:], FirebaseUserError.noInvitesInInvitesList)
@@ -455,10 +425,7 @@ class FirebaseUser {
             return
         }
         
-        
-        
         var players = [String: String]()
-        
         let receivedRequests = friendRequests.filter { $0.value.status == status.rawValue }
         let keysArray = Array(receivedRequests.keys)
         
@@ -781,7 +748,7 @@ class FirebaseUser {
         }
     }
     
-    
+    // function to get group members
     func fetchGroupMembers(group: FriendGroup, completion: @escaping (Result<[String: String], Error>) -> Void) {
         let members = group.members
         
@@ -885,4 +852,35 @@ enum FirebaseUserError: Error, Equatable {
     case cantAddYourself
     case noInvitesInInvitesList
     case userInfoNotFound
+    
+    var description: String {
+            switch self {
+            case .usernameAlreadyUsed:
+                return "Username already exists"
+            case .noUserConnected:
+                return "No user is currently connected"
+            case .failedToUpdateGroupMembers:
+                return "Failed to update group members"
+            case .failedToRemoveMembersFromGroup:
+                return "Failed to remove members from group"
+            case .failedToUpdateGroupName:
+                return "Failed to update group name"
+            case .questionNotFound:
+                return "Question not found"
+            case .failedToGetData:
+                return "Failed to get data"
+            case .userNotFound:
+                return "User not found"
+            case .noFriendsInFriendList:
+                return "No friends in friend list"
+            case .noFriendRequestYet:
+                return "No friend request yet"
+            case .cantAddYourself:
+                return "You can't add yourself"
+            case .noInvitesInInvitesList:
+                return "No invites in invites list"
+            case .userInfoNotFound:
+                return "User info not found"
+            }
+        }
 }

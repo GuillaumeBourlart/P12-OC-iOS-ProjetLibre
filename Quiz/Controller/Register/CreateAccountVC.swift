@@ -64,7 +64,12 @@ class CreateAccountVC: UIViewController {
                 case .failure(let error):
                     print("Error creating user: \(error.localizedDescription)")
                     // Update UI for creation error
-                    self.updateUIForError(error.localizedDescription, textField: nil)
+                    
+                    if let FirebaseUserError = error as? FirebaseUserError {
+                        self.updateUIForError(FirebaseUserError.description, textField: nil)
+                    }else {
+                        self.updateUIForError(error.localizedDescription, textField: nil)
+                    }
                 case .success():
                     
                     self.dismiss(animated: true)

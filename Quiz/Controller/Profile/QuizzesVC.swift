@@ -142,11 +142,8 @@ extension QuizzesVC: UITableViewDataSource {
         
             cell.label.text = quizzes[indexPath.row].name
         
-        let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-        whiteDisclosureIndicator.tintColor = .white
-        whiteDisclosureIndicator.backgroundColor = UIColor.clear
-        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
-        cell.accessoryView = whiteDisclosureIndicator
+        // Create the disclosure indicator for the cell
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }

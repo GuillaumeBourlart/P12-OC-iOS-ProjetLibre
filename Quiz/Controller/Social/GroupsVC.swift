@@ -134,11 +134,7 @@ extension GroupsVC: UITableViewDataSource {
         cell.label.text = groups[indexPath.row].name
         
         // Create the disclosure indicator for the cell
-        let whiteDisclosureIndicator = UIImageView(image: UIImage(systemName: "chevron.right"))
-        whiteDisclosureIndicator.tintColor = .white // Replace "customDisclosureIndicator" with your image's name.
-        whiteDisclosureIndicator.backgroundColor = UIColor.clear
-        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
-        cell.accessoryView = whiteDisclosureIndicator
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }

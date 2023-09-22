@@ -9,6 +9,8 @@ import XCTest
 import Firebase
 
 class FirebaseServiceStub: FirebaseServiceProtocol {
+    
+    
    
     
     func isUserSignedIn() -> Bool {
@@ -130,6 +132,21 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
                 completion(.success(Data()))
             }
         }
+    
+    func deleteData(in folder: String, fileName: String, completion: @escaping (Error?) -> Void) {
+        guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}
+        
+        completion(stubbedDocumentError)
+    }
+    
+    func checkIfUserAlreadyExist(in collection: String, whereFields fields: [FirestoreCondition], completion: @escaping (Result<[[String : Any]], Error>) -> Void) {
+        if let error = stubbedDocumentError {
+            completion(.failure(error))
+            
+        }else{
+            completion(.success(([])))
+        }
+    }
     
     
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {

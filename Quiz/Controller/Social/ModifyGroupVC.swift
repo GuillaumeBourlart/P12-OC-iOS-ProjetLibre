@@ -157,10 +157,7 @@ extension ModifyGroupVC: UITableViewDelegate, UITableViewDataSource {
             cell.label.text = userName
         }
         
-        // Create and set the disclosure indicator image
-        let whiteDisclosureIndicator = UIImageView(image: UIImage(named: "whiteCustomDisclosureIndicator")) // Replace "customDisclosureIndicator" with the name of your image.
-        whiteDisclosureIndicator.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
-        cell.accessoryView = whiteDisclosureIndicator
+        
         
         return cell
     }
