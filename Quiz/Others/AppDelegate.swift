@@ -344,25 +344,33 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
     private func navigateToFriends(on navigationController: UINavigationController) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let friendsViewController = storyboard.instantiateViewController(withIdentifier: "FriendsVC") as? FriendsVC {
+            friendsViewController.initialSegmentIndex = 1
             navigationController.pushViewController(friendsViewController, animated: true)
         }
     }
     
     // Function to join a game based on the provided lobby ID
     func joinGameFromInvitation(lobbyID: String) {
-        // Attempt to join the game room
-        Game.shared.joinRoom(lobbyId: lobbyID) { result in
+        // delete the invite after user clicked on it
+        Game.shared.deleteInvite(inviteId: lobbyID) { result in
             switch result {
-            case .failure(let error):
-                // Print the error if joining fails
-                print(error)
-            case .success():
-                // Navigate to the appropriate view controller if joining is successful
-                self.navigateAfterJoining(lobbyID: lobbyID)
+            case .failure(let error): print(error)
+            case .success(let lobbyID): print("invite \(lobbyID) deleted")
+            }
+            // Attempt to join the game room
+            Game.shared.joinRoom(lobbyId: lobbyID) { result in
+                switch result {
+                case .failure(let error):
+                    // Print the error if joining fails
+                    print(error)
+                case .success():
+                    // Navigate to the appropriate view controller if joining is successful
+                    self.navigateAfterJoining(lobbyID: lobbyID)
+                }
             }
         }
+        
     }
-    
     // Function to navigate the user to the relevant view controller after successfully joining the game
     func navigateAfterJoining(lobbyID: String) {
         // Ensure the main tab bar controller exists

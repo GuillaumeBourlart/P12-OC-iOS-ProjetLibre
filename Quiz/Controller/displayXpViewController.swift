@@ -60,9 +60,6 @@ class displayXpViewControler: UIViewController {
         let animationDuration: TimeInterval = 1.5
         let moveAndFadeDuration: TimeInterval = 0.5
         
-        // Capture la position initiale de label
-           let initialLabelCenter = self.label.center
-        
         // Animer la jauge de progression
         UIView.animate(withDuration: animationDuration, animations: {
             self.bar.setProgress(1.0, animated: true)
@@ -124,7 +121,7 @@ class displayXpViewControler: UIViewController {
                                 }) { _ in
                                     Game.shared.updateXP { result in
                                         switch result {
-                                        case .success(var Int): print("\(Int) xp added")
+                                        case .success(let Int): print("\(Int) xp added")
                                         case .failure(let error): print(error)
                                         }
                                     }

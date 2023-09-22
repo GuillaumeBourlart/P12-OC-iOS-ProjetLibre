@@ -6,19 +6,21 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import UIKit
 
 
 class CompetitiveVC: UIViewController{
-    
+    // Outlets
     @IBOutlet weak var rankBar: UIProgressView!
     @IBOutlet weak var points: UILabel!
     @IBOutlet weak var previousRank: UIImageView!
     @IBOutlet weak var currentRank: UIImageView!
     @IBOutlet weak var nextRank: UIImageView!
     @IBOutlet weak var startButton: CustomButton2!
-    
     @IBOutlet weak var rankView: UIView!
+    //Properties
+    var listener: ListenerRegistration?
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -37,9 +39,21 @@ class CompetitiveVC: UIViewController{
             }
         }
         self.startButton.isEnabled = true
+        startListening()
     }
     
+    // Method called when view will disapear
+    override func viewWillDisappear(_ animated: Bool) {
+        listener?.remove()
+        listener = nil
+    }
+    
+    // Method to update UI
     func updateUI() {
+        
+        
+        
+        
             guard let rankValue = FirebaseUser.shared.userInfo?.rank else {
                 return
             }
@@ -47,6 +61,8 @@ class CompetitiveVC: UIViewController{
             let intValue = Int(rankValue)  // Convertir en Int
             let level = intValue / 10      // Obtenir le niveau
             let progress = intValue % 10   // Obtenir la progression
+        
+       
         
         if level >= 7 {
                    // Gérez ici les niveaux supérieurs ou égaux à 7
@@ -67,7 +83,7 @@ class CompetitiveVC: UIViewController{
             points.text = "\(progress)/10"
             
             previousRank.image = rank.previous?.image ?? UIImage(systemName: "star.fill")
-            currentRank.image = rank.image ?? UIImage(systemName: "star.fill")
+            currentRank.image = rank.image 
             nextRank.image = rank.next?.image ?? UIImage(systemName: "star.fill")
             
         if level >= 6 {
@@ -89,8 +105,66 @@ class CompetitiveVC: UIViewController{
                     rankBar.progress = Float(progress) / 10.0
                     points.text = "\(progress)/10"
                 }
+        
+        
         }
     
+    // Method to animate UI when level change
+    func makedisapearRankImages(progress: Int) {
+        // Animer les éléments d'image pour rétrécir
+        UIView.animate(withDuration: 0.5, animations: {
+            self.nextRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                self.previousRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                self.currentRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            }){ _ in
+                self.restoreRankImagesToOriginalSize()
+            }
+           
+    }
+    
+    func animateProgressView(progress: Int){
+        
+        // Animer la barre de progression
+        let newProgress = Float(progress) / 10.0
+        self.rankBar.setProgress(newProgress, animated: true)
+
+
+        // Mettre à jour le label des points
+        points.text = "\(progress)/10"
+    }
+    
+    func restoreRankImagesToOriginalSize() {
+        
+        // Ensuite, animer les éléments pour revenir à leur taille originale
+        UIView.animate(withDuration: 0.5, animations: {
+            self.nextRank.transform = CGAffineTransform.identity
+            self.previousRank.transform = CGAffineTransform.identity
+            self.currentRank.transform = CGAffineTransform.identity
+        })
+    }
+    
+    // start listening for rank update and update UI if needed
+    func startListening(){
+        if let userID = FirebaseUser.shared.currentUserId {
+            listener = Game.shared.ListenForChangeInDocument(in: "users", documentId: userID) { result in
+                switch result {
+                case .failure(let error): print(error)
+                case .success(let data):
+                    let newrank: Int = data["rank"] as! Int
+                    guard FirebaseUser.shared.userInfo?.rank != newrank else {
+                        return
+                    }
+                    FirebaseUser.shared.userInfo?.rank = newrank
+                    let intValue = Int(newrank)  // Convertir en Int
+                    let progress = intValue % 10
+                    self.makedisapearRankImages(progress: progress)
+                    self.animateProgressView(progress: progress)
+                    self.updateUI()
+                    
+                }
+            }
+        }
+    }
     
 
     

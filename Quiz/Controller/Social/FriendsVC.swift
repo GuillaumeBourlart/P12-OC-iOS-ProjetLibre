@@ -34,6 +34,8 @@ class FriendsVC: UIViewController{
         var colorChangeAnimation: CABasicAnimation?
         // Layer for the pull-to-refresh color animation
         var borderLayer: CALayer?
+    // default value of UISegmentedControl selected index
+    var initialSegmentIndex: Int?
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -53,6 +55,9 @@ class FriendsVC: UIViewController{
     // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
         loadArrays()
+        if let initialSegmentIndex = initialSegmentIndex{
+            switchControl.selectedSegmentIndex = initialSegmentIndex
+        }
         onSwitch(switchControl)
         let attributesNormal = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let attributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.black]

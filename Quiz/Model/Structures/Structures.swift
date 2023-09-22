@@ -58,7 +58,7 @@ struct aUser: Decodable {
     let username: String
     let email: String
     let inscription_date: Date
-    let rank: Double
+    var rank: Int
     var points: Int
     var invites: [String: String]
     var profile_picture: String
