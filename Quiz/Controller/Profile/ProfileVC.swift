@@ -8,9 +8,8 @@ import Foundation
 import UIKit
 import FirebaseStorage
 import WebKit
-
+// Class to see user profile
 class ProfileVC: UIViewController{
-    
     // Outlets
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -194,18 +193,17 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-    
-    
 }
 
 extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
+    // Create a custom header view for each section in the table view
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         
-        let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
-                                                    tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
+        // Create a label for the header
+        let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
         headerLabel.font = UIFont(name: "Helvetica", size: 18)
-        headerLabel.textColor = UIColor(named: "text")  // couleur du texte
+        headerLabel.textColor = UIColor(named: "text") // Text color
         headerLabel.text = SettingsSections(rawValue: section)?.description
         headerLabel.sizeToFit()
         headerView.backgroundColor = UIColor(named: "background")
@@ -214,14 +212,17 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         return headerView
     }
     
+    // Set the height for each section's header
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
     
+    // Define the number of sections in the table view
     func numberOfSections(in tableView: UITableView) -> Int {
         return SettingsSections.allCases.count
     }
     
+    // Define the number of rows in each section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let settingsSection = SettingsSections(rawValue: section) else { return 0 }
         
@@ -232,6 +233,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // Configure and return a cell for a specific row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? SettingsCell else {
             return UITableViewCell()
@@ -252,24 +254,23 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
             
         }
         
+        // Add a disclosure indicator to the cell if needed
         if !(cell.sectionType?.containsSwitch ?? false), let accountOption = cell.sectionType as? SettingsSections.AccountOptions, accountOption != .disconnect {
-            // Create the disclosure indicator for the cell except for disconnectc cell
             cell.accessoryType = .disclosureIndicator
         }
         
-        
-        
+        // Set the delegate of the cell to the view controller
         cell.delegate = self
-        
         
         return cell
     }
     
-    
+    // Provide the title for each section's header
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return SettingsSections(rawValue: section)?.description
     }
     
+    // Handle row selection in the table view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -278,7 +279,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
         switch settingsSection {
         case .account:
             if let accountOption = SettingsSections.AccountOptions(rawValue: indexPath.row) {
-                guard accountOption.segueIdentifier != "goToDisconnect" else {logout(); return }
+                guard accountOption.segueIdentifier != "goToDisconnect" else { logout(); return }
                 if let identifier = accountOption.segueIdentifier {
                     performSegue(withIdentifier: identifier, sender: accountOption.description)
                 }
@@ -291,7 +292,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
             }
         case .privacy:
             if let privacyOptions = SettingsSections.PrivacyOptions(rawValue: indexPath.row) {
-                if privacyOptions.description == "Privacy policy" {
+                if privacyOptions.isPrivacyPolicy {
                     displayPrivacyPolicyInWebView()
                 }
             }
@@ -300,50 +301,61 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension ProfileVC: SettingsCellDelegate{
-    
-    
+// Handle switches
+extension ProfileVC: SettingsCellDelegate {
+    // Function to handle changes in Dark Mode switch
     func DarkmodeSwitchChanged(in cell: SettingsCell, isOn: Bool) {
         if isOn {
+            // Enable Dark Mode
             appDelegate.window?.overrideUserInterfaceStyle = .dark
         } else {
+            // Disable Dark Mode
             appDelegate.window?.overrideUserInterfaceStyle = .light
         }
+        // Save Dark Mode setting to UserDefaults
         UserDefaults.standard.setValue(isOn, forKey: "darkmode")
         UserDefaults.standard.synchronize()
     }
     
+    // Function to handle changes in Sound switch
     func SoundSwitchChanged(in cell: SettingsCell, isOn: Bool) {
         switch isOn {
-        case true : if let tabBar = self.tabBarController as? CustomTabBarController {
-            tabBar.resumeSound()
+        case true:
+            // If Sound is turned on, resume sound in the CustomTabBarController
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.resumeSound()
+            }
+        case false:
+            // If Sound is turned off, stop sound in the CustomTabBarController
+            if let tabBar = self.tabBarController as? CustomTabBarController {
+                tabBar.stopSound()
+            }
         }
-        case false : if let tabBar = self.tabBarController as? CustomTabBarController {
-            tabBar.stopSound()
-        }
-        }
+        // Save Sound setting to UserDefaults
         UserDefaults.standard.setValue(isOn, forKey: "sound")
         UserDefaults.standard.synchronize()
     }
-    
 }
 
 
+// Handle the displaying of privacy policy
 extension ProfileVC {
+    
+    // Function to display the Privacy Policy in a WebView
     func displayPrivacyPolicyInWebView() {
-        // Chemin vers le fichier PDF
+        // Path to the PDF file
         if let pdfURL = Bundle.main.url(forResource: "privacy policy", withExtension: "pdf") {
             let webView = WKWebView()
             let request = URLRequest(url: pdfURL)
             webView.load(request)
             
-            // Créer un nouveau UIViewController pour afficher le WKWebView
+            // Create a new UIViewController to display the WKWebView
             let webViewController = UIViewController()
             webViewController.view.addSubview(webView)
             webView.frame = webViewController.view.bounds
             webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            // Pousser le nouveau UIViewController
+            // Push the new UIViewController onto the navigation stack
             self.navigationController?.pushViewController(webViewController, animated: true)
         }
     }

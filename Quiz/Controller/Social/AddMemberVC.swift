@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// Class to add members to the selected group
 class AddMemberVC: UIViewController {
     // Outlets
     @IBOutlet weak var tableView: UITableView!

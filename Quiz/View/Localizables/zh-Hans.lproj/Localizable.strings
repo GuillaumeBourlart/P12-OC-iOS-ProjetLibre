@@ -109,3 +109,6 @@
 "Correct answer: %@" = "正确答案：%@";
 
 "Privacy" = "隐私";
+"Session Expired" = "会话已过期";
+"The invitation no longer exists." = "邀请不再存在。";
+"OK" = "确定";

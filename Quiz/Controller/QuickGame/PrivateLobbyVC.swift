@@ -33,8 +33,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.hidesBackButton = true
-        tabBarController?.tabBar.isHidden = true
+        
     }
     
     // Method called when view will appear
@@ -56,6 +55,9 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
             activeAlert.dismiss(animated: false)
             self.activeAlert = nil
         }
+        
+        self.navigationItem.hidesBackButton = true
+        tabBarController?.tabBar.isHidden = true
     }
     
     // Method called when view will disappear
@@ -125,6 +127,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
                     print(error)
                 case .success():
                     print("success")
+                    completion()
                 }
             }        }
     }
@@ -179,7 +182,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         CustomAnimations.buttonPressAnimation(for: self.launchButton) {
             
             if let tabBar = self.tabBarController as? CustomTabBarController {
-                tabBar.playSound(soundName: "button", fileType: "mp3")
+                tabBar.playSoundEffect(soundName: "button", fileType: "mp3")
             }
             
             self.launchButton.isEnabled = false

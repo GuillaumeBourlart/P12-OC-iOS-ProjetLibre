@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 import UIKit
 
-
+// Class to see current ranked level and start a ranked game
 class CompetitiveVC: UIViewController{
     // Outlets
     @IBOutlet weak var rankBar: UIProgressView!
@@ -50,10 +50,6 @@ class CompetitiveVC: UIViewController{
     
     // Method to update UI
     func updateUI() {
-        
-        
-        
-        
             guard let rankValue = FirebaseUser.shared.userInfo?.rank else {
                 return
             }
@@ -61,8 +57,6 @@ class CompetitiveVC: UIViewController{
             let intValue = Int(rankValue)  // Convertir en Int
             let level = intValue / 10      // Obtenir le niveau
             let progress = intValue % 10   // Obtenir la progression
-        
-       
         
         if level >= 7 {
                    // Gérez ici les niveaux supérieurs ou égaux à 7
@@ -111,7 +105,6 @@ class CompetitiveVC: UIViewController{
     
     // Method to animate UI when level change
     func makedisapearRankImages(progress: Int) {
-        // Animer les éléments d'image pour rétrécir
         UIView.animate(withDuration: 0.5, animations: {
             self.nextRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
                 self.previousRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
@@ -122,20 +115,18 @@ class CompetitiveVC: UIViewController{
            
     }
     
+    // Method to animate progressView and points changes
     func animateProgressView(progress: Int){
         
-        // Animer la barre de progression
+        // Aniate the progress view
         let newProgress = Float(progress) / 10.0
         self.rankBar.setProgress(newProgress, animated: true)
-
-
-        // Mettre à jour le label des points
+        // Set new points
         points.text = "\(progress)/10"
     }
     
+    // Method to animate properties to theeir original size and location
     func restoreRankImagesToOriginalSize() {
-        
-        // Ensuite, animer les éléments pour revenir à leur taille originale
         UIView.animate(withDuration: 0.5, animations: {
             self.nextRank.transform = CGAffineTransform.identity
             self.previousRank.transform = CGAffineTransform.identity
@@ -166,11 +157,11 @@ class CompetitiveVC: UIViewController{
         }
     }
     
-
-    
+    // Allow to unwind to this controller
     @IBAction func unwindToCompetitive(segue: UIStoryboardSegue) {
     }
     
+    // Method to perform segue to SearchOpponentVC where user will find a new oponent
     @IBAction func findOpponentButtonPressed(_ sender: Any) {
         self.startButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: self.startButton) {

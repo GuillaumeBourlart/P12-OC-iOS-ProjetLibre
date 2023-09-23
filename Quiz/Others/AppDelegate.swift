@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
-    var mainTabBarController: UITabBarController?
+    var mainTabBarController: CustomTabBarController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -362,6 +362,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
                 switch result {
                 case .failure(let error):
                     // Print the error if joining fails
+                    self.mainTabBarController?.showSessionExpiredAlert()
                     print(error)
                 case .success():
                     // Navigate to the appropriate view controller if joining is successful
@@ -371,6 +372,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate{
         }
         
     }
+    
     // Function to navigate the user to the relevant view controller after successfully joining the game
     func navigateAfterJoining(lobbyID: String) {
         // Ensure the main tab bar controller exists

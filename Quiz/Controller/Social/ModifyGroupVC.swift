@@ -9,6 +9,7 @@ import FirebaseFirestore
 import Foundation
 import UIKit
 
+// Class to modify a group (members and name)
 class ModifyGroupVC: UIViewController{
     
     // Outlets

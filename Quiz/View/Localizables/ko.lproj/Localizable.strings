@@ -115,3 +115,6 @@
 "Correct answer: %@" = "정답: %@";
 
 "Privacy" = "개인 정보 보호";
+"Session Expired" = "세션이 만료되었습니다";
+"The invitation no longer exists." = "초대장이 더 이상 존재하지 않습니다.";
+"OK" = "확인";

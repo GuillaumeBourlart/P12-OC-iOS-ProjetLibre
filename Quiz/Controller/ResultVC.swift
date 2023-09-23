@@ -8,13 +8,13 @@
 import Foundation
 import UIKit
 import FirebaseFirestore
-
+// Class that show result of a game
 class ResultVC: UIViewController {
-    
+    // Outlets
     @IBOutlet weak var label : UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var goToAppLobby: UIButton!
-    
+    // Properties
     var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
     var gameID: String?
     var gameData: GameData?
@@ -29,7 +29,7 @@ class ResultVC: UIViewController {
         if isResultAfterGame != nil {
             goToAppLobby.isHidden = false
         }
-        
+        // Get game data from ID after a game or load game data from history
         if let gameID = gameID {
             Game.shared.getGameData(gameId: gameID) { result in
                 switch result {
@@ -95,12 +95,11 @@ class ResultVC: UIViewController {
             navigationController?.setNavigationBarHidden(false, animated: true)
             tabBarController?.tabBar.isHidden = false
         }
-        
         listener?.remove()
         listener = nil
     }
     
-    
+    // Go back to lobby (AVAILABLE ONLY AFTER A GAME)
     @IBAction func goBackToLobbby(_ sender: Any) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             print("Could not get app delegate")
@@ -122,7 +121,7 @@ class ResultVC: UIViewController {
         }
     }
     
-    
+    // Display results of the game
     func displayResults() {
         guard let gameData = self.gameData else {
             print(NSLocalizedString("No game data available.", comment: ""))
@@ -173,6 +172,7 @@ class ResultVC: UIViewController {
         }
     }
     
+    // Listen for change in the document (gameID)
     func startListening(){
         guard let gameID = gameID else { return }
         listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: gameID) { result in
@@ -207,6 +207,7 @@ class ResultVC: UIViewController {
         }
     }
     
+    // Called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? QuestionResultVC,
            let selectedQuestionDict = sender as? [String: UniversalQuestion] {
@@ -215,54 +216,59 @@ class ResultVC: UIViewController {
         }
     }
 }
+
 extension ResultVC: UITableViewDelegate, UITableViewDataSource {
     
+    // Set the height for each row in the table view
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0 // Remplacer par la hauteur désirée
+        return 70.0 // Replace with the desired height
     }
     
-    
+    // Define the number of rows in the table view based on the number of questions in the quiz
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.questions?.count ?? 0
     }
     
+    // Configure and return a cell for a specific row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionCell", for: indexPath) as? CustomCell else { return UITableViewCell() }
         
+        // Convert the questions dictionary into an array and retrieve the question for the current row
         let questionsArray = Array(self.questions ?? [:])
         if indexPath.row < questionsArray.count {
             let question = questionsArray[indexPath.row]
             cell.label.text = question.value.question
         }
         
-        // Create the disclosure indicator for the cell
+        // Create a disclosure indicator for the cell
         cell.accessoryType = .disclosureIndicator
         
         return cell
     }
     
+    // Handle row selection in the table view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Question sélectionnée à la ligne: \(indexPath.row)")
+        print("Selected question at row: \(indexPath.row)")
         
-        tableView.deselectRow(at: indexPath, animated: true) // Désélectionnez la cellule pour une meilleure expérience utilisateur
+        tableView.deselectRow(at: indexPath, animated: true) // Deselect the cell for a better user experience
         
         guard let questionsDict = questions else {
             print("questions is nil")
             return
         }
         
+        // Convert the questions dictionary into an array and retrieve the selected question's information
         let questionsArray = Array(questionsDict)
         if indexPath.row < questionsArray.count {
             let selectedQuestionKey = questionsArray[indexPath.row].0
             let selectedQuestionValue = questionsArray[indexPath.row].1
             let selectedQuestionDict = [selectedQuestionKey: selectedQuestionValue]
-            print("Informations du quiz sélectionné : \(selectedQuestionDict)")
+            print("Selected quiz information: \(selectedQuestionDict)")
             performSegue(withIdentifier: "goToQuestionResult", sender: selectedQuestionDict)
         }
     }
-    
-    
 }
+
 
 
 

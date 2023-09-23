@@ -115,3 +115,6 @@
 "Correct answer: %@" = "Richtige Antwort: %@";
 
 "Privacy" = "Datenschutz";
+"Session Expired" = "Sitzung abgelaufen";
+"The invitation no longer exists." = "Die Einladung existiert nicht mehr.";
+"OK" = "OK";

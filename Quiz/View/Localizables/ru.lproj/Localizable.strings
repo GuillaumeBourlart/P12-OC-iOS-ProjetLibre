@@ -115,3 +115,6 @@
 "Correct answer: %@" = "Правильный ответ: %@";
 
 "Privacy" = "Конфиденциальность";
+"Session Expired" = "Сессия завершена";
+"The invitation no longer exists." = "Приглашение больше не существует.";
+"OK" = "OK";

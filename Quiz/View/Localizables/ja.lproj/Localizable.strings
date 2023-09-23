@@ -115,3 +115,6 @@
 "Correct answer: %@" = "正しい答え: %@";
 
 "Privacy" = "プライバシー";
+"Session Expired" = "セッションが期限切れです";
+"The invitation no longer exists." = "招待状はもう存在しません。";
+"OK" = "OK";

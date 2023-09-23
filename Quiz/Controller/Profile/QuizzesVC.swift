@@ -8,10 +8,11 @@
 import Foundation
 import UIKit
 
+// Class to see every created quizzes of user
 class QuizzesVC: UIViewController{
-    
+    // Outlets
     @IBOutlet weak var tableView: UITableView!
-    
+    // Properties
     var quizzes: [Quiz] { return FirebaseUser.shared.userQuizzes ?? [] }
     var activeAlert: UIAlertController?
     
@@ -89,7 +90,7 @@ class QuizzesVC: UIViewController{
         present(alert, animated: true)
     }
     
-    
+    // Called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ModifyQuizVC {
             if let quiz = sender as? Quiz{
@@ -102,53 +103,60 @@ class QuizzesVC: UIViewController{
 
 extension QuizzesVC: UITableViewDelegate {
     
+    // Handle deletion of a row in the table view
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-                let quizToDelete = quizzes[indexPath.row]
-                FirebaseUser.shared.deleteQuiz(quiz: quizToDelete) { result in
-                    switch result {
-                    case .success:
-                        tableView.reloadData()
-                    case .failure(let error):
-                        print("Error removing quiz : \(error.localizedDescription)")
-                    }
+            // Get the quiz to be deleted
+            let quizToDelete = quizzes[indexPath.row]
+            
+            // Delete the quiz using FirebaseUser's deleteQuiz function
+            FirebaseUser.shared.deleteQuiz(quiz: quizToDelete) { result in
+                switch result {
+                case .success:
+                    // Reload the table view after successful deletion
+                    tableView.reloadData()
+                case .failure(let error):
+                    print("Error removing quiz: \(error.localizedDescription)")
                 }
+            }
         }
     }
     
+    // Set the height for each row in the table view
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 70.0
-        }
+        return 70.0
+    }
     
+    // Handle row selection in the table view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-            let selectedQuiz = quizzes[indexPath.row]
-            performSegue(withIdentifier: "goToModification", sender: selectedQuiz)
-          
+        
+        // Get the selected quiz
+        let selectedQuiz = quizzes[indexPath.row]
+        
+        // Perform segue to modify the selected quiz
+        performSegue(withIdentifier: "goToModification", sender: selectedQuiz)
     }
 }
 
-
 extension QuizzesVC: UITableViewDataSource {
+    
+    // Define the number of rows in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
-            return quizzes.count
-        
+        return quizzes.count
     }
     
+    // Configure and return a cell for a specific row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCell
         
-            cell.label.text = quizzes[indexPath.row].name
+        // Set the label text to the name of the quiz
+        cell.label.text = quizzes[indexPath.row].name
         
-        // Create the disclosure indicator for the cell
+        // Create a disclosure indicator for the cell
         cell.accessoryType = .disclosureIndicator
         
         return cell
     }
-    
-    
-    
 }
-

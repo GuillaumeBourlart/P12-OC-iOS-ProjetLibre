@@ -103,6 +103,12 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
             }
         }
         
+        var isPrivacyPolicy: Bool{
+            switch self {
+            case .privacypolicy: return true
+            }
+        }
+        
         var containsSwitch: Bool {
             switch self {
             case .privacypolicy: return false

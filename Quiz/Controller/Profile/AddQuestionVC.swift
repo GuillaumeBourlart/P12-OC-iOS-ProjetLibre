@@ -8,15 +8,15 @@
 import Foundation
 import UIKit
 
+// Class to create of modify a question for the selected quiz
 class AddQuestionVC: UIViewController {
-    
-    
+    // Outlets
     @IBOutlet weak var validateButton: UIButton!
     @IBOutlet weak var questionField: CustomTextField!
     @IBOutlet weak var correctAnswerField: CustomTextField!
     @IBOutlet var incorrectAnswersFields: [CustomTextField]!
     @IBOutlet weak var explanationField: CustomTextField!
-    
+    // Properties
     var existingQuestion: UniversalQuestion?
     var existingQuestionId: String?
     var quiz: Quiz?
@@ -33,10 +33,7 @@ class AddQuestionVC: UIViewController {
         setUI()
     }
     
-   
-    
-    
-    
+    // Method to load the selected question if it exist, else user is creating a new question
     func loadExistingQuestion(){
         if let existingQuestion = existingQuestion {
             questionField.text = existingQuestion.question
@@ -48,6 +45,7 @@ class AddQuestionVC: UIViewController {
         }
     }
     
+    // Create or save the question and add it to the quiz
     @IBAction func validateButtonPressed(_ sender: Any) {
         CustomAnimations.buttonPressAnimation(for: self.validateButton) {
             
@@ -94,7 +92,7 @@ class AddQuestionVC: UIViewController {
         }
         
     }
-    
+    // Handle keyboard dismissing
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         questionField.resignFirstResponder()
         correctAnswerField.resignFirstResponder()
@@ -104,6 +102,7 @@ class AddQuestionVC: UIViewController {
         explanationField.resignFirstResponder()
     }
     
+    // update fields UI
     func setUI() {
         // Question
         questionField.setup(image: UIImage(systemName: "questionmark"), placeholder: NSLocalizedString("Question", comment: ""), placeholderColor: UIColor(named: "placeholder") ?? .gray)
@@ -126,6 +125,8 @@ class AddQuestionVC: UIViewController {
     
 }
 extension AddQuestionVC: UITextFieldDelegate {
+    
+    // Handle the return key on text fields to resign first responder status
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         questionField.resignFirstResponder()
         correctAnswerField.resignFirstResponder()
@@ -136,23 +137,26 @@ extension AddQuestionVC: UITextFieldDelegate {
         return true
     }
     
+    // Handle appearance of the keyboard and make view higher so we can see what we are writing
     @objc func keyboardAppear(_ notification: Notification) {
-           guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-           let keyboardFrame = frame.cgRectValue
-           guard let activeTextField = activeTextField else { return }
-           let activeTextFieldFrame = activeTextField.convert(activeTextField.bounds, to: self.view)
-           
-           if self.view.frame.origin.y == 0 && activeTextFieldFrame.maxY > keyboardFrame.origin.y {
-               self.view.frame.origin.y -= activeTextFieldFrame.maxY - keyboardFrame.origin.y + 20 // +20 for a little extra space
-           }
-       }
-       
-       @objc func keyboardDisappear(_ notification: Notification) {
-           if self.view.frame.origin.y != 0 {
-               self.view.frame.origin.y = 0
-           }
-       }
+        guard let frame = notification.userInfo?[UIViewController.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardFrame = frame.cgRectValue
+        guard let activeTextField = activeTextField else { return }
+        let activeTextFieldFrame = activeTextField.convert(activeTextField.bounds, to: self.view)
+        
+        if self.view.frame.origin.y == 0 && activeTextFieldFrame.maxY > keyboardFrame.origin.y {
+            self.view.frame.origin.y -= activeTextFieldFrame.maxY - keyboardFrame.origin.y + 20 // +20 for a little extra space
+        }
+    }
     
+    // Handle disappearance of the keyboard
+    @objc func keyboardDisappear(_ notification: Notification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    // Handle the beginning of editing for a text field and store the active textfield
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
     }

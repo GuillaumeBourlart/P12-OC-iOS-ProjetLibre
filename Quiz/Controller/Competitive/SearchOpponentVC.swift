@@ -7,9 +7,9 @@
 
 import Foundation
 import FirebaseFirestore
-
+// Controller to search a new ranked opponent
 class SearchOpponentVC: UIViewController, LeavePageProtocol{
-    
+    // Properties
     var lobbyId: String?
     var listener: ListenerRegistration? = nil
     var isGameFound = false
@@ -45,7 +45,7 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
         tabBarController?.tabBar.isHidden = false
         }
     
-    // Fonction called by appdelegate when user click on a notification
+    // Fonction called by appdelegate when user click on a notification so he stop looking for a new opponent
     func leavePage(completion: @escaping () -> Void) {
         cancelSearch { error in
             if let error = error {
@@ -53,7 +53,6 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
                 
             }
             self.dismiss(animated: true) {
-                // Call the completion closure after the page has been dismissed
                 completion()
             }
         }
@@ -105,6 +104,7 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
         }
     }
     
+    // Called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? GameVC {
             destination.gameID = sender as? String

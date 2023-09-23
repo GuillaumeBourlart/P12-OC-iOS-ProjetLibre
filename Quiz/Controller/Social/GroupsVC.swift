@@ -129,10 +129,8 @@ extension GroupsVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomCell
-        
         // Set the cell label to display the group name
         cell.label.text = groups[indexPath.row].name
-        
         // Create the disclosure indicator for the cell
         cell.accessoryType = .disclosureIndicator
         

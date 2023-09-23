@@ -8,20 +8,21 @@
 import Foundation
 import UIKit
 import AVFoundation
-
+// Class for the custom tabbar
 class CustomTabBarController: UITabBarController {
-    
+    // Properties
     var musicPlayer: AVAudioPlayer?
     var soundEffectPlayer: AVAudioPlayer?
     var soundEffectPlayer2: AVAudioPlayer?
     var countLabel: UILabel?
-
+    
     // Method called when view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()
     }
-
+    
+    // Set ui of the tabbar
     private func setupTabBar() {
         self.tabBar.tintColor = UIColor.white
         self.tabBar.isTranslucent = false
@@ -29,21 +30,22 @@ class CustomTabBarController: UITabBarController {
         self.tabBar.barTintColor = UIColor.black
     }
     
-    
     // HANDLE SOUNDS
+    
+    // Method to play the app music
     func playSound(soundName: String, fileType: String) {
         let defaults = UserDefaults.standard
 
+        // Check if user disabled/enabled sound
         let sound: Bool
         if let _ = defaults.object(forKey: "sound") {
-            // L'utilisateur a déjà défini une valeur pour "sound", utilisez cette valeur.
             sound = defaults.bool(forKey: "sound")
         } else {
-            // L'utilisateur n'a jamais défini une valeur pour "sound", utilisez une valeur par défaut.
             defaults.setValue(true, forKey: "sound")
             sound = true
         }
 
+        // Sound volume
         let volume: Float = 0.1
         UserDefaults.standard.synchronize()
 
@@ -52,7 +54,8 @@ class CustomTabBarController: UITabBarController {
                 musicPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 musicPlayer?.numberOfLoops = -1
                 setVolume(volume: volume)
-                // Si le son est désactivé, ne jouez pas le son et retournez de la fonction
+
+                // If sound is enabled, play the sound
                 if sound {
                     musicPlayer?.play()
                 }
@@ -62,13 +65,16 @@ class CustomTabBarController: UITabBarController {
         }
     }
     
+    // Method to play a sound effect
     func playSoundEffect(soundName: String, fileType: String) {
         if let path = Bundle.main.path(forResource: soundName, ofType: fileType) {
             do {
+                // Check if a sound is already being played
                 if soundEffectPlayer == nil || !soundEffectPlayer!.isPlaying {
                     soundEffectPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                     soundEffectPlayer?.play()
                 } else {
+                    // if a sound is being played, use the second AVAudioPlayer
                     soundEffectPlayer2 = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                     soundEffectPlayer2?.play()
                 }
@@ -77,17 +83,39 @@ class CustomTabBarController: UITabBarController {
             }
         }
     }
-    
+
+    // Method to stop sound
     func stopSound() {
         musicPlayer?.stop()
-        
     }
+
+    // Method to play sound
     func resumeSound() {
         musicPlayer?.play()
     }
+
+    // Method to change volume
     func setVolume(volume: Float) {
         musicPlayer?.volume = volume
     }
-    
-   
+    // Method to show alert if joined invitation is expired
+    func showSessionExpiredAlert() {
+        let title = NSLocalizedString("Session Expired", comment: "Alert title for session expired")
+        let message = NSLocalizedString("The invitation no longer exists.", comment: "Alert message for session expired")
+        let okActionTitle = NSLocalizedString("OK", comment: "OK button title for alert")
+        
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alertController.addAction(UIAlertAction(
+            title: okActionTitle,
+            style: .default,
+            handler: nil
+        ))
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
+// Class where the game is played
 class GameVC: UIViewController, LeavePageProtocol {
-    
+    // Outlets
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet var answerButtons: [UIButton]!
@@ -17,13 +18,13 @@ class GameVC: UIViewController, LeavePageProtocol {
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var timerImage: UIImageView!
     @IBOutlet weak var scoreImage: UIImageView!
-    
+    @IBOutlet weak var scoreLabel: UILabel!
+    // Properties
     enum Answer {
         case noAnswer
         case correct
         case incorrect
     }
-    
     var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
     var gameID: String?
     var userAnswers: [String: UserAnswer] = [:]
@@ -32,14 +33,11 @@ class GameVC: UIViewController, LeavePageProtocol {
     var currentQuestionIndex = 0
     var timer: Timer?
     var timeRemaining = 10
-    var isAnswering = false 
+    var isAnswering = false
     var finalScore = 0
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var activeAlert: UIAlertController?
     var confettiLayer: CAEmitterLayer!
-    
-    
-    @IBOutlet weak var scoreLabel: UILabel!
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -52,8 +50,7 @@ class GameVC: UIViewController, LeavePageProtocol {
            view.layer.addSublayer(confettiLayer)
        }
     
-    
-    
+    // Method to display encouragement label
     func displayAnswerLabel(answer: Answer){
         switch answer {
         case .correct:
@@ -89,6 +86,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         })
     }
 
+    // Method to create confettis
        func createConfettiLayer() -> CAEmitterLayer {
            let confettiLayer = CAEmitterLayer()
 
@@ -117,11 +115,11 @@ class GameVC: UIViewController, LeavePageProtocol {
            // Mettez ici le nom de l'image que vous voulez utiliser pour les confettis.
            cell.contents = UIImage(named: "square.jpg")?.cgImage
            
-
            confettiLayer.emitterCells = [cell]
            return confettiLayer
        }
 
+    // Method to display confettis
        func showConfetti() {
            confettiLayer.birthRate = 15 // On active le confettiLayer.
 
@@ -150,16 +148,16 @@ class GameVC: UIViewController, LeavePageProtocol {
         
     }
     
+    // Fonction called by appdelegate when user click on a notification so he stop looking for a new opponent
     func leavePage(completion: @escaping () -> Void) {
-        
         showLeaveConfirmation {
             self.leaveGame {
                 completion()
             }
         }
-        
     }
     
+    // remove tabbar and navigation controller during the game
     func setUpUI() {
         navigationController?.setNavigationBarHidden(true, animated: true)
         tabBarController?.tabBar.isHidden = true
@@ -167,6 +165,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         resetAnimations()
     }
     
+    // Reset the animation for each question
     func resetAnimations() {
         timer?.invalidate() 
         questionLabel.layer.removeAllAnimations()
@@ -179,7 +178,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
-    
+    // Load game questions from the game in firebase
     func loadQuestions() {
         Game.shared.getQuestions(quizId: nil, gameId: gameID!) { result in
             
@@ -201,6 +200,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
+    // hide or show score and it's icon
     func hideScore() {
         if !scoreLabel.isHidden {
             UIView.animate(withDuration: 0.5, animations: {
@@ -221,6 +221,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
+    // hide or show timer and it's icon
     func hideTimer() {
         if !timerLabel.isHidden {
             
@@ -244,7 +245,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     }
     
     
-    
+    // Show the leave confirmation before to leave the game so user can confirm or cancel
     func showLeaveConfirmation(completion: @escaping () -> Void) {
         let alert = UIAlertController(title: NSLocalizedString("Confirmation", comment: ""), message: NSLocalizedString("Are you sure you want to leave the game ?", comment: ""), preferredStyle: .alert)
         
@@ -262,7 +263,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     }
     
     
-    
+    // display the new question
     func displayQuestion() {
         
         if currentQuestionIndex >= questions.count {
@@ -307,18 +308,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
-    func showAlert(title: String, message: String, actionTitle: String, actionHandler: @escaping () -> Void) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: actionTitle, style: .default) { _ in
-            actionHandler()
-        }
-        alertController.addAction(action)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    
+    // show leave confirmation if user push leave button
     @IBAction func leavebuttonPressed(_ sender: Any) {
         showLeaveConfirmation {
             self.leaveGame {
@@ -326,8 +316,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
-    
-    
+    // Method to leave the game
     func leaveGame(completion: @escaping () -> Void) {
         self.leaveButton.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: self.leaveButton) { [weak self] in
@@ -340,7 +329,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
 
-    
+    // Remove user from the game and navigate back depending of where he was when he joined
     func leaveCurrentGame(completion: @escaping () -> Void) {
         guard let gameID = self.gameID else { return }
         Game.shared.leaveGame(gameId: gameID){ result in
@@ -354,7 +343,7 @@ class GameVC: UIViewController, LeavePageProtocol {
             }
         }
     }
-    
+    // If it's competitive, unwind to competitive controller, else search the controller from where user joined the game
     func navigateBackFromGame() {
         if self.isCompetitive == true {
             self.performSegue(withIdentifier: "unwindToCompetitive", sender: self)
@@ -363,6 +352,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
+    // Method to  search the controller from where user joined the game and unwind to it
     func navigateToOpponentChoiceOrInvites() {
         if let navController = self.navigationController {
             var canUnwindToOpponentChoice = false
@@ -413,6 +403,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
+    // reset the timer, handle animations
     func resetTimer() {
         timeRemaining = 10
         timerLabel.text = "\(timeRemaining)"
@@ -473,6 +464,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
+    // Caled when user chose an answer
     @IBAction func answerButtonTapped(_ sender: UIButton) {
         guard !isAnswering else { return }
         isAnswering = true
@@ -517,7 +509,7 @@ class GameVC: UIViewController, LeavePageProtocol {
     }
     
     
-    
+    // Method to show correct answer and animate depending of user's answer before we display the new question
     @objc func showCorrectAnswerAndProceed() {
         let correctAnswer = questions[currentQuestionIndex].correct_answer
         for button in answerButtons {
@@ -538,6 +530,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
+    // Finish the quiz and save stats
     func finishQuiz() {
         guard let gameId = gameID else { print("error"); return }
         Game.shared.saveStats(finalScore: finalScore, userAnswers: userAnswers, gameID: gameId){ result in
@@ -550,7 +543,7 @@ class GameVC: UIViewController, LeavePageProtocol {
         }
     }
     
-    
+    // Called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? displayXpViewControler {
             if let gameID = sender as? String {

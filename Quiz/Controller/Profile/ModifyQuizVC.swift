@@ -8,8 +8,9 @@ import FirebaseFirestore
 import Foundation
 import UIKit
 
+// class to modify a quiz (name, difficulty, theme and questions)
 class ModifyQuizVC: UIViewController{
-    
+    // Outlets
     @IBOutlet weak var modifyButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
@@ -20,13 +21,10 @@ class ModifyQuizVC: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var launchQuizButton: UIButton!
     @IBOutlet weak var addQuestionButton: UIButton!
-    
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
-    
+    // Properties
     var quizID: String?
-    var quiz: Quiz? {
-        return FirebaseUser.shared.userQuizzes?.first(where: { $0.id == quizID })
-    }
+    var quiz: Quiz? { return FirebaseUser.shared.userQuizzes?.first(where: { $0.id == quizID }) }
     var usernames = [String: String]()
     var isModifying = false
     
@@ -49,8 +47,7 @@ class ModifyQuizVC: UIViewController{
         tableView.reloadData()
     }
     
-    
-    
+    // Activate or deactivate name, theme and difficulty modification
     @IBAction func modifyButtonWasTapped(_ sender: UIButton) {
         self.addQuestionButton.isEnabled = false
         self.launchQuizButton.isEnabled = false
@@ -97,6 +94,7 @@ class ModifyQuizVC: UIViewController{
         }
     }
     
+    // Save name, theme and difficulty modification
     func saveModifications(){
         if let quiz = quiz {
             guard let name = nameField.text, name != "", let theme = themeField.text,theme != "", let difficulty = difficultyField.text, difficulty != "" else {return}
@@ -115,6 +113,7 @@ class ModifyQuizVC: UIViewController{
         
     }
     
+    // navigate to addQuestionVC so user can create a question
     @IBAction func addButtonTapped(_ sender: UIButton) {
         self.addQuestionButton.isEnabled = false
         self.launchQuizButton.isEnabled = false
@@ -136,6 +135,7 @@ class ModifyQuizVC: UIViewController{
         }
     }
     
+    // Called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? AddQuestionVC {
             if let questionData = sender as? (id: String, question: UniversalQuestion) {
@@ -148,18 +148,18 @@ class ModifyQuizVC: UIViewController{
         }
         
         if let destination = segue.destination as? OpponentChoice{
-            
             destination.quizId = quizID
         }
     }
     
+    // handle keyboard dismissing
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         nameField.resignFirstResponder()
         themeField.resignFirstResponder()
         difficultyField.resignFirstResponder()
     }
     
-    
+    // Launch the quiz
     @IBAction func lauchQuizButtonPressed(_ sender: UIButton) {
         self.addQuestionButton.isEnabled = false
         self.launchQuizButton.isEnabled = false
@@ -186,18 +186,21 @@ class ModifyQuizVC: UIViewController{
 
 extension ModifyQuizVC: UITableViewDelegate, UITableViewDataSource {
     
+    // Set the height for each row in the table view
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0 // Remplacer par la hauteur désirée
+        return 70.0 // Replace with the desired height
     }
     
+    // Define the number of rows in the table view based on the number of questions in the quiz
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let quiz = quiz {
             return quiz.questions.count
-        }else{
+        } else {
             return 0
         }
     }
     
+    // Configure and return a cell for a specific row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
         
@@ -206,12 +209,13 @@ extension ModifyQuizVC: UITableViewDelegate, UITableViewDataSource {
             cell.label.text = question.question // Change question.text to question.question
         }
         
-        // Create the disclosure indicator for the cell
+        // Create a disclosure indicator for the cell
         cell.accessoryType = .disclosureIndicator
         
         return cell
     }
     
+    // Handle deletion of a row in the table view
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if let quiz = quiz {
@@ -219,14 +223,14 @@ extension ModifyQuizVC: UITableViewDelegate, UITableViewDataSource {
                     
                     let questionIdToDelete = Array(quiz.questions.keys)[indexPath.row]
                     
-                    // Supprimer la question de la base de données
+                    // Delete the question from the database
                     FirebaseUser.shared.deleteQuestionFromQuiz(quiz: quiz, questionId: questionIdToDelete) { result in
                         switch result {
-                        case .success():
-                            // Supprimer la question de la table view
+                        case .success:
+                            // Reload the table view after successfully removing the question
                             tableView.reloadData()
                         case .failure(let error):
-                            print("Error removing question : \(error.localizedDescription)")
+                            print("Error removing question: \(error.localizedDescription)")
                         }
                     }
                 }
@@ -234,19 +238,27 @@ extension ModifyQuizVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // Handle row selection in the table view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true) // Désélectionner la cellule après le clic
+        tableView.deselectRow(at: indexPath, animated: true) // Deselect the cell after the click
+        
         if let quiz = quiz {
             let selectedQuestionId = Array(quiz.questions.keys)[indexPath.row]
+            
             guard let question = quiz.questions[selectedQuestionId] else {
                 return
             }
+            
+            // Prepare question data and perform a segue to add/edit the question
             let questionData = (id: selectedQuestionId, question: question)
             performSegue(withIdentifier: "goToAddQuestion", sender: questionData)
         }
     }
 }
+
 extension ModifyQuizVC: UITextFieldDelegate {
+    
+    // Handle the return key on text fields to resign first responder status
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         nameField.resignFirstResponder()
         themeField.resignFirstResponder()
@@ -254,4 +266,5 @@ extension ModifyQuizVC: UITextFieldDelegate {
         return true
     }
 }
+
 
