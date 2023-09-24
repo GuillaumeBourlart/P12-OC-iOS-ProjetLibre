@@ -25,30 +25,31 @@ class GameVC: UIViewController, LeavePageProtocol {
         case correct
         case incorrect
     }
-    var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
-    var gameID: String?
-    var userAnswers: [String: UserAnswer] = [:]
-    var isCompetitive: Bool = false
-    var questions: [UniversalQuestion] = []
-    var currentQuestionIndex = 0
-    var timer: Timer?
-    var timeRemaining = 10
-    var isAnswering = false
-    var finalScore = 0
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var activeAlert: UIAlertController?
-    var confettiLayer: CAEmitterLayer!
+    var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest())) // Translator
+        var gameID: String? // Unique identifier for the game
+        var userAnswers: [String: UserAnswer] = [:] // Dictionary to store user's answers
+        var isCompetitive: Bool = false // Flag indicating if the game is competitive
+        var questions: [UniversalQuestion] = [] // Array of questions in the game
+        var currentQuestionIndex = 0 // Index of the current question
+        var timer: Timer? // Timer for tracking time
+        var timeRemaining = 10 // Remaining time for each question
+        var isAnswering = false // Flag indicating if the user is answering a question
+        var finalScore = 0 // Final score of the game
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate // Reference to the AppDelegate
+        var activeAlert: UIAlertController? // Active alert for leaving confirmation
+        var confettiLayer: CAEmitterLayer! // Layer for displaying confetti animation
+        
     
     // Method called when view is loaded
     override func viewDidLoad() {
-           super.viewDidLoad()
-           setUpUI()
-           loadQuestions()
-           
-           confettiLayer = createConfettiLayer()
-           confettiLayer.birthRate = 0 // On désactive le confettiLayer par défaut.
-           view.layer.addSublayer(confettiLayer)
-       }
+        super.viewDidLoad()
+        setUpUI()
+        loadQuestions()
+        
+        confettiLayer = createConfettiLayer()
+        confettiLayer.birthRate = 0 // On désactive le confettiLayer par défaut.
+        view.layer.addSublayer(confettiLayer)
+    }
     
     // Method to display encouragement label
     func displayAnswerLabel(answer: Answer){
@@ -85,48 +86,48 @@ class GameVC: UIViewController, LeavePageProtocol {
             }
         })
     }
-
+    
     // Method to create confettis
-       func createConfettiLayer() -> CAEmitterLayer {
-           let confettiLayer = CAEmitterLayer()
-
-           confettiLayer.emitterPosition = CGPoint(x: view.frame.midX, y: -50)
-           confettiLayer.emitterShape = .line
-           confettiLayer.emitterSize = CGSize(width: view.frame.size.width, height: 2)
-
-           let cell = CAEmitterCell()
-           cell.birthRate = 15
-           cell.lifetime = 14.0
-           cell.velocity = CGFloat(350)
-           cell.velocityRange = CGFloat(80)
-           cell.emissionLongitude = CGFloat(Double.pi)
-           cell.emissionRange = CGFloat(Double.pi/4)
-           cell.spin = CGFloat(3.5)
-           cell.spinRange = CGFloat(4.0)
-           cell.scaleRange = CGFloat(0.05)
-           cell.scale = 0.3
-           cell.scaleSpeed = CGFloat(-0.1)
-           cell.color = UIColor.white.cgColor // couleur moyenne
-           cell.redRange = 1.0 // variation totale (de -1.0 à 1.0)
-           cell.greenRange = 1.0
-           cell.blueRange = 1.0
-           cell.alphaRange = 1.0
-
-           // Mettez ici le nom de l'image que vous voulez utiliser pour les confettis.
-           cell.contents = UIImage(named: "square.jpg")?.cgImage
-           
-           confettiLayer.emitterCells = [cell]
-           return confettiLayer
-       }
-
+    func createConfettiLayer() -> CAEmitterLayer {
+        let confettiLayer = CAEmitterLayer()
+        
+        confettiLayer.emitterPosition = CGPoint(x: view.frame.midX, y: -50)
+        confettiLayer.emitterShape = .line
+        confettiLayer.emitterSize = CGSize(width: view.frame.size.width, height: 2)
+        
+        let cell = CAEmitterCell()
+        cell.birthRate = 15
+        cell.lifetime = 14.0
+        cell.velocity = CGFloat(350)
+        cell.velocityRange = CGFloat(80)
+        cell.emissionLongitude = CGFloat(Double.pi)
+        cell.emissionRange = CGFloat(Double.pi/4)
+        cell.spin = CGFloat(3.5)
+        cell.spinRange = CGFloat(4.0)
+        cell.scaleRange = CGFloat(0.05)
+        cell.scale = 0.3
+        cell.scaleSpeed = CGFloat(-0.1)
+        cell.color = UIColor.white.cgColor // couleur moyenne
+        cell.redRange = 1.0 // variation totale (de -1.0 à 1.0)
+        cell.greenRange = 1.0
+        cell.blueRange = 1.0
+        cell.alphaRange = 1.0
+        
+        // Mettez ici le nom de l'image que vous voulez utiliser pour les confettis.
+        cell.contents = UIImage(named: "square.jpg")?.cgImage
+        
+        confettiLayer.emitterCells = [cell]
+        return confettiLayer
+    }
+    
     // Method to display confettis
-       func showConfetti() {
-           confettiLayer.birthRate = 15 // On active le confettiLayer.
-
-           DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-               self.confettiLayer.birthRate = 0 // On désactive le confettiLayer après 1 seconde.
-           }
-       }
+    func showConfetti() {
+        confettiLayer.birthRate = 15 // On active le confettiLayer.
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.confettiLayer.birthRate = 0 // On désactive le confettiLayer après 1 seconde.
+        }
+    }
     
     // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
@@ -328,7 +329,7 @@ class GameVC: UIViewController, LeavePageProtocol {
             }
         }
     }
-
+    
     // Remove user from the game and navigate back depending of where he was when he joined
     func leaveCurrentGame(completion: @escaping () -> Void) {
         guard let gameID = self.gameID else { return }
@@ -422,13 +423,13 @@ class GameVC: UIViewController, LeavePageProtocol {
             // Changer la couleur du label en fonction du temps restant
             let colorValue = CGFloat(self.timeRemaining) / 10.0 // This will give us a value between 0 and 1
             // Détecter le mode clair ou sombre
-                if self.traitCollection.userInterfaceStyle == .dark {
-                    // En mode sombre, aller du blanc vers le rouge
-                    self.timerLabel.textColor = UIColor(red: 1.0, green: colorValue, blue: colorValue, alpha: 1.0)
-                } else {
-                    // En mode clair, aller du noir vers le rouge
-                            self.timerLabel.textColor = UIColor(red: 1 - colorValue, green: 0, blue: 0, alpha: 1.0)
-                }
+            if self.traitCollection.userInterfaceStyle == .dark {
+                // En mode sombre, aller du blanc vers le rouge
+                self.timerLabel.textColor = UIColor(red: 1.0, green: colorValue, blue: colorValue, alpha: 1.0)
+            } else {
+                // En mode clair, aller du noir vers le rouge
+                self.timerLabel.textColor = UIColor(red: 1 - colorValue, green: 0, blue: 0, alpha: 1.0)
+            }
             
             // Changer la taille du label en fonction du temps restant
             let scale = 1.0 + (1.0 - colorValue) * 0.5 // This will give us a scale between 1.0 and 1.5

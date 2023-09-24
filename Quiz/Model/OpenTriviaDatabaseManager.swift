@@ -17,18 +17,18 @@ enum OpenTriviaDBError: Error {
     case failedToMakeURL
 }
 
+// Class to get categories and quesstions form OpenTriviaDB(API)
 class OpenTriviaDatabaseManager {
     
-    var service: Service // service that allows to stub alamofire
-        var translator: DeepLTranslator
-        // The initializer for the RecipeService class
-        init(service: Service, translatorService: Service) {
-            self.service = service
-            self.translator = DeepLTranslator(service: translatorService)
-        }
-    
-   
-    static var categories: [[String: Any]]?
+    // Properties
+    var service: Service // Used service of AlamofireNetwork (stub or not)
+    var translator: DeepLTranslator // Deepltranslator class in case we need to translate categories or questions
+    // The initializer for the RecipeService class
+    init(service: Service, translatorService: Service) {
+        self.service = service
+        self.translator = DeepLTranslator(service: translatorService)
+    }
+    static var categories: [[String: Any]]? // Store categories
     
     // Function to display TriviaDB categories
     func fetchCategories(completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
@@ -124,7 +124,7 @@ class OpenTriviaDatabaseManager {
                         completion(.failure(OpenTriviaDBError.invalidJsonFormat))
                         return
                     }
-
+                    
                     for (index, _) in questionsData.enumerated() {
                         if var question = questionsData[index]["question"] as? String {
                             question = question.stringByDecodingHTMLEntities ?? question
@@ -141,7 +141,7 @@ class OpenTriviaDatabaseManager {
                             questionsData[index]["incorrect_answers"] = incorrectAnswers
                         }
                     }
-
+                    
                     json["results"] = questionsData
                     let jsonData = try JSONSerialization.data(withJSONObject: questionsData, options: [])
                     let decoder = JSONDecoder()
@@ -164,16 +164,16 @@ extension String {
         guard let data = self.data(using: .utf8) else {
             return nil
         }
-
+        
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSAttributedString.DocumentType.html,
             .characterEncoding: String.Encoding.utf8.rawValue
         ]
-
+        
         guard let attributedString = try? NSAttributedString(data: data, options: options, documentAttributes: nil) else {
             return nil
         }
-
+        
         return attributedString.string
     }
 }

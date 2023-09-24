@@ -23,10 +23,9 @@ class ModifyQuizVC: UIViewController{
     @IBOutlet weak var addQuestionButton: UIButton!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     // Properties
-    var quizID: String?
-    var quiz: Quiz? { return FirebaseUser.shared.userQuizzes?.first(where: { $0.id == quizID }) }
-    var usernames = [String: String]()
-    var isModifying = false
+    var quizID: String? // cureetn quiz id
+    var quiz: Quiz? { return FirebaseUser.shared.userQuizzes?.first(where: { $0.id == quizID }) } // Current quiz infromations
+    var isModifying = false // Check if user is modifying quiz name, theme and difficulty
     
     // Method called when view is loaded
     override func viewDidLoad() {

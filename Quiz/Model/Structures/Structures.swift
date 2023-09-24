@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Struct for questions
 struct UniversalQuestion: Decodable, Equatable {
     var id: String?
     let category: String?
@@ -41,6 +42,7 @@ struct UniversalQuestion: Decodable, Equatable {
     }
 }
 
+// Struct for quiz
 struct Quiz: Decodable, Equatable {
     var id: String
     var name: String
@@ -53,7 +55,8 @@ struct Quiz: Decodable, Equatable {
     var code: String
 }
 
-struct aUser: Decodable {
+// Struct for current user informations
+struct CurrentUser: Decodable {
     let id: String
     let username: String
     let email: String
@@ -71,6 +74,7 @@ struct aUser: Decodable {
     }
 }
 
+// Struct for groups
 struct FriendGroup: Decodable {
     var id: String
     var creator: String
@@ -78,6 +82,7 @@ struct FriendGroup: Decodable {
     var members: [String]
 }
 
+// Struct for game data
 struct GameData: Decodable {
     var id: String
     let creator: String
@@ -91,6 +96,7 @@ struct GameData: Decodable {
     var final_scores: [String: Int]?
 }
 
+// Struct for user answer
 struct UserAnswer: Decodable {
     let selected_answer: String
     let points: Int
@@ -103,6 +109,7 @@ struct UserAnswer: Decodable {
     }
 }
 
+// Struct for lobby
 struct Lobby: Decodable {
     let id: String
     let creator: String
@@ -115,4 +122,10 @@ struct Lobby: Decodable {
     let join_code: String
 }
 
-
+// Struct of json response from deepl
+struct DeepLResponse: Codable {
+    let translations: [Translation]
+}
+struct Translation: Codable {
+    let text: String
+}

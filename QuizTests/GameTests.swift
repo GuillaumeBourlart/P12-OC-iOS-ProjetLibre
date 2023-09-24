@@ -46,25 +46,25 @@ final class GameTests: XCTestCase {
     //                                 COMPETITIVE
     //-----------------------------------------------------------------------------------
     
-            func testSearchCompetitiveRoom_lobbyFound_Success() {
-                firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.testLobbiesData]
-                firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData]
-    
-                guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
-                networkRequestStub.dataQueue = [jsonData]
-    
-                let expectation = self.expectation(description: "Search competitive room succeeds")
-                game.searchCompetitiveRoom { result in
-                    switch result {
-                    case .success(let lobbyId):
-                        XCTAssertNotNil(lobbyId)
-                    case .failure(let error):
-                        XCTFail("Expected success, got \(error) instead")
-                    }
-                    expectation.fulfill()
-                }
-                waitForExpectations(timeout: 1)
+    func testSearchCompetitiveRoom_lobbyFound_Success() {
+        firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.testLobbiesData]
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData]
+        
+        guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
+        networkRequestStub.dataQueue = [jsonData]
+        
+        let expectation = self.expectation(description: "Search competitive room succeeds")
+        game.searchCompetitiveRoom { result in
+            switch result {
+            case .success(let lobbyId):
+                XCTAssertNotNil(lobbyId)
+            case .failure(let error):
+                XCTFail("Expected success, got \(error) instead")
             }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
     
     func testSearchCompetitiveRoo_NoLobbyFound_Success() {
         firebaseServiceStub.stubbedQuerySnapshotDatas = []
@@ -99,23 +99,23 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-        func testJoinCompetitiveRoom_Success() {
-            firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData]
-    
-            guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
-            networkRequestStub.dataQueue = [jsonData]
-    
-                let expectation = self.expectation(description: "Join competitive room succeeds")
-                game.joinCompetitiveRoom(lobbyId: "lobby1") { result in
-                    switch result {
-                    case .success():
-                        expectation.fulfill()
-                    case .failure(let error):
-                        XCTFail("Expected success, got \(error) instead")
-                    }
-                }
-                waitForExpectations(timeout: 1)
+    func testJoinCompetitiveRoom_Success() {
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData]
+        
+        guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
+        networkRequestStub.dataQueue = [jsonData]
+        
+        let expectation = self.expectation(description: "Join competitive room succeeds")
+        game.joinCompetitiveRoom(lobbyId: "lobby1") { result in
+            switch result {
+            case .success():
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail("Expected success, got \(error) instead")
             }
+        }
+        waitForExpectations(timeout: 1)
+    }
     
     func testJoinCompetitiveRoom_Failure() {
         firebaseServiceStub.userID = "user1"
@@ -326,56 +326,56 @@ final class GameTests: XCTestCase {
     // test join with code
     
     func testJoinWithCode_Success() {
-            // Stub the fake lobby data
-            firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.testLobbiesData]
-            firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData, fakeResponsesData.mockUserData]
-
-            let expectation = self.expectation(description: "Joining with code succeeds")
-            game.joinWithCode(code: "TestCode") { result in
-                switch result {
-                case .success(let lobbyId):
-                    XCTAssertNotNil(lobbyId) // Replace "ExpectedLobbyId" with the id you expect
-                case .failure(let error):
-                    XCTFail("Expected success, got \(error) instead")
-                }
-                expectation.fulfill()
+        // Stub the fake lobby data
+        firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.testLobbiesData]
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData, fakeResponsesData.mockUserData]
+        
+        let expectation = self.expectation(description: "Joining with code succeeds")
+        game.joinWithCode(code: "TestCode") { result in
+            switch result {
+            case .success(let lobbyId):
+                XCTAssertNotNil(lobbyId) // Replace "ExpectedLobbyId" with the id you expect
+            case .failure(let error):
+                XCTFail("Expected success, got \(error) instead")
             }
-            waitForExpectations(timeout: 1)
+            expectation.fulfill()
         }
-
-        func testJoinWithCode_NoLobbyFound_Failure() {
-            // Stub no lobby data
-            firebaseServiceStub.stubbedQuerySnapshotDatas = []
-
-            let expectation = self.expectation(description: "No lobby found for given code")
-            game.joinWithCode(code: "TestCode") { result in
-                switch result {
-                case .success(let lobbyId):
-                    XCTFail("Expected failure, got \(lobbyId) instead")
-                case .failure(let error):
-                    XCTAssertNotNil(error) // You could make this more specific if you expect a certain error
-                }
-                expectation.fulfill()
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testJoinWithCode_NoLobbyFound_Failure() {
+        // Stub no lobby data
+        firebaseServiceStub.stubbedQuerySnapshotDatas = []
+        
+        let expectation = self.expectation(description: "No lobby found for given code")
+        game.joinWithCode(code: "TestCode") { result in
+            switch result {
+            case .success(let lobbyId):
+                XCTFail("Expected failure, got \(lobbyId) instead")
+            case .failure(let error):
+                XCTAssertNotNil(error) // You could make this more specific if you expect a certain error
             }
-            waitForExpectations(timeout: 1)
+            expectation.fulfill()
         }
-
-        func testJoinWithCode_Failure() {
-            // Stub a network error
-            firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
-
-            let expectation = self.expectation(description: "Network error occurs while joining with code")
-            game.joinWithCode(code: "TestCode") { result in
-                switch result {
-                case .success(let lobbyId):
-                    XCTFail("Expected failure, got \(lobbyId) instead")
-                case .failure(let error):
-                    XCTAssertNotNil(error) // You could make this more specific if you expect a certain error
-                }
-                expectation.fulfill()
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testJoinWithCode_Failure() {
+        // Stub a network error
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
+        
+        let expectation = self.expectation(description: "Network error occurs while joining with code")
+        game.joinWithCode(code: "TestCode") { result in
+            switch result {
+            case .success(let lobbyId):
+                XCTFail("Expected failure, got \(lobbyId) instead")
+            case .failure(let error):
+                XCTAssertNotNil(error) // You could make this more specific if you expect a certain error
             }
-            waitForExpectations(timeout: 1)
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1)
+    }
     
     func testDeleteInvite_Success() {
         let expectation = self.expectation(description: "Delete invite succeeds")
@@ -496,7 +496,7 @@ final class GameTests: XCTestCase {
         }
         waitForExpectations(timeout: 1)
     }
-
+    
     func testLeaveLobby_Failure() {
         let lobbyId = "lobby1"
         firebaseServiceStub.userID = "user1"
@@ -513,7 +513,7 @@ final class GameTests: XCTestCase {
         }
         waitForExpectations(timeout: 1)
     }
-
+    
     
     
     
@@ -638,7 +638,7 @@ final class GameTests: XCTestCase {
         }
         waitForExpectations(timeout: 1)
     }
-
+    
     func testLeaveGame_Failure() {
         let gameId = "game1"
         firebaseServiceStub.userID = "user1"

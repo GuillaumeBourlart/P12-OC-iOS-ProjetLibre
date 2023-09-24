@@ -14,14 +14,14 @@ import FirebaseFirestore
 class FirebaseUser {
     
     // Properties
-    static let shared = FirebaseUser(firebaseService: FirebaseService())
-    var currentUserId: String? { return firebaseService.currentUserID }
-    var firebaseService: FirebaseServiceProtocol
-    init(firebaseService: FirebaseServiceProtocol) { self.firebaseService = firebaseService }
-    var userInfo: aUser? // User's informations
-    var friendGroups: [FriendGroup]? // User's groups
-    var userQuizzes: [Quiz]? // User's quizzes
-    var History: [GameData]? // User's history
+    static let shared = FirebaseUser(firebaseService: FirebaseService()) // Singleton instance of `FirebaseUser` for global access throughout the app
+    var currentUserId: String? { return firebaseService.currentUserID } // Getter property that returns the current user's ID from the Firebase service
+    var firebaseService: FirebaseServiceProtocol // Handles Firebase interactions and services and allow stubbng if needed
+    init(firebaseService: FirebaseServiceProtocol) { self.firebaseService = firebaseService } // Initializer which sets the Firebase service for this user object
+    var userInfo: CurrentUser? // Property to store information related to the user
+    var friendGroups: [FriendGroup]? // Property to store all groups the user is part of
+    var userQuizzes: [Quiz]? // Property to store all quizzes associated with the user
+    var History: [GameData]? // Property to store game data or activities related to the user's history
     
     // Function to sign out
     func signOut(completion: @escaping (Result<Void, Error>) -> Void ) {
@@ -132,7 +132,7 @@ class FirebaseUser {
                     let jsonData = try JSONSerialization.data(withJSONObject: convertedDataWithDate, options: [])
                     let decoder = JSONDecoder()
                     decoder.dateDecodingStrategy = .iso8601
-                    let user = try decoder.decode(aUser.self, from: jsonData)
+                    let user = try decoder.decode(CurrentUser.self, from: jsonData)
                     self.userInfo = user
                     completion(.success(()))
                 } catch {
@@ -166,9 +166,9 @@ class FirebaseUser {
                     let quizzes = try decoder.decode([Quiz].self, from: jsonData)
                     self.userQuizzes = quizzes
                     completion(.success(()))
-                                    } catch {
-                                        completion(.failure(error))
-                                    }
+                } catch {
+                    completion(.failure(error))
+                }
                 
             }
         }
@@ -236,7 +236,7 @@ class FirebaseUser {
             }
         }
     }
-
+    
     // Function to get Firestore storage Image from URL
     func downloadProfileImageFromURL(url: String, completion: @escaping (Data?) -> Void) {
         firebaseService.downloadData(from: url) { result in
@@ -255,7 +255,7 @@ class FirebaseUser {
             completion(.failure(FirebaseUserError.noUserConnected))
             return
         }
-
+        
         let imageFileName = "profile.jpg"
         let folderPath = "profile_images/\(currentUserId)/"
         firebaseService.deleteData(in: folderPath, fileName: imageFileName) { error in
@@ -266,7 +266,7 @@ class FirebaseUser {
             }
         }
     }
-
+    
     // Function to save user's profile image on Firestore Storage
     func saveImageInStorage(imageData: Data, completion: @escaping (Result<String, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -337,7 +337,7 @@ class FirebaseUser {
         var usernames = [String: String]()
         var lastError: Error?
         let dispatchGroup = DispatchGroup()
-
+        
         for uid in uids {
             dispatchGroup.enter()
             firebaseService.getDocument(in: FirestoreFields.usersCollection, documentId: uid) { result in
@@ -354,7 +354,7 @@ class FirebaseUser {
                 dispatchGroup.leave()
             }
         }
-
+        
         dispatchGroup.notify(queue: .main) {
             if let error = lastError {
                 completion(.failure(error))
@@ -387,7 +387,7 @@ class FirebaseUser {
                     completion(.failure(FirebaseUserError.cantAddYourself))
                     return
                 }
-               
+                
                 let requestTimestamp = Timestamp(date: Date())
                 // Create friend request data
                 let friendRequestData: [String: Any] = [
@@ -406,7 +406,7 @@ class FirebaseUser {
                         completion(.failure(error))
                     } else {
                         // Create new FriendRequest
-                        let newFriendRequest = aUser.FriendRequest(status: "sent", date: requestTimestamp.dateValue())
+                        let newFriendRequest = CurrentUser.FriendRequest(status: "sent", date: requestTimestamp.dateValue())
                         
                         // Add new FriendRequest to current userInfo
                         FirebaseUser.shared.userInfo?.friendRequests[friendID] = newFriendRequest
@@ -448,7 +448,7 @@ class FirebaseUser {
             "\(FirestoreFields.User.friends)": FieldValue.arrayUnion([friendID]),
             "\(FirestoreFields.User.friendRequests).\(friendID)": FieldValue.delete()
         ]
-
+        
         
         firebaseService.setDataWithMerge(in: FirestoreFields.usersCollection, documentId: currentUserId, data: data, merge: true) { error in
             if let error = error {
@@ -481,7 +481,7 @@ class FirebaseUser {
         }
     }
     
-   
+    
     
     // Function to remove a friend from friends list
     func removeFriend(friendID: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -603,7 +603,7 @@ class FirebaseUser {
         }
     }
     
-    // Function to pdate a quiz from it's quiz iD
+    // Function to update a quiz from it's quiz iD
     func updateQuiz(quizID: String, newName: String, newCategoryID: String, newDifficulty: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard firebaseService.currentUserID != nil else { completion(.failure(FirebaseUserError.noUserConnected)); return }
         
@@ -854,33 +854,33 @@ enum FirebaseUserError: Error, Equatable {
     case userInfoNotFound
     
     var description: String {
-            switch self {
-            case .usernameAlreadyUsed:
-                return "Username already exists"
-            case .noUserConnected:
-                return "No user is currently connected"
-            case .failedToUpdateGroupMembers:
-                return "Failed to update group members"
-            case .failedToRemoveMembersFromGroup:
-                return "Failed to remove members from group"
-            case .failedToUpdateGroupName:
-                return "Failed to update group name"
-            case .questionNotFound:
-                return "Question not found"
-            case .failedToGetData:
-                return "Failed to get data"
-            case .userNotFound:
-                return "User not found"
-            case .noFriendsInFriendList:
-                return "No friends in friend list"
-            case .noFriendRequestYet:
-                return "No friend request yet"
-            case .cantAddYourself:
-                return "You can't add yourself"
-            case .noInvitesInInvitesList:
-                return "No invites in invites list"
-            case .userInfoNotFound:
-                return "User info not found"
-            }
+        switch self {
+        case .usernameAlreadyUsed:
+            return "Username already exists"
+        case .noUserConnected:
+            return "No user is currently connected"
+        case .failedToUpdateGroupMembers:
+            return "Failed to update group members"
+        case .failedToRemoveMembersFromGroup:
+            return "Failed to remove members from group"
+        case .failedToUpdateGroupName:
+            return "Failed to update group name"
+        case .questionNotFound:
+            return "Question not found"
+        case .failedToGetData:
+            return "Failed to get data"
+        case .userNotFound:
+            return "User not found"
+        case .noFriendsInFriendList:
+            return "No friends in friend list"
+        case .noFriendRequestYet:
+            return "No friend request yet"
+        case .cantAddYourself:
+            return "You can't add yourself"
+        case .noInvitesInInvitesList:
+            return "No invites in invites list"
+        case .userInfoNotFound:
+            return "User info not found"
         }
+    }
 }

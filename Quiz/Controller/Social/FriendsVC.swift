@@ -17,23 +17,23 @@ class FriendsVC: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     // Properties
     // Listener for user data updates
-        var userListener: ListenerRegistration?
-        // Dictionary to store user's friends with their usernames
-        var friends: [String: String] = [:]
-        // Dictionary to store received friend requests with sender usernames
-        var receivedFriendRequests: [String: String] = [:]
-        // Dictionary to store sent friend requests with receiver usernames
-        var sentFriendRequests: [String: String] = [:]
-        // Boolean flag to track whether received friend requests are displayed
-        var isShowingReceivedFriendRequests = false
-        // Boolean flag to track whether sent friend requests are displayed
-        var isShowingSentFriendRequests = false
-        // An active alert controller to manage displayed alerts
-        var activeAlert: UIAlertController?
-        // Animation for changing background color during pull-to-refresh
-        var colorChangeAnimation: CABasicAnimation?
-        // Layer for the pull-to-refresh color animation
-        var borderLayer: CALayer?
+    var userListener: ListenerRegistration?
+    // Dictionary to store user's friends with their usernames
+    var friends: [String: String] = [:]
+    // Dictionary to store received friend requests with sender usernames
+    var receivedFriendRequests: [String: String] = [:]
+    // Dictionary to store sent friend requests with receiver usernames
+    var sentFriendRequests: [String: String] = [:]
+    // Boolean flag to track whether received friend requests are displayed
+    var isShowingReceivedFriendRequests = false
+    // Boolean flag to track whether sent friend requests are displayed
+    var isShowingSentFriendRequests = false
+    // An active alert controller to manage displayed alerts
+    var activeAlert: UIAlertController?
+    // Animation for changing background color during pull-to-refresh
+    var colorChangeAnimation: CABasicAnimation?
+    // Layer for the pull-to-refresh color animation
+    var borderLayer: CALayer?
     // default value of UISegmentedControl selected index
     var initialSegmentIndex: Int?
     
@@ -44,12 +44,12 @@ class FriendsVC: UIViewController{
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable), name: NSNotification.Name("DataUpdated"), object: nil)
         
         // initiate pull to refresh
-            let refreshControl = UIRefreshControl()
-            refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         refreshControl.tintColor = UIColor.clear
         refreshControl.subviews.first?.backgroundColor = UIColor.clear
-            // Add UIRefreshControl to UITableView
-            tableView.refreshControl = refreshControl
+        // Add UIRefreshControl to UITableView
+        tableView.refreshControl = refreshControl
     }
     
     // Method called when view will appear
@@ -163,7 +163,7 @@ class FriendsVC: UIViewController{
             borderLayer.add(animation, forKey: "colorChange")
         }
     }
-
+    
     // stop the color animation
     func stopColorChangeAnimation() {
         borderLayer?.removeAnimation(forKey: "colorChange")

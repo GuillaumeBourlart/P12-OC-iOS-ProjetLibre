@@ -17,10 +17,10 @@ class AddQuestionVC: UIViewController {
     @IBOutlet var incorrectAnswersFields: [CustomTextField]!
     @IBOutlet weak var explanationField: CustomTextField!
     // Properties
-    var existingQuestion: UniversalQuestion?
-    var existingQuestionId: String?
-    var quiz: Quiz?
-    var activeTextField: UITextField?
+    var existingQuestion: UniversalQuestion? // current question informations if user is modifying existing question
+    var existingQuestionId: String? // current question ID if user is modifying existing question
+    var quiz: Quiz? // Current quiz
+    var activeTextField: UITextField? // For alert displaying
     
     // Method called when view is loaded
     override func viewDidLoad() {

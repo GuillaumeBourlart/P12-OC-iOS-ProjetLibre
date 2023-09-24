@@ -11,7 +11,7 @@ import Firebase
 class FirebaseServiceStub: FirebaseServiceProtocol {
     
     
-   
+    
     
     func isUserSignedIn() -> Bool {
         return currentUserID != nil
@@ -114,24 +114,24 @@ class FirebaseServiceStub: FirebaseServiceProtocol {
     func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void) {
         guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
         
-            if let error = stubbedDocumentError {
-                completion(.failure(error))
-            } else {
-                completion(.success(stubbedStorageURL))
-            }
+        if let error = stubbedDocumentError {
+            completion(.failure(error))
+        } else {
+            completion(.success(stubbedStorageURL))
         }
-
-        func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void) {
-            guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
-            
-            if let error = stubbedDocumentError {
-                completion(.failure(error))
-            } else if let data = stubbedDownloadData {
-                completion(.success(data))
-            } else {
-                completion(.success(Data()))
-            }
+    }
+    
+    func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void) {
+        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
+        
+        if let error = stubbedDocumentError {
+            completion(.failure(error))
+        } else if let data = stubbedDownloadData {
+            completion(.success(data))
+        } else {
+            completion(.success(Data()))
         }
+    }
     
     func deleteData(in folder: String, fileName: String, completion: @escaping (Error?) -> Void) {
         guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}

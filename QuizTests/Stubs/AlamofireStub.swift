@@ -11,7 +11,7 @@ import XCTest
 class NetworkRequestStub: NetworkRequest {
     var dataQueue: [Data]?
     var error: Error?
-
+    
     func request(_ request: URLRequest, completion: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
         if let data = dataQueue?.first {
             dataQueue?.removeFirst()

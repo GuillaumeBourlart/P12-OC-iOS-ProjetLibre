@@ -10,11 +10,10 @@ import FirebaseFirestore
 // Controller to search a new ranked opponent
 class SearchOpponentVC: UIViewController, LeavePageProtocol{
     // Properties
-    var lobbyId: String?
-    var listener: ListenerRegistration? = nil
-    var isGameFound = false
-    var isCancelSearchCalled = false
-    var gameFound = false
+    var lobbyId: String? // Current lobby (found or created)
+    var listener: ListenerRegistration? = nil // Listener to know if someone join the created lobby
+    var isCancelSearchCalled = false // set to true if search is cancelled
+    var gameFound = false // set to true if a game is found
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -30,20 +29,20 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
     
     // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            if let listener = listener {
-                listener.remove()
-            }
-            if !isCancelSearchCalled, !gameFound {
-                cancelSearch { error in
-                    if let error = error {
-                        print(error)
-                    }
+        super.viewWillDisappear(animated)
+        if let listener = listener {
+            listener.remove()
+        }
+        if !isCancelSearchCalled, !gameFound {
+            cancelSearch { error in
+                if let error = error {
+                    print(error)
                 }
             }
+        }
         
         tabBarController?.tabBar.isHidden = false
-        }
+    }
     
     // Fonction called by appdelegate when user click on a notification so he stop looking for a new opponent
     func leavePage(completion: @escaping () -> Void) {
@@ -60,7 +59,7 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
     
     // fonction to cancel the search
     func cancelSearch(completion: @escaping (Error?) -> Void){
-        if !isGameFound {
+        if !gameFound {
             guard let lobbyId = lobbyId else { return }
             Game.shared.deleteCurrentRoom(lobbyId: lobbyId){ result in
                 switch result {
@@ -88,7 +87,7 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
         
     }
     
-    // Fonction to listen for new opponent found
+    // Fonction to listen if game is created (with same id than the lobby ID)
     func startListening() {
         guard let lobbyId = lobbyId else { return }
         listener = Game.shared.ListenForChangeInDocument(in: "games", documentId: lobbyId) { result in
@@ -112,5 +111,5 @@ class SearchOpponentVC: UIViewController, LeavePageProtocol{
         }
     }
     
-   
+    
 }

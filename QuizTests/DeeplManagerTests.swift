@@ -8,65 +8,65 @@
 import XCTest
 
 final class DeeplManagerTests: XCTestCase {
-
+    
     var sut: DeepLTranslator! // System Under Test
     var networkRequestStub: NetworkRequestStub!
-        
-        override func setUp() {
-            super.setUp()
-            networkRequestStub = NetworkRequestStub()
-            sut = DeepLTranslator(service: Service(networkRequest: networkRequestStub))
-        }
-
-        override func tearDown() {
-            sut = nil
-            networkRequestStub.dataQueue = nil
-            networkRequestStub.error = nil
-            networkRequestStub = nil
-            super.tearDown()
-        }
-
+    
+    override func setUp() {
+        super.setUp()
+        networkRequestStub = NetworkRequestStub()
+        sut = DeepLTranslator(service: Service(networkRequest: networkRequestStub))
+    }
+    
+    override func tearDown() {
+        sut = nil
+        networkRequestStub.dataQueue = nil
+        networkRequestStub.error = nil
+        networkRequestStub = nil
+        super.tearDown()
+    }
+    
     // Test de la traduction réussie
-        func testTranslateText_Success() {
-            guard let jsonData = "{\"translations\": [{\"detected_source_language\": \"EN\", \"text\": \"Bonjour\"}]}".data(using: .utf8) else {return}
-            networkRequestStub.dataQueue = [jsonData]
-            
-            let expectation = self.expectation(description: "La traduction du texte réussit")
-            sut.translate("Hello", targetLanguage: "FR") { result in
-                switch result {
-                case .success(let translation):
-                    XCTAssertEqual(translation, "Bonjour")
-                case .failure(let error):
-                    XCTFail("Attendu le succès, obtenu \(error) à la place")
-                }
+    func testTranslateText_Success() {
+        guard let jsonData = "{\"translations\": [{\"detected_source_language\": \"EN\", \"text\": \"Bonjour\"}]}".data(using: .utf8) else {return}
+        networkRequestStub.dataQueue = [jsonData]
+        
+        let expectation = self.expectation(description: "La traduction du texte réussit")
+        sut.translate("Hello", targetLanguage: "FR") { result in
+            switch result {
+            case .success(let translation):
+                XCTAssertEqual(translation, "Bonjour")
+            case .failure(let error):
+                XCTFail("Attendu le succès, obtenu \(error) à la place")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    // Test de l'échec de la traduction
+    func testTranslateText_Failure() {
+        networkRequestStub.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Erreur réseau"])
+        
+        let expectation = self.expectation(description: "La traduction du texte échoue")
+        sut.translate("Hello", targetLanguage: "FR") { result in
+            switch result {
+            case .success(let translation):
+                XCTFail("Attendu l'échec, obtenu \(translation) à la place")
+            case .failure(_):
                 expectation.fulfill()
             }
-            waitForExpectations(timeout: 1)
         }
-        
-        // Test de l'échec de la traduction
-        func testTranslateText_Failure() {
-            networkRequestStub.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Erreur réseau"])
-            
-            let expectation = self.expectation(description: "La traduction du texte échoue")
-            sut.translate("Hello", targetLanguage: "FR") { result in
-                switch result {
-                case .success(let translation):
-                    XCTFail("Attendu l'échec, obtenu \(translation) à la place")
-                case .failure(_):
-                    expectation.fulfill()
-                }
-            }
-            waitForExpectations(timeout: 1)
-        }
-        
-       
+        waitForExpectations(timeout: 1)
+    }
+    
+    
     
     // Test de la traduction réussie des questions
     func testTranslateQuestions_Success() {
         guard let jsonData = "{\"translations\": [{\"detected_source_language\": \"EN\", \"text\": \"Bonjour\"}]}".data(using: .utf8) else {return}
         networkRequestStub.dataQueue = [jsonData, jsonData, jsonData, jsonData, jsonData, jsonData] // Données pour chaque traduction
-
+        
         let expectation = self.expectation(description: "La traduction des questions réussit")
         let questions = [
             UniversalQuestion(id: "1", category: "", type: "", difficulty: "", question: "Hello", correct_answer: "Yes", incorrect_answers: ["No", "No", "No"], explanation: "Because it's right"),
@@ -80,11 +80,11 @@ final class DeeplManagerTests: XCTestCase {
         }
         waitForExpectations(timeout: 1)
     }
-
+    
     // Test de l'échec de la traduction des questions
     func testTranslateQuestions_Failure() {
         networkRequestStub.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Erreur réseau"])
-
+        
         let expectation = self.expectation(description: "La traduction des questions échoue")
         let questions = [
             UniversalQuestion(id: "1", category: "", type: "", difficulty: "", question: "Hello", correct_answer: "Yes", incorrect_answers: ["No", "No", "No"], explanation: "Because it's right"),
@@ -107,7 +107,7 @@ final class DeeplManagerTests: XCTestCase {
         
         guard let jsonData = "{\"translations\": [{\"detected_source_language\": \"EN\", \"text\": \"Bonjour\"}]}".data(using: .utf8) else {return}
         networkRequestStub.dataQueue = [jsonData, jsonData, jsonData, jsonData, jsonData, jsonData] // On suppose que toutes les traductions réussissent
-
+        
         // Création d'une attente
         let expectation = self.expectation(description: "La traduction des questions réussit")
         
@@ -123,7 +123,7 @@ final class DeeplManagerTests: XCTestCase {
         }
         waitForExpectations(timeout: 1)
     }
-
+    
     // Test de l'échec de la traduction pour les questions
     func testTranslateQuestionsWithString_Failure() {
         // Préparation des données de test
@@ -147,4 +147,4 @@ final class DeeplManagerTests: XCTestCase {
         }
         waitForExpectations(timeout: 1)
     }
-    }
+}

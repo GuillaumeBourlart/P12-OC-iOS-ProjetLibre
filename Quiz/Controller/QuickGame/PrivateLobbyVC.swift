@@ -9,26 +9,26 @@ import Foundation
 import UIKit
 import Firebase
 
-
+// Class for private room 
 class PrivateLobbyVC: UIViewController, LeavePageProtocol{
-    
+    // Outlets
     @IBOutlet weak var joinCodeLabel: UILabel!
     @IBOutlet weak var leave: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var invteplayersButton: UIButton!
     @IBOutlet weak var launchButton: CustomButton!
-    
-    var lobbyId: String?
-    var isCreator: Bool?
-    var invitedPlayers: [String] = []
-    var invitedGroups: [String] = []
-    var players: [String] = []
-    var listener: ListenerRegistration? = nil
-    var difficulty: String?
-    var category: Int?
-    var quizId: String?
-    var usernamesForUIDs = [String: String]()
-    var activeAlert: UIAlertController?
+    // Properties
+    var lobbyId: String? // ID of the lobby
+       var isCreator: Bool? // Indicates if the user is the creator of the lobby
+       var invitedPlayers: [String] = [] // List of invited player UIDs
+       var invitedGroups: [String] = [] // List of invited groups
+       var players: [String] = [] // List of current players in the lobby
+       var listener: ListenerRegistration? = nil // Listener registration for Firebase
+       var difficulty: String? // Difficulty level of the game
+       var category: Int? // Category of the game
+       var quizId: String? // ID of the quiz
+       var usernamesForUIDs = [String: String]() // Dictionary for mapping UIDs to usernames
+       var activeAlert: UIAlertController? // Active alert for confirmation
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -36,31 +36,31 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         
     }
     
-    // Method called when view will appear
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if let lobbyId = lobbyId {
-            startListening(lobbyId: lobbyId)
-            guard let isCreator = isCreator else { return }
-            if isCreator {
-                joinCodeLabel.isHidden = false
-                invteplayersButton.isHidden = false
-                launchButton.isHidden = false
+    // Method called when the view will appear
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            if let lobbyId = lobbyId {
+                startListening(lobbyId: lobbyId)
+                guard let isCreator = isCreator else { return }
+                if isCreator {
+                    joinCodeLabel.isHidden = false
+                    invteplayersButton.isHidden = false
+                    launchButton.isHidden = false
+                }
             }
+            getUsernames()
+            
+            // If an alert is being displayed, dismiss it
+            if let activeAlert = activeAlert {
+                activeAlert.dismiss(animated: false)
+                self.activeAlert = nil
+            }
+            
+            self.navigationItem.hidesBackButton = true
+            tabBarController?.tabBar.isHidden = true
         }
-        getUsernames()
-        
-        // If an alert is being displayed, dismiss it
-        if let activeAlert = activeAlert {
-            activeAlert.dismiss(animated: false)
-            self.activeAlert = nil
-        }
-        
-        self.navigationItem.hidesBackButton = true
-        tabBarController?.tabBar.isHidden = true
-    }
     
-    // Method called when view will disappear
+    // Method called when the view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let listener = listener {
@@ -70,8 +70,8 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         tabBarController?.tabBar.isHidden = false
     }
     
-    // Function that get usernames to display usernames rather than UIDs
-    func getUsernames(){
+    // Function that gets usernames to display usernames rather than UIDs
+    func getUsernames() {
         let allPlayerUIDs = players + invitedPlayers
         FirebaseUser.shared.getUsernames(with: allPlayerUIDs) { [weak self] result in
             switch result {
@@ -84,10 +84,9 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
                 }
             }
         }
-        
-        
     }
     
+    // Alert shown before to leave the lobby
     func showLeaveConfirmation(completion: @escaping () -> Void) {
         let alert = UIAlertController(title: NSLocalizedString("Confirmation", comment: ""), message: NSLocalizedString("Are you sure you want to leave the room ?", comment: ""), preferredStyle: .alert)
         
@@ -129,11 +128,11 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
                     print("success")
                     completion()
                 }
-            }        }
+            }
+        }
     }
     
-    
-    
+    // Function to leave lobby
     func leaveLobby(completion: @escaping (Result<Void, Error>) -> Void) {
         self.leave.isEnabled = false
         CustomAnimations.buttonPressAnimation(for: self.leave) {
@@ -198,7 +197,6 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         
     }
     
-    
     // Function that listen for change in lobby document
     func startListening(lobbyId: String) {
         listener = Game.shared.ListenForChangeInDocument(in: "lobby", documentId: lobbyId, completion: { result in
@@ -243,6 +241,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
         }
     }
     
+    // Called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? InvitePlayersVC {
             destination.lobbyID = lobbyId
@@ -255,59 +254,69 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     
 }
 
+
 extension PrivateLobbyVC: UITableViewDelegate, UITableViewDataSource {
     
+    // Function to provide a custom view for the section header in the table view
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         
-        let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width:
-                                                    tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
-        headerLabel.font = UIFont(name: "Helvetica", size: 18)
-        headerLabel.textColor = UIColor(named: "text")  // couleur du texte
-        headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+        // Create a label for the section header
+        let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width: tableView.bounds.size.width, height: tableView.sectionHeaderHeight))
+        headerLabel.font = UIFont(name: "Helvetica", size: 18) // Set the font and size for the header label
+        headerLabel.textColor = UIColor(named: "text")  // Set the text color using a named color
+        headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section) // Set the header text
         headerLabel.sizeToFit()
+        
+        // Add the header label to the header view
         headerView.addSubview(headerLabel)
         
         return headerView
     }
     
+    // Function to specify the height for each row in the table view
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50.0 // Remplacer par la hauteur désirée
+        return 50.0 // Replace with the desired height for table view rows
     }
     
-    
+    // Function to specify the number of sections in the table view
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2  // one for players, another for invitedPlayers
+        return 2  // There are two sections: one for players, another for invited players
     }
     
+    // Function to specify the number of rows in each section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return players.count
+            return players.count // Number of rows in the "Current Players" section
         } else  {
-            return invitedPlayers.count
+            return invitedPlayers.count // Number of rows in the "Invited Players" section
         }
     }
     
+    // Function to configure and return a cell for a given row and section
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Dequeue a reusable cell with the identifier "Cell" and cast it to CustomCell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else { return UITableViewCell() }
         var uid = ""
         if indexPath.section == 0 {
-            uid = players[indexPath.row]
+            uid = players[indexPath.row] // Get the UID for the current player row
         } else {
-            uid = invitedPlayers[indexPath.row]
+            uid = invitedPlayers[indexPath.row] // Get the UID for the invited player row
         }
-        // Use the username if available, otherwise use the UID
+        // Use the username if available, otherwise use the UID as the text for the cell label
         cell.label.text = usernamesForUIDs[uid] ?? uid
         return cell
     }
     
+    // Function to specify the title for each section header
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return NSLocalizedString("Current Players", comment: "")
+            return NSLocalizedString("Current Players", comment: "") // Title for the "Current Players" section
         } else {
-            return NSLocalizedString("Invited Players", comment: "")
+            return NSLocalizedString("Invited Players", comment: "") // Title for the "Invited Players" section
         }
     }
 }
+
 
 

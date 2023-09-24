@@ -14,9 +14,9 @@ class QuestionResultVC: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var correctAnswerLabel: UILabel!
     // Properties
-    var usersAnswer: [String: [String: UserAnswer]]?
-    var question: [String: UniversalQuestion]?
-    var usernamesForUIDs = [String: String]()
+    var usersAnswer: [String: [String: UserAnswer]]? // List of users answers
+    var question: [String: UniversalQuestion]? // list of questions
+    var usernamesForUIDs = [String: String]() // List of unsermanes
     
     // Method called when view is loaded
     override func viewDidLoad() {

@@ -20,7 +20,7 @@ class CompetitiveVC: UIViewController{
     @IBOutlet weak var startButton: CustomButton2!
     @IBOutlet weak var rankView: UIView!
     //Properties
-    var listener: ListenerRegistration?
+    var listener: ListenerRegistration? // Listener to be notified when user's rank change
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -50,41 +50,41 @@ class CompetitiveVC: UIViewController{
     
     // Method to update UI
     func updateUI() {
-            guard let rankValue = FirebaseUser.shared.userInfo?.rank else {
-                return
-            }
-            
-            let intValue = Int(rankValue)  // Convertir en Int
-            let level = intValue / 10      // Obtenir le niveau
-            let progress = intValue % 10   // Obtenir la progression
+        guard let rankValue = FirebaseUser.shared.userInfo?.rank else {
+            return
+        }
+        
+        let intValue = Int(rankValue)  // Convertir en Int
+        let level = intValue / 10      // Obtenir le niveau
+        let progress = intValue % 10   // Obtenir la progression
         
         if level >= 7 {
-                   // Gérez ici les niveaux supérieurs ou égaux à 7
-                   nextRank.isHidden = true
-                   previousRank.isHidden = true
-                   rankBar.isHidden = true
-                   points.text = "\(intValue) xp"
-                   currentRank.image = UIImage(named: "level6") ?? UIImage(systemName: "star.fill")
-                   return
-               }
-            
-            guard let rank = Rank(rawValue: level) else {
-                return
-            }
-            
-            rankView.layer.cornerRadius = 15
-            rankBar.progress = Float(progress) / 10.0
-            points.text = "\(progress)/10"
-            
-            previousRank.image = rank.previous?.image ?? UIImage(systemName: "star.fill")
-            currentRank.image = rank.image 
-            nextRank.image = rank.next?.image ?? UIImage(systemName: "star.fill")
-            
+            // Gérez ici les niveaux supérieurs ou égaux à 7
+            nextRank.isHidden = true
+            previousRank.isHidden = true
+            rankBar.isHidden = true
+            points.text = "\(intValue) xp"
+            currentRank.image = UIImage(named: "level6") ?? UIImage(systemName: "star.fill")
+            return
+        }
+        
+        guard let rank = Rank(rawValue: level) else {
+            return
+        }
+        
+        rankView.layer.cornerRadius = 15
+        rankBar.progress = Float(progress) / 10.0
+        points.text = "\(progress)/10"
+        
+        previousRank.image = rank.previous?.image ?? UIImage(systemName: "star.fill")
+        currentRank.image = rank.image 
+        nextRank.image = rank.next?.image ?? UIImage(systemName: "star.fill")
+        
         if level >= 6 {
-                    nextRank.isHidden = true
-                    previousRank.isHidden = true
-                    rankBar.isHidden = true
-                    points.text = "\(intValue) xp"
+            nextRank.isHidden = true
+            previousRank.isHidden = true
+            rankBar.isHidden = true
+            points.text = "\(intValue) xp"
         } else if level == 0 {
             nextRank.isHidden = false
             previousRank.isHidden = true
@@ -93,26 +93,26 @@ class CompetitiveVC: UIViewController{
             points.text = "\(progress)/10"
             
         } else {
-                    nextRank.isHidden = false
-                    previousRank.isHidden = false
-                    rankBar.isHidden = false
-                    rankBar.progress = Float(progress) / 10.0
-                    points.text = "\(progress)/10"
-                }
-        
-        
+            nextRank.isHidden = false
+            previousRank.isHidden = false
+            rankBar.isHidden = false
+            rankBar.progress = Float(progress) / 10.0
+            points.text = "\(progress)/10"
         }
+        
+        
+    }
     
     // Method to animate UI when level change
     func makedisapearRankImages(progress: Int) {
         UIView.animate(withDuration: 0.5, animations: {
             self.nextRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-                self.previousRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-                self.currentRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-            }){ _ in
-                self.restoreRankImagesToOriginalSize()
-            }
-           
+            self.previousRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            self.currentRank.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        }){ _ in
+            self.restoreRankImagesToOriginalSize()
+        }
+        
     }
     
     // Method to animate progressView and points changes
@@ -189,9 +189,9 @@ enum Rank: Int {
     var image: UIImage {
         switch self {
         case .bronze: return UIImage(named: "level0") ?? UIImage(systemName: "star.fill")!
-                case .silver: return UIImage(named: "level1") ?? UIImage(systemName: "star.fill")!
-                case .gold: return UIImage(named: "level2") ?? UIImage(systemName: "star.fill")!
-                case .platinum: return UIImage(named: "level3") ?? UIImage(systemName: "star.fill")!
+        case .silver: return UIImage(named: "level1") ?? UIImage(systemName: "star.fill")!
+        case .gold: return UIImage(named: "level2") ?? UIImage(systemName: "star.fill")!
+        case .platinum: return UIImage(named: "level3") ?? UIImage(systemName: "star.fill")!
         case .diamond: return UIImage(named: "level4") ?? UIImage(systemName: "star.fill")!
         case .master: return UIImage(named: "level5") ?? UIImage(systemName: "star.fill")!
         case .bests: return UIImage(named: "level6") ?? UIImage(systemName: "star.fill")!

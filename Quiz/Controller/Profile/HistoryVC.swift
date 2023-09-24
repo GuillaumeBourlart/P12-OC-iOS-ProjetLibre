@@ -14,6 +14,7 @@ class HistoryVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var gameModeControl: UISegmentedControl!
     // Properties
+    // Store every user's games
     var games: [GameData] {
         let allGames = FirebaseUser.shared.History ?? []
         switch gameModeControl.selectedSegmentIndex {

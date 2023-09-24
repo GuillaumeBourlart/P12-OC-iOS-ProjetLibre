@@ -15,11 +15,11 @@ class ResultVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var goToAppLobby: UIButton!
     // Properties
-    var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest()))
-    var gameID: String?
-    var gameData: GameData?
-    var questions: [String: UniversalQuestion]?
-    var isResultAfterGame: Bool?
+    var translator = DeepLTranslator(service: Service(networkRequest: AlamofireNetworkRequest())) // translator
+    var gameID: String? // Current game id
+    var gameData: GameData? // Current game data
+    var questions: [String: UniversalQuestion]? // game questions list
+    var isResultAfterGame: Bool? // check if the controller is displaying from history or from a game result
     var listener: ListenerRegistration?
     
     // Method called when view is loaded

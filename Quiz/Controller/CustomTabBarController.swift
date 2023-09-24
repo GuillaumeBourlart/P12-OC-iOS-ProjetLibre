@@ -11,9 +11,9 @@ import AVFoundation
 // Class for the custom tabbar
 class CustomTabBarController: UITabBarController {
     // Properties
-    var musicPlayer: AVAudioPlayer?
-    var soundEffectPlayer: AVAudioPlayer?
-    var soundEffectPlayer2: AVAudioPlayer?
+    var musicPlayer: AVAudioPlayer? // AUdio player for music of app
+    var soundEffectPlayer: AVAudioPlayer? // Audio player for sound effects
+    var soundEffectPlayer2: AVAudioPlayer? // Second player for sound effects
     var countLabel: UILabel?
     
     // Method called when view is loaded
@@ -35,7 +35,7 @@ class CustomTabBarController: UITabBarController {
     // Method to play the app music
     func playSound(soundName: String, fileType: String) {
         let defaults = UserDefaults.standard
-
+        
         // Check if user disabled/enabled sound
         let sound: Bool
         if let _ = defaults.object(forKey: "sound") {
@@ -44,17 +44,17 @@ class CustomTabBarController: UITabBarController {
             defaults.setValue(true, forKey: "sound")
             sound = true
         }
-
+        
         // Sound volume
         let volume: Float = 0.1
         UserDefaults.standard.synchronize()
-
+        
         if let path = Bundle.main.path(forResource: soundName, ofType: fileType) {
             do {
                 musicPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 musicPlayer?.numberOfLoops = -1
                 setVolume(volume: volume)
-
+                
                 // If sound is enabled, play the sound
                 if sound {
                     musicPlayer?.play()
@@ -83,17 +83,17 @@ class CustomTabBarController: UITabBarController {
             }
         }
     }
-
+    
     // Method to stop sound
     func stopSound() {
         musicPlayer?.stop()
     }
-
+    
     // Method to play sound
     func resumeSound() {
         musicPlayer?.play()
     }
-
+    
     // Method to change volume
     func setVolume(volume: Float) {
         musicPlayer?.volume = volume

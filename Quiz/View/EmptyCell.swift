@@ -8,24 +8,16 @@
 import UIKit
 import SDWebImage
 
+// Custom UITableViewCell class for an empty cell
 class EmptyCell: UITableViewCell {
+    // Outlets
     @IBOutlet weak var label: UILabel!
-//    @IBOutlet weak var gifImageView: SDAnimatedImageView!
-    
-    
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // Customisation du label
-        label.text = "Pull to refresh"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        
-       
-        
-        
+        // Customize the label within the cell
+        label.text = "Pull to refresh" // Set the label text
+        label.font = UIFont.boldSystemFont(ofSize: 18) // Apply a bold font to the label
     }
-    
-   
 }

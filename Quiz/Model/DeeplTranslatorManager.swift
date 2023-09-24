@@ -14,15 +14,16 @@ enum DeepLError: Error {
     case failedToMakeURL
 }
 
+// Class to get translation from Deepl(API)
 class DeepLTranslator {
-    var apiKey = "d35a5eeb-9d0c-4229-65e6-50a5ac70d7be:fx"
-    var service: Service
-    
-
+    // Properties
+    var apiKey = "d35a5eeb-9d0c-4229-65e6-50a5ac70d7be:fx" // API key
+    var service: Service // Used service of AlamofireNetwork (stub or not)
     init(service: Service) {
         self.service = service
     }
-
+    
+    // Function to translate a text
     func translate(_ text: String, targetLanguage: String, completion: @escaping (Result<String, Error>) -> Void) {
         
         let url = "https://api-free.deepl.com/v2/translate"
@@ -35,16 +36,16 @@ class DeepLTranslator {
             URLQueryItem(name: "auth_key", value: apiKey)
         ]
         guard let url = urlComponent?.url else {
-            completion(.failure(DeepLError.failedToMakeURL)) // a modifier
+            completion(.failure(DeepLError.failedToMakeURL))
             return
         }
-
+        
         service.load(url: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-
+            
             if let data = data {
                 do {
                     let decoder = JSONDecoder()
@@ -63,186 +64,119 @@ class DeepLTranslator {
         }
     }
     
-    struct DeepLResponse: Codable {
-        let translations: [Translation]
+    // Function to translate a single UniversalQuestion. this function use translate()
+    private func translateSingleQuestion(_ question: UniversalQuestion, to: String, completion: @escaping (UniversalQuestion) -> Void) {
+        let dispatchGroup = DispatchGroup()
+        
+        var translatedQuestion: String?
+        var translatedCorrectAnswer: String?
+        var translatedIncorrectAnswers: [String]?
+        var translatedExplanation: String?
+        
+        dispatchGroup.enter()
+        translate(question.question, targetLanguage: to) { result in
+            switch result {
+            case .success(let translation):
+                translatedQuestion = translation
+            case .failure(let error):
+                print("Error translating question: \(error)")
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        translate(question.correct_answer, targetLanguage: to) { result in
+            switch result {
+            case .success(let translation):
+                translatedCorrectAnswer = translation
+            case .failure(let error):
+                print("Error translating correct answer: \(error)")
+            }
+            dispatchGroup.leave()
+        }
+        
+        for incorrectAnswer in question.incorrect_answers {
+            dispatchGroup.enter()
+            translate(incorrectAnswer, targetLanguage: to) { result in
+                switch result {
+                case .success(let translation):
+                    if translatedIncorrectAnswers == nil {
+                        translatedIncorrectAnswers = [translation]
+                    } else {
+                        translatedIncorrectAnswers?.append(translation)
+                    }
+                case .failure(let error):
+                    print("Error translating incorrect answer: \(error)")
+                }
+                dispatchGroup.leave()
+            }
+        }
+        
+        if let explanation = question.explanation {
+            dispatchGroup.enter()
+            translate(explanation, targetLanguage: to) { result in
+                switch result {
+                case .success(let translation):
+                    translatedExplanation = translation
+                case .failure(let error):
+                    print("Error translating explanation: \(error)")
+                }
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            let translatedQuestionInstance = UniversalQuestion(
+                id: question.id,
+                category: question.category,
+                type: question.type,
+                difficulty: question.difficulty,
+                question: translatedQuestion ?? question.question,
+                correct_answer: translatedCorrectAnswer ?? question.correct_answer,
+                incorrect_answers: translatedIncorrectAnswers ?? question.incorrect_answers,
+                explanation: translatedExplanation ?? question.explanation
+            )
+            completion(translatedQuestionInstance)
+        }
     }
-
-    struct Translation: Codable {
-        let text: String
-    }
-
-    func translateQuestions(questions : [UniversalQuestion], to: String, completion: @escaping ([UniversalQuestion]) -> Void) {
+    
+    // Function to translate questions. Used to translate questions in the game controller
+    func translateQuestions(questions: [UniversalQuestion], to: String, completion: @escaping ([UniversalQuestion]) -> Void) {
         var newArray = [UniversalQuestion]()
-        
         let dispatchGroup = DispatchGroup()
-
+        
         for question in questions {
-            var translatedQuestion: String?
-            var translatedCorrectAnswer: String?
-            var translatedIncorrectAnswers: [String]?
-            var translatedExplanation: String?
-
             dispatchGroup.enter()
-            translate(question.question, targetLanguage: to) { result in
-                switch result {
-                case .success(let translation):
-                    translatedQuestion = translation
-                case .failure(let error):
-                    print("Error translating question: \(error)")
-                }
-                dispatchGroup.leave()
-            }
-
-            dispatchGroup.enter()
-            translate(question.correct_answer, targetLanguage: to) { result in
-                switch result {
-                case .success(let translation):
-                    translatedCorrectAnswer = translation
-                case .failure(let error):
-                    print("Error translating correct answer: \(error)")
-                }
-                dispatchGroup.leave()
-            }
-
-            // Translate each incorrect answer
-            question.incorrect_answers.forEach { incorrectAnswer in
-                dispatchGroup.enter()
-                translate(incorrectAnswer, targetLanguage: to) { result in
-                    switch result {
-                    case .success(let translation):
-                        if translatedIncorrectAnswers == nil {
-                            translatedIncorrectAnswers = [translation]
-                        } else {
-                            translatedIncorrectAnswers?.append(translation)
-                        }
-                    case .failure(let error):
-                        print("Error translating incorrect answer: \(error)")
-                    }
-                    dispatchGroup.leave()
-                }
-            }
-            
-            if let explanation = question.explanation {
-                dispatchGroup.enter()
-                translate(explanation, targetLanguage: to) { result in
-                    switch result {
-                    case .success(let translation):
-                        translatedExplanation = translation
-                    case .failure(let error):
-                        print("Error translating explanation: \(error)")
-                    }
-                    dispatchGroup.leave()
-                }
-            }
-
-            dispatchGroup.notify(queue: .main) {
-                let translatedQuestion = UniversalQuestion(
-                    id: question.id,
-                    category: question.category,
-                    type: question.type,
-                    difficulty: question.difficulty,
-                    question: translatedQuestion ?? question.question,
-                    correct_answer: translatedCorrectAnswer ?? question.correct_answer,
-                    incorrect_answers: translatedIncorrectAnswers ?? question.incorrect_answers,
-                    explanation: translatedExplanation ?? question.explanation
-                )
-                // Append the translated question to the newArray
+            translateSingleQuestion(question, to: to) { translatedQuestion in
                 newArray.append(translatedQuestion)
-                // Check if all translations are completed
-                if newArray.count == questions.count {
-                    completion(newArray)
-                }
+                dispatchGroup.leave()
             }
         }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(newArray)
+        }
     }
-
-    func translateQuestionsWithString(questions : [String: UniversalQuestion], to: String, completion: @escaping ([String: UniversalQuestion]) -> Void) {
+    
+    // Function to translate questions. Used to translate questions of GameData in result controller
+    func translateQuestionsWithString(questions: [String: UniversalQuestion], to: String, completion: @escaping ([String: UniversalQuestion]) -> Void) {
         var translatedDict = [String: UniversalQuestion]()
-        
         let dispatchGroup = DispatchGroup()
-        let questionPairs = Array(questions)
         
-        for pair in questionPairs {
-            let questionID = pair.key
-            let question = pair.value
-            var translatedQuestion: String?
-            var translatedCorrectAnswer: String?
-            var translatedIncorrectAnswers: [String]?
-            var translatedExplanation: String?
-
+        for (key, question) in questions {
             dispatchGroup.enter()
-            translate(question.question, targetLanguage: to) { result in
-                switch result {
-                case .success(let translation):
-                    translatedQuestion = translation
-                case .failure(let error):
-                    print("Error translating question: \(error)")
-                }
+            translateSingleQuestion(question, to: to) { translatedQuestion in
+                translatedDict[key] = translatedQuestion
                 dispatchGroup.leave()
-            }
-
-            dispatchGroup.enter()
-            translate(question.correct_answer, targetLanguage: to) { result in
-                switch result {
-                case .success(let translation):
-                    translatedCorrectAnswer = translation
-                case .failure(let error):
-                    print("Error translating correct answer: \(error)")
-                }
-                dispatchGroup.leave()
-            }
-
-            // Translate each incorrect answer
-            question.incorrect_answers.forEach { incorrectAnswer in
-                dispatchGroup.enter()
-                translate(incorrectAnswer, targetLanguage: to) { result in
-                    switch result {
-                    case .success(let translation):
-                        if translatedIncorrectAnswers == nil {
-                            translatedIncorrectAnswers = [translation]
-                        } else {
-                            translatedIncorrectAnswers?.append(translation)
-                        }
-                    case .failure(let error):
-                        print("Error translating incorrect answer: \(error)")
-                    }
-                    dispatchGroup.leave()
-                }
-            }
-
-            if let explanation = question.explanation {
-                dispatchGroup.enter()
-                translate(explanation, targetLanguage: to) { result in
-                    switch result {
-                    case .success(let translation):
-                        translatedExplanation = translation
-                        
-                    case .failure(let error):
-                        print("Error translating explanation: \(error)")
-                    }
-                    dispatchGroup.leave()
-                }
-            }
-
-            dispatchGroup.notify(queue: .main) {
-                let translatedQuestion = UniversalQuestion(
-                    id: question.id,
-                    category: question.category,
-                    type: question.type,
-                    difficulty: question.difficulty,
-                    question: translatedQuestion ?? question.question,
-                    correct_answer: translatedCorrectAnswer ?? question.correct_answer,
-                    incorrect_answers: translatedIncorrectAnswers ?? question.incorrect_answers,
-                    explanation: translatedExplanation ?? question.explanation
-                )
-                translatedDict[questionID] = translatedQuestion
-                if translatedDict.count == questions.count {
-                    completion(translatedDict)
-                }
             }
         }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(translatedDict)
+        }
     }
-
+    
+    
 }
 
 

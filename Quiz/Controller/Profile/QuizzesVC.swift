@@ -13,8 +13,8 @@ class QuizzesVC: UIViewController{
     // Outlets
     @IBOutlet weak var tableView: UITableView!
     // Properties
-    var quizzes: [Quiz] { return FirebaseUser.shared.userQuizzes ?? [] }
-    var activeAlert: UIAlertController?
+    var quizzes: [Quiz] { return FirebaseUser.shared.userQuizzes ?? [] } // Store user's quizzes
+    var activeAlert: UIAlertController? // For alert displaying
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -23,30 +23,30 @@ class QuizzesVC: UIViewController{
     
     // Method called when view will appear
     override func viewWillAppear(_ animated: Bool) {
-            // get all user's quizzes
-            FirebaseUser.shared.getUserQuizzes { result in
-                switch result {
-                case .success():
-                    self.tableView.reloadData()
-                case .failure(let error):
-                    print("Error getting quizzes : \(error.localizedDescription)")
-                }
+        // get all user's quizzes
+        FirebaseUser.shared.getUserQuizzes { result in
+            switch result {
+            case .success():
+                self.tableView.reloadData()
+            case .failure(let error):
+                print("Error getting quizzes : \(error.localizedDescription)")
             }
+        }
     }
     
     // Method called when view will disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // If an alert is being displayed, dismiss it
-               if let activeAlert = activeAlert {
-                   activeAlert.dismiss(animated: false)
-                   self.activeAlert = nil
-               }
+        if let activeAlert = activeAlert {
+            activeAlert.dismiss(animated: false)
+            self.activeAlert = nil
+        }
     }
     
     // display an alert
     @IBAction func plusButtonTapped(_ sender: Any) {
-            displayAddQuizAlert()
+        displayAddQuizAlert()
     }
     
     // create an alert so user can create a quiz

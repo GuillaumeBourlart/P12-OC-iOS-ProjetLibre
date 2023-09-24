@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
+// Class for button and images animations
 class CustomAnimations {
-    
+    // Animation for buttons
     static func buttonPressAnimation(for button: UIButton, completion: @escaping () -> Void) {
         UIView.animate(withDuration: 0.1,
                        delay: 0,
@@ -31,7 +32,7 @@ class CustomAnimations {
             }
         }
     }
-    
+    // Animation for images
     static func imagePressAnimation(for image: UIImageView, completion: @escaping () -> Void) {
         UIView.animate(withDuration: 0.1,
                        delay: 0,

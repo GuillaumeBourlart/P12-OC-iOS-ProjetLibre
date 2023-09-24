@@ -12,8 +12,8 @@ class GroupsVC: UIViewController{
     // Outlets
     @IBOutlet weak var tableView: UITableView!
     // Properties
-    var groups: [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] }
-    var activeAlert: UIAlertController?
+    var groups: [FriendGroup] { return FirebaseUser.shared.friendGroups ?? [] } // Calculated propertie to get all groups of user
+    var activeAlert: UIAlertController? // For alert displaying
     
     // Method called when view is loaded
     override func viewDidLoad() {

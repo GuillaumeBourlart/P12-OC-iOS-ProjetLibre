@@ -17,12 +17,12 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
     var translatorNetworkRequestStub: NetworkRequestStub!
     
     override func setUp() {
-           super.setUp()
-           networkRequestStub = NetworkRequestStub()
-           translatorNetworkRequestStub = NetworkRequestStub()
-           let service = Service(networkRequest: networkRequestStub)
-           let translatorService = Service(networkRequest: translatorNetworkRequestStub)
-           sut = OpenTriviaDatabaseManager(service: service, translatorService: translatorService)
+        super.setUp()
+        networkRequestStub = NetworkRequestStub()
+        translatorNetworkRequestStub = NetworkRequestStub()
+        let service = Service(networkRequest: networkRequestStub)
+        let translatorService = Service(networkRequest: translatorNetworkRequestStub)
+        sut = OpenTriviaDatabaseManager(service: service, translatorService: translatorService)
     }
     
     override func tearDown() {
@@ -34,7 +34,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
     
     func testFetchCategories_success() {
         // Given
-           let jsonStringCategories = """
+        let jsonStringCategories = """
            {
                "trivia_categories": [
                    {
@@ -52,10 +52,10 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                ]
            }
            """
-           guard let jsonDataCategories = jsonStringCategories.data(using: .utf8) else {return}
-
-           // Add the translation responses to the translatorNetworkRequestStub.
-           let jsonStringtranslateGeneralKnowledge = """
+        guard let jsonDataCategories = jsonStringCategories.data(using: .utf8) else {return}
+        
+        // Add the translation responses to the translatorNetworkRequestStub.
+        let jsonStringtranslateGeneralKnowledge = """
            {
                "translations": [
                    {
@@ -65,7 +65,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                ]
            }
            """
-           let jsonStringtranslateEntertainmentBooks = """
+        let jsonStringtranslateEntertainmentBooks = """
            {
                "translations": [
                    {
@@ -75,7 +75,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                ]
            }
            """
-           let jsonStringtranslateEntertainmentFilm = """
+        let jsonStringtranslateEntertainmentFilm = """
            {
                "translations": [
                    {
@@ -85,34 +85,34 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                ]
            }
            """
-           guard let jsonDataTranslateGeneralKnowledge = jsonStringtranslateGeneralKnowledge.data(using: .utf8) else {return}
-           guard let jsonDataTranslateEntertainmentBooks = jsonStringtranslateEntertainmentBooks.data(using: .utf8) else {return}
-           guard let jsonDataTranslateEntertainmentFilm = jsonStringtranslateEntertainmentFilm.data(using: .utf8) else {return}
-
-           translatorNetworkRequestStub.dataQueue = [jsonDataTranslateGeneralKnowledge, jsonDataTranslateEntertainmentBooks, jsonDataTranslateEntertainmentFilm]
-
-           networkRequestStub.dataQueue = [jsonDataCategories]
-           var fetchedError: Error?
-
-           // When
-           var fetchedCategories: [[String: Any]]?
-           sut.fetchCategories { result in
-               switch result {
-               case .failure(let error):
-                   fetchedError = error
-               case .success(let categories):
-                   fetchedCategories = categories
-                   print("cateeeeeeeeegories : \(fetchedCategories)")
-                   // Then
-                   XCTAssertNil(fetchedError)
-                   XCTAssertNotNil(fetchedCategories)
-                   // Add checks for translated categories
-                   XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Connaissance Générale" }))
-                   XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Livres" }))
-                   XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Film" }))
-               }
-           }
-       }
+        guard let jsonDataTranslateGeneralKnowledge = jsonStringtranslateGeneralKnowledge.data(using: .utf8) else {return}
+        guard let jsonDataTranslateEntertainmentBooks = jsonStringtranslateEntertainmentBooks.data(using: .utf8) else {return}
+        guard let jsonDataTranslateEntertainmentFilm = jsonStringtranslateEntertainmentFilm.data(using: .utf8) else {return}
+        
+        translatorNetworkRequestStub.dataQueue = [jsonDataTranslateGeneralKnowledge, jsonDataTranslateEntertainmentBooks, jsonDataTranslateEntertainmentFilm]
+        
+        networkRequestStub.dataQueue = [jsonDataCategories]
+        var fetchedError: Error?
+        
+        // When
+        var fetchedCategories: [[String: Any]]?
+        sut.fetchCategories { result in
+            switch result {
+            case .failure(let error):
+                fetchedError = error
+            case .success(let categories):
+                fetchedCategories = categories
+                print("cateeeeeeeeegories : \(fetchedCategories)")
+                // Then
+                XCTAssertNil(fetchedError)
+                XCTAssertNotNil(fetchedCategories)
+                // Add checks for translated categories
+                XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Connaissance Générale" }))
+                XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Livres" }))
+                XCTAssert(fetchedCategories!.contains(where: { $0["name"] as? String == "Film" }))
+            }
+        }
+    }
     
     func testFetchCategories_failure() {
         // Given
@@ -124,7 +124,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
         sut.fetchCategories { result in
             switch result {
             case .failure(let error):
-                    fetchedError = error
+                fetchedError = error
             case .success(let categories):
                 fetchedCategories = categories
                 // Then
@@ -137,51 +137,51 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
             
         }
     }
-        
-        func testFetchQuestions_success() {
-            // Given
-            guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
-            networkRequestStub.dataQueue = [jsonData]
-            
-            // When
-            var fetchedQuestions: [UniversalQuestion]?
-            var fetchedError: Error?
-            sut.fetchQuestions(inCategory: 1, difficulty: nil) { result in
-                switch result {
-                case .success(let questions):
-                    fetchedQuestions = questions
-                case .failure(let error):
-                    fetchedError = error
-                }
-                // Then
-                XCTAssertNil(fetchedError)
-                XCTAssertNotNil(fetchedQuestions)
-            }
-            
-            
-        }
-        
-        func testFetchQuestions_failure() {
-            // Given
-            networkRequestStub.error = NSError(domain: "", code: -1, userInfo: nil)
-            
-            // When
-            var fetchedQuestions: [UniversalQuestion]?
-            var fetchedError: Error?
-            sut.fetchQuestions(inCategory: 1, difficulty: nil) { result in
-                switch result {
-                case .success(let questions):
-                    fetchedQuestions = questions
-                case .failure(let error):
-                    fetchedError = error
-                }
-                // Then
-                XCTAssertNotNil(fetchedError)
-                XCTAssertNil(fetchedQuestions)
-            }
-            
-            
-        }
     
+    func testFetchQuestions_success() {
+        // Given
+        guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
+        networkRequestStub.dataQueue = [jsonData]
+        
+        // When
+        var fetchedQuestions: [UniversalQuestion]?
+        var fetchedError: Error?
+        sut.fetchQuestions(inCategory: 1, difficulty: nil) { result in
+            switch result {
+            case .success(let questions):
+                fetchedQuestions = questions
+            case .failure(let error):
+                fetchedError = error
+            }
+            // Then
+            XCTAssertNil(fetchedError)
+            XCTAssertNotNil(fetchedQuestions)
+        }
+        
+        
     }
+    
+    func testFetchQuestions_failure() {
+        // Given
+        networkRequestStub.error = NSError(domain: "", code: -1, userInfo: nil)
+        
+        // When
+        var fetchedQuestions: [UniversalQuestion]?
+        var fetchedError: Error?
+        sut.fetchQuestions(inCategory: 1, difficulty: nil) { result in
+            switch result {
+            case .success(let questions):
+                fetchedQuestions = questions
+            case .failure(let error):
+                fetchedError = error
+            }
+            // Then
+            XCTAssertNotNil(fetchedError)
+            XCTAssertNil(fetchedQuestions)
+        }
+        
+        
+    }
+    
+}
 

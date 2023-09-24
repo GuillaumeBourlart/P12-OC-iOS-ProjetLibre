@@ -20,10 +20,10 @@ class ModifyGroupVC: UIViewController{
     @IBOutlet weak var addQuestionButton: UIButton!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     // properties
-    var groupID: String?
-    var group: FriendGroup? { return FirebaseUser.shared.friendGroups?.first(where: { $0.id == groupID }) }
-    var usernames = [String: String]()
-    var isModifying = false
+    var groupID: String? // current Group id
+    var group: FriendGroup? { return FirebaseUser.shared.friendGroups?.first(where: { $0.id == groupID }) } // Get current group information
+    var usernames = [String: String]() // store current group members usernames
+    var isModifying = false // Check if user is modidying group's name
     
     // Method called when view is loaded
     override func viewDidLoad() {

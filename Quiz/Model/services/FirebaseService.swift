@@ -36,7 +36,7 @@ protocol FirebaseServiceProtocol {
     func isUserSignedIn() -> Bool
     func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void)
     func deleteData(in folder: String, fileName: String, completion: @escaping (Error?) -> Void)
-        func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void)
+    func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void)
     
     var currentUserID: String? { get }
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -48,12 +48,13 @@ protocol FirebaseServiceProtocol {
 
 // Class to handle Firebase services
 class FirebaseService: FirebaseServiceProtocol{
-    
+    // Properties
     private let db = Firestore.firestore() // firestore reference
     var currentUserID: String? {
         return Auth.auth().currentUser?.uid // get current UID
     }
     
+    // Function to get current userID
     func isUserSignedIn() -> Bool {
         return currentUserID != nil
     }
@@ -133,52 +134,58 @@ class FirebaseService: FirebaseServiceProtocol{
         
         db.collection(collection).document(documentId).setData(data, completion: completion)
     }
+    
     // Function to merge data in a document
     func setDataWithMerge(in collection: String, documentId: String, data: [String: Any], merge: Bool = false, completion: @escaping (Error?) -> Void) {
         guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}
         
         db.collection(collection).document(documentId).setData(data, merge: merge, completion: completion)
     }
+    
     // Function to delete a document from it's ID
     func deleteDocument(in collection: String, documentId: String, completion: @escaping (Error?) -> Void) {
         guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}
         
         db.collection(collection).document(documentId).delete(completion: completion)
     }
+    
     // Function to update a document from it's ID
     func updateDocument(in collection: String, documentId: String, data: [String: Any], completion: @escaping (Error?) -> Void) {
         guard isUserSignedIn() else {completion(FirebaseServiceError.noUserConnected); return}
         
         db.collection(collection).document(documentId).updateData(data, completion: completion)
     }
+    
+    // FUnction to store image n Firebase storage
     func storeData(in folder: String, fileName: String, data: Data, completion: @escaping (Result<String, Error>) -> Void) {
         guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
         
-            let storageRef = Storage.storage().reference().child(folder).child(fileName)
-            storageRef.putData(data, metadata: nil) { (metadata, error) in
+        let storageRef = Storage.storage().reference().child(folder).child(fileName)
+        storageRef.putData(data, metadata: nil) { (metadata, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            // Get URL image
+            storageRef.downloadURL { (url, error) in
                 if let error = error {
                     completion(.failure(error))
                     return
                 }
                 
-                // Get URL image
-                storageRef.downloadURL { (url, error) in
-                    if let error = error {
-                        completion(.failure(error))
-                        return
-                    }
-                    
-                    if let downloadURL = url {
-                        completion(.success(downloadURL.absoluteString))
-                    }
+                if let downloadURL = url {
+                    completion(.success(downloadURL.absoluteString))
                 }
             }
         }
+    }
     
+    // Function to delete image form Firebase Storage
     func deleteData(in folder: String, fileName: String, completion: @escaping (Error?) -> Void) {
         let storage = Storage.storage().reference()
         let imageRef = storage.child("\(folder)/\(fileName)")
-
+        
         imageRef.delete { error in
             if let error = error {
                 completion(error)
@@ -187,23 +194,25 @@ class FirebaseService: FirebaseServiceProtocol{
             }
         }
     }
-
-        func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void) {
-            guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
-            
-            guard let imageURL = URL(string: url) else {
-                completion(.failure(FirebaseServiceError.failedToMakeURL))
-                return
-            }
-
-            SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, data, error, _) in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(data ?? Data()))
-                }
+    
+    // Function to download profile image
+    func downloadData(from url: String, completion: @escaping (Result<Data, Error>) -> Void) {
+        guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}
+        
+        guard let imageURL = URL(string: url) else {
+            completion(.failure(FirebaseServiceError.failedToMakeURL))
+            return
+        }
+        
+        SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, data, error, _) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(data ?? Data()))
             }
         }
+    }
+    
     // Function to sign a user
     func signInUser(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { authData, error in
@@ -214,6 +223,7 @@ class FirebaseService: FirebaseServiceProtocol{
             }
         }
     }
+    
     // Function to create a user
     func createUser(withEmail email: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authData, error in
@@ -224,6 +234,7 @@ class FirebaseService: FirebaseServiceProtocol{
             }
         }
     }
+    
     // Function to sign out user
     func signOutUser(completion: @escaping (Result<Void, Error>) -> Void) {
         guard isUserSignedIn() else {completion(.failure(FirebaseServiceError.noUserConnected)); return}

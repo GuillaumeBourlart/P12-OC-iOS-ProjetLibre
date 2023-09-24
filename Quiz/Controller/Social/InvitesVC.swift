@@ -14,12 +14,9 @@ class InvitesVC: UIViewController {
     // Outlets
     @IBOutlet weak var tableView: UITableView!
     // Properties
-    // Dictionary to store invites with usernames as keys and lobby IDs as values
-        var invites: [String: String] = [:]
-        // Animation for changing background color during pull-to-refresh
-        var colorChangeAnimation: CABasicAnimation?
-        // Layer for the pull-to-refresh color animation
-        var borderLayer: CALayer?
+    var invites: [String: String] = [:] // Dictionary to store invites with usernames as keys and lobby IDs as values
+    var colorChangeAnimation: CABasicAnimation? // Animation for changing background color during pull-to-refresh
+    var borderLayer: CALayer?  // Layer for the pull-to-refresh color animation
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -47,7 +44,7 @@ class InvitesVC: UIViewController {
     @objc func refreshData(_ sender: Any) {
         self.tableView.refreshControl?.endRefreshing()
         startColorChangeAnimation()
-         
+        
         // refresh invites
         loadInvites()
     }
@@ -63,13 +60,13 @@ class InvitesVC: UIViewController {
     func loadInvites() {
         FirebaseUser.shared.getUserInfo { result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-            switch result {
-            case .failure(let error): print(error)
-            case .success():
-                self.fetchInvites()
-            }
-            // stop the color animation
-                    self.stopColorChangeAnimation()
+                switch result {
+                case .failure(let error): print(error)
+                case .success():
+                    self.fetchInvites()
+                }
+                // stop the color animation
+                self.stopColorChangeAnimation()
                 
             }
         }
@@ -99,7 +96,7 @@ class InvitesVC: UIViewController {
             borderLayer.add(animation, forKey: "colorChange")
         }
     }
-
+    
     // stop the color change animation
     func stopColorChangeAnimation() {
         borderLayer?.removeAnimation(forKey: "colorChange")
@@ -133,16 +130,19 @@ class InvitesVC: UIViewController {
     func joinLobby(lobbyId: String) {
         // delete the invite after user clicked on it
         Game.shared.deleteInvite(inviteId: lobbyId) { result in
-        switch result {
-        case .failure(let error): print(error)
-        case .success(let lobbyID): print("invite \(lobbyID) deleted")
-            self.fetchInvites()
+            switch result {
+            case .failure(let error): print(error)
+            case .success(let lobbyID): print("invite \(lobbyID) deleted")
+                self.fetchInvites()
             }
         }
         // Try to join the room linked to the invite
         Game.shared.joinRoom(lobbyId: lobbyId){ result in
             switch result {
             case .failure(let error): print(error)
+                if let tabBar = self.tabBarController as? CustomTabBarController {
+                    tabBar.showSessionExpiredAlert()
+                }
             case .success():
                 self.performSegue(withIdentifier: "goToPrivateLobby", sender: lobbyId)
             }
@@ -199,7 +199,7 @@ extension InvitesVC: UITableViewDataSource {
             let userText = NSLocalizedString("User", comment: "")
             let lobbyText = NSLocalizedString("Lobby", comment: "")
             cell.label.text = userText + ": \(invite.key) - " + lobbyText + invite.value
-
+            
             // Create the disclosure indicator for the cell
             cell.accessoryType = .disclosureIndicator
             

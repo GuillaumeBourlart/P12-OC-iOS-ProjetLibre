@@ -6,18 +6,19 @@
 //
 
 import Foundation
-// Structure to set section et rows in parameters
 
-protocol SectionType: CustomStringConvertible{
-    var containsSwitch: Bool{ get }
+// Protocol to define section types
+protocol SectionType: CustomStringConvertible {
+    var containsSwitch: Bool { get }
 }
 
-
+// Enumeration for different sections in the settings
 enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
     case account
     case preferences
     case privacy
-    // title
+    
+    // Title for each section
     var description: String {
         switch self {
         case .account: return NSLocalizedString("Account", comment: "")
@@ -25,59 +26,56 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
         case .privacy: return NSLocalizedString("Privacy", comment: "")
         }
     }
-    // Section 1
+    
+    // Enumeration for options within the "Account" section
     enum AccountOptions: Int, CaseIterable, SectionType {
         case history
         case quizzes
         case disconnect
-        // titles
+        
+        // Titles for each option
         var description: String {
             switch self {
-            case .history:
-                return NSLocalizedString("History", comment: "")
-            case .quizzes:
-                return NSLocalizedString("Quizzes", comment: "")
-            case .disconnect:
-                return NSLocalizedString("Disconnect", comment: "")
-            }
-            
-        }
-        // Segue's IDS
-        var segueIdentifier: String? {
-            switch self {
-            case .history:
-                return "goToHistory"
-            case .quizzes:
-                return "goToQuizzOrGroups"
-            case .disconnect:
-                return "goToDisconnect"
+            case .history: return NSLocalizedString("History", comment: "")
+            case .quizzes: return NSLocalizedString("Quizzes", comment: "")
+            case .disconnect: return NSLocalizedString("Disconnect", comment: "")
             }
         }
         
+        // Segue identifiers for each option
+        var segueIdentifier: String? {
+            switch self {
+            case .history: return "goToHistory"
+            case .quizzes: return "goToQuizzOrGroups"
+            case .disconnect: return "goToDisconnect"
+            }
+        }
+        
+        // Indicates whether the option contains a switch
         var containsSwitch: Bool {
             return false
         }
-        
     }
     
-    // Section 2
+    // Enumeration for options within the "Security" section
     enum SecurityOptions: Int, CaseIterable, SectionType {
         case sounds
-        // titles
+        
+        // Titles for each option
         var description: String {
             switch self {
-            case .sounds:
-                return NSLocalizedString("Sounds", comment: "")
-            }
-        }
-        // segue's IDS
-        var segueIdentifier: String? {
-            switch self {
-            case .sounds:
-                return nil
+            case .sounds: return NSLocalizedString("Sounds", comment: "")
             }
         }
         
+        // Segue identifiers for each option
+        var segueIdentifier: String? {
+            switch self {
+            case .sounds: return nil
+            }
+        }
+        
+        // Indicates whether the option contains a switch
         var containsSwitch: Bool {
             switch self {
             case .sounds: return true
@@ -85,30 +83,32 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
         }
     }
     
-    // Section 3
+    // Enumeration for options within the "Privacy" section
     enum PrivacyOptions: Int, CaseIterable, SectionType {
         case privacypolicy
-        // titles
+        
+        // Titles for each option
         var description: String {
             switch self {
-            case .privacypolicy:
-                return NSLocalizedString("Privacy policy", comment: "")
-            }
-        }
-        // segue's IDS
-        var segueIdentifier: String? {
-            switch self {
-            case .privacypolicy:
-                return "goToPrivacy"
+            case .privacypolicy: return NSLocalizedString("Privacy policy", comment: "")
             }
         }
         
-        var isPrivacyPolicy: Bool{
+        // Segue identifier for the option
+        var segueIdentifier: String? {
+            switch self {
+            case .privacypolicy: return "goToPrivacy"
+            }
+        }
+        
+        // Indicates whether the option is for privacy policy
+        var isPrivacyPolicy: Bool {
             switch self {
             case .privacypolicy: return true
             }
         }
         
+        // Indicates whether the option contains a switch
         var containsSwitch: Bool {
             switch self {
             case .privacypolicy: return false
@@ -116,4 +116,5 @@ enum SettingsSections: Int, CaseIterable, CustomStringConvertible {
         }
     }
 }
+
 

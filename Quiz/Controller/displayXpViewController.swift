@@ -14,8 +14,8 @@ class displayXpViewControler: UIViewController {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var currentXPLabel: UILabel!
     // Properties
-    var isResultAfterGame: Bool?
-    var gameID: String?
+    var isResultAfterGame: Bool? // check if it's result after game
+    var gameID: String? // Current game id
     
     // Method called when the view is loaded
     override func viewDidLoad() {
@@ -41,7 +41,7 @@ class displayXpViewControler: UIViewController {
             self.animateProgress()
         }
     }
-
+    
     // Method called when the view will appear
     override func viewWillAppear(_ animated: Bool) {
         if isResultAfterGame != nil, isResultAfterGame == true {
@@ -60,34 +60,34 @@ class displayXpViewControler: UIViewController {
         // Animation duration
         let animationDuration: TimeInterval = 1.5
         let moveAndFadeDuration: TimeInterval = 0.5
-
+        
         // Animate the progress bar
         UIView.animate(withDuration: animationDuration) {
             self.bar.setProgress(1.0, animated: true)
         }
-
+        
         if let tabBar = self.tabBarController as? CustomTabBarController {
             tabBar.playSoundEffect(soundName: "money-counter", fileType: "mp3")
         }
-
+        
         // Animate the label
         let xpStart = 0
         let xpEnd = 30
         var currentXP = xpStart
         let localizedCurrentXP = NSLocalizedString("Current xp", comment: "Label for current XP")
-
+        
         Timer.scheduledTimer(withTimeInterval: animationDuration / Double(xpEnd - xpStart), repeats: true) { timer in
             currentXP += 1
             self.label.text = "\(currentXP) xp"
-
+            
             // Stop the timer when the final XP is reached
             if currentXP == xpEnd {
                 timer.invalidate()
-
+                
                 // Disable Auto Layout constraints if needed
                 self.label.translatesAutoresizingMaskIntoConstraints = true
                 self.currentXPLabel.translatesAutoresizingMaskIntoConstraints = true
-
+                
                 // Animate the label's movement to currentXPLabel
                 UIView.animate(withDuration: moveAndFadeDuration, animations: {
                     self.label.center = self.currentXPLabel.center
@@ -129,7 +129,7 @@ class displayXpViewControler: UIViewController {
             }
         }
     }
-
+    
     // Method to prepare for a segue to ResultVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ResultVC {

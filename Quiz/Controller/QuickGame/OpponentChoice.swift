@@ -8,18 +8,16 @@
 import Foundation
 import UIKit
 
+// Class where you chosse to play solo or online
 class OpponentChoice: UIViewController {
-    
+    // Outlets
     @IBOutlet var buttons: [UIButton]!
-    
     @IBOutlet weak var soloImage: CustomButton2!
     @IBOutlet weak var multiImage: CustomButton2!
-    
-    
-    var difficulty: String?
-    var category: Int?
-    var quizId: String?
-    
+    // Properties
+    var difficulty: String? // Store chosen difficulty
+    var category: Int? // Store chosen category
+    var quizId: String? // Store chosen quizID
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -34,15 +32,16 @@ class OpponentChoice: UIViewController {
         updateImageViewForCurrentTraitCollection()
     }
     
+    // Method called when light/dark mode change
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-            super.traitCollectionDidChange(previousTraitCollection)
-            
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                // Mettre à jour l'image lorsque le mode clair/sombre change
-                updateImageViewForCurrentTraitCollection()
-            }
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            // Mettre à jour l'image lorsque le mode clair/sombre change
+            updateImageViewForCurrentTraitCollection()
         }
-
+    }
+    // Update images depending of lifght/dark Mode
     func updateImageViewForCurrentTraitCollection() {
         if traitCollection.userInterfaceStyle == .dark {
             // Mode sombre
@@ -54,7 +53,7 @@ class OpponentChoice: UIViewController {
             soloImage.setImage(UIImage(named: "solo"), for: .normal)
         }
     }
-    
+    // Method to creat romm  for multiplayer, or quiz for solo game
     @IBAction func onTap(_ sender: UIButton) {
         for button in self.buttons {
             button.isEnabled = false
@@ -101,6 +100,7 @@ class OpponentChoice: UIViewController {
         
     }
     
+    // Called before the segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? GameVC {
             destination.gameID = sender as? String
@@ -116,6 +116,7 @@ class OpponentChoice: UIViewController {
         }
     }
     
+    // Unwind use to unwind to this controller
     @IBAction func unwindToOpponentChoice(segue: UIStoryboardSegue) {
     }
     

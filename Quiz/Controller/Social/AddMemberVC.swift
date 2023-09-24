@@ -14,9 +14,9 @@ class AddMemberVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var validateButton: CustomButton!
     // Properties
-    var group: FriendGroup?
-    var friends: [String: String] = [:]
-    var selectedFriends: [String] = []
+    var group: FriendGroup? // current FriendGroup
+    var friends: [String: String] = [:] // get user's friend
+    var selectedFriends: [String] = [] // store selected friends 
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -62,12 +62,12 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
     // Configure and provide cells for the table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
-
+        
         let memberId = Array(self.friends.keys)[indexPath.row] // Get memberId from friends keys
         let memberUsername = self.friends[memberId] // Get username from friends values
-
+        
         cell.label.text = memberUsername
-
+        
         // Update the cell's accessoryType to indicate selection
         if selectedFriends.contains(memberId) {
             cell.accessoryType = .checkmark
@@ -87,7 +87,7 @@ extension AddMemberVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70.0
     }
-   
+    
     // Handle row selection and updating the selection state
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Get memberId from friends keys

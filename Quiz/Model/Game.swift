@@ -10,18 +10,18 @@ import FirebaseFirestore
 import FirebaseAuth
 
 
-
+// Handle everything linked to games (launching, history, questions, etc.)
 class Game {
     
-    static let shared = Game(apiManager: OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()), translatorService: Service(networkRequest: AlamofireNetworkRequest())), firebaseService: FirebaseService())
-    var apiManager: OpenTriviaDatabaseManager
-    private var firebaseService: FirebaseServiceProtocol
+    // Properties
+    static let shared = Game(apiManager: OpenTriviaDatabaseManager(service: Service(networkRequest: AlamofireNetworkRequest()), translatorService: Service(networkRequest: AlamofireNetworkRequest())), firebaseService: FirebaseService())   // Singleton instance for global access
+    var apiManager: OpenTriviaDatabaseManager    // Manages API requests for trivia data
+    private var firebaseService: FirebaseServiceProtocol   // Handles Firebase interactions and services and allow stubbng if needed
     init(apiManager: OpenTriviaDatabaseManager, firebaseService: FirebaseServiceProtocol) {
         self.apiManager = apiManager
         self.firebaseService = firebaseService
-    }
-    var currentUserId: String? { return firebaseService.currentUserID } // get current UID
-    
+    }   // Initializer for the Game instance, sets the API and Firebase managers
+    var currentUserId: String? { return firebaseService.currentUserID }   // Getter for current user's ID
     
     //-----------------------------------------------------------------------------------
     //                                 Competitive
@@ -38,7 +38,7 @@ class Game {
             .isEqualTo(FirestoreFields.status, "waiting"),
             .isEqualTo(FirestoreFields.Lobby.competitive, true)
         ]
-
+        
         firebaseService.getDocuments(in: FirestoreFields.lobbyCollection, whereFields: conditions) { result in
             switch result {
             case .failure(let error):
@@ -70,7 +70,7 @@ class Game {
             }
         }
     }
-
+    
     // Function to join a competitive room from it's lobby ID
     func joinCompetitiveRoom(lobbyId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = firebaseService.currentUserID else {
@@ -84,24 +84,24 @@ class Game {
                 completion(.failure(error))
                 return
             }
-                self.firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { result in
-                    switch result {
-                    case .failure(let error):
-                        completion(.failure(error))
-                    case .success(let lobbyData):
-                        guard !lobbyData.isEmpty else { completion(.failure(GameError.lobbyNotFound)); return }
-                        var players = lobbyData[FirestoreFields.Lobby.players] as! [String]
-                        players.append(currentUserId)
-                        
-                        self.createQuestionsForGame(quizId: nil, category: nil, difficulty: nil, with: lobbyId, competitive: true, players: players) { result in
-                            switch result {
-                            case .failure(let error):
-                                completion(.failure(error))
-                            case .success(_):
-                                completion(.success(()))
-                            }
+            self.firebaseService.getDocument(in: FirestoreFields.lobbyCollection, documentId: lobbyId) { result in
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success(let lobbyData):
+                    guard !lobbyData.isEmpty else { completion(.failure(GameError.lobbyNotFound)); return }
+                    var players = lobbyData[FirestoreFields.Lobby.players] as! [String]
+                    players.append(currentUserId)
+                    
+                    self.createQuestionsForGame(quizId: nil, category: nil, difficulty: nil, with: lobbyId, competitive: true, players: players) { result in
+                        switch result {
+                        case .failure(let error):
+                            completion(.failure(error))
+                        case .success(_):
+                            completion(.success(()))
                         }
                     }
+                }
                 
             }
         }
@@ -112,7 +112,7 @@ class Game {
         guard let currentUserId = firebaseService.currentUserID else {
             completion(.failure(GameError.noUserConnected)); return
         }
-
+        
         let newLobbyId = UUID().uuidString
         
         firebaseService.setData(in: FirestoreFields.lobbyCollection, documentId: newLobbyId, data: [FirestoreFields.creator: currentUserId, FirestoreFields.Lobby.competitive: true, FirestoreFields.status: "waiting",  FirestoreFields.Lobby.players: [currentUserId]]) { error in
@@ -123,7 +123,7 @@ class Game {
             }
         }
     }
-
+    
     // Function to get questions from a quiz ID (when launching a custom quiz) or from gameID when game starts
     func getQuestions(quizId: String? ,gameId: String?, completion: @escaping (Result<[UniversalQuestion], Error>) -> Void) {
         guard firebaseService.currentUserID != nil else {
@@ -155,7 +155,7 @@ class Game {
                     completion(.failure(GameError.failedToGetData))
                     return
                 }
-
+                
                 do {
                     let decoder = JSONDecoder()
                     var questions = [UniversalQuestion]()
@@ -166,7 +166,7 @@ class Game {
                         question.id = questionID
                         questions.append(question)
                     }
-
+                    
                     completion(.success(questions))
                     
                 } catch let error {
@@ -205,7 +205,7 @@ class Game {
                 if let quizID = quizID {
                     data[FirestoreFields.Lobby.quizId] = quizID
                 }
-                    
+                
                 self.firebaseService.setData(in: FirestoreFields.lobbyCollection, documentId: newLobbyId, data: data) { error in
                     if let error = error {
                         completion(.failure(error))
@@ -216,8 +216,8 @@ class Game {
             }
         }
     }
-
-    // Funcrtion to invite a pplayer in a private room
+    
+    // Funcrtion to invite a player in a private room
     func invitePlayerInRoom(lobbyId: String,invited_players: [String], invited_groups: [String], completion: @escaping (Result<Void, Error>) -> Void ){
         guard (firebaseService.currentUserID) != nil else {
             completion(.failure(GameError.noUserConnected)); return
@@ -300,7 +300,7 @@ class Game {
             completion(.failure(GameError.noUserConnected))
             return
         }
-
+        
         let condition: [FirestoreCondition] = [.isEqualTo(FirestoreFields.Lobby.joinCode, code)]
         
         firebaseService.getDocuments(in: FirestoreFields.lobbyCollection, whereFields: condition) { result in
@@ -312,7 +312,7 @@ class Game {
                     completion(.failure(GameError.noDataInResponse))
                     return
                 }
-
+                
                 // Now join the lobby
                 self.joinRoom(lobbyId: lobbyId, completion: { result in
                     switch result {
@@ -348,22 +348,22 @@ class Game {
                         newInvites.removeValue(forKey: key)
                     }
                 }
-
+                
                 self.firebaseService.updateDocument(in: FirestoreFields.usersCollection, documentId: currentUserId, data: [FirestoreFields.User.invites: newInvites]) { error in
                     if let error = error {
                         completion(.failure(error))
                     }
                     else {
                         if let key = FirebaseUser.shared.userInfo?.invites.first(where: { $1 == inviteId })?.key {
-                                FirebaseUser.shared.userInfo?.invites.removeValue(forKey: key)
-                            }
+                            FirebaseUser.shared.userInfo?.invites.removeValue(forKey: key)
+                        }
                         completion(.success(inviteId))
                     }
                 }
             }
         }
     }
-
+    
     
     
     // Function to leave a private room
@@ -395,7 +395,7 @@ class Game {
     //                                 General
     //-----------------------------------------------------------------------------------
     
-    // Function to create question of the game, depending of it is a custom quiz or a TriviaDB quiz
+    // Function to create questions of the game, depending of it is a custom quiz or a TriviaDB quiz
     func createQuestionsForGame(quizId: String?, category: Int?, difficulty: String?, with documentId: String?, competitive: Bool, players: [String], completion: @escaping (Result<String, Error>) -> Void) {
         guard (firebaseService.currentUserID) != nil else {
             completion(.failure(GameError.noUserConnected)); return
@@ -476,7 +476,7 @@ class Game {
             }
             
         })
-
+        
     }
     
     // Function to leave a game
@@ -508,7 +508,7 @@ class Game {
         }
     }
     
-
+    
     //-----------------------------------------------------------------------------------
     //                                 GAME DATA
     //-----------------------------------------------------------------------------------

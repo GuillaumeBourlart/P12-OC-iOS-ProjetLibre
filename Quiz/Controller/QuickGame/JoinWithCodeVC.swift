@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
+// Class to join a room from a code
 class JoinWithCodeVC: UIViewController {
-    
+    // Outlets
     @IBOutlet weak var codeField: UITextField!
     @IBOutlet weak var joinButton: UIButton!
     
@@ -23,7 +24,7 @@ class JoinWithCodeVC: UIViewController {
         self.joinButton.isEnabled = true
         
     }
-    
+    // Action method when the join button is pressed
     @IBAction func joinButtonPressed(sender: UIButton){
         CustomAnimations.buttonPressAnimation(for: sender) {
             
@@ -43,14 +44,14 @@ class JoinWithCodeVC: UIViewController {
         }
         
     }
-    
+    // Called before segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? PrivateLobbyVC{
             destination.lobbyId = sender as? String
             destination.isCreator = false
         }
     }
-    
+    // Action method to dismiss the keyboard when tapping outside the text field
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         codeField.resignFirstResponder()
     }
@@ -58,6 +59,7 @@ class JoinWithCodeVC: UIViewController {
 }
 
 extension JoinWithCodeVC: UITextFieldDelegate {
+    // Dismiss when user tap "return"
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         codeField.resignFirstResponder()
         return true

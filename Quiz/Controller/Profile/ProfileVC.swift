@@ -16,9 +16,8 @@ class ProfileVC: UIViewController{
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var level: UILabel!
     // Properties
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    let imagePickerController = UIImagePickerController()
-    var activeAlert: UIAlertController?
+    let imagePickerController = UIImagePickerController() // Picker controller
+    var activeAlert: UIAlertController? // For alert displaying
     
     // Method called when view is loaded
     override func viewDidLoad() {
@@ -91,8 +90,8 @@ class ProfileVC: UIViewController{
             }))
             
             alert.addAction(UIAlertAction(title: NSLocalizedString("Delete current photo", comment: ""), style: .destructive, handler: { _ in
-                   self.deleteProfileImage()
-               }))
+                self.deleteProfileImage()
+            }))
             
             alert.addAction(UIAlertAction.init(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             
@@ -145,7 +144,7 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
             self.present(consentAlert, animated: true, completion: nil)
         }
     }
-
+    
     // Method to upload picked image on firebase storage
     func uploadProfileImage(pickedImage: UIImage) {
         profileImageView.image = pickedImage
@@ -184,7 +183,7 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
                     case .failure(let error): print(error)
                     }
                 }
-               
+                
             }
         }
     }
@@ -303,20 +302,7 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
 
 // Handle switches
 extension ProfileVC: SettingsCellDelegate {
-    // Function to handle changes in Dark Mode switch
-    func DarkmodeSwitchChanged(in cell: SettingsCell, isOn: Bool) {
-        if isOn {
-            // Enable Dark Mode
-            appDelegate.window?.overrideUserInterfaceStyle = .dark
-        } else {
-            // Disable Dark Mode
-            appDelegate.window?.overrideUserInterfaceStyle = .light
-        }
-        // Save Dark Mode setting to UserDefaults
-        UserDefaults.standard.setValue(isOn, forKey: "darkmode")
-        UserDefaults.standard.synchronize()
-    }
-    
+
     // Function to handle changes in Sound switch
     func SoundSwitchChanged(in cell: SettingsCell, isOn: Bool) {
         switch isOn {

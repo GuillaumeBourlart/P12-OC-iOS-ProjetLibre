@@ -6,11 +6,13 @@
 //
 
 import Foundation
+// Enume to chose what king of friend invites we want to fetch in fetchFriendRequests()
 enum Status: String  {
     case received = "received"
     case sent = "sent"
 }
 
+// Fields name for firebase firestore
 struct FirestoreFields {
     
     // Collection names
@@ -19,13 +21,13 @@ struct FirestoreFields {
     static let gamesCollection = "games"
     static let lobbyCollection = "lobby"
     static let groupsCollection = "groups"
-
+    
     // Common field names
     static let id = "id"
     static let creator = "creator"
     static let status = "status"
     static let date = "date"
-
+    
     // User fields
     struct User {
         static let username = "username"
@@ -43,7 +45,7 @@ struct FirestoreFields {
         static let friendRequests = "friendRequests"
         static let senderUsername = "username"
     }
-
+    
     // Quiz fields
     struct Quiz {
         static let name = "name"
@@ -64,7 +66,7 @@ struct FirestoreFields {
         static let type = "type"
         static let difficulty = "difficulty"
     }
-
+    
     // Game fields
     struct Game {
         static let competitive = "competitive"
@@ -74,11 +76,11 @@ struct FirestoreFields {
         static let userAnswers = "user_answers"
         static let finalScores = "final_scores"
         struct UserAnswer {
-                static let selected_answer = "selected_answer"
-                static let points = "points"
-            }
+            static let selected_answer = "selected_answer"
+            static let points = "points"
+        }
     }
-
+    
     // Lobby fields
     struct Lobby {
         static let quizId = "quiz_id"
@@ -89,7 +91,7 @@ struct FirestoreFields {
         static let joinCode = "join_code"
         static let competitive = "competitive"
     }
-
+    
     // Group fields
     struct Group {
         static let name = "name"
