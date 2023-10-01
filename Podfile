@@ -6,19 +6,19 @@ target 'Quiz' do
   use_frameworks!
 
   # Pods for Quiz
-  pod 'Alamofire', '5.7.1'
+  pod 'Alamofire', '5.8.0'
 
-  pod 'Firebase', '10.13.0'
-  pod 'Firebase/Firestore', '10.13.0'
-  pod 'Firebase/Messaging', '10.13.0'
-  pod 'Firebase/Auth', '10.13.0'
-  pod 'Firebase/Analytics', '10.13.0'
-  pod 'Firebase/Performance', '10.13.0'
-  pod 'Firebase/Storage', '10.13.0'
-  pod 'FirebaseAuthInterop', '10.13.0'
-  pod 'FirebaseAppCheckInterop', '10.13.0'
+  pod 'Firebase', '10.15.0'
+  pod 'Firebase/Firestore', '10.15.0'
+  pod 'Firebase/Messaging', '10.15.0'
+  pod 'Firebase/Auth', '10.15.0'
+  pod 'Firebase/Analytics', '10.15.0'
+  pod 'Firebase/Performance', '10.15.0'
+  pod 'Firebase/Storage', '10.15.0'
+#  pod 'FirebaseAuthInterop', '10.15.0'
+#  pod 'FirebaseAppCheckInterop', '10.15.0'
 
-  pod 'SDWebImage', '5.17.0'
+  pod 'SDWebImage', '5.18.2'
 
   target 'QuizTests' do
     inherit! :search_paths
