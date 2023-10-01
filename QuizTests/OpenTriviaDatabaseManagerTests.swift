@@ -102,7 +102,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
                 fetchedError = error
             case .success(let categories):
                 fetchedCategories = categories
-                print("cateeeeeeeeegories : \(fetchedCategories)")
+                print("categories : \(String(describing: fetchedCategories))")
                 // Then
                 XCTAssertNil(fetchedError)
                 XCTAssertNotNil(fetchedCategories)

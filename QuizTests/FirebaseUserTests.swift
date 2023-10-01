@@ -164,7 +164,6 @@ final class FirebaseUserTests: XCTestCase {
         firebaseServiceStub.stubbedDocumentError = expectedError
         
         // Act
-        var returnedError: Error?
         firebaseUser.createUser(email: "test@test.com", password: "password", pseudo: "") { result in
             switch result {
             case .failure:
@@ -484,7 +483,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 expectation.fulfill()
-            case .failure(let error):
+            case .failure(_):
                 XCTFail("expected success, got failure instead")
             }
         }
@@ -779,7 +778,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Expected failure")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -822,7 +821,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Expected failure")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -864,7 +863,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Expected failure")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -906,7 +905,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Expected failure")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -953,7 +952,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Expected failure")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
@@ -1236,7 +1235,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .failure(_):
                 expectation.fulfill()
-            case .success(let code):
+            case .success(_):
                 XCTFail("Expected failure")
             }
         }
@@ -1251,7 +1250,7 @@ final class FirebaseUserTests: XCTestCase {
             switch result {
             case .failure(_):
                 XCTFail("Expected success")
-            case .success(let code):
+            case .success(_):
                 expectation.fulfill()
             }
         }

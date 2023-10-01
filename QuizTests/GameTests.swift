@@ -588,7 +588,7 @@ final class GameTests: XCTestCase {
             switch result {
             case .success:
                 XCTFail("Expected failure, got success instead")
-            case .failure(let error):
+            case .failure(_):
                 expectation.fulfill()
             }
         }
