@@ -46,7 +46,9 @@ final class GameTests: XCTestCase {
     //                                 COMPETITIVE
     //-----------------------------------------------------------------------------------
     
-    func testSearchCompetitiveRoom_lobbyFound_Success() {
+    // Search competitive rom
+    
+    func testGivenValidData_WhenSearchingCompetitiveRoomAndFindOne_ThenReturnsLobbyId() {
         firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.testLobbiesData]
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData]
         
@@ -66,9 +68,8 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testSearchCompetitiveRoo_NoLobbyFound_Success() {
+    func testGivenValidData_WhenSearchingCompetitiveRoomAndDontFind_ThenReturnsLobbyId() {
         firebaseServiceStub.stubbedQuerySnapshotDatas = []
-        
         
         let expectation = self.expectation(description: "Search competitive room succeeds")
         game.searchCompetitiveRoom { result in
@@ -83,7 +84,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testSearchCompetitiveRoom_Failure() {
+    func testGivenErrorNotNil_WhenSearchingCompetitiveRoom_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Search competitive room fails")
@@ -99,7 +100,9 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testJoinCompetitiveRoom_Success() {
+    // join competitive room
+    
+    func testGivenValidData_WhenJoiningCompetitiveRoom_ThenReturnsSuccess() {
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData]
         
         guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
@@ -117,8 +120,8 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testJoinCompetitiveRoom_Failure() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenError_WhenJoiningCompetitiveRoom_ThenReturnsFailure() {
+        
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Join competitive room fails")
@@ -133,9 +136,9 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testCreateCompetitiveRoom_Success() {
-        firebaseServiceStub.userID = "user1"
-        
+    // create competitive room
+    
+    func testGivenNoError_WhenCreatingCompetitiveRoom_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Create competitive room succeeds")
         game.createCompetitiveRoom { result in
             switch result {
@@ -149,8 +152,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testCreateCompetitiveRoom_Failure() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenError_WhenCreatingCompetitiveRoom_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Create competitive room fails")
@@ -165,8 +167,9 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    // Pour ce test, assurez-vous d'avoir un échantillon de données de questions qui correspondent à ce que votre service renverrait
-    func testGetQuestionsInQuiz_Success() {
+    // get question from a quiz
+    
+    func testGivenNoError_WhenGettingQuestionFromQuiz_ThenReturnsSuccess() {
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockQuizData]
         
         let expectation = self.expectation(description: "Get questions succeeds")
@@ -182,7 +185,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testGetQuestionsInQuiz_failed() {
+    func testGivenError_WhenGettingQuestionFromQuiz_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Get questions succeeds")
@@ -199,7 +202,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testGetQuestionsInQuizfailed() {
+    func testGivenEmptyResponse_WhenGettingQuestionFromQuiz_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentSnapshots = []
         
         let expectation = self.expectation(description: "Get questions succeeds")
@@ -216,7 +219,9 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testGetQuestionsInGame_Success() {
+    // get question from a game
+    
+    func testGivenNoError_WhenGettingQuestionFromGame_ThenReturnsSuccess() {
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockGameData]
         
         let expectation = self.expectation(description: "Get questions succeeds")
@@ -232,7 +237,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testGetQuestionsInGame_failed() {
+    func testGivenError_WhenGettingQuestionFromGame_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Get questions succeeds")
@@ -257,7 +262,7 @@ final class GameTests: XCTestCase {
     
     // Test for createRoom
     
-    func testCreateRoom_Success() {
+    func testGivenEmptyData_WhenCreateRoom_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Create room succeeds")
         firebaseServiceStub.stubbedQuerySnapshotDatas = []
         
@@ -273,7 +278,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testCreateRoom_Failure() {
+    func testGivenError_WhenCreateRoom_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Create room fails")
@@ -292,8 +297,7 @@ final class GameTests: XCTestCase {
     
     // Test for invitePlayerInRoom
     
-    func testInvitePlayerInRoom_Success() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenNoerror_WhenInvitePlayers_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Invite player succeeds")
         
         game.invitePlayerInRoom(lobbyId: "lobby1", invited_players: ["player1"], invited_groups: ["group1"]) { result in
@@ -307,7 +311,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testInvitePlayerInRoom_Failure() {
+    func testGivenError_WhenInvitePlayers_ThenReturnsSuccess() {
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Invite player fails")
@@ -325,7 +329,7 @@ final class GameTests: XCTestCase {
     }
     // test join with code
     
-    func testJoinWithCode_Success() {
+    func testGivenValideData_WhenJoinWithCode_ThenReturnsSuccess() {
         // Stub the fake lobby data
         firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.testLobbiesData]
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData, fakeResponsesData.mockUserData]
@@ -343,7 +347,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testJoinWithCode_NoLobbyFound_Failure() {
+    func testGivenEmptyData_WhenJoinWithCode_ThenReturnsFailure() {
         // Stub no lobby data
         firebaseServiceStub.stubbedQuerySnapshotDatas = []
         
@@ -360,7 +364,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testJoinWithCode_Failure() {
+    func testGivenError_WhenJoinWithCode_ThenReturnsFailure() {
         // Stub a network error
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
@@ -377,7 +381,9 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testDeleteInvite_Success() {
+    // Delete invite
+    
+    func testGivenValideData_WhenDeleteInvite_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Delete invite succeeds")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
         
@@ -392,7 +398,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testDeleteInvite_failed() {
+    func testGivenError_WhenDeleteInvite_ThenReturnsFailure() {
         let expectation = self.expectation(description: "Delete invite succeeds")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
@@ -411,7 +417,7 @@ final class GameTests: XCTestCase {
     
     // Test for deleteCurrentRoom
     
-    func testDeleteCurrentRoom_Success() {
+    func testGivenNoError_WhenDeleteCurrentRoom_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Delete room succeeds")
         
         game.deleteCurrentRoom(lobbyId: "lobby1") { result in
@@ -425,7 +431,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testDeleteCurrentRoom_Failure() {
+    func testGivenError_WhenDeleteCurrentRoom_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Delete room fails")
@@ -444,10 +450,8 @@ final class GameTests: XCTestCase {
     
     // Test for joinRoom
     
-    // Here, as the function involves getting and updating data, you might want to
-    // add more tests to check the logic inside the function.
     
-    func testJoinRoom_Success() {
+    func testGivenValideData_WhenJoiningRoom_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Join room succeeds")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData, fakeResponsesData.mockUserData]
         
@@ -463,7 +467,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testJoinRoom_Failure() {
+    func testGivenError_WhenJoiningRoom_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData]
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
@@ -481,7 +485,9 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testLeaveLobby_Success() {
+    // Leave lobby
+    
+    func testGivenValideData_WhenLeaveLobby_ThenReturnsSuccess() {
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.testLobbyData]
         
         let expectation = self.expectation(description: "Leave lobby succeeds")
@@ -497,7 +503,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testLeaveLobby_Failure() {
+    func testGivenError_WhenLeaveLobby_ThenReturnsFailure() {
         let lobbyId = "lobby1"
         firebaseServiceStub.userID = "user1"
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
@@ -514,16 +520,13 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    
-    
-    
     //-----------------------------------------------------------------------------------
     //                                 GENERAL
     //-----------------------------------------------------------------------------------
     
-    // Test for createQuestionsForGame
+    // Test for createQuestionsForGame from a quiz
     
-    func testCreateQuestionsForGameFromQuiz_Success() {
+    func testGivenValideData_WhenCreateQuestionsForGameFromQuiz_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockQuizData]
         
@@ -538,10 +541,28 @@ final class GameTests: XCTestCase {
             
         }
         waitForExpectations(timeout: 2.0, handler: nil)
-        
     }
     
-    func testCreateQuestionsForGameFromTriviaDB_Success() {
+    func testGivenError_WhenCreateQuestionsForGameFromQuiz_ThenReturnsFailure() {
+        let expectation = self.expectation(description: "Completion handler invoked")
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
+        
+        game.createQuestionsForGame(quizId: "quiz1", category: 1, difficulty: "easy", with: "doc1", competitive: true, players: ["player1", "player2"]) { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure, got success instead")
+            case .failure(let error):
+                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
+                expectation.fulfill()
+            }
+        }
+        
+        waitForExpectations(timeout: 2.0, handler: nil)
+    }
+    
+    // create question for a game from trivia DB
+    
+    func testGivenValideData_WhenCreateQuestionsForGameFromTriviaDB_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Completion handler invoked")
         
         guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {print("error");return}
@@ -559,28 +580,27 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
     
-    func testCreateQuestionsForGame_Failure() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenError_WhenCreateQuestionsForGameFromTriviaDB_ThenReturnsFailure() {
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
-        game.createQuestionsForGame(quizId: "quiz1", category: 1, difficulty: "easy", with: "doc1", competitive: true, players: ["player1", "player2"]) { result in
+        game.createQuestionsForGame(quizId: nil, category: 1, difficulty: "easy", with: "doc1", competitive: true, players: ["player1", "player2"]) { result in
             switch result {
             case .success:
                 XCTFail("Expected failure, got success instead")
             case .failure(let error):
-                XCTAssertEqual(error as NSError, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"]))
                 expectation.fulfill()
             }
         }
-        
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
+    
+    
     // Test for createGame
     
-    func testCreateGame_Success() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenValideData_WhenCreateGame_ThenReturnsSuccess() {
+        
         let expectation = self.expectation(description: "Completion handler invoked")
         
         let question = UniversalQuestion(id: "id1", category: "cat1", type: "type1", difficulty: "easy", question: "question1", correct_answer: "answer1", incorrect_answers: ["wrong1", "wrong2", "wrong3"], explanation: "")
@@ -599,8 +619,8 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
-    func testCreateGame_Failure() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenError_WhenCreateGame_ThenReturnsFailure() {
+        
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
@@ -622,9 +642,7 @@ final class GameTests: XCTestCase {
     
     // Test for leaveGame
     
-    
-    
-    func testLeaveGame_Success() {
+    func testGivenValideData_WhenLeaveGame_ThenReturnsSuccess() {
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockGameData]
         
         let expectation = self.expectation(description: "Leave game succeeds")
@@ -639,9 +657,8 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
-    func testLeaveGame_Failure() {
+    func testGivenError_WhenLeaveGame_ThenReturnsFailure() {
         let gameId = "game1"
-        firebaseServiceStub.userID = "user1"
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
         let expectation = self.expectation(description: "Leave game fails")
@@ -662,7 +679,7 @@ final class GameTests: XCTestCase {
     
     // Test for checkIfGameExist
     
-    func testCheckIfGameExist_Success() {
+    func testGivenValideData_WhenCheckIfGameExist_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockGameData]
         
@@ -679,7 +696,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
-    func testCheckIfGameExist_Failure() {
+    func testGivenError_WhenCheckIfGameExist_ThenReturnsFailure() {
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
@@ -698,8 +715,8 @@ final class GameTests: XCTestCase {
     
     // Test for getCompletedGames
     
-    func testGetCompletedGames_Success() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenValideData_WhenGetCompletedGames_ThenReturnsSuccess() {
+        
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.mockGamesData]
         
@@ -716,8 +733,8 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
-    func testGetCompletedGames_Failure() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenError_WhenGetCompletedGames_ThenReturnsFailure() {
+        
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
@@ -737,7 +754,7 @@ final class GameTests: XCTestCase {
     
     // Test for getGameData
     
-    func testGetGameData_Success() {
+    func testGivenValideData_WhenGeGameData_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockGameData]
         
@@ -754,8 +771,8 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
-    func testGetGameData_Failure() {
-        firebaseServiceStub.userID = "user1"
+    func testGivenError_WhenGetGameData_ThenReturnsFailure() {
+        
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         
@@ -775,7 +792,7 @@ final class GameTests: XCTestCase {
     
     // Test for saveStats
     
-    func testSaveStats_Success() {
+    func testGivenValideData_WhenSaveStats_ThenReturnsSuccess() {
         let expectation = self.expectation(description: "Completion handler invoked")
         let userAnswers: [String: UserAnswer] = ["answer1": UserAnswer(selected_answer: "question1", points: 27)]
         
@@ -792,7 +809,7 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
-    func testSaveStats_Failure() {
+    func testGivenError_WhenSaveStats_ThenReturnsFailure() {
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         let userAnswers: [String: UserAnswer] = ["answer1": UserAnswer(selected_answer: "question1", points: 32)]
@@ -811,26 +828,68 @@ final class GameTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
-    // Test for ListenForChangeInDocument
+    // Test for updateXP
     
-    //    func testListenForChangeInDocument_Success() {
-    //        let expectation = self.expectation(description: "Completion handler invoked")
-    //
-    //        let listener = game.ListenForChangeInDocument(in: "collection1", documentId: "doc1") { result in
-    //            switch result {
-    //            case .failure(let error):
-    //                XCTFail("Expected success, got \(error) instead")
-    //            case .success(let data):
-    //                XCTAssertNotNil(data)
-    //                expectation.fulfill()
-    //            }
-    //        }
-    //
-    //        waitForExpectations(timeout: 2.0, handler: nil)
-    //        listener.remove() // Remove the listener after testing
-    //    }
+    func testGivenValideData_WhenUpdateXP_ThenReturnsSuccess() {
+        let expectation = self.expectation(description: "Completion handler invoked")
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData, fakeResponsesData.mockUserData]
+        
+        game.updateXP() { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+                XCTFail("Expected success, got failure instead")
+            case .success(_):
+                expectation.fulfill()
+                
+            }
+        }
+        
+        waitForExpectations(timeout: 2.0, handler: nil)
+    }
     
-    func testListenForChangeInDocument_Failure() {
+    func testGivenError_WhenUpdateXP_ThenReturnsFailure() {
+        let expectation = self.expectation(description: "Completion handler invoked")
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData, fakeResponsesData.mockUserData]
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
+        
+        game.updateXP() { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+                expectation.fulfill()
+                
+            case .success(_):
+                XCTFail("Expected failure, got success instead")
+                
+            }
+        }
+        
+        waitForExpectations(timeout: 2.0, handler: nil)
+    }
+    
+    // Tests for listener
+    
+    func testGivenNoError_WhenListenForChangeInDocument_ThenReturnsSuccess() {
+        let expectation = self.expectation(description: "Completion handler invoked")
+        firebaseServiceStub.stubbedListenerData = fakeResponsesData.mockGameData
+        
+        
+        let listener = game.ListenForChangeInDocument(in: "collection1", documentId: "doc1") { result in
+            switch result {
+            case .failure(_):
+                XCTFail("Expected error, got success instead")
+            case .success(_):
+                expectation.fulfill()
+                
+            }
+        }
+        
+        waitForExpectations(timeout: 2.0, handler: nil)
+        listener?.remove() // Remove the listener after testing
+    }
+    
+    func testGivenError_WhenListenForChangeInDocument_ThenReturnsFailure() {
         let expectation = self.expectation(description: "Completion handler invoked")
         firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network error"])
         

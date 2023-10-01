@@ -32,7 +32,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testFetchCategories_success() {
+    func testGivenValideData_WhenFetchCategories_ThenReturnsSuccess() {
         // Given
         let jsonStringCategories = """
            {
@@ -114,7 +114,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
         }
     }
     
-    func testFetchCategories_failure() {
+    func testGivenError_WhenFetchCategories_ThenReturnsFailure() {
         // Given
         networkRequestStub.error = NSError(domain: "", code: -1, userInfo: nil)
         var fetchedQuestions: [UniversalQuestion]?
@@ -138,7 +138,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
         }
     }
     
-    func testFetchQuestions_success() {
+    func testGivenValideData_WhenFetchQuestions_ThenReturnsSuccess() {
         // Given
         guard let jsonData = "{\"results\": [{\"category\": \"category1\", \"type\": \"multiple\", \"difficulty\": \"easy\", \"question\": \"What is the capital of France?\", \"correct_answer\": \"Paris\", \"incorrect_answers\": [\"London\", \"Berlin\", \"Madrid\"]}]}".data(using: .utf8) else {return}
         networkRequestStub.dataQueue = [jsonData]
@@ -161,7 +161,7 @@ final class OpenTriviaDatabaseManagerTests: XCTestCase {
         
     }
     
-    func testFetchQuestions_failure() {
+    func testGivenError_WhenFetchQuestions_ThenReturnsFailure() {
         // Given
         networkRequestStub.error = NSError(domain: "", code: -1, userInfo: nil)
         

@@ -88,7 +88,7 @@ class PrivateLobbyVC: UIViewController, LeavePageProtocol{
     
     // Alert shown before to leave the lobby
     func showLeaveConfirmation(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: NSLocalizedString("Confirmation", comment: ""), message: NSLocalizedString("Are you sure you want to leave the room ?", comment: ""), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Confirmation", comment: ""), message: NSLocalizedString("Are you sure you want to leave the room?", comment: ""), preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { _ in
             completion()

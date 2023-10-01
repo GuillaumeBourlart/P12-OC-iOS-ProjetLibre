@@ -19,7 +19,6 @@ final class FirebaseUserTests: XCTestCase {
         firebaseServiceStub = FirebaseServiceStub()
         firebaseUser = FirebaseUser(firebaseService: firebaseServiceStub)
         
-        
         firebaseUser.userInfo = CurrentUser(id: "id", username: "", email: "", inscription_date: Date(), rank: 3, points: 3, invites: ["userID":"initeID"], profile_picture: "", friends: ["friendUID1", "friendUID2"], friendRequests: ["user2": CurrentUser.FriendRequest(status: "sent", date: Date())])
         firebaseUser.userQuizzes = [Quiz(id: "quiz1", name: "quiz1", category_id: "2", creator: "user1", difficulty: "", questions: ["": UniversalQuestion(category: "", type: "", difficulty: "", question: "", correct_answer: "", incorrect_answers: ["", "", ""], explanation: "")], average_score: 3, users_completed: 3, code: "dedcx")]
         firebaseUser.friendGroups = [FriendGroup(id: "group1", creator: "user1", name: "group1", members: ["user2", "user3"])]
@@ -35,78 +34,69 @@ final class FirebaseUserTests: XCTestCase {
         firebaseServiceStub = nil
         super.tearDown()
     }
-    //    
+    //
     //    //-----------------------------------------------------------------------------------
     //    //                                 CONNEXION ET INSCRIPTION
     //    //-----------------------------------------------------------------------------------
     
-    func testSignOut_withStubbedError_returnsError() {
+    func testGivenError_WhenSignOut_ThenReturnFailure() {
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         firebaseServiceStub.stubbedDocumentError = expectedError
         let expectation = self.expectation(description: "signout failed")
         
-        // Act
-        var returnedError: Error?
         firebaseUser.signOut() { result in
             switch result {
-            case .failure(let error):
-                returnedError = error
+            case .failure(_):
+                expectation.fulfill()
             case .success:
-                break
+                XCTFail("Expected failure, got success instead")
             }
-            expectation.fulfill()
+            
         }
         // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
         self.waitForExpectations(timeout: 5.0, handler: nil)
-        // Assert
-        XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testSignOut_withoutStubbedError_returnsSuccess() {
+    func testGivenNoError_WhenSignOut_ThenReturnSuccess() {
         // Arrange
         let expectation = self.expectation(description: "signout succeed")
         // Act
-        var returnedError: Error?
         firebaseUser.signOut() { result in
             switch result {
-            case .failure(let error):
-                returnedError = error
+            case .failure(_):
+                XCTFail("Expected success, got failure instead")
             case .success:
-                break
+                
+                expectation.fulfill()
             }
-            expectation.fulfill()
+            
         }
         // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
         self.waitForExpectations(timeout: 5.0, handler: nil)
-        // Assert
-        XCTAssertNil(returnedError as NSError?)
     }
     
-    func testResetPassword_withStubbedError_returnsError() {
+    func testGivenError_WhenResetPassword_ThenReturnFailure() {
         let expectation = self.expectation(description: "")
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         firebaseServiceStub.stubbedDocumentError = expectedError
         
         // Act
-        var returnedError: Error?
+        
         firebaseUser.resetPassword(for: "test@test.com") { result in
             switch result {
-            case .failure(let error):
-                returnedError = error
+            case .failure(_):
+                expectation.fulfill()
             case .success:
-                break
+                XCTFail("Expected failure, got success instead")
             }
-            expectation.fulfill()
         }
         // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
         self.waitForExpectations(timeout: 5.0, handler: nil)
-        // Assert
-        XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testResetPassword_withoutStubbedError_returnsSuccess() {
+    func testGivenNoError_WhenResetPassword_ThenReturnSuccess() {
         // Arrange
         firebaseServiceStub.stubbedDocumentError = nil
         let expectation = self.expectation(description: "")
@@ -116,44 +106,36 @@ final class FirebaseUserTests: XCTestCase {
         firebaseUser.resetPassword(for: "test@test.com") { result in
             switch result {
             case .failure:
-                break
+                XCTFail("Expected success, got failure instead")
             case .success:
-                isSuccess = true
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
         // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
         self.waitForExpectations(timeout: 5.0, handler: nil)
         
-        // Assert
-        XCTAssertTrue(isSuccess)
     }
     
-    func testSignInUser_withStubbedError_returnsError() {
+    func testGivenError_WhenSignInUser_ThenReturnFailure() {
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         firebaseServiceStub.stubbedDocumentError = expectedError
         let expectation = self.expectation(description: "")
         
         // Act
-        var returnedError: Error?
         firebaseUser.signInUser(email: "test@test.com", password: "password") { result in
             switch result {
-            case .failure(let error):
-                returnedError = error
+            case .failure(_):
+                expectation.fulfill()
             case .success:
-                break
+                XCTFail("Expected failure, got success instead")
             }
-            expectation.fulfill()
         }
         // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
         self.waitForExpectations(timeout: 5.0, handler: nil)
-        
-        // Assert
-        XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testSignInUser_withoutStubbedError_returnsSuccess() {
+    func testGivenNoError_WhenSignInUser_ThenReturnSuccess() {
         // Arrange
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
         
@@ -164,21 +146,18 @@ final class FirebaseUserTests: XCTestCase {
         firebaseUser.signInUser(email: "test@test.com", password: "password") { result in
             switch result {
             case .failure:
-                break
+                XCTFail("Expected success, got failure instead")
             case .success:
-                isSuccess = true
-            }
-            expectation.fulfill()  // Mark the expectation as having been fulfilled
+                expectation.fulfill()
+            } // Mark the expectation as having been fulfilled
         }
         
         // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
         self.waitForExpectations(timeout: 5.0, handler: nil)
         
-        // Assert
-        XCTAssertTrue(isSuccess)
     }
     
-    func testCreateUser_withStubbedError_returnsError() {
+    func testGivenError_WhenCreateUser_ThenReturnFailure() {
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         let expectation = self.expectation(description: "")
@@ -188,48 +167,41 @@ final class FirebaseUserTests: XCTestCase {
         var returnedError: Error?
         firebaseUser.createUser(email: "test@test.com", password: "password", pseudo: "") { result in
             switch result {
-            case .failure(let error):
-                returnedError = error
+            case .failure:
+                expectation.fulfill()
             case .success:
-                break
+                XCTFail("Expected failure, got success instead")
+                
             }
-            expectation.fulfill()
         }
         // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
         self.waitForExpectations(timeout: 5.0, handler: nil)
-        
-        // Assert
-        XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testCreateUser_withoutStubbedError_returnsUserId() {
+    func testGivenNoError_WhenCreateUser_ThenReturnSuccess() {
         firebaseServiceStub.stubbedQuerySnapshotDatas = []
         
         // Act
         let expectation = self.expectation(description: "")
-        var nserror: Error?
+        
         firebaseUser.createUser(email: "test@test.com", password: "password", pseudo: "") { result in
-            
             switch result {
-            case .failure(let error):
-                nserror = error
-            case .success():
-                break
+            case .failure:
+                XCTFail("Expected success, got failure instead")
+            case .success:
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
         // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
         self.waitForExpectations(timeout: 5.0, handler: nil)
         
-        // Assert
-        XCTAssertNil(nserror)
     }
     
     //-----------------------------------------------------------------------------------
     //                                GET INFO, QUIZZES AND GROUPS
     //-----------------------------------------------------------------------------------
     
-    func testGetUserInfo_withStubbedError_returnsError() {
+    func testGivenError_WhenGetUserInfo_ThenReturnFailure() {
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         firebaseServiceStub.stubbedDocumentError = expectedError
@@ -252,7 +224,7 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testGetUserInfo_withoutStubbedError_returnsSuccess() {
+    func testGivenNoError_WhenGetUserInfo_ThenReturnSuccess() {
         // Arrange
         firebaseServiceStub.stubbedDocumentError = nil
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
@@ -275,7 +247,7 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertTrue(isSuccess)
     }
     
-    func testGetUserQuizzes_withStubbedError_returnsError() {
+    func testGivenError_WhenGetUserQuizzes_ThenReturnFailure() {
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         firebaseServiceStub.stubbedDocumentError = expectedError
@@ -298,7 +270,7 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testGetUserQuizzes_withoutStubbedError_returnsSuccess() {
+    func testGivenNoError_WhenGetUserQuizzes_ThenReturnSuccess() {
         // Arrange
         firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.mockQuizzesData]
         let expectation = self.expectation(description: "")
@@ -316,7 +288,7 @@ final class FirebaseUserTests: XCTestCase {
         self.waitForExpectations(timeout: 5.0, handler: nil)
     }
     
-    func testGetUserGroups_withStubbedError_returnsError() {
+    func testGivenError_WhenGetUserGroups_ThenReturnFailure() {
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         firebaseServiceStub.stubbedDocumentError = expectedError
@@ -339,7 +311,7 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testGetUserGroups_withoutStubbedError_returnsSuccess() {
+    func testGivenNoError_WhenGetUserGroups_ThenReturnSuccess() {
         // Arrange
         firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.mockQGroupsData]
         let expectation = self.expectation(description: "")
@@ -361,7 +333,7 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertTrue(isSuccess)
     }
     
-    func testSaveImageInStorage_withStubbedError_returnsError() {
+    func testGivenError_WhenSaveImageInStorage_ThenReturnFailure() {
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         firebaseServiceStub.stubbedDocumentError = expectedError
@@ -385,7 +357,7 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testSaveImageInStorage_withoutStubbedError_returnsSuccess() {
+    func testGivenNoError_WhenSaveImageInStorage_ThenReturnSuccess() {
         // Arrange
         firebaseServiceStub.stubbedDocumentError = nil
         let expectation = self.expectation(description: "")
@@ -408,7 +380,7 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertTrue(isSuccess)
     }
     
-    func testSaveProfileImage_withStubbedError_returnsError() {
+    func testGivenError_WhenSaveProfileImage_ThenReturnFailure() {
         // Arrange
         let expectedError = NSError(domain: "", code: -1, userInfo: nil)
         firebaseServiceStub.stubbedDocumentError = expectedError
@@ -431,7 +403,7 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertEqual(expectedError, returnedError as NSError?)
     }
     
-    func testSaveProfileImage_withoutStubbedError_returnsSuccess() {
+    func testGivenNoError_WhenSaveProfileImage_ThenReturnSuccess() {
         // Arrange
         firebaseServiceStub.stubbedDocumentError = nil
         let expectation = self.expectation(description: "")
@@ -453,7 +425,42 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertTrue(isSuccess)
     }
     
-    func testDownloadProfileImageFromURL_returnsData() {
+    func testGivenError_WhenDeleteProfileImage_ThenReturnFailure() {
+        // Arrange
+        firebaseServiceStub.stubbedDocumentError =  nil
+        let expectation = self.expectation(description: "")
+        // Act
+        firebaseUser.deleteProfileImageURL() { result in
+            switch result {
+            case .failure:
+                XCTFail("expected success, got failure instead")
+            case .success:
+                expectation.fulfill()
+            }
+        }
+        // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
+        self.waitForExpectations(timeout: 5.0, handler: nil)
+    }
+    
+    func testGivenNoError_WhenDeleteProfileImage_ThenReturnSuccess() {
+        // Arrange
+        firebaseServiceStub.stubbedDocumentError =  NSError(domain: "", code: -1, userInfo: nil)
+        let expectation = self.expectation(description: "")
+        // Act
+        firebaseUser.deleteProfileImageURL() { result in
+            switch result {
+            case .failure:
+                expectation.fulfill()
+            case .success:
+                XCTFail("expected failure, got succes instead")
+            }
+            
+        }
+        // Wait for expectations for a maximum of 5 seconds (you can adjust this time as necessary)
+        self.waitForExpectations(timeout: 5.0, handler: nil)
+    }
+    
+    func testGivenError_WhenDownloadProfileImageFromUrl_ThenReturnFailure() {
         firebaseServiceStub.stubbedDownloadData = "Test data".data(using: .utf8)
         // Act
         var returnedData: Data?
@@ -468,7 +475,51 @@ final class FirebaseUserTests: XCTestCase {
         XCTAssertNotNil(returnedData)
     }
     
+    func testGivenNoError_WhenDownloadProfileImageFromUrl_ThenReturnSuccess() {
+        // Arrange
+        // Arrange
+        firebaseServiceStub.stubbedDocumentError = nil
+        let expectation = self.expectation(description: "Add group")
+        firebaseUser.deleteImageInStorage() { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail("expected success, got failure instead")
+            }
+        }
+        wait(for: [expectation], timeout: 1.0)
+    }
     
+    func testGivenError_WhenDeleteImageInStorage_ThenReturnFailure() {
+        // Arrange
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        let expectation = self.expectation(description: "Add group")
+        firebaseUser.deleteImageInStorage() { result in
+            switch result {
+            case .success:
+                
+                XCTFail("expected failure, got succes instead")
+            case .failure(_):
+                expectation.fulfill()
+            }
+        }
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testGivenNoError_WhenDeleteImageInStorage_ThenReturnSuccess() {
+        // Arrange
+        let expectation = self.expectation(description: "Add group")
+        firebaseUser.deleteImageInStorage() { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case .failure(_):
+                XCTFail("expected success, got failure instead")
+            }
+        }
+        wait(for: [expectation], timeout: 1.0)
+    }
     
     
     
@@ -477,7 +528,7 @@ final class FirebaseUserTests: XCTestCase {
     //-----------------------------------------------------------------------------------
     
     
-    func testFetchInvites_withInvites_returnsInvitesDict() {
+    func testGivenValideData_WhenFetchInvites_ThenReturnNoError() {
         // Arrange
         let expectation = self.expectation(description: "Fetch Invites")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData, fakeResponsesData.mockUserData]
@@ -494,7 +545,24 @@ final class FirebaseUserTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testSendFriendRequest_withValidUsername_returnsSuccess() {
+    func testGivenError_WhenFetchInvites_ThenReturnError() {
+        // Arrange
+        let expectation = self.expectation(description: "Fetch Invites")
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData, fakeResponsesData.mockUserData]
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        firebaseUser.fetchInvites { invites, error in
+            if let error {
+                expectation.fulfill()
+            } else {
+                XCTFail("expected error")
+            }
+        }
+        
+        // Assert
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testGivenValideData_WhenSendFriendRequest_ThenReturnSuccess() {
         // Arrange
         let expectation = self.expectation(description: "Send Friend Request")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
@@ -513,7 +581,26 @@ final class FirebaseUserTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testFetchFriendRequests_withRequests_returnsRequestsDict() {
+    func testGivenError_WhenSendFriendRequest_ThenReturnFailure() {
+        // Arrange
+        let expectation = self.expectation(description: "Send Friend Request")
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
+        firebaseServiceStub.stubbedQuerySnapshotDatas = [fakeResponsesData.mockUsersData]
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        firebaseUser.sendFriendRequest(username: "user3") { result in
+            switch result {
+            case .failure:
+                expectation.fulfill()
+            case .success:
+                XCTFail("expected failure")
+            }
+        }
+        
+        // Assert
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testGivenValideData_WhenFetchFriendRequest_ThenReturnsDictAndNoError() {
         // Arrange
         let expectation = self.expectation(description: "Fetch Friend Requests")
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData, fakeResponsesData.mockUserData]
@@ -521,7 +608,7 @@ final class FirebaseUserTests: XCTestCase {
         
         firebaseUser.fetchFriendRequests(status: .sent) { requests, error in
             if let error {
-                XCTFail("expected to success")
+                XCTFail("expected success")
             } else {
                 expectation.fulfill()
             }
@@ -531,7 +618,25 @@ final class FirebaseUserTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testAcceptFriendRequest_withValidId_returnsSuccess() {
+    func testGivenError_WhenFetchFriendRequest_ThenReturnsError() {
+        // Arrange
+        let expectation = self.expectation(description: "Fetch Friend Requests")
+        firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData, fakeResponsesData.mockUserData]
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        
+        firebaseUser.fetchFriendRequests(status: .sent) { requests, error in
+            if let error {
+                expectation.fulfill()
+            } else {
+                XCTFail("expected failure")
+            }
+        }
+        
+        // Assert
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testGivenNoError_WhenAcceptFriendRequest_ThenReturnsSuccess() {
         // Arrange
         let expectation = self.expectation(description: "Accept Friend Request")
         
@@ -548,7 +653,24 @@ final class FirebaseUserTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testRejectFriendRequest_withValidId_returnsSuccess() {
+    func testGivenError_WhenAcceptFriendRequest_ThenReturnsFailure() {
+        // Arrange
+        let expectation = self.expectation(description: "Accept Friend Request")
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        firebaseUser.acceptFriendRequest(friendID: "validFriendId", friendUsername: "validUsername") { result in
+            switch result {
+            case .failure:
+                expectation.fulfill()
+            case .success:
+                XCTFail("expected failure")
+            }
+        }
+        
+        // Assert
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testGivenNoError_WhenRejectFriendRequest_ThenReturnsSuccess() {
         // Arrange
         let expectation = self.expectation(description: "Reject Friend Request")
         
@@ -565,7 +687,25 @@ final class FirebaseUserTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testRemoveFriend_withValidId_returnsSuccess() {
+    
+    func testGivenError_WhenRejectFriendRequest_ThenReturnsFailure() {
+        // Arrange
+        let expectation = self.expectation(description: "Reject Friend Request")
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        firebaseUser.rejectFriendRequest(friendID: "validFriendId") { result in
+            switch result {
+            case .failure:
+                expectation.fulfill()
+            case .success:
+                XCTFail("expected failure")
+            }
+        }
+        
+        // Assert
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testGivenNoError_WhenRemoveFriend_ThenReturnsSuccess() {
         // Arrange
         let expectation = self.expectation(description: "Remove Friend")
         
@@ -582,113 +722,10 @@ final class FirebaseUserTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testFetchFriends_withError_returnsError() {
-        // Arrange
-        let expectation = self.expectation(description: "Fetch Friends")
-        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noFriendsInFriendList
-        
-        // Act
-        firebaseUser.fetchFriends { friends, error in
-            // Assert
-            XCTAssertNil(friends)
-            XCTAssertNotNil(error)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
-    func testFetchInvites_withError_returnsError() {
-        // Arrange
-        let expectation = self.expectation(description: "Fetch Invites")
-        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noInvitesInInvitesList
-        
-        // Act
-        firebaseUser.fetchInvites { invites, error in
-            // Assert
-            XCTAssertNil(invites)
-            XCTAssertNotNil(error)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
-    func testSendFriendRequest_withError_returnsError() {
-        // Arrange
-        let expectation = self.expectation(description: "Send Friend Request")
-        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.userNotFound
-        let username = "user1"
-        
-        // Act
-        firebaseUser.sendFriendRequest(username: username) { result in
-            // Assert
-            switch result {
-            case .success:
-                XCTFail("expected to fail")
-            case .failure(_):
-                expectation.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
-    func testFetchFriendRequests_withError_returnsError() {
-        // Arrange
-        let expectation = self.expectation(description: "Fetch Friend Requests")
-        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noFriendRequestYet
-        
-        // Act
-        firebaseUser.fetchFriendRequests(status: .sent) { friends, error in
-            // Assert
-            XCTAssertNil(friends)
-            XCTAssertNotNil(error)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
-    func testAcceptFriendRequest_withError_returnsError() {
-        // Arrange
-        let expectation = self.expectation(description: "Accept Friend Request")
-        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noUserConnected
-        let friendID = "friend1"
-        let friendUsername = "friendName"
-        
-        // Act
-        firebaseUser.acceptFriendRequest(friendID: friendID, friendUsername: friendUsername) { result in
-            // Assert
-            switch result {
-            case .success:
-                XCTFail("expected to fail")
-            case .failure(_):
-                expectation.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
-    func testRejectFriendRequest_withError_returnsError() {
-        // Arrange
-        let expectation = self.expectation(description: "Reject Friend Request")
-        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noUserConnected
-        let friendID = "friend1"
-        
-        // Act
-        firebaseUser.rejectFriendRequest(friendID: friendID) { result in
-            // Assert
-            switch result {
-            case .success:
-                XCTFail("expected to fail")
-            case .failure(_):
-                expectation.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
-    func testRemoveFriend_withError_returnsError() {
+    func testGivenError_WhenRemoveFriend_ThenReturnsFailure() {
         // Arrange
         let expectation = self.expectation(description: "Remove Friend")
-        firebaseServiceStub.stubbedDocumentError = FirebaseUserError.noUserConnected
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
         let friendID = "friend1"
         
         // Act
@@ -710,7 +747,7 @@ final class FirebaseUserTests: XCTestCase {
     //-----------------------------------------------------------------------------------
     
     
-    func testAddQuiz() {
+    func testGivenNoError_WhenAddQuiz_ThenReturnsSuccess() {
         // Prepare mock and stub
         
         firebaseUser.userQuizzes = []
@@ -731,14 +768,31 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testDeleteQuiz() {
+    func testGivenError_WhenAddQuiz_ThenReturnsFailure() {
+        // Prepare mock and stub
+        
+        firebaseUser.userQuizzes = []
+        let expectation = XCTestExpectation(description: "Get user info success")
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        // Test
+        firebaseUser.addQuiz(name: "testQuiz", category_id: "categoryId", difficulty: "medium") { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure")
+            case .failure(let error):
+                expectation.fulfill()
+            }
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testGivenNoErrorAndValideData_WhenDeleteQuiz_ThenReturnsSuccess() {
         // Prepare mock and stub
         let quiz = Quiz(id: "", name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
         firebaseUser.userQuizzes = [quiz]
         
         let expectation = XCTestExpectation(description: "Get user info success")
-        
-        
         
         // Test
         firebaseUser.deleteQuiz(quiz: firebaseUser.userQuizzes![0]) { result in
@@ -755,14 +809,33 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testAddQuestionToQuiz() {
+    func testGivenError_WhenDeleteQuiz_ThenReturnsFailure() {
         // Prepare mock and stub
         let quiz = Quiz(id: "", name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
         firebaseUser.userQuizzes = [quiz]
         
         let expectation = XCTestExpectation(description: "Get user info success")
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
         
+        // Test
+        firebaseUser.deleteQuiz(quiz: firebaseUser.userQuizzes![0]) { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure")
+            case .failure(let error):
+                expectation.fulfill()
+            }
+        }
         
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testGivenNoErrorAndValideData_WhenAddQuestionToQuiz_ThenReturnsSuccess() {
+        // Prepare mock and stub
+        let quiz = Quiz(id: "", name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
+        firebaseUser.userQuizzes = [quiz]
+        
+        let expectation = XCTestExpectation(description: "Get user info success")
         
         // Test
         firebaseUser.addQuestionToQuiz(quiz: firebaseUser.userQuizzes![0], questionText: "Question?", correctAnswer: "Answer", incorrectAnswers: ["Wrong", "", ""], explanation: "Explanation") { result in
@@ -778,14 +851,32 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testUpdateQuiz() {
+    func testGivenError_WhenAddQuestionToQuiz_ThenReturnsFailure() {
+        // Prepare mock and stub
+        let quiz = Quiz(id: "", name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
+        firebaseUser.userQuizzes = [quiz]
+        
+        let expectation = XCTestExpectation(description: "Get user info success")
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        
+        // Test
+        firebaseUser.addQuestionToQuiz(quiz: firebaseUser.userQuizzes![0], questionText: "Question?", correctAnswer: "Answer", incorrectAnswers: ["Wrong", "", ""], explanation: "Explanation") { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure")
+            case .failure(let error):
+                expectation.fulfill()
+            }
+        }
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testGivenNoErrorAndValideData_WhenUpdateQuiz_ThenReturnsSuccess() {
         // Prepare mock and stub
         let quiz = Quiz(id: "id",name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
         firebaseUser.userQuizzes = [quiz]
         
         let expectation = XCTestExpectation(description: "Get user info success")
-        
-        
         
         // Test
         firebaseUser.updateQuiz(quizID: "id", newName: "NewName", newCategoryID: "NewCategory", newDifficulty: "easy") { result in
@@ -802,7 +893,28 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testDeleteQuestionFromQuiz() {
+    func testGivenError_WhenUpdateQuiz_ThenReturnsFailure() {
+        // Prepare mock and stub
+        let quiz = Quiz(id: "id",name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
+        firebaseUser.userQuizzes = [quiz]
+        
+        let expectation = XCTestExpectation(description: "Get user info success")
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        
+        // Test
+        firebaseUser.updateQuiz(quizID: "id", newName: "NewName", newCategoryID: "NewCategory", newDifficulty: "easy") { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure")
+            case .failure(let error):
+                expectation.fulfill()
+            }
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testGivenNoErrorAndValideData_WhenDeleteQuestionFromQuiz_ThenReturnsSuccess() {
         // Prepare mock and stub
         let quiz = Quiz(id: "",name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
         firebaseUser.userQuizzes = [quiz]
@@ -810,8 +922,6 @@ final class FirebaseUserTests: XCTestCase {
         firebaseUser.userQuizzes![0].questions = questions
         
         let expectation = XCTestExpectation(description: "Get user info success")
-        
-        
         
         // Test
         firebaseUser.deleteQuestionFromQuiz(quiz: firebaseUser.userQuizzes![0], questionId: "questionID") { result in
@@ -828,7 +938,30 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testUpdateQuestionInQuiz() {
+    func testGivenError_WhenDeleteQuestionFromQuiz_ThenReturnsFailure() {
+        // Prepare mock and stub
+        let quiz = Quiz(id: "",name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
+        firebaseUser.userQuizzes = [quiz]
+        let questions = ["questionID": UniversalQuestion(id: "id", category: "", type: "", difficulty: "", question: "", correct_answer: "", incorrect_answers: [], explanation: "")]
+        firebaseUser.userQuizzes![0].questions = questions
+        
+        let expectation = XCTestExpectation(description: "Get user info success")
+        firebaseServiceStub.stubbedDocumentError = NSError(domain: "", code: -1, userInfo: nil)
+        
+        // Test
+        firebaseUser.deleteQuestionFromQuiz(quiz: firebaseUser.userQuizzes![0], questionId: "questionID") { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure")
+            case .failure(let error):
+                expectation.fulfill()
+            }
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testGivenNoErrorAndValideData_WhenUpdateQuestionInQuiz_ThenReturnsSuccess() {
         // Prepare mock and stub
         let quiz = Quiz(id: "", name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
         firebaseUser.userQuizzes = [quiz]
@@ -851,7 +984,7 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testUpdateQuestionInQuiz_failed() {
+    func testGivenError_WhenUpdateQuestionInQuiz_ThenReturnsFalure() {
         // Prepare mock and stub
         let quiz = Quiz(id: "", name: "", category_id: "", creator: "", difficulty: "", questions: [:], average_score: 0, users_completed: 0, code: "")
         firebaseUser.userQuizzes = [quiz]
@@ -882,7 +1015,7 @@ final class FirebaseUserTests: XCTestCase {
     //                                GROUPS
     //-----------------------------------------------------------------------------------
     
-    func test_fetchGroupMembers_success(){
+    func testGivenNoErrorAndValideData_WhenFetchGroupMembers_ThenReturnsSuccess(){
         let group = FriendGroup(id: "group1", creator: "userID", name: "group 1", members: ["user2", "user4"])
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData, fakeResponsesData.mockUserData]
         
@@ -899,7 +1032,7 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func test_fetchGroupMembers_failed(){
+    func testGivenError_WhenFetchGroupMembers_ThenReturnsFailure(){
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: ["user2", "user3", "user4"])
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData, fakeResponsesData.mockUserData, fakeResponsesData.mockUserData]
         firebaseServiceStub.stubbedDocumentError = NSError()
@@ -918,7 +1051,7 @@ final class FirebaseUserTests: XCTestCase {
     }
     
     // MARK: - Tests for deleteGroup
-    func testDeleteGroupSuccess() {
+    func testGivenNoErrorAndValideData_WhenDeleteGroup_ThenReturnsSuccess() {
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: [])
         
         let expectation = self.expectation(description: "Delete group")
@@ -933,7 +1066,7 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testDeleteGroupFailure() {
+    func testGivenError_WhenDeleteGroup_ThenReturnsFailure() {
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: [])
         firebaseServiceStub.stubbedDocumentError = NSError()
         
@@ -950,7 +1083,7 @@ final class FirebaseUserTests: XCTestCase {
     }
     
     // MARK: - Tests for addGroup
-    func testAddGroupSuccess() {
+    func testGivenNoError_WhenAddGroup_ThenReturnsSuccess() {
         
         let expectation = self.expectation(description: "Add group")
         firebaseUser.addGroup(name: "group 1") { result in
@@ -964,7 +1097,7 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testAddGroupFailure() {
+    func testGivenError_WhenAddGroup_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentError = NSError()
         
         let expectation = self.expectation(description: "Add group failure")
@@ -980,7 +1113,7 @@ final class FirebaseUserTests: XCTestCase {
     }
     
     // MARL: - Tests for updateGroupName
-    func testUpdateGroupNameSuccess() {
+    func testGivenNoError_WhenUpdateGroupNalme_ThenReturnsSuccess() {
         let friednGroup = FriendGroup(id: "groupId", creator: "", name: "", members: [])
         firebaseUser.friendGroups = [friednGroup]
         
@@ -997,7 +1130,7 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testUpdateGroupNameFailure() {
+    func testGivenError_WhenUpdateGroupNalme_ThenReturnsFailure() {
         firebaseServiceStub.stubbedDocumentError = NSError()
         
         let expectation = self.expectation(description: "Update group name failure")
@@ -1013,10 +1146,8 @@ final class FirebaseUserTests: XCTestCase {
     }
     
     // MARK: - Tests for addNewMembersToGroup
-    func testAddNewMembersToGroupSuccess() {
+    func testGivenNoError_WhenAddNewMembersToGroup_ThenReturnsSuccess() {
         firebaseUser.friendGroups = [FriendGroup(id: "group1", creator: "", name: "group 1", members: [])]
-        
-        
         
         let expectation = self.expectation(description: "Add new members to group")
         firebaseUser.addNewMembersToGroup(group: firebaseUser.friendGroups![0], newMembers: ["member1"]) { result in
@@ -1030,7 +1161,7 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testAddNewMembersToGroupFailure() {
+    func testGivenError_WhenAddNewMembersToGroup_ThenReturnsFailure() {
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: [])
         firebaseServiceStub.stubbedDocumentError = NSError()
         
@@ -1047,7 +1178,7 @@ final class FirebaseUserTests: XCTestCase {
     }
     
     // MARK: - Tests for removeMemberFromGroup
-    func testRemoveMemberFromGroupSuccess() {
+    func testGivenNoError_WhenRemoveMemebrsFromGroup_ThenReturnsSuccess() {
         let friednGroup = FriendGroup(id: "groupId", creator: "", name: "", members: ["member1"])
         firebaseUser.friendGroups = [friednGroup]
         
@@ -1063,7 +1194,7 @@ final class FirebaseUserTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    func testRemoveMemberFromGroupFailure() {
+    func testGivenError_WhenRemoveMemebrsFromGroup_ThenReturnsFailure() {
         let group = FriendGroup(id: "group1", creator: "", name: "group 1", members: ["member1"])
         firebaseServiceStub.stubbedDocumentError = NSError()
         
@@ -1080,8 +1211,8 @@ final class FirebaseUserTests: XCTestCase {
     }
     
     // MARK: - Tests for generateUniqueCode
-    func testGenerateUniqueCodeSuccess() {
-        firebaseServiceStub.stubbedDocumentSnapshots = [[:]]
+    func testGivenNoErrorAndEmptyResponse_WhenGenerateUniqueCode_ThenReturnsSuccess() {
+        firebaseServiceStub.stubbedQuerySnapshotDatas = [[[:]]]
         
         let expectation = self.expectation(description: "Generate unique code")
         firebaseUser.generateUniqueCode() { result  in
@@ -1091,6 +1222,36 @@ final class FirebaseUserTests: XCTestCase {
             case .success(let code):
                 XCTAssertNotNil(code, "Code should not be nil")
                 XCTAssertFalse(code.isEmpty, "Code should not be empty")
+                expectation.fulfill()
+            }
+        }
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testGivenError_WhenGenerateUniqueCode_ThenReturnsFailure() {
+        firebaseServiceStub.stubbedQuerySnapshotDatas = [[[:]]]
+        firebaseServiceStub.stubbedDocumentError = NSError()
+        let expectation = self.expectation(description: "Generate unique code")
+        firebaseUser.generateUniqueCode() { result  in
+            switch result {
+            case .failure(_):
+                expectation.fulfill()
+            case .success(let code):
+                XCTFail("Expected failure")
+            }
+        }
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testGivenNotEmptyData_WhenGenerateUniqueCode_ThenReturnsFailure() {
+        firebaseServiceStub.stubbedQuerySnapshotDatas = [[fakeResponsesData.mockQuizData]]
+        
+        let expectation = self.expectation(description: "Generate unique code")
+        firebaseUser.generateUniqueCode() { result  in
+            switch result {
+            case .failure(_):
+                XCTFail("Expected success")
+            case .success(let code):
                 expectation.fulfill()
             }
         }

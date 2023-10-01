@@ -27,7 +27,7 @@ final class DeeplManagerTests: XCTestCase {
     }
     
     // Test de la traduction réussie
-    func testTranslateText_Success() {
+    func testGivenValideData_WhenTranslateText_ThenReturnsSuccess() {
         guard let jsonData = "{\"translations\": [{\"detected_source_language\": \"EN\", \"text\": \"Bonjour\"}]}".data(using: .utf8) else {return}
         networkRequestStub.dataQueue = [jsonData]
         
@@ -45,7 +45,7 @@ final class DeeplManagerTests: XCTestCase {
     }
     
     // Test de l'échec de la traduction
-    func testTranslateText_Failure() {
+    func testGivenError_WhenTranslateText_ThenReturnsFailure() {
         networkRequestStub.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Erreur réseau"])
         
         let expectation = self.expectation(description: "La traduction du texte échoue")
@@ -63,7 +63,7 @@ final class DeeplManagerTests: XCTestCase {
     
     
     // Test de la traduction réussie des questions
-    func testTranslateQuestions_Success() {
+    func testGivenValideData_WhenTranslateQuestion_ThenReturnsSuccess() {
         guard let jsonData = "{\"translations\": [{\"detected_source_language\": \"EN\", \"text\": \"Bonjour\"}]}".data(using: .utf8) else {return}
         networkRequestStub.dataQueue = [jsonData, jsonData, jsonData, jsonData, jsonData, jsonData] // Données pour chaque traduction
         
@@ -82,7 +82,7 @@ final class DeeplManagerTests: XCTestCase {
     }
     
     // Test de l'échec de la traduction des questions
-    func testTranslateQuestions_Failure() {
+    func testGivenError_WhenTranslateQuestion_ThenReturnsFailure() {
         networkRequestStub.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Erreur réseau"])
         
         let expectation = self.expectation(description: "La traduction des questions échoue")
@@ -100,7 +100,7 @@ final class DeeplManagerTests: XCTestCase {
     }
     
     // Test de la traduction réussie pour les questions
-    func testTranslateQuestionsWithString_Success() {
+    func testGivenValideData_WhenTranslateQuestionWithString_ThenReturnsSuccess() {
         // Préparation des données de test
         let question1 = UniversalQuestion(id: "1", category: "category", type: "type", difficulty: "easy", question: "Hello", correct_answer: "World", incorrect_answers: ["Incorrect", "Incorrect", "Incorrect"], explanation: "Explanation")
         let questionDict = ["1": question1]
@@ -125,7 +125,7 @@ final class DeeplManagerTests: XCTestCase {
     }
     
     // Test de l'échec de la traduction pour les questions
-    func testTranslateQuestionsWithString_Failure() {
+    func testGivenError_WhenTranslateQuestionWithString_ThenReturnsFailure() {
         // Préparation des données de test
         let question1 = UniversalQuestion(id: "1", category: "category", type: "type", difficulty: "easy", question: "Hello", correct_answer: "World", incorrect_answers: ["Incorrect", "Incorrect", "Incorrect"], explanation: "Explanation")
         let questionDict = ["1": question1]
