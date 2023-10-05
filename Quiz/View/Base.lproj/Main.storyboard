@@ -242,7 +242,7 @@
                     <tabBarItem key="tabBarItem" title="Ranked" image="flag" catalog="system" selectedImage="flag.fill" springLoaded="YES" id="qZ9-Bu-vAN"/>
                     <navigationItem key="navigationItem" id="tKn-fo-Wik"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="chj-W2-VB0" customClass="CustomNavigationBar" customModule="Quiz" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -2319,7 +2319,7 @@
                     <navigationItem key="navigationItem" title="Private room" id="Gur-eL-rdV">
                         <barButtonItem key="rightBarButtonItem" style="done" id="VE7-Z8-Wgl">
                             <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="DwI-Hh-qKU">
-                                <rect key="frame" x="217" y="5" width="87" height="34"/>
+                                <rect key="frame" x="217" y="8" width="87" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
@@ -2953,8 +2953,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="g8t-qW-Yby"/>
-        <segue reference="gqc-Rr-G6f"/>
-        <segue reference="VMf-YG-tkp"/>
+        <segue reference="gh0-tC-Q8T"/>
+        <segue reference="axf-xm-Zem"/>
         <segue reference="Kre-pq-QlT"/>
         <segue reference="mgT-Y3-Laq"/>
     </inferredMetricsTieBreakers>

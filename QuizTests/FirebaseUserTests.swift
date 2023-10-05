@@ -102,7 +102,6 @@ final class FirebaseUserTests: XCTestCase {
         let expectation = self.expectation(description: "")
         
         // Act
-        var isSuccess = false
         firebaseUser.resetPassword(for: "test@test.com") { result in
             switch result {
             case .failure:
@@ -140,7 +139,7 @@ final class FirebaseUserTests: XCTestCase {
         firebaseServiceStub.stubbedDocumentSnapshots = [fakeResponsesData.mockUserData]
         
         // Act
-        var isSuccess = false
+        
         let expectation = self.expectation(description: "signInUser finishes")
         
         firebaseUser.signInUser(email: "test@test.com", password: "password") { result in
