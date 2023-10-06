@@ -197,9 +197,6 @@ class QuickPlayVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         // Present the alert to the user.
         present(alertController, animated: true, completion: nil)
     }
-    
-    
-    
 }
 
 

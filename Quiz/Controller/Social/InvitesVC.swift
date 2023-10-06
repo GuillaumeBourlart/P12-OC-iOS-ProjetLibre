@@ -196,9 +196,8 @@ extension InvitesVC: UITableViewDataSource {
             // Create and configure a custom cell with invite information
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
             let invite = Array(invites)[indexPath.row]
-            let userText = NSLocalizedString("User", comment: "")
-            let lobbyText = NSLocalizedString("Lobby", comment: "")
-            cell.label.text = userText + ": \(invite.key) - " + lobbyText + invite.value
+            let userText = NSLocalizedString("Invite from", comment: "")
+            cell.label.text = userText + " : \(invite.key)"
             
             // Create the disclosure indicator for the cell
             cell.accessoryType = .disclosureIndicator
