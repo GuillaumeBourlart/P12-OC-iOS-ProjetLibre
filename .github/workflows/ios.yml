@@ -19,6 +19,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
+
+      - name: Install compatible activesupport
+        run: gem install activesupport -v '6.1.0'
           
       - name: Set Default Scheme
         run: |
