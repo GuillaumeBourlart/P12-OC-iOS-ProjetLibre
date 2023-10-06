@@ -252,6 +252,7 @@
 		7E53C15F2A3C9AF50046CC5E /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				7E5B14632AB9AE5D00B3D46D /* money-counter.mp3 */,
 				D0CEA5BE2A58605A007CDDB4 /* happy.mp3 */,
 				D0CEA5BF2A58605B007CDDB4 /* disapointed.mp3 */,
 				7E727B992A38BAB20025AC80 /* incorrect.mp3 */,
@@ -381,7 +382,6 @@
 		D084EC722A0F7FD700544AA3 /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				7E5B14632AB9AE5D00B3D46D /* money-counter.mp3 */,
 				D0B7B38F2A5883E40005C008 /* square.jpg */,
 				7E69C4112AB8F7FD00D73B97 /* privacy policy.pdf */,
 				7E53C15F2A3C9AF50046CC5E /* sounds */,

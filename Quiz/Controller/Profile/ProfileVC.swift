@@ -133,7 +133,7 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         if let pickedImage = info[.originalImage] as? UIImage {
             picker.dismiss(animated: true, completion: nil)
             
-            let consentAlert = UIAlertController(title: NSLocalizedString("consent", comment: ""), message: NSLocalizedString("Do you agree to use this photo as a profile image visible to other users?", comment: ""), preferredStyle: .alert)
+            let consentAlert = UIAlertController(title: NSLocalizedString("Consent", comment: ""), message: NSLocalizedString("Do you agree to use this photo as a profile image visible to other users?", comment: ""), preferredStyle: .alert)
             
             consentAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { _ in
                 self.uploadProfileImage(pickedImage: pickedImage)
